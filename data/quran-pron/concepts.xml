@@ -1,0 +1,4143 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<concepts>
+<con id='1'>
+<arabic> الله </arabic>
+<english> Allah </english>
+</con>
+<con id='2'>
+<arabic> القرآن </arabic>
+<english> the Qur'an </english>
+</con>
+<con id='3'>
+<arabic> المتقين </arabic>
+<english> (Muttaqun) the pious, the righteous, God fearing </english>
+</con>
+<con id='4'>
+<arabic> محمد </arabic>
+<english> Prophet Muhammad </english>
+</con>
+<con id='5'>
+<arabic> الكافرين </arabic>
+<english> (Kaafir) the infidels </english>
+</con>
+<con id='6'>
+<arabic> المنافقين </arabic>
+<english> the hypocrites </english>
+</con>
+<con id='7'>
+<arabic> الصحابة </arabic>
+<english> companions of the Prophet </english>
+</con>
+<con id='8'>
+<arabic> نار </arabic>
+<english> fire </english>
+</con>
+<con id='9'>
+<arabic> مطر </arabic>
+<english> rain </english>
+</con>
+<con id='10'>
+<arabic> الناس </arabic>
+<english> mankind </english>
+</con>
+<con id='11'>
+<arabic> آمنوا وعملوا الصالحات </arabic>
+<english> those who believed and did righteous deeds </english>
+</con>
+<con id='12'>
+<arabic> جنات </arabic>
+<english> paradises, gardens </english>
+</con>
+<con id='13'>
+<arabic> ثمر الجنة </arabic>
+<english> fruit of the Pradise </english>
+</con>
+<con id='14'>
+<arabic> بعوضة </arabic>
+<english> mosquito </english>
+</con>
+<con id='15'>
+<arabic> مثل البعوضة </arabic>
+<english> the analogy of the mosquito </english>
+</con>
+<con id='16'>
+<arabic> المؤمنين </arabic>
+<english> the believers  </english>
+</con>
+<con id='17'>
+<arabic> الفاسقين </arabic>
+<english> disobedient </english>
+</con>
+<con id='18'>
+<arabic> الأرض </arabic>
+<english> the Earth </english>
+</con>
+<con id='19'>
+<arabic> الملائكة </arabic>
+<english> the Angels </english>
+</con>
+<con id='20'>
+<arabic> الأسماء </arabic>
+<english> names </english>
+</con>
+<con id='21'>
+<arabic> آدم </arabic>
+<english> Adam </english>
+</con>
+<con id='22'>
+<arabic> آدم وزوجته </arabic>
+<english> Adam and his wife </english>
+</con>
+<con id='23'>
+<arabic> الجنة التي سكنها آدم وزوجه </arabic>
+<english> the garden where Adam and his wife stayed </english>
+</con>
+<con id='24'>
+<arabic> نعيم الجنة </arabic>
+<english> the bounty of Paradise </english>
+</con>
+<con id='25'>
+<arabic> آدم وزوجته وإبليس </arabic>
+<english> Adam, his wife and Iblis </english>
+</con>
+<con id='26'>
+<arabic> من تبع هدى الله </arabic>
+<english> those who follow the guidance of Allah </english>
+</con>
+<con id='27'>
+<arabic> اللذين كفروا وكذبوا بآيات الله </arabic>
+<english> those who disbelieve and belie the proofs of Allah </english>
+</con>
+<con id='28'>
+<arabic> نار جهنم </arabic>
+<english> Hellfire </english>
+</con>
+<con id='29'>
+<arabic> بني إسرائيل </arabic>
+<english> Children of Israel </english>
+</con>
+<con id='30'>
+<arabic> التوراة والإنجيل </arabic>
+<english> Torah and the Gospel </english>
+</con>
+<con id='31'>
+<arabic> الصلاة </arabic>
+<english> the prayer </english>
+</con>
+<con id='32'>
+<arabic> الخاشعين </arabic>
+<english> humbly submissive </english>
+</con>
+<con id='33'>
+<arabic> آل فرعون </arabic>
+<english> Pharaoh's folk </english>
+</con>
+<con id='34'>
+<arabic> إنجاء بني إسرائيل من عذاب آل فرعون </arabic>
+<english> salvation of the children of Israel from the persecution of the Pharaoh's folk  </english>
+</con>
+<con id='35'>
+<arabic> نفس </arabic>
+<english> soul </english>
+</con>
+<con id='37'>
+<arabic> اتخاذ العجل آلهة </arabic>
+<english> taking the calf as God </english>
+</con>
+<con id='39'>
+<arabic> موسى </arabic>
+<english> Moses </english>
+</con>
+<con id='40'>
+<arabic> بيت المقدس </arabic>
+<english> Jerusalem </english>
+</con>
+<con id='41'>
+<arabic> الحجر الذي انفجر منه 12 عينا </arabic>
+<english> the rock which blew into 12 springs </english>
+</con>
+<con id='44'>
+<arabic> المعتدين في السبت من بني إسرائيل </arabic>
+<english> those who transgressed on the Sabbath </english>
+</con>
+<con id='45'>
+<arabic> البقرة التي أمر بني إسرائيل بذبحها </arabic>
+<english> the cow which the children of Israel were commanded to slaughter </english>
+</con>
+<con id='46'>
+<arabic> القتيل من بني إسرائيل في قصة البقرة </arabic>
+<english> the killed person in the story of the cow </english>
+</con>
+<con id='47'>
+<arabic> القلب </arabic>
+<english> the heart </english>
+</con>
+<con id='48'>
+<arabic> إحياء الله الموتى </arabic>
+<english> bringing alive the dead </english>
+</con>
+<con id='49'>
+<arabic> الحجارة </arabic>
+<english> stones </english>
+</con>
+<con id='50'>
+<arabic> المؤمنون </arabic>
+<english> the believers </english>
+</con>
+<con id='51'>
+<arabic> التوراة </arabic>
+<english> the Torah </english>
+</con>
+<con id='52'>
+<arabic> اليهود </arabic>
+<english> the Jews </english>
+</con>
+<con id='53'>
+<arabic> نعت محمد في التوراة </arabic>
+<english> description of Prophet Muhammad in Torah </english>
+</con>
+<con id='54'>
+<arabic> أهل الكتاب </arabic>
+<english> people of the Book </english>
+</con>
+<con id='55'>
+<arabic> تحريف التوراة </arabic>
+<english> distortion of the Torah </english>
+</con>
+<con id='56'>
+<arabic> المحرفون لكلام الله </arabic>
+<english> those who distort the words of Allah </english>
+</con>
+<con id='57'>
+<arabic> المشركين </arabic>
+<english> the polytheists </english>
+</con>
+<con id='59'>
+<arabic> عيسى </arabic>
+<english> Jesus </english>
+</con>
+<con id='60'>
+<arabic> جبريل </arabic>
+<english> angel Gabriel </english>
+</con>
+<con id='61'>
+<arabic> الموت </arabic>
+<english> the death </english>
+</con>
+<con id='62'>
+<arabic> عهد الله </arabic>
+<english> Allah's covenant </english>
+</con>
+<con id='63'>
+<arabic> هاروت وماروت </arabic>
+<english> angels Harout and Marout </english>
+</con>
+<con id='64'>
+<arabic> السحر </arabic>
+<english> magic </english>
+</con>
+<con id='65'>
+<arabic> السحرة </arabic>
+<english> magicians </english>
+</con>
+<con id='66'>
+<arabic> المنسوخ من القرآن </arabic>
+<english> abrogated Qur'an </english>
+</con>
+<con id='67'>
+<arabic> خير </arabic>
+<english> goodness </english>
+</con>
+<con id='68'>
+<arabic> اليهود والنصارى </arabic>
+<english> Jews and Christians </english>
+</con>
+<con id='70'>
+<arabic> المحسنون </arabic>
+<english> good doers </english>
+</con>
+<con id='71'>
+<arabic> المساجد </arabic>
+<english> Mosques </english>
+</con>
+<con id='72'>
+<arabic> المسجد الحرام </arabic>
+<english> the sacred Mosque in Makkah </english>
+</con>
+<con id='73'>
+<arabic> الذين يسعون في خراب المساجد ومنع الذكر فيها </arabic>
+<english> who prevent the name of Allah from being mentioned in His mosques and strive toward their destruction </english>
+</con>
+<con id='74'>
+<arabic> المدعين لله الولد </arabic>
+<english> those who ascribe son to Allah </english>
+</con>
+<con id='75'>
+<arabic> مشركوا العرب </arabic>
+<english> the polytheists among the Arabs </english>
+</con>
+<con id='76'>
+<arabic> إبراهيم </arabic>
+<english> Abraham </english>
+</con>
+<con id='77'>
+<arabic> إبراهيم وإسماعيل </arabic>
+<english> Abraham and Ishmael </english>
+</con>
+<con id='78'>
+<arabic> مكة </arabic>
+<english> Makkah </english>
+</con>
+<con id='79'>
+<arabic> أهل مكة </arabic>
+<english> people of Makkah </english>
+</con>
+<con id='80'>
+<arabic> الإسلام </arabic>
+<english> Islam </english>
+</con>
+<con id='81'>
+<arabic> أبناء إبراهيم </arabic>
+<english> children of Abraham </english>
+</con>
+<con id='82'>
+<arabic> يعقوب </arabic>
+<english> Jacob </english>
+</con>
+<con id='83'>
+<arabic> أبناء يعقوب </arabic>
+<english> children of Jacob </english>
+</con>
+<con id='84'>
+<arabic> الأنبياء </arabic>
+<english> the Prophets </english>
+</con>
+<con id='86'>
+<arabic> تحول القبلة </arabic>
+<english> change of prayer direction </english>
+</con>
+<con id='87'>
+<arabic> المسلمون </arabic>
+<english> Muslims </english>
+</con>
+<con id='88'>
+<arabic> الصابرين </arabic>
+<english> the patients </english>
+</con>
+<con id='89'>
+<arabic> الحاج والمعتمر </arabic>
+<english> Pilgrims </english>
+</con>
+<con id='90'>
+<arabic> الصفا والمروة </arabic>
+<english> mount Safa and Marwah </english>
+</con>
+<con id='91'>
+<arabic> الذين يكتمون ما في التوراة والإنجيل مما بينه الله </arabic>
+<english> those who hide the content of the bible </english>
+</con>
+<con id='92'>
+<arabic> الذين تابوا وأصلحوا وبينوا </arabic>
+<english> those who repent and correct themselves and make evident [what they concealed] </english>
+</con>
+<con id='93'>
+<arabic> الذين كفروا وماتوا وهم كفار </arabic>
+<english> those who disbelieved and died as such  </english>
+</con>
+<con id='94'>
+<arabic> لعنة الله </arabic>
+<english> curse of Allah </english>
+</con>
+<con id='95'>
+<arabic> أنداد من دون الله </arabic>
+<english> deities considered as equal to Allah </english>
+</con>
+<con id='96'>
+<arabic> الشيطان </arabic>
+<english> Satan </english>
+</con>
+<con id='97'>
+<arabic> الذين آمنوا </arabic>
+<english> those who believe </english>
+</con>
+<con id='98'>
+<arabic> القاتل </arabic>
+<english> the Murderer </english>
+</con>
+<con id='99'>
+<arabic> المقتول </arabic>
+<english> the murdered </english>
+</con>
+<con id='100'>
+<arabic> ولي المقتول </arabic>
+<english> guardians of the Killed </english>
+</con>
+<con id='101'>
+<arabic> وصية الميت </arabic>
+<english> will of the deceased </english>
+</con>
+<con id='102'>
+<arabic> الأطراف المعنيين في الوصية </arabic>
+<english> parties in the will </english>
+</con>
+<con id='103'>
+<arabic> المصلح بين الأطراف </arabic>
+<english> the person who resolves dispute between parties </english>
+</con>
+<con id='104'>
+<arabic> شهر رمضان </arabic>
+<english> month of Ramadan </english>
+</con>
+<con id='105'>
+<arabic> الزوجة </arabic>
+<english> the wife </english>
+</con>
+<con id='106'>
+<arabic> الأولاد </arabic>
+<english> the children </english>
+</con>
+<con id='107'>
+<arabic> الرشوة </arabic>
+<english> bribery </english>
+</con>
+<con id='108'>
+<arabic> الأهلة </arabic>
+<english> new moon </english>
+</con>
+<con id='109'>
+<arabic> المحاربين من المشركين </arabic>
+<english> polytheists who fight against the Muslims </english>
+</con>
+<con id='110'>
+<arabic> أتباع الرسل </arabic>
+<english> followers of the Messengers </english>
+</con>
+<con id='111'>
+<arabic> الأشهر الحج </arabic>
+<english> the months of Hajj </english>
+</con>
+<con id='112'>
+<arabic> المرتدون </arabic>
+<english> Proselytes </english>
+</con>
+<con id='113'>
+<arabic> الخمر </arabic>
+<english> wine </english>
+</con>
+<con id='114'>
+<arabic> الميسر </arabic>
+<english> gambling </english>
+</con>
+<con id='115'>
+<arabic> الأيتام </arabic>
+<english> orphans </english>
+</con>
+<con id='116'>
+<arabic> الحيض </arabic>
+<english> menstruation </english>
+</con>
+<con id='117'>
+<arabic> المطلقات </arabic>
+<english> divorced women </english>
+</con>
+<con id='119'>
+<arabic> الزوجان </arabic>
+<english> husband and wife </english>
+</con>
+<con id='120'>
+<arabic> أولياء الزوجين </arabic>
+<english> guardians of husband and wife </english>
+</con>
+<con id='121'>
+<arabic> الزوج الأول </arabic>
+<english> the first husband </english>
+</con>
+<con id='123'>
+<arabic> النهي عن العضل </arabic>
+<english> prohibition of preventing divorced women to unite with her husband </english>
+</con>
+<con id='124'>
+<arabic> الأب </arabic>
+<english> the father  </english>
+</con>
+<con id='125'>
+<arabic> الأم </arabic>
+<english> the mother </english>
+</con>
+<con id='130'>
+<arabic> أولياء الزوجة </arabic>
+<english> guardians of the wife </english>
+</con>
+<con id='131'>
+<arabic> المرأة المتوفى عنها زوجها </arabic>
+<english> the woman whom husband died </english>
+</con>
+<con id='132'>
+<arabic> المرأة المطلقة </arabic>
+<english> the divorced women </english>
+</con>
+<con id='133'>
+<arabic> الزوج </arabic>
+<english> the husband </english>
+</con>
+<con id='135'>
+<arabic> أولياء الميت </arabic>
+<english> guardians of the died person </english>
+</con>
+<con id='136'>
+<arabic> المنفق في سبيل الله </arabic>
+<english> those who give charity in the cause of Allah </english>
+</con>
+<con id='138'>
+<arabic> طالوت </arabic>
+<english> Saul </english>
+</con>
+<con id='140'>
+<arabic> تابوت بني إسرائيل الذي فيه التوراة </arabic>
+<english> the chest of Israelite that had the Torah  </english>
+</con>
+<con id='141'>
+<arabic> عصا موسى </arabic>
+<english> the stick of Moses </english>
+</con>
+<con id='143'>
+<arabic> نهر بين الأردن وفلسطين </arabic>
+<english> a river between Jordan and Palestine </english>
+</con>
+<con id='144'>
+<arabic> الجيش المؤمن مع طالوت </arabic>
+<english> the faithful army with Saul </english>
+</con>
+<con id='145'>
+<arabic> جالوت وجنوده </arabic>
+<english> Goliath and his soldiers </english>
+</con>
+<con id='146'>
+<arabic> داود </arabic>
+<english> David </english>
+</con>
+<con id='147'>
+<arabic> الرسل </arabic>
+<english> prophets </english>
+</con>
+<con id='148'>
+<arabic> السموات </arabic>
+<english> the skies </english>
+</con>
+<con id='149'>
+<arabic> العروة الوثقى </arabic>
+<english> the most trustworthy handhold </english>
+</con>
+<con id='150'>
+<arabic> نمرود </arabic>
+<english> Nimrod </english>
+</con>
+<con id='151'>
+<arabic> الشمس </arabic>
+<english> the Sun </english>
+</con>
+<con id='152'>
+<arabic> عزير </arabic>
+<english> Ozair </english>
+</con>
+<con id='153'>
+<arabic> العظام </arabic>
+<english> bone </english>
+</con>
+<con id='154'>
+<arabic> أربعة أنواع من الطير في قصة إبراهيم </arabic>
+<english> four kinds of birds in the story of Abraham </english>
+</con>
+<con id='155'>
+<arabic> المرائي </arabic>
+<english> the person who shows off </english>
+</con>
+<con id='156'>
+<arabic> حجر أملس </arabic>
+<english> smooth stone </english>
+</con>
+<con id='157'>
+<arabic> بستان </arabic>
+<english> garden </english>
+</con>
+<con id='158'>
+<arabic> إعصار </arabic>
+<english> whirlwind </english>
+</con>
+<con id='159'>
+<arabic> المال الردئ </arabic>
+<english> unwanted and defective goods </english>
+</con>
+<con id='160'>
+<arabic> الصدقات </arabic>
+<english> charity </english>
+</con>
+<con id='161'>
+<arabic> إخفاء الصدقة </arabic>
+<english> hiding the charity </english>
+</con>
+<con id='162'>
+<arabic> الفقراء المسلمين </arabic>
+<english> poor among the Muslims </english>
+</con>
+<con id='163'>
+<arabic> آكلوا الربا </arabic>
+<english> those who consume interest </english>
+</con>
+<con id='164'>
+<arabic> المقلع عن المعصية </arabic>
+<english> those who give up sins </english>
+</con>
+<con id='165'>
+<arabic> المصر على المعصية </arabic>
+<english> those to who insists on sins </english>
+</con>
+<con id='168'>
+<arabic> يوم القيامة </arabic>
+<english> the day of resurrection </english>
+</con>
+<con id='169'>
+<arabic> دَيْن </arabic>
+<english> loan </english>
+</con>
+<con id='170'>
+<arabic> الكاتب </arabic>
+<english> scriber of the debt deed </english>
+</con>
+<con id='171'>
+<arabic> المدين </arabic>
+<english> the debtor </english>
+</con>
+<con id='173'>
+<arabic> تجارة </arabic>
+<english> business transaction </english>
+</con>
+<con id='174'>
+<arabic> فعل ما نهى الله </arabic>
+<english> committing what Allah forbade </english>
+</con>
+<con id='175'>
+<arabic> الشهادة </arabic>
+<english> testimony </english>
+</con>
+<con id='176'>
+<arabic> كاتم الشهادة </arabic>
+<english> concealing a testimony </english>
+</con>
+<con id='177'>
+<arabic> حديث النفس </arabic>
+<english> what a person conceal within himself </english>
+</con>
+<con id='178'>
+<arabic> التكاليف الشاقة </arabic>
+<english> hard rituals </english>
+</con>
+<con id='179'>
+<arabic> كفار قريش </arabic>
+<english> the infidels of Quraish </english>
+</con>
+<con id='180'>
+<arabic> الطاغين </arabic>
+<english> transgressors </english>
+</con>
+<con id='181'>
+<arabic> كل شيئ </arabic>
+<english> everything </english>
+</con>
+<con id='182'>
+<arabic> السموات والأرض </arabic>
+<english> the earth and skies </english>
+</con>
+<con id='183'>
+<arabic> المرء </arabic>
+<english> a person </english>
+</con>
+<con id='184'>
+<arabic> عشية </arabic>
+<english> afternoon </english>
+</con>
+<con id='185'>
+<arabic> الساعة </arabic>
+<english> the Hour </english>
+</con>
+<con id='186'>
+<arabic> الجحيم </arabic>
+<english> Hellfire </english>
+</con>
+<con id='187'>
+<arabic> الجبال </arabic>
+<english> mountain </english>
+</con>
+<con id='188'>
+<arabic> السماء </arabic>
+<english> the sky </english>
+</con>
+<con id='189'>
+<arabic> فرعون </arabic>
+<english> Pharaoh </english>
+</con>
+<con id='190'>
+<arabic> منكروا البعث </arabic>
+<english> those who deny resurrection </english>
+</con>
+<con id='191'>
+<arabic> النفخة الثانية </arabic>
+<english> the second blow of the Horn </english>
+</con>
+<con id='192'>
+<arabic> النفخة الأولى </arabic>
+<english> the first blow of the Horn </english>
+</con>
+<con id='193'>
+<arabic> null </arabic>
+<english> null </english>
+</con>
+<con id='194'>
+<arabic> عبد الله بن أم مكتوم </arabic>
+<english> Abdullah ibn Umm Maktoum </english>
+</con>
+<con id='195'>
+<arabic> سورة عبس </arabic>
+<english> Sura abasa no. 80 </english>
+</con>
+<con id='196'>
+<arabic> الإنسان </arabic>
+<english> mankind </english>
+</con>
+<con id='197'>
+<arabic> وجوه الكفار </arabic>
+<english> the face of the disbeliever </english>
+</con>
+<con id='198'>
+<arabic> العالمين </arabic>
+<english> the worlds </english>
+</con>
+<con id='199'>
+<arabic> الكرام الكاتبين </arabic>
+<english> noble angels who record our deeds </english>
+</con>
+<con id='200'>
+<arabic> الفجار </arabic>
+<english> the wicked </english>
+</con>
+<con id='201'>
+<arabic> المطففين </arabic>
+<english> those who give less than due </english>
+</con>
+<con id='202'>
+<arabic> المكذبين </arabic>
+<english> the deniers </english>
+</con>
+<con id='203'>
+<arabic> يوم الدين </arabic>
+<english> the day of recompense </english>
+</con>
+<con id='204'>
+<arabic> معتد أثيم </arabic>
+<english> sinful transgressor </english>
+</con>
+<con id='205'>
+<arabic> كتاب الأبرار </arabic>
+<english> record of the righteous </english>
+</con>
+<con id='206'>
+<arabic> الأبرار </arabic>
+<english> the righteous </english>
+</con>
+<con id='207'>
+<arabic> رحيق مختوم </arabic>
+<english> pure sealed wine in the paradise </english>
+</con>
+<con id='208'>
+<arabic> تسنيم </arabic>
+<english> Tasneem (favored drink from a spring in Paradise) </english>
+</con>
+<con id='209'>
+<arabic> المجرمين </arabic>
+<english> criminals </english>
+</con>
+<con id='210'>
+<arabic> أصحاب اليمين </arabic>
+<english> those who receive their record in their right hand </english>
+</con>
+<con id='211'>
+<arabic> أصحاب الشمال </arabic>
+<english> these who receive their records in their left hand </english>
+</con>
+<con id='212'>
+<arabic> أصحاب الأخدود </arabic>
+<english> the companions of the trench </english>
+</con>
+<con id='213'>
+<arabic> المرعى </arabic>
+<english> the pasture </english>
+</con>
+<con id='214'>
+<arabic> الذكرى </arabic>
+<english> reminder </english>
+</con>
+<con id='215'>
+<arabic> عاد </arabic>
+<english> the people of 'Aad </english>
+</con>
+<con id='216'>
+<arabic> ثمود </arabic>
+<english> people of Thamoud </english>
+</con>
+<con id='217'>
+<arabic> اليلاد </arabic>
+<english> the lands </english>
+</con>
+<con id='218'>
+<arabic> النفس المطمئنة </arabic>
+<english> reassured soul </english>
+</con>
+<con id='219'>
+<arabic> ناقة ثمود </arabic>
+<english> the Camel of Thamoud </english>
+</con>
+<con id='220'>
+<arabic> صالح </arabic>
+<english> Prophet Salih </english>
+</con>
+<con id='221'>
+<arabic> أبو جهل </arabic>
+<english> Abu Jahl </english>
+</con>
+<con id='222'>
+<arabic> ليلة القدر </arabic>
+<english> the night of decree </english>
+</con>
+<con id='223'>
+<arabic> الخيل </arabic>
+<english> the horse </english>
+</con>
+<con id='224'>
+<arabic> العدو </arabic>
+<english> the enemy </english>
+</con>
+<con id='225'>
+<arabic> مكان الغزو </arabic>
+<english> place of battle </english>
+</con>
+<con id='226'>
+<arabic> النقع </arabic>
+<english> dust </english>
+</con>
+<con id='227'>
+<arabic> هاوية </arabic>
+<english> abyss (a name for Hellfire) </english>
+</con>
+<con id='228'>
+<arabic> المال </arabic>
+<english> money </english>
+</con>
+<con id='229'>
+<arabic> المغتاب </arabic>
+<english> backbiter </english>
+</con>
+<con id='230'>
+<arabic> الحطمة </arabic>
+<english> the Crusher (a name for Hellfire) </english>
+</con>
+<con id='231'>
+<arabic> أصحاب الفيل </arabic>
+<english> companions of the elephant </english>
+</con>
+<con id='232'>
+<arabic> قريش </arabic>
+<english> Quraysh </english>
+</con>
+<con id='233'>
+<arabic> الساهون عن الصلاة </arabic>
+<english> those who are headless of their prayer </english>
+</con>
+<con id='234'>
+<arabic> مبغض النبي محمد صلى الله عليه وسلم </arabic>
+<english> enemy of the Prophet Muhammad </english>
+</con>
+<con id='235'>
+<arabic> أبو لهب </arabic>
+<english> Abu Lahab </english>
+</con>
+<con id='236'>
+<arabic> إمرأة أبي لهب </arabic>
+<english> wife of Abu Lahab </english>
+</con>
+<con id='237'>
+<arabic> المنعم عليهم </arabic>
+<english> those on whom favor of Allah is bestowed  </english>
+</con>
+<con id='238'>
+<arabic> المغضوب عليهم </arabic>
+<english> those on whom the anger of Allah has fallen </english>
+</con>
+<con id='239'>
+<arabic> البرق </arabic>
+<english> lightning </english>
+</con>
+<con id='240'>
+<arabic> المسميات </arabic>
+<english> names of entities </english>
+</con>
+<con id='241'>
+<arabic> بني آدم </arabic>
+<english> children of Adam </english>
+</con>
+<con id='242'>
+<arabic> القرية التي كانت حاضرة البحر </arabic>
+<english> the village near the sea (in the story of Sabbath) </english>
+</con>
+<con id='243'>
+<arabic> الذين اشتروا الحياة الدنيا بالآخرة </arabic>
+<english> those who purchased this world exchanging the world hereafter </english>
+</con>
+<con id='244'>
+<arabic> آيات القرآن </arabic>
+<english> the verses of the Qur'an </english>
+</con>
+<con id='245'>
+<arabic> كل من ينفى الخير عن الآخرين </arabic>
+<english> those who deny the virtue of others </english>
+</con>
+<con id='246'>
+<arabic> اليهود والنصارى والمشركين </arabic>
+<english> Jews, Christians and the Polytheists </english>
+</con>
+<con id='247'>
+<arabic> إبتلاء الله إبراهيم </arabic>
+<english> trial of Abraham by Allah </english>
+</con>
+<con id='248'>
+<arabic> العرب ذرية إسماعيل </arabic>
+<english> the Arabs who are offspring of Ishmael </english>
+</con>
+<con id='249'>
+<arabic> الأمم السابقة </arabic>
+<english> the past nations </english>
+</con>
+<con id='250'>
+<arabic> إبراهيم وإسماعيل وإسحاق ويعقوب والأسباط </arabic>
+<english> Abraham, Ishmael, Isaac, Jacob and the Descendants (the 12 tribes of Israel) </english>
+</con>
+<con id='251'>
+<arabic> قبلة المسلمين </arabic>
+<english> the direction of Muslim prayer </english>
+</con>
+<con id='252'>
+<arabic> القبلة في الصلاة </arabic>
+<english> direction of prayer </english>
+</con>
+<con id='253'>
+<arabic> التابعين والمتبوعين </arabic>
+<english> the followers and those who are been followed </english>
+</con>
+<con id='254'>
+<arabic> المضطر </arabic>
+<english> the person forced by necessity </english>
+</con>
+<con id='255'>
+<arabic> كتمان ما أنزل الله </arabic>
+<english> concealment of Allah's words </english>
+</con>
+<con id='256'>
+<arabic> المعتدين </arabic>
+<english> transgressor </english>
+</con>
+<con id='257'>
+<arabic> تبديل الوصية </arabic>
+<english> altering the bequest </english>
+</con>
+<con id='258'>
+<arabic> الذين يبدلون وصية الميت </arabic>
+<english> those who alter deceased bequest </english>
+</con>
+<con id='259'>
+<arabic> الصيام </arabic>
+<english> fasting </english>
+</con>
+<con id='260'>
+<arabic> من تطوع خيراً </arabic>
+<english> whoever volunteers good </english>
+</con>
+<con id='261'>
+<arabic> عباد الله </arabic>
+<english> beloved slaves of Allah </english>
+</con>
+<con id='262'>
+<arabic> حدود الله </arabic>
+<english> limits set by Allah </english>
+</con>
+<con id='263'>
+<arabic> البيوت </arabic>
+<english> houses </english>
+</con>
+<con id='264'>
+<arabic> الهدي </arabic>
+<english> sacrificial animal </english>
+</con>
+<con id='265'>
+<arabic> هداية الله </arabic>
+<english> guidance from Allah </english>
+</con>
+<con id='266'>
+<arabic> المؤمنين في الأمم السابقة </arabic>
+<english> believers among the past nations </english>
+</con>
+<con id='267'>
+<arabic> رسول </arabic>
+<english> a messenger </english>
+</con>
+<con id='268'>
+<arabic> القتال </arabic>
+<english> fighting </english>
+</con>
+<con id='269'>
+<arabic> المكروه </arabic>
+<english> disliked thing </english>
+</con>
+<con id='270'>
+<arabic> المحبوب </arabic>
+<english> liked thing </english>
+</con>
+<con id='271'>
+<arabic> الأشهر الحرم </arabic>
+<english> sacred months </english>
+</con>
+<con id='272'>
+<arabic> آمنوا وهاجروا وجاهدوا </arabic>
+<english> those who believed and those who have migrated and fought in the cause of Allah </english>
+</con>
+<con id='273'>
+<arabic> المشركات </arabic>
+<english> polytheistic women </english>
+</con>
+<con id='274'>
+<arabic> الذين يؤلون من نسائهم </arabic>
+<english> those who swear not to have sexual relation with their wives </english>
+</con>
+<con id='275'>
+<arabic> الفدية التي تدفعها المرأة لطلب الطلاق </arabic>
+<english> ransom money which wife pays for divorce </english>
+</con>
+<con id='276'>
+<arabic> من يتعد حدود الله </arabic>
+<english> those who transgress the limits of Allah </english>
+</con>
+<con id='277'>
+<arabic> الزوج الأول والمرأة المطلقة طلاقاً بائناً من زوج آخر  </arabic>
+<english> the first husband and the women been divorced three times from another husband </english>
+</con>
+<con id='278'>
+<arabic> الوالدان </arabic>
+<english> the parents </english>
+</con>
+<con id='279'>
+<arabic> الغني </arabic>
+<english> wealthy </english>
+</con>
+<con id='280'>
+<arabic> الفقير </arabic>
+<english> poor </english>
+</con>
+<con id='281'>
+<arabic> الذين خرجوا من أرضهم خشية الموت </arabic>
+<english> those who escaped their land fearing death </english>
+</con>
+<con id='282'>
+<arabic> النفقة في  سبيل الله </arabic>
+<english> spending in the cause of Allah </english>
+</con>
+<con id='283'>
+<arabic> الأشراف من بني إسرائيل </arabic>
+<english> the nobles among children of Israel </english>
+</con>
+<con id='284'>
+<arabic> جالوت </arabic>
+<english> Goliath </english>
+</con>
+<con id='285'>
+<arabic> الطاغوت </arabic>
+<english> false objects of worship </english>
+</con>
+<con id='286'>
+<arabic> قرية و أهلها </arabic>
+<english> a village and its residence </english>
+</con>
+<con id='287'>
+<arabic> صدقة </arabic>
+<english> charity </english>
+</con>
+<con id='288'>
+<arabic> شيخ كبير ذو عيال له بستان </arabic>
+<english> an old person with small kids who owns a garden </english>
+</con>
+<con id='289'>
+<arabic> الذين آمنوا وعملوا الصالحات وأقاموا الصلاة وآتوا الزكاة </arabic>
+<english> those who believe, does good, establish prayer and give zakat </english>
+</con>
+<con id='290'>
+<arabic> شاهدي الدين </arabic>
+<english> the two witness of debt </english>
+</con>
+<con id='291'>
+<arabic> الضرار </arabic>
+<english> harming </english>
+</con>
+<con id='292'>
+<arabic> الآيات المحكمات </arabic>
+<english> decisive verses </english>
+</con>
+<con id='293'>
+<arabic> الذين في قلوبهم زيغ </arabic>
+<english> deviated hearts </english>
+</con>
+<con id='294'>
+<arabic> الآيات المتشابهات </arabic>
+<english> allegorical verses </english>
+</con>
+<con id='295'>
+<arabic> الراسخون في العلم </arabic>
+<english> those firm in knowledge </english>
+</con>
+<con id='296'>
+<arabic> المسلون والمشركون </arabic>
+<english> Muslims and disbelievers </english>
+</con>
+<con id='299'>
+<arabic> السيئات </arabic>
+<english> sins </english>
+</con>
+<con id='300'>
+<arabic> ذرية </arabic>
+<english> descendants  </english>
+</con>
+<con id='298'>
+<arabic> الذين يكفرون بآيات الله ويقتلون النبيين بغير حقّ ويقتلون الذين يأمرون بالقسط من الناس </arabic>
+<english> Those who disbelieve in the signs of Allah and kill the prophets without right and kill those who order justice from among the people </english>
+</con>
+<con id='301'>
+<arabic> امرأة عمران </arabic>
+<english> wife of Imran </english>
+</con>
+<con id='302'>
+<arabic> مريم </arabic>
+<english> Mary </english>
+</con>
+<con id='303'>
+<arabic> الرزق الطيب </arabic>
+<english> good provision </english>
+</con>
+<con id='304'>
+<arabic> زكريا </arabic>
+<english> Zechariah </english>
+</con>
+<con id='305'>
+<arabic> أنباء الغيب </arabic>
+<english> news of the unseen </english>
+</con>
+<con id='306'>
+<arabic> قضاء الله </arabic>
+<english> decrees of Allah </english>
+</con>
+<con id='307'>
+<arabic> هيئة الطير </arabic>
+<english> form of a bird </english>
+</con>
+<con id='308'>
+<arabic> الحواريون </arabic>
+<english> the disciples of Jesus </english>
+</con>
+<con id='309'>
+<arabic> قصة ولادة عيسى عليه السلام </arabic>
+<english> the story of Jesus birth </english>
+</con>
+<con id='310'>
+<arabic> النصارى </arabic>
+<english> Christians </english>
+</con>
+<con id='311'>
+<arabic> المسلمون وأهل الكتاب </arabic>
+<english> Muslims and the peoples of the book </english>
+</con>
+<con id='312'>
+<arabic> النهار </arabic>
+<english> day </english>
+</con>
+<con id='313'>
+<arabic> فضل الله </arabic>
+<english> the bounty of Allah </english>
+</con>
+<con id='314'>
+<arabic> قنطار </arabic>
+<english> great amount of wealth </english>
+</con>
+<con id='315'>
+<arabic> دينار </arabic>
+<english> small amount of money </english>
+</con>
+<con id='316'>
+<arabic> اللذين يشترون بعهد الله وأيمانهم ثمناً قليلاً </arabic>
+<english> those who exchange the covenant of Allah and their oaths for a small price </english>
+</con>
+<con id='317'>
+<arabic> بشر </arabic>
+<english> a human </english>
+</con>
+<con id='318'>
+<arabic> التائبين </arabic>
+<english> those who repents </english>
+</con>
+<con id='319'>
+<arabic> ملء الأرض ذهباً </arabic>
+<english> earth full of gold </english>
+</con>
+<con id='320'>
+<arabic> الظالمون </arabic>
+<english> wrongdoers </english>
+</con>
+<con id='321'>
+<arabic> سبيل الله </arabic>
+<english> path of Allah </english>
+</con>
+<con id='322'>
+<arabic> اللذين تفرقوا واختلفوا </arabic>
+<english> those who became divided and differed </english>
+</con>
+<con id='323'>
+<arabic> اللذين اسودت وجوههم </arabic>
+<english> those whose faces turn black </english>
+</con>
+<con id='324'>
+<arabic> اللذين ابيضت وجوههم </arabic>
+<english> those whose faces turn white </english>
+</con>
+<con id='325'>
+<arabic> رحمة الله </arabic>
+<english> mercy of Allah </english>
+</con>
+<con id='326'>
+<arabic> مؤمنوا أهل الكتاب </arabic>
+<english> believers among the peoples of the scripture </english>
+</con>
+<con id='327'>
+<arabic> ريح </arabic>
+<english> wind </english>
+</con>
+<con id='328'>
+<arabic> حرث </arabic>
+<english> harvest </english>
+</con>
+<con id='329'>
+<arabic> الكتب السماوية </arabic>
+<english> divine scriptures </english>
+</con>
+<con id='330'>
+<arabic> مصيبة </arabic>
+<english> calamity </english>
+</con>
+<con id='331'>
+<arabic> بنو سلمة وبنو حارثة </arabic>
+<english> banu Salamah and banu Haritha [two branches of Ansar] </english>
+</con>
+<con id='332'>
+<arabic> إمداد الجيش الإسلامي بالملائكة </arabic>
+<english> enforcement of Islamic army with Angels </english>
+</con>
+<con id='333'>
+<arabic> جراح أو قتل </arabic>
+<english> wound and killing </english>
+</con>
+<con id='334'>
+<arabic> أيام النصر أو الهزيمة </arabic>
+<english> days of victory or defeat </english>
+</con>
+<con id='335'>
+<arabic> من يرد ثواب الدنيا </arabic>
+<english> those who desires the reward of this world </english>
+</con>
+<con id='336'>
+<arabic> من يرد ثواب الآخرة </arabic>
+<english> those who desires the reward of the Hereafter </english>
+</con>
+<con id='337'>
+<arabic> الدنيا </arabic>
+<english> this world </english>
+</con>
+<con id='338'>
+<arabic> الآخرة </arabic>
+<english> the world Hereafter </english>
+</con>
+<con id='339'>
+<arabic> الشرك بالله </arabic>
+<english> associating partner with Allah </english>
+</con>
+<con id='340'>
+<arabic> الأمر </arabic>
+<english> matter </english>
+</con>
+<con id='341'>
+<arabic> الفارين في المعركة </arabic>
+<english> those who flee a battle </english>
+</con>
+<con id='342'>
+<arabic> أصحاب الجنة وأصحاب النار </arabic>
+<english> people of Paradise and people of Hellfire </english>
+</con>
+<con id='343'>
+<arabic> الشهداء </arabic>
+<english> martyrs </english>
+</con>
+<con id='344'>
+<arabic> أولياء الشيطان </arabic>
+<english> supporters of satan </english>
+</con>
+<con id='345'>
+<arabic> اللذين يبخلوا بما آتاهم الله </arabic>
+<english> those who greedily withhold which Allah gave them </english>
+</con>
+<con id='346'>
+<arabic> البخل </arabic>
+<english> withholding </english>
+</con>
+<con id='347'>
+<arabic> قربان </arabic>
+<english> offering </english>
+</con>
+<con id='348'>
+<arabic> أولي الألباب </arabic>
+<english> those who understand </english>
+</con>
+<con id='349'>
+<arabic> المهاجرين </arabic>
+<english> those who migrated for the sake of Allah </english>
+</con>
+<con id='350'>
+<arabic> المجاهدين </arabic>
+<english> those who go for jihad </english>
+</con>
+<con id='351'>
+<arabic> المهاجرين والمجاهدين </arabic>
+<english> those who migrated and struggled for the sake of Allah </english>
+</con>
+<con id='352'>
+<arabic> البصر </arabic>
+<english> vision </english>
+</con>
+<con id='353'>
+<arabic> النجوم </arabic>
+<english> stars </english>
+</con>
+<con id='354'>
+<arabic> القول </arabic>
+<english> speech </english>
+</con>
+<con id='355'>
+<arabic> الطير </arabic>
+<english> birds </english>
+</con>
+<con id='356'>
+<arabic> عذاب الله </arabic>
+<english> punishment of Allah </english>
+</con>
+<con id='357'>
+<arabic> الملائكة والناس </arabic>
+<english> angels and mankind </english>
+</con>
+<con id='358'>
+<arabic> الرسول محمد أو الكافرون </arabic>
+<english> Prophet Muhammad or the disbelievers </english>
+</con>
+<con id='359'>
+<arabic> الوليد ابن المغيرة </arabic>
+<english> al-Waleed Ibn al-Mughirah </english>
+</con>
+<con id='360'>
+<arabic> أصحاب البستان في سورة القلم </arabic>
+<english> owners of the garden in chapter 68 </english>
+</con>
+<con id='361'>
+<arabic> ثمر الحديقة </arabic>
+<english> fruits of the garden </english>
+</con>
+<con id='362'>
+<arabic> الحديقة في سورة القلم </arabic>
+<english> the garden in chapter 68 </english>
+</con>
+<con id='363'>
+<arabic> كتاب منزل </arabic>
+<english> revealed book </english>
+</con>
+<con id='364'>
+<arabic> يونس </arabic>
+<english> Jonah </english>
+</con>
+<con id='365'>
+<arabic> الريح التي أهلكت عاد </arabic>
+<english> the violent wind which destroyed Aad </english>
+</con>
+<con id='366'>
+<arabic> سبع ليال  وثمانية أيام </arabic>
+<english> seven nights and eight days </english>
+</con>
+<con id='367'>
+<arabic> سفينة نوح </arabic>
+<english> Noah's ark </english>
+</con>
+<con id='368'>
+<arabic> الأرض والجبال </arabic>
+<english> the earth and mountains </english>
+</con>
+<con id='369'>
+<arabic> خزنة جهنم </arabic>
+<english> guards of the Hellfire </english>
+</con>
+<con id='370'>
+<arabic> سلسلة جهنم </arabic>
+<english> the chain of the Hellfire </english>
+</con>
+<con id='371'>
+<arabic> طعام جهنم </arabic>
+<english> the food of Hellfire </english>
+</con>
+<con id='372'>
+<arabic> الأقرباء </arabic>
+<english> close relatives </english>
+</con>
+<con id='373'>
+<arabic> المصلين </arabic>
+<english> those who regularly pray </english>
+</con>
+<con id='374'>
+<arabic> نوح </arabic>
+<english> Noah </english>
+</con>
+<con id='375'>
+<arabic> قوم نوح </arabic>
+<english> people of Noah </english>
+</con>
+<con id='376'>
+<arabic> سبع سموات </arabic>
+<english> seven heavens </english>
+</con>
+<con id='377'>
+<arabic> الرؤساء المتبوعون </arabic>
+<english> the followed leaders </english>
+</con>
+<con id='378'>
+<arabic> الجن </arabic>
+<english> Jinn </english>
+</con>
+<con id='379'>
+<arabic> مسترقوا السمع من الجن </arabic>
+<english> eavesdroppers among the Jinn </english>
+</con>
+<con id='380'>
+<arabic> مسلموا الجن </arabic>
+<english> Muslims among the Jinn </english>
+</con>
+<con id='381'>
+<arabic> القاسطون من الجن </arabic>
+<english> unjust among the Jinn </english>
+</con>
+<con id='382'>
+<arabic> الليل </arabic>
+<english> night </english>
+</con>
+<con id='383'>
+<arabic> النصف </arabic>
+<english> half </english>
+</con>
+<con id='384'>
+<arabic> قيام الليل </arabic>
+<english> waking up in the middle of the night </english>
+</con>
+<con id='385'>
+<arabic> التجار </arabic>
+<english> merchants </english>
+</con>
+<con id='386'>
+<arabic> أصحاب الجنة </arabic>
+<english> people of paradise </english>
+</con>
+<con id='387'>
+<arabic> أصحاب النار </arabic>
+<english> people of Hellfire </english>
+</con>
+<con id='388'>
+<arabic> علقة </arabic>
+<english> clinging clot </english>
+</con>
+<con id='389'>
+<arabic> خمر الجنة </arabic>
+<english> wine of the paradise </english>
+</con>
+<con id='391'>
+<arabic> الطعام </arabic>
+<english> food </english>
+</con>
+<con id='392'>
+<arabic> خدم الجنة </arabic>
+<english> servants of the paradise </english>
+</con>
+<con id='393'>
+<arabic> آنية الفضة في الجنة </arabic>
+<english> silver vessels in the paradise </english>
+</con>
+<con id='394'>
+<arabic> نطفة </arabic>
+<english> sperm drop </english>
+</con>
+<con id='395'>
+<arabic> سر النبي محمد </arabic>
+<english> a secret of Prophet Muhammad </english>
+</con>
+<con id='396'>
+<arabic> أم المؤمنين حفصة بنت عمر </arabic>
+<english> Wife of the Prophet Hafsa daughter of Omar </english>
+</con>
+<con id='397'>
+<arabic> حفصة وعائشة </arabic>
+<english> Hafsa and Ayesha (two wives of the Prophet) </english>
+</con>
+<con id='398'>
+<arabic> أزواج النبي </arabic>
+<english> wives of the Prophet </english>
+</con>
+<con id='399'>
+<arabic> الكفار والمنافقين </arabic>
+<english> disbelievers and the hypocrites </english>
+</con>
+<con id='400'>
+<arabic> امرأة نوح وامرأة لوط </arabic>
+<english> wife of Noah and wife of Lot </english>
+</con>
+<con id='401'>
+<arabic> نوح ولوط </arabic>
+<english> Noah and Lot </english>
+</con>
+<con id='402'>
+<arabic> امرأة فرعون </arabic>
+<english> wife of Pharaoh </english>
+</con>
+<con id='403'>
+<arabic> جيب قميص مريم </arabic>
+<english> garment of Mary </english>
+</con>
+<con id='404'>
+<arabic> النبي والمؤمنون </arabic>
+<english> Prophet Muhammad and the believers </english>
+</con>
+<con id='405'>
+<arabic> أمر الله  </arabic>
+<english> commands of Allah </english>
+</con>
+<con id='406'>
+<arabic> الزوجة والأولاد </arabic>
+<english> wife and children </english>
+</con>
+<con id='407'>
+<arabic> المفلحون </arabic>
+<english> successful </english>
+</con>
+<con id='408'>
+<arabic> خاسرون </arabic>
+<english> loosers </english>
+</con>
+<con id='409'>
+<arabic> الأميين </arabic>
+<english> unlettered </english>
+</con>
+<con id='410'>
+<arabic> الدين </arabic>
+<english> religion </english>
+</con>
+<con id='411'>
+<arabic> نصر من الله </arabic>
+<english> victory from Allah </english>
+</con>
+<con id='412'>
+<arabic> أعداء الإسلام </arabic>
+<english> enemy of Islam </english>
+</con>
+<con id='413'>
+<arabic> موالاة أعداء الإسلام </arabic>
+<english> affection towards enemies of Islam </english>
+</con>
+<con id='414'>
+<arabic> إبراهيم والمؤمنين معه </arabic>
+<english> Abraham and his faithful followers </english>
+</con>
+<con id='415'>
+<arabic> قوم إبراهيم </arabic>
+<english> people of Abraham </english>
+</con>
+<con id='416'>
+<arabic> آزر والد إبراهيم </arabic>
+<english> Aazar father of Abraham </english>
+</con>
+<con id='417'>
+<arabic> المسالمين من الكفار </arabic>
+<english> the peaceful among the non-believers </english>
+</con>
+<con id='418'>
+<arabic> النساء المؤمنات المهاجرات </arabic>
+<english> believing migrant women </english>
+</con>
+<con id='419'>
+<arabic> المسلمين اللذين لديهم زوجات كافرات </arabic>
+<english> Muslims who have disbelieving wives </english>
+</con>
+<con id='420'>
+<arabic> بهتان </arabic>
+<english> slander </english>
+</con>
+<con id='421'>
+<arabic> يهود بني النضير </arabic>
+<english> Jews from the tribe of banu Nadhir </english>
+</con>
+<con id='422'>
+<arabic> نخلة </arabic>
+<english> palm tree </english>
+</con>
+<con id='423'>
+<arabic> الفئ </arabic>
+<english> restored property from disbelievers without war </english>
+</con>
+<con id='424'>
+<arabic> أوامر ونواه الرسول </arabic>
+<english> instructions and prohibitions of the Prophet </english>
+</con>
+<con id='425'>
+<arabic> الأنصار </arabic>
+<english> Ansar </english>
+</con>
+<con id='426'>
+<arabic> المؤمنين من بعد الصحابة </arabic>
+<english> the believers after the companions of the Prophet </english>
+</con>
+<con id='427'>
+<arabic> يهود بني قينقاع </arabic>
+<english> Jews of the bani Qainuqa tribe </english>
+</con>
+<con id='428'>
+<arabic> الشيطان ومن أطاعه </arabic>
+<english> Satan and his followers </english>
+</con>
+<con id='429'>
+<arabic> أمثال القرآن </arabic>
+<english> parables of the Quran </english>
+</con>
+<con id='430'>
+<arabic> خولة بنت ثعلبة </arabic>
+<english> Khaolah daughter of Tha'labah </english>
+</con>
+<con id='431'>
+<arabic> محمد والمجادلة </arabic>
+<english> Prophet Muhammad and the women who pleaded with him </english>
+</con>
+<con id='432'>
+<arabic> الزوج المظاهر </arabic>
+<english> the husband who does Thihar (a form of pre-Islamic divorce) </english>
+</con>
+<con id='433'>
+<arabic> زوجة المظاهر </arabic>
+<english> the wife of the Thihar husband </english>
+</con>
+<con id='434'>
+<arabic> اللذين يحادون الله ورسوله </arabic>
+<english> those who oppose Allah and his Messenger </english>
+</con>
+<con id='435'>
+<arabic> النجوى </arabic>
+<english> private conversation </english>
+</con>
+<con id='436'>
+<arabic> السلام (تحية الإسلام) </arabic>
+<english> Salam (the greetings of Islam) </english>
+</con>
+<con id='437'>
+<arabic> حزب الشيطان </arabic>
+<english> party of Satan </english>
+</con>
+<con id='438'>
+<arabic> حزب الله </arabic>
+<english> party of Allah </english>
+</con>
+<con id='439'>
+<arabic> اللذين آمنوا وأنفقوا </arabic>
+<english> those who believe and spend in the cause of Allah </english>
+</con>
+<con id='440'>
+<arabic> المؤمنين والمنافقين </arabic>
+<english> believers and hypocrites </english>
+</con>
+<con id='441'>
+<arabic> سور لفصل المؤمنين من المنافقين يوم القيامة </arabic>
+<english> a wall to separate believers from hypocrites on the day of Judgement  </english>
+</con>
+<con id='442'>
+<arabic> نبات </arabic>
+<english> plant </english>
+</con>
+<con id='443'>
+<arabic> الخليقة </arabic>
+<english> all creations </english>
+</con>
+<con id='444'>
+<arabic> الحديد </arabic>
+<english> iron </english>
+</con>
+<con id='445'>
+<arabic> نوح وإبراهيم </arabic>
+<english> Noah and Abraham </english>
+</con>
+<con id='446'>
+<arabic> ذرية نوح وإبراهيم </arabic>
+<english> descendants of Noah and Abrahama </english>
+</con>
+<con id='447'>
+<arabic> رهبانية </arabic>
+<english> monasticism </english>
+</con>
+<con id='448'>
+<arabic> سرير الجنة </arabic>
+<english> thrones for the people of Paradise </english>
+</con>
+<con id='449'>
+<arabic> السابقون من أصحاب الجنة </arabic>
+<english> the forerunners among the people of the Paradise </english>
+</con>
+<con id='450'>
+<arabic> نساء الجنة </arabic>
+<english> the women of Paradise </english>
+</con>
+<con id='451'>
+<arabic> شجر الزقوم </arabic>
+<english> zaqqum tree (in Hellfire) </english>
+</con>
+<con id='452'>
+<arabic> منيّ </arabic>
+<english> semen </english>
+</con>
+<con id='453'>
+<arabic> مساقط النجوم </arabic>
+<english> setting of the stars </english>
+</con>
+<con id='454'>
+<arabic> المحتضر على فراش الموت </arabic>
+<english> a soul at the time of death </english>
+</con>
+<con id='455'>
+<arabic> الروح </arabic>
+<english> soul </english>
+</con>
+<con id='456'>
+<arabic> النجم والشجر </arabic>
+<english> Star and Tree </english>
+</con>
+<con id='457'>
+<arabic> الإنس والجن </arabic>
+<english> Jinn and Mankind </english>
+</con>
+<con id='458'>
+<arabic> الماء العذب والمالح </arabic>
+<english> salt and sweet water </english>
+</con>
+<con id='459'>
+<arabic> جنتان للمقربين </arabic>
+<english> two gardens for the righteous </english>
+</con>
+<con id='460'>
+<arabic> عينان في الجنة </arabic>
+<english> two springs in paradise </english>
+</con>
+<con id='464'>
+<arabic> جنتان لأصحاب اليمين </arabic>
+<english> two paradise for those who are receive their books by their right hand </english>
+</con>
+<con id='463'>
+<arabic> فراش الجنة </arabic>
+<english> beds of the Paradise </english>
+</con>
+<con id='465'>
+<arabic> قوم لوط </arabic>
+<english> people of Lot </english>
+</con>
+<con id='466'>
+<arabic> آل لوط </arabic>
+<english> family of Lot </english>
+</con>
+<con id='467'>
+<arabic> لوط </arabic>
+<english> prophet Lot </english>
+</con>
+<con id='468'>
+<arabic> آيات الله </arabic>
+<english> signs of Allah </english>
+</con>
+<con id='469'>
+<arabic> المكذبين بالرسل </arabic>
+<english> those who belied their prophets </english>
+</con>
+<con id='470'>
+<arabic> القرآن والسنة </arabic>
+<english> Quran and Sunnah </english>
+</con>
+<con id='471'>
+<arabic> سدرة المنتهى </arabic>
+<english> Lote Tree of the Utmost Boundary </english>
+</con>
+<con id='472'>
+<arabic> الأوثان </arabic>
+<english> status </english>
+</con>
+<con id='473'>
+<arabic> ادعاء أن الملائكة إناث </arabic>
+<english> claiming that angels and female </english>
+</con>
+<con id='474'>
+<arabic> اللذين يعملون السيئات </arabic>
+<english> those who commit sins </english>
+</con>
+<con id='475'>
+<arabic> قوم نوح وعاد وثمود </arabic>
+<english> Peoples of Noah and Aad and Thamud </english>
+</con>
+<con id='476'>
+<arabic> شاعر </arabic>
+<english> poet </english>
+</con>
+<con id='477'>
+<arabic> مصعد إلى السماء </arabic>
+<english> stairway to heaven </english>
+</con>
+<con id='478'>
+<arabic> ضيف إبراهيم من الملائكة </arabic>
+<english> guests of Abraham among angels </english>
+</con>
+<con id='479'>
+<arabic> عجل سمين </arabic>
+<english> a fat calf </english>
+</con>
+<con id='480'>
+<arabic> سارة امرأة إبراهيم </arabic>
+<english> Sarah the wife of Abraham </english>
+</con>
+<con id='481'>
+<arabic> قرية قوم لوط </arabic>
+<english> cities of the people of Lot </english>
+</con>
+<con id='482'>
+<arabic> التكذيب بالرسل </arabic>
+<english> denying prophets </english>
+</con>
+<con id='483'>
+<arabic> أوصياء اليتيم </arabic>
+<english> guardians of the orphan </english>
+</con>
+<con id='484'>
+<arabic> أكل مال اليتيم </arabic>
+<english> eating up orphan's money </english>
+</con>
+<con id='485'>
+<arabic> المهر </arabic>
+<english> bridal gift </english>
+</con>
+<con id='486'>
+<arabic> النساء والصبيان </arabic>
+<english> women and children </english>
+</con>
+<con id='487'>
+<arabic> مال اليتيم </arabic>
+<english> orphan's property </english>
+</con>
+<con id='488'>
+<arabic> الميراث </arabic>
+<english> the inheritance </english>
+</con>
+<con id='489'>
+<arabic> الأقرباء والأيتام والمساكين </arabic>
+<english> relatives, orphans and the poor </english>
+</con>
+<con id='490'>
+<arabic> اللذين يأكلون أموال اليتامى </arabic>
+<english> those who eat up the money of the orphan </english>
+</con>
+<con id='491'>
+<arabic> ورثة </arabic>
+<english> heirs </english>
+</con>
+<con id='492'>
+<arabic> الميت </arabic>
+<english> the dead </english>
+</con>
+<con id='494'>
+<arabic> الرجل الذي يموت وليس له والد ولا ولد </arabic>
+<english> those who die without leaving behind parents or children </english>
+</con>
+<con id='495'>
+<arabic> الأخ أو الأخت </arabic>
+<english> brother or sister </english>
+</con>
+<con id='496'>
+<arabic> من يطع الله والرسول </arabic>
+<english> those who obey Allah and His messenger </english>
+</con>
+<con id='497'>
+<arabic> الزوجة الزانية </arabic>
+<english> wife who commit illegal sex </english>
+</con>
+<con id='498'>
+<arabic> الشهود </arabic>
+<english> witness </english>
+</con>
+<con id='499'>
+<arabic> الزناة </arabic>
+<english> those who commit illegal sex </english>
+</con>
+<con id='500'>
+<arabic> الزنى </arabic>
+<english> illegal sex </english>
+</con>
+<con id='501'>
+<arabic> نكاح زوجة الأب </arabic>
+<english> getting married to father's wife </english>
+</con>
+<con id='502'>
+<arabic> الأم المرضعة </arabic>
+<english> milk mother </english>
+</con>
+<con id='503'>
+<arabic> ملك اليمين من المؤمنات </arabic>
+<english> believing slave girls </english>
+</con>
+<con id='504'>
+<arabic> الذي يقتل نفسه </arabic>
+<english> he who commits suicide </english>
+</con>
+<con id='505'>
+<arabic> كبائر الذنوب </arabic>
+<english> major sins </english>
+</con>
+<con id='506'>
+<arabic> رجال </arabic>
+<english> men </english>
+</con>
+<con id='507'>
+<arabic> نساء </arabic>
+<english> women </english>
+</con>
+<con id='508'>
+<arabic> المتحالفين </arabic>
+<english> those who are bound by oath </english>
+</con>
+<con id='509'>
+<arabic> حكمان للإصلاح بين الزوجين </arabic>
+<english> arbitrator to reconcile between conflicting couples </english>
+</con>
+<con id='510'>
+<arabic> البخلاء والمرائين </arabic>
+<english> the stingy and those who show off </english>
+</con>
+<con id='511'>
+<arabic> حسنة </arabic>
+<english> good deed </english>
+</con>
+<con id='512'>
+<arabic> الذي يزكي نفسه </arabic>
+<english> who claims himself to be pure </english>
+</con>
+<con id='513'>
+<arabic> اللذين يفترون على الله الكذب </arabic>
+<english> those who invent about Allah untruth </english>
+</con>
+<con id='514'>
+<arabic> من لعنه الله </arabic>
+<english> who is been cursed by Allah </english>
+</con>
+<con id='515'>
+<arabic> جلد </arabic>
+<english> skin </english>
+</con>
+<con id='516'>
+<arabic> الأمانات </arabic>
+<english> trusts </english>
+</con>
+<con id='517'>
+<arabic> الأمر المتنازع فيه </arabic>
+<english> matter of dispute </english>
+</con>
+<con id='518'>
+<arabic> القتل أو الخروج </arabic>
+<english> killing or leaving home </english>
+</con>
+<con id='519'>
+<arabic> المستضعفين </arabic>
+<english> the weak </english>
+</con>
+<con id='520'>
+<arabic> نبأ الأمن أو الخوف </arabic>
+<english> news of security or fear </english>
+</con>
+<con id='521'>
+<arabic> أولو الأمر </arabic>
+<english> people of authority </english>
+</con>
+<con id='522'>
+<arabic> من يشفع شفاعة حسنة </arabic>
+<english> who intercedes for good cause </english>
+</con>
+<con id='523'>
+<arabic> من يشفع شفاعة سيئة </arabic>
+<english> who intercedes for bad cause </english>
+</con>
+<con id='524'>
+<arabic> شفاعة حسنة </arabic>
+<english> good intercession  </english>
+</con>
+<con id='525'>
+<arabic> شفاعة سيئة </arabic>
+<english> bad intercession </english>
+</con>
+<con id='526'>
+<arabic> من يضلل الله </arabic>
+<english> whom Allah sends astray </english>
+</con>
+<con id='527'>
+<arabic> أهل ذمة </arabic>
+<english> people of protection </english>
+</con>
+<con id='528'>
+<arabic> من أظهر علامات الإسلام </arabic>
+<english> who shows signs of Islam </english>
+</con>
+<con id='529'>
+<arabic> المخلصين </arabic>
+<english> who are sincere </english>
+</con>
+<con id='530'>
+<arabic> المخالف لأمر الرسول </arabic>
+<english> who opposes the Prophet </english>
+</con>
+<con id='531'>
+<arabic> الغني  أو الفقير </arabic>
+<english> rich or poor </english>
+</con>
+<con id='532'>
+<arabic> الإستهزاء بالإسلام </arabic>
+<english> ridicule Islam </english>
+</con>
+<con id='533'>
+<arabic> المسلمين والكافرين </arabic>
+<english> Muslims and disbelievers </english>
+</con>
+<con id='534'>
+<arabic> الله والرسول </arabic>
+<english> Allah and His messenger </english>
+</con>
+<con id='535'>
+<arabic> الربا </arabic>
+<english> usury </english>
+</con>
+<con id='536'>
+<arabic> كلمة الله </arabic>
+<english> the word of Allah </english>
+</con>
+<con id='537'>
+<arabic> المستكبرين </arabic>
+<english> the arrogant </english>
+</con>
+<con id='538'>
+<arabic> الأخت </arabic>
+<english> sister </english>
+</con>
+<con id='539'>
+<arabic> الأخ </arabic>
+<english> brother </english>
+</con>
+<con id='540'>
+<arabic> القرين من الملائكة </arabic>
+<english> companion of man among the angels </english>
+</con>
+<con id='541'>
+<arabic> الملكان: سائق وشهيد </arabic>
+<english> the two angels: driver and witness </english>
+</con>
+<con id='542'>
+<arabic> القرين من الشيطان </arabic>
+<english> companion among Satan </english>
+</con>
+<con id='543'>
+<arabic> الأعراب </arabic>
+<english> Bedouins </english>
+</con>
+<con id='544'>
+<arabic> الإيمان </arabic>
+<english> Faith </english>
+</con>
+<con id='545'>
+<arabic> المقتتلين من المؤمنين </arabic>
+<english> factions among believers who fight each other </english>
+</con>
+<con id='546'>
+<arabic> مؤمنات </arabic>
+<english> believing women </english>
+</con>
+<con id='547'>
+<arabic> أكل لحم الأخ </arabic>
+<english> eating the flesh of ones own brother </english>
+</con>
+<con id='548'>
+<arabic> المبايعين في الحديبية </arabic>
+<english> those who pledged allegiance in Hudaibiah </english>
+</con>
+<con id='549'>
+<arabic> الموفون بعهد الله </arabic>
+<english> who fulfills the pledge of Allah  </english>
+</con>
+<con id='550'>
+<arabic> الناقضين لعهد الله </arabic>
+<english> who denies the pledge of Allah </english>
+</con>
+<con id='551'>
+<arabic> غنيمة </arabic>
+<english> war booty </english>
+</con>
+<con id='552'>
+<arabic> المعرضين عن الله </arabic>
+<english> who turns away from Allah </english>
+</con>
+<con id='553'>
+<arabic> المستضعفين من المسلمين في مكة </arabic>
+<english> the weak amongst Muslims in Makkah </english>
+</con>
+<con id='554'>
+<arabic> كلمة التوحيد </arabic>
+<english> testimony of monotheism </english>
+</con>
+<con id='555'>
+<arabic> الحرب </arabic>
+<english> war </english>
+</con>
+<con id='556'>
+<arabic> لبن الجنة </arabic>
+<english> milk of paradise </english>
+</con>
+<con id='557'>
+<arabic> متاع الدنيا </arabic>
+<english> luxury of the world </english>
+</con>
+<con id='558'>
+<arabic> هود </arabic>
+<english> the Prophet Hud </english>
+</con>
+<con id='559'>
+<arabic> الموقنين </arabic>
+<english> those who are certain </english>
+</con>
+<con id='560'>
+<arabic> المستهزئين </arabic>
+<english> those who ridicule Islam </english>
+</con>
+<con id='561'>
+<arabic> البحر </arabic>
+<english> sea </english>
+</con>
+<con id='562'>
+<arabic> قوم يتفكرون </arabic>
+<english> those who think </english>
+</con>
+<con id='563'>
+<arabic> أصناف المخلوقات </arabic>
+<english> classes of all creatures </english>
+</con>
+<con id='564'>
+<arabic> المركوب من الفلك والأنعام </arabic>
+<english> riding objects from ship and animal </english>
+</con>
+<con id='565'>
+<arabic> المترفين </arabic>
+<english> the affluent </english>
+</con>
+<con id='566'>
+<arabic> سلالم </arabic>
+<english> stairs </english>
+</con>
+<con id='567'>
+<arabic> سرر </arabic>
+<english> beds </english>
+</con>
+<con id='568'>
+<arabic> الأصدقاء </arabic>
+<english> close friends </english>
+</con>
+<con id='569'>
+<arabic> سفن </arabic>
+<english> ships </english>
+</con>
+<con id='570'>
+<arabic> المتجاوز عن هفوات الآخرين </arabic>
+<english> those who forgive others </english>
+</con>
+<con id='571'>
+<arabic> عاد وثمود </arabic>
+<english> people of Aad and Thamud </english>
+</con>
+<con id='572'>
+<arabic> خصال حميدة </arabic>
+<english> good behavior  </english>
+</con>
+<con id='573'>
+<arabic> الشمس والقمر </arabic>
+<english> sun and moon </english>
+</con>
+<con id='574'>
+<arabic> الباطل </arabic>
+<english> falsehood </english>
+</con>
+<con id='575'>
+<arabic> العرش </arabic>
+<english> the Throne of Allah </english>
+</con>
+<con id='576'>
+<arabic> حملة العرش من الملائكة </arabic>
+<english> those who carry the Throne of Allah among the angels </english>
+</con>
+<con id='577'>
+<arabic> فرعون وهامان وقارون </arabic>
+<english> Pharaoh, Haman and Qaroon </english>
+</con>
+<con id='578'>
+<arabic> رجل مؤمن من آل فرعون </arabic>
+<english> a believing man from the folk of Pharaoh </english>
+</con>
+<con id='579'>
+<arabic> يوسف </arabic>
+<english> Joseph </english>
+</con>
+<con id='580'>
+<arabic> المرتاب في أمر الله </arabic>
+<english> who has doubt in the religion </english>
+</con>
+<con id='581'>
+<arabic> المسرفين </arabic>
+<english> transgressors </english>
+</con>
+<con id='582'>
+<arabic> اللذين يجادلون في آيات الله </arabic>
+<english> those who dispute concerning the signs of Allah </english>
+</con>
+<con id='583'>
+<arabic> النبوة </arabic>
+<english> prophethood </english>
+</con>
+<con id='584'>
+<arabic> الأنعام </arabic>
+<english> riding animals </english>
+</con>
+<con id='585'>
+<arabic> المؤمنين والكفار </arabic>
+<english> Believers and disbelievers </english>
+</con>
+<con id='586'>
+<arabic> شكر نعم الله </arabic>
+<english> being thankful to Allah </english>
+</con>
+<con id='587'>
+<arabic> دعاء الله </arabic>
+<english> supplication to Allah </english>
+</con>
+<con id='588'>
+<arabic> جاهل </arabic>
+<english> ignorant </english>
+</con>
+<con id='589'>
+<arabic> غرف الجنة </arabic>
+<english> chambers of the Paradise </english>
+</con>
+<con id='590'>
+<arabic> العبد المملوك لشركاء عدة </arabic>
+<english> a slave having many masters </english>
+</con>
+<con id='591'>
+<arabic> العبد المملوك لشركاء كثيرين والعبد المملوك لشخص واحد </arabic>
+<english> a slave having many masters and a slave having one master </english>
+</con>
+<con id='592'>
+<arabic> الصدق </arabic>
+<english> the truth </english>
+</con>
+<con id='593'>
+<arabic> من يهد الله </arabic>
+<english> those who are guided by Allah </english>
+</con>
+<con id='594'>
+<arabic> كل ما على الأرض من أموال </arabic>
+<english> all the wealth of this earth </english>
+</con>
+<con id='595'>
+<arabic> نسبة نعم الله إلى النفس </arabic>
+<english> attributing bounties of Allah to the self </english>
+</con>
+<con id='596'>
+<arabic> الصور </arabic>
+<english> Horn </english>
+</con>
+<con id='597'>
+<arabic> المتخاصمان عند داود </arabic>
+<english> the two disputing parties in the court of David </english>
+</con>
+<con id='598'>
+<arabic> الخصم الذي له نعجة واحدة في قصة داود </arabic>
+<english> the brother who has one sheep in the story of David </english>
+</con>
+<con id='599'>
+<arabic> الخصم الذي له 99 نعجة </arabic>
+<english> the brother who has 99 sheep in the story of David </english>
+</con>
+<con id='600'>
+<arabic> نعجة </arabic>
+<english> sheep </english>
+</con>
+<con id='601'>
+<arabic> شركاء </arabic>
+<english> company </english>
+</con>
+<con id='602'>
+<arabic> سليمان </arabic>
+<english> Prophet Solomon </english>
+</con>
+<con id='603'>
+<arabic> جنود سليمان </arabic>
+<english> army of Solomon </english>
+</con>
+<con id='604'>
+<arabic> أيوب </arabic>
+<english> Prophet Ayoub </english>
+</con>
+<con id='605'>
+<arabic> أهل أيوب </arabic>
+<english> Family of Ayoub </english>
+</con>
+<con id='606'>
+<arabic> حزمة من الشجر </arabic>
+<english> bunch of grass </english>
+</con>
+<con id='607'>
+<arabic> الأتباع من أهل النار </arabic>
+<english> those who were followers of the tyrants </english>
+</con>
+<con id='608'>
+<arabic> إبليس </arabic>
+<english> Iblis </english>
+</con>
+<con id='609'>
+<arabic> المتبوعين من الطاغين </arabic>
+<english> those who are followed among the tyrants </english>
+</con>
+<con id='610'>
+<arabic> إسماعيل </arabic>
+<english> Ishmael </english>
+</con>
+<con id='611'>
+<arabic> إبراهيم وإسحاق </arabic>
+<english> Abraham and Isaac </english>
+</con>
+<con id='612'>
+<arabic> موسى و هارون </arabic>
+<english> Moses and Aaron </english>
+</con>
+<con id='613'>
+<arabic> إلياس </arabic>
+<english> Elias </english>
+</con>
+<con id='614'>
+<arabic> قوم إلياس </arabic>
+<english> the people of Elias </english>
+</con>
+<con id='615'>
+<arabic> حوت </arabic>
+<english> fish </english>
+</con>
+<con id='616'>
+<arabic> قوم يونس </arabic>
+<english> people of Jonah </english>
+</con>
+<con id='617'>
+<arabic> أغلال </arabic>
+<english> shackles </english>
+</con>
+<con id='618'>
+<arabic> القرية في سورة يس </arabic>
+<english> the town in sura Yasin </english>
+</con>
+<con id='619'>
+<arabic> أصحاب القرية في سورة يس </arabic>
+<english> the people of the town in sura Yasin </english>
+</con>
+<con id='620'>
+<arabic> الرسل اللذين أرسلوا لأصحاب القرية في سورة يس </arabic>
+<english> the messengers who were sent to the people of the town in sura yasin </english>
+</con>
+<con id='621'>
+<arabic> حبيب النجار </arabic>
+<english> Habib the carpenter </english>
+</con>
+<con id='622'>
+<arabic> آلهة من دون الله </arabic>
+<english> gods beside Allah </english>
+</con>
+<con id='623'>
+<arabic> أزواج المخلوقات </arabic>
+<english> pairs of creation </english>
+</con>
+<con id='624'>
+<arabic> القمر </arabic>
+<english> moon </english>
+</con>
+<con id='625'>
+<arabic> الكبير في السن </arabic>
+<english> old aged </english>
+</con>
+<con id='626'>
+<arabic> سحاب </arabic>
+<english> cloud </english>
+</con>
+<con id='627'>
+<arabic> مكر الكافرين </arabic>
+<english> plotting of the disbelievers </english>
+</con>
+<con id='628'>
+<arabic> الماء العذب </arabic>
+<english> sweet water </english>
+</con>
+<con id='629'>
+<arabic> حلي </arabic>
+<english> ornaments </english>
+</con>
+<con id='630'>
+<arabic> دابة </arabic>
+<english> moving animals </english>
+</con>
+<con id='631'>
+<arabic> ماكرين </arabic>
+<english> plotters </english>
+</con>
+<con id='632'>
+<arabic> قوم سبأ </arabic>
+<english> tribe of Sheba </english>
+</con>
+<con id='633'>
+<arabic> بلاد الشام </arabic>
+<english> the area of Shaam (Syria) </english>
+</con>
+<con id='634'>
+<arabic> أجر </arabic>
+<english> payment </english>
+</con>
+<con id='635'>
+<arabic> أدعياء </arabic>
+<english> adopted son </english>
+</con>
+<con id='636'>
+<arabic> خطأ </arabic>
+<english> mistake </english>
+</con>
+<con id='637'>
+<arabic> قرابة الرحم </arabic>
+<english> blood relatives </english>
+</con>
+<con id='638'>
+<arabic> الصادقين </arabic>
+<english> the truthful </english>
+</con>
+<con id='639'>
+<arabic> جيش الأحزاب </arabic>
+<english> Army of Ahzab </english>
+</con>
+<con id='640'>
+<arabic> أهل المدينة </arabic>
+<english> people of Medina </english>
+</con>
+<con id='641'>
+<arabic> المدينة </arabic>
+<english> Medina </english>
+</con>
+<con id='642'>
+<arabic> يهود بنو قريظة </arabic>
+<english> jews of banu Quraidha </english>
+</con>
+<con id='643'>
+<arabic> أهل بيت النبي </arabic>
+<english> Inhabitants of the Prophet's house </english>
+</con>
+<con id='644'>
+<arabic> زيد رضي الله عنه </arabic>
+<english> Zaid (the companion) </english>
+</con>
+<con id='645'>
+<arabic> زينب بنت جحش </arabic>
+<english> Zainab bint Zahsh </english>
+</con>
+<con id='646'>
+<arabic> الكافرين و المنافقين </arabic>
+<english>  </english>
+</con>
+<con id='647'>
+<arabic> عدة الطلاق </arabic>
+<english> period between divorce </english>
+</con>
+<con id='648'>
+<arabic> بنات اخوال و أعمام النبي </arabic>
+<english> Prophet Muhammad's cousine </english>
+</con>
+<con id='649'>
+<arabic> الله والملائكة </arabic>
+<english> Allah and Angels </english>
+</con>
+<con id='650'>
+<arabic> اللذين يؤذون الله ورسوله والمؤمنين </arabic>
+<english> those who harm Allah, his Prophet and the believers </english>
+</con>
+<con id='651'>
+<arabic> السموات والأرض والجبال </arabic>
+<english> skies, earth and mountains </english>
+</con>
+<con id='652'>
+<arabic> يوم من أيام الله </arabic>
+<english> day of Allah </english>
+</con>
+<con id='653'>
+<arabic> أئمة الهدى </arabic>
+<english> Leaders for guidance </english>
+</con>
+<con id='654'>
+<arabic> لقمان </arabic>
+<english> Luqman </english>
+</con>
+<con id='655'>
+<arabic> ابن لقمان </arabic>
+<english> son of Luqman </english>
+</con>
+<con id='656'>
+<arabic> حبة خردل </arabic>
+<english> mustard seed </english>
+</con>
+<con id='657'>
+<arabic> الابن </arabic>
+<english> son </english>
+</con>
+<con id='658'>
+<arabic> الروم </arabic>
+<english> Romans </english>
+</con>
+<con id='659'>
+<arabic> الشركاء من دون الله </arabic>
+<english> partners other than Allah </english>
+</con>
+<con id='660'>
+<arabic> إعادة الخلق بعد الموت </arabic>
+<english> re-creation after death </english>
+</con>
+<con id='661'>
+<arabic> العبد المملوك </arabic>
+<english> slaves </english>
+</con>
+<con id='662'>
+<arabic> فطرة الله </arabic>
+<english> divine instinct </english>
+</con>
+<con id='663'>
+<arabic> سلطان وبرهان </arabic>
+<english> proofs </english>
+</con>
+<con id='664'>
+<arabic> نعم الله </arabic>
+<english> bounties of Allah </english>
+</con>
+<con id='665'>
+<arabic> عمل قوم لوط </arabic>
+<english> sodomy </english>
+</con>
+<con id='666'>
+<arabic> مدين قوم شعيب </arabic>
+<english> Madyan the people of Shuaib </english>
+</con>
+<con id='667'>
+<arabic> شعيب </arabic>
+<english> Prophet Shuaib </english>
+</con>
+<con id='668'>
+<arabic> قارون </arabic>
+<english> Qaroun </english>
+</con>
+<con id='669'>
+<arabic> الأمثال القرآنية </arabic>
+<english> Quranic parables </english>
+</con>
+<con id='670'>
+<arabic> العلماء </arabic>
+<english> scholars </english>
+</con>
+<con id='671'>
+<arabic> فرعون وهامان </arabic>
+<english> Pharaoh and Haman  </english>
+</con>
+<con id='672'>
+<arabic> أم موسى </arabic>
+<english> mother of Moses </english>
+</con>
+<con id='673'>
+<arabic> جنود فرعون </arabic>
+<english> army of Pharaoh  </english>
+</con>
+<con id='674'>
+<arabic> أخت موسى </arabic>
+<english> sister of Moses </english>
+</con>
+<con id='675'>
+<arabic> مدينة فرعون </arabic>
+<english> city of Pharaoh  </english>
+</con>
+<con id='676'>
+<arabic> الرجلان المقتتلان  القبطي وبني إسرائيل </arabic>
+<english> the two persons who fought: Israelite and coptic </english>
+</con>
+<con id='677'>
+<arabic> القبطي في قصة الرجلان المقتتلان </arabic>
+<english> the Coptic in the story of the two fighting people </english>
+</con>
+<con id='678'>
+<arabic> الرجل الذي من شيعة موسى في قصة الرجلان المقتتلان </arabic>
+<english> the person from Moses's tribe in the story of the two fighting persons </english>
+</con>
+<con id='679'>
+<arabic> موسى والرجل الذي من شيعته في قصة الرجلان المقتتلان </arabic>
+<english> Moses and the person from his tribe in the story of the two fighting persons </english>
+</con>
+<con id='680'>
+<arabic> الرجل الذي حذر موسى من مؤامرة قتله </arabic>
+<english> the man who warned Moses about the conspiracy to kill him </english>
+</con>
+<con id='681'>
+<arabic> ماء مدين </arabic>
+<english> waters of the city of Madyan </english>
+</con>
+<con id='682'>
+<arabic> المرأتان في قصة ماء مدين مع موسى </arabic>
+<english> the two ladies in the story of Maydan and Moses </english>
+</con>
+<con id='683'>
+<arabic> أحد المرأتان في قصة موسى في ماء مدين </arabic>
+<english> one of the two ladies in the story of Moses in Madyan </english>
+</con>
+<con id='684'>
+<arabic> والد المرأتان في قصة موسى في مدين </arabic>
+<english> the father of the two ladies in the story of Moses in Madyan </english>
+</con>
+<con id='685'>
+<arabic> أهل موسى </arabic>
+<english> wife of Moses </english>
+</con>
+<con id='686'>
+<arabic> هارون </arabic>
+<english> Aron brother of Moses </english>
+</con>
+<con id='687'>
+<arabic> أهل مدين </arabic>
+<english> people of Madyan </english>
+</con>
+<con id='688'>
+<arabic> القرآن والتوراة </arabic>
+<english> Quran and Torah </english>
+</con>
+<con id='689'>
+<arabic> ثواب الله </arabic>
+<english> reward of Allah </english>
+</con>
+<con id='690'>
+<arabic> داود وسليمان </arabic>
+<english> David and Solomon </english>
+</con>
+<con id='691'>
+<arabic> النمل </arabic>
+<english> ants </english>
+</con>
+<con id='692'>
+<arabic> الهدهد </arabic>
+<english> hoopoe </english>
+</con>
+<con id='693'>
+<arabic> بلقيس ملكة سبأ </arabic>
+<english> Bilquees the Queen of Sheba </english>
+</con>
+<con id='694'>
+<arabic> كتاب سليمان إلى بلقيس </arabic>
+<english> the letter of Solomon to Bilquees </english>
+</con>
+<con id='695'>
+<arabic> الملوك </arabic>
+<english> kings </english>
+</con>
+<con id='696'>
+<arabic> عفريت من الجن </arabic>
+<english> a powerful jinn </english>
+</con>
+<con id='697'>
+<arabic> عرش بلقيس </arabic>
+<english> throne of Bilquees </english>
+</con>
+<con id='698'>
+<arabic> الذي عنده علم من الكتاب </arabic>
+<english> the man who had knowledge from the Book </english>
+</con>
+<con id='699'>
+<arabic> الشاكرين </arabic>
+<english> those who are thankful to Allah </english>
+</con>
+<con id='700'>
+<arabic> القصر </arabic>
+<english> palace </english>
+</con>
+<con id='701'>
+<arabic> التسعة الرهط من ثمود </arabic>
+<english> the nine family heads of Thamoud </english>
+</con>
+<con id='702'>
+<arabic> امرأة لوط </arabic>
+<english> wife of Lot </english>
+</con>
+<con id='703'>
+<arabic> الأصم </arabic>
+<english> the deaf </english>
+</con>
+<con id='704'>
+<arabic> الأعمى </arabic>
+<english> the blind </english>
+</con>
+<con id='705'>
+<arabic> قتل موسى للقبطي </arabic>
+<english> Moses killing a Coptic person  </english>
+</con>
+<con id='706'>
+<arabic> تربية مفرعون لموسى في صغره </arabic>
+<english> Pharaoh upbringing Moses at his childhood </english>
+</con>
+<con id='707'>
+<arabic> المشرق والمغرب </arabic>
+<english> East and West </english>
+</con>
+<con id='708'>
+<arabic> معجزات موسى </arabic>
+<english> Miracles of Moses </english>
+</con>
+<con id='709'>
+<arabic> يد موسى </arabic>
+<english> hands of Moses </english>
+</con>
+<con id='710'>
+<arabic> سحرة فرعون </arabic>
+<english> the magicians of Pharaoh  </english>
+</con>
+<con id='711'>
+<arabic> أرض مصر </arabic>
+<english> the land of Egypt </english>
+</con>
+<con id='712'>
+<arabic> تبليغ الرسالة </arabic>
+<english> conveying the Message </english>
+</con>
+<con id='713'>
+<arabic> المستضعفين من المؤمنين من قوم نوح </arabic>
+<english> the weak believers among the people of Noah </english>
+</con>
+<con id='714'>
+<arabic> عذاب يوم الظلة </arabic>
+<english> punishment of the day of black cloud </english>
+</con>
+<con id='715'>
+<arabic> جحود القرآن </arabic>
+<english> denying of Quran </english>
+</con>
+<con id='716'>
+<arabic> كاهن </arabic>
+<english> sinful liar </english>
+</con>
+<con id='717'>
+<arabic> إختلاق القرآن </arabic>
+<english> claiming to author the Quran </english>
+</con>
+<con id='718'>
+<arabic> أساطير الأولين </arabic>
+<english> legends of the past </english>
+</con>
+<con id='719'>
+<arabic> أعمال البر من الكافر </arabic>
+<english> good deeds of a disbeliever </english>
+</con>
+<con id='720'>
+<arabic> الذي يطيه هواه </arabic>
+<english> those who follow their desires </english>
+</con>
+<con id='721'>
+<arabic> الظل </arabic>
+<english> shadow </english>
+</con>
+<con id='722'>
+<arabic> سورة نور </arabic>
+<english> chapter 24 the light </english>
+</con>
+<con id='723'>
+<arabic> الزانية والزاني </arabic>
+<english> man or woman who commit illegal sexual intercourse </english>
+</con>
+<con id='724'>
+<arabic> زانية </arabic>
+<english> woman who commit illegal sexual intercourse </english>
+</con>
+<con id='725'>
+<arabic> قاذف المحصنات </arabic>
+<english> those who accuse chaste women </english>
+</con>
+<con id='726'>
+<arabic> أصحاب الإفك على عائشة </arabic>
+<english> those who accused Ayesha of adultery  </english>
+</con>
+<con id='727'>
+<arabic> الإفك على عائشة </arabic>
+<english> accusation against Ayesha </english>
+</con>
+<con id='728'>
+<arabic> عبد الله بن أبي بن سلول رئيس المنافقين </arabic>
+<english> Abdullah ibn Ubai ibn Salool, the head of hypocrites </english>
+</con>
+<con id='729'>
+<arabic> اللذين يحبون شيوع الفاحشة في المسلمين </arabic>
+<english> those who like to spread immorality among the Muslims </english>
+</con>
+<con id='730'>
+<arabic> أهل السعة من المؤمنين </arabic>
+<english> the rich among the believers </english>
+</con>
+<con id='731'>
+<arabic> الخبيثون والخبيثات </arabic>
+<english> evil men and women </english>
+</con>
+<con id='732'>
+<arabic> الطيبين والطيبات </arabic>
+<english> good men and women </english>
+</con>
+<con id='733'>
+<arabic> الرجوع عند عدم الإذن </arabic>
+<english> return when permission was not granted </english>
+</con>
+<con id='734'>
+<arabic> زينة النساء </arabic>
+<english> beauty of women </english>
+</con>
+<con id='735'>
+<arabic> الأطفال </arabic>
+<english> children </english>
+</con>
+<con id='736'>
+<arabic> الراغب في الزواج للعفة </arabic>
+<english> who looks for marriage to chaste himself </english>
+</con>
+<con id='737'>
+<arabic> مشكاة </arabic>
+<english> a niche </english>
+</con>
+<con id='738'>
+<arabic> زجاجة </arabic>
+<english> glass </english>
+</con>
+<con id='739'>
+<arabic> شجرة الزيتون </arabic>
+<english> olive tree </english>
+</con>
+<con id='740'>
+<arabic> زيت الزيتون </arabic>
+<english> olive oil </english>
+</con>
+<con id='741'>
+<arabic> سراب </arabic>
+<english> mirage </english>
+</con>
+<con id='742'>
+<arabic> ظلمات </arabic>
+<english> darkness </english>
+</con>
+<con id='743'>
+<arabic> موج </arabic>
+<english> wave </english>
+</con>
+<con id='744'>
+<arabic> يد الإنسان </arabic>
+<english> human hand </english>
+</con>
+<con id='745'>
+<arabic> برد </arabic>
+<english> hail </english>
+</con>
+<con id='746'>
+<arabic> ملك اليمين والأطفال </arabic>
+<english> slaves and children </english>
+</con>
+<con id='747'>
+<arabic> أوقات العورة الثلاث </arabic>
+<english> three times of privacy </english>
+</con>
+<con id='748'>
+<arabic> العجائز من النساء </arabic>
+<english> old women </english>
+</con>
+<con id='749'>
+<arabic> فردوس </arabic>
+<english> the topmost paradise Ferdous </english>
+</con>
+<con id='750'>
+<arabic> أهل نوح </arabic>
+<english> family members of Noah </english>
+</con>
+<con id='751'>
+<arabic> عيسى وأمه </arabic>
+<english> Jesus and his mother </english>
+</con>
+<con id='752'>
+<arabic> طلب الكافر للرجوع للدنيا </arabic>
+<english> non-believer's request to return back to this world </english>
+</con>
+<con id='753'>
+<arabic> من ثقلت موازين حسناته </arabic>
+<english> those who's right deed's balance outweighs bad deeds </english>
+</con>
+<con id='754'>
+<arabic> من خفت موازين حسناته </arabic>
+<english> those who's bad deed's balance outweighs good deeds </english>
+</con>
+<con id='755'>
+<arabic> المرأة الحامل </arabic>
+<english> pregnant woman </english>
+</con>
+<con id='756'>
+<arabic> من يدخل في الإسلام على شك </arabic>
+<english> he who enters into Islam with doubt  </english>
+</con>
+<con id='757'>
+<arabic> خسارة </arabic>
+<english> loss </english>
+</con>
+<con id='758'>
+<arabic> دعاء غير الله </arabic>
+<english> supplicating to other than Allah </english>
+</con>
+<con id='759'>
+<arabic> أصحاب الأديان </arabic>
+<english> adherers of different religions </english>
+</con>
+<con id='760'>
+<arabic> من يهنه الله </arabic>
+<english> he who is humiliated by Allah </english>
+</con>
+<con id='761'>
+<arabic> الماء المتناهي في حره </arabic>
+<english> extremely hot water </english>
+</con>
+<con id='762'>
+<arabic> من يظلم في المسجد الحرام </arabic>
+<english> who commits oppression in the Haram  </english>
+</con>
+<con id='763'>
+<arabic> الحجاج </arabic>
+<english> pilgrims </english>
+</con>
+<con id='764'>
+<arabic> الضامر من الإبل </arabic>
+<english> lean camel </english>
+</con>
+<con id='765'>
+<arabic> تعظيم حرمات الله </arabic>
+<english> honoring sacred ordinances of Allah </english>
+</con>
+<con id='766'>
+<arabic> من يعظم حرمات الله </arabic>
+<english> those who honor sacred ordinances of Allah </english>
+</con>
+<con id='767'>
+<arabic> المخبتين </arabic>
+<english> the humble </english>
+</con>
+<con id='768'>
+<arabic> البدن </arabic>
+<english> sacrificial camel </english>
+</con>
+<con id='769'>
+<arabic> آذان </arabic>
+<english> ears </english>
+</con>
+<con id='770'>
+<arabic> العمى </arabic>
+<english> blindness </english>
+</con>
+<con id='771'>
+<arabic> قاسي القلب </arabic>
+<english> those with hard heart </english>
+</con>
+<con id='772'>
+<arabic> من عاقب بمثل ما عوقب به </arabic>
+<english> whoever responds [to injustice] with the equivalent </english>
+</con>
+<con id='773'>
+<arabic> شريعة ومنسك </arabic>
+<english> rites and rituals </english>
+</con>
+<con id='774'>
+<arabic> خلق ذبابة </arabic>
+<english> creation of a fly </english>
+</con>
+<con id='775'>
+<arabic> ما سلبه الذباب </arabic>
+<english> what a fly has taken </english>
+</con>
+<con id='776'>
+<arabic> الذباب </arabic>
+<english> fly (insect) </english>
+</con>
+<con id='777'>
+<arabic> كبير أصنام قوم إبراهيم </arabic>
+<english> the largest idol of the tribe of Abraham </english>
+</con>
+<con id='778'>
+<arabic> كسر الأصنام </arabic>
+<english> breaking statues </english>
+</con>
+<con id='779'>
+<arabic> العدل ومراعاة مصالح الأطراف </arabic>
+<english> justice and balancing the need of parties </english>
+</con>
+<con id='780'>
+<arabic> إسماعيل ودريس وذا الكفل </arabic>
+<english> Ishmael, Idris and Dhul Kifl </english>
+</con>
+<con id='781'>
+<arabic> زكريا وأهله وأولاده </arabic>
+<english> Zachariah and his son and wife </english>
+</con>
+<con id='782'>
+<arabic> يأجوج ومأجوج </arabic>
+<english> Gog and Magog </english>
+</con>
+<con id='783'>
+<arabic> تأخير العذاب </arabic>
+<english> delay of punishment </english>
+</con>
+<con id='784'>
+<arabic> موعد </arabic>
+<english> appointment  </english>
+</con>
+<con id='785'>
+<arabic> حبال وعصي </arabic>
+<english> ropes and sticks </english>
+</con>
+<con id='786'>
+<arabic> فرعون أو رب موسى </arabic>
+<english> Pharaoh or Lord of Moses </english>
+</con>
+<con id='787'>
+<arabic> حلي قوم فرعون </arabic>
+<english> ornaments of the people of Pharaoh </english>
+</con>
+<con id='788'>
+<arabic> عجل بني إسرائيل </arabic>
+<english> calf of the children of Israel </english>
+</con>
+<con id='789'>
+<arabic> المفتونين بالعجل من بني إسرائيل </arabic>
+<english> those who became enchanted by the calf among the children of Israel </english>
+</con>
+<con id='790'>
+<arabic> سامري </arabic>
+<english> Samiri </english>
+</con>
+<con id='791'>
+<arabic> تراب من أثر حافر فرس جبريل </arabic>
+<english> soil from the track of the horse of the angel Gabriel  </english>
+</con>
+<con id='792'>
+<arabic> المعرضين عن القرآن </arabic>
+<english> those who turn away from the Quran </english>
+</con>
+<con id='793'>
+<arabic> داعي الناس للموقف يوم القيامة </arabic>
+<english> the angel who assembles mankind on the day of resurrection </english>
+</con>
+<con id='794'>
+<arabic> الشافع يوم القيامة </arabic>
+<english> he who intercedes on the Day of Judgement  </english>
+</con>
+<con id='795'>
+<arabic> المشفوع له يوم القيامة </arabic>
+<english> he whom has been interceded for on the Day of Judgement  </english>
+</con>
+<con id='796'>
+<arabic> الشجرة التي أكل منها آدم وزوجته </arabic>
+<english> the tree from which Adam and Eve ate </english>
+</con>
+<con id='797'>
+<arabic> إرسال الرسل </arabic>
+<english> sending of Prophets </english>
+</con>
+<con id='798'>
+<arabic> يحي </arabic>
+<english> John </english>
+</con>
+<con id='799'>
+<arabic> خلق مولود من إمرأة عاقر ورجل عجوز </arabic>
+<english> creation of a child from a barren mother and old aged father </english>
+</con>
+<con id='800'>
+<arabic> قوم زكريا </arabic>
+<english> people of Zacharia </english>
+</con>
+<con id='801'>
+<arabic> أهل مريم </arabic>
+<english> family of Mary </english>
+</con>
+<con id='802'>
+<arabic> خلق مولود من غير أب </arabic>
+<english> creation of a child without father </english>
+</con>
+<con id='803'>
+<arabic> إدريس </arabic>
+<english> Prophet Idris </english>
+</con>
+<con id='804'>
+<arabic> المضيعين للصلوات ومتبعي الشهوات </arabic>
+<english> those who neglect of prayer and follow lusts </english>
+</con>
+<con id='805'>
+<arabic> منكروا البعث والشياطين </arabic>
+<english> the devils and those who deny the hereafter </english>
+</con>
+<con id='806'>
+<arabic> العاص بن وائل </arabic>
+<english> Al-aas ibn Wael </english>
+</con>
+<con id='807'>
+<arabic> إدعاء الولد لله </arabic>
+<english> assigning child to Allah </english>
+</con>
+<con id='808'>
+<arabic> أصحاب الكهف والرقيم </arabic>
+<english> people of the cave </english>
+</con>
+<con id='809'>
+<arabic> قوم أصحاب الكهف المشركين </arabic>
+<english> tribe of the people of the Cave </english>
+</con>
+<con id='810'>
+<arabic> الكهف في قصة أصحاب الكهف </arabic>
+<english> the Cave in the story of the people of cave </english>
+</con>
+<con id='811'>
+<arabic> كلب أصحاب الكهف </arabic>
+<english> the dog of the people of the Cave </english>
+</con>
+<con id='812'>
+<arabic> أهل مدينة أصحاب الكهف بعد قيامهم من النوم </arabic>
+<english> residence of the city of the people of the cave after their awakening </english>
+</con>
+<con id='813'>
+<arabic> الخائضون في أصحاب الكهف من أهل الكتاب </arabic>
+<english> those who debated about the number of the people of the cave among the people of the Scripture </english>
+</con>
+<con id='814'>
+<arabic> الغافلين </arabic>
+<english> the heedless </english>
+</con>
+<con id='815'>
+<arabic> الرجلان في قصة أصحاب الجنتين في الكهف </arabic>
+<english> the two men in the story of the people of the two Gardens in ch 18 </english>
+</con>
+<con id='816'>
+<arabic> الجنتان في قصة أصحاب الجنتين في سورة الكهف </arabic>
+<english> the two gardens in ch 18 </english>
+</con>
+<con id='817'>
+<arabic> المؤمن في قصة الجنتين في سورة الكهف </arabic>
+<english> the believer among the two in the story of Garden in ch 18 </english>
+</con>
+<con id='818'>
+<arabic> الكافر في قصة الجنتين في سورة الكهف </arabic>
+<english> the non-believer among the two in the story of Garden in ch 18 </english>
+</con>
+<con id='819'>
+<arabic> حديقة الكافر  في قصة الجنتين في الكهف </arabic>
+<english> garden of the non-believer in the story of gardens in ch 18 </english>
+</con>
+<con id='820'>
+<arabic> الناصر والمعين </arabic>
+<english> helper and supporter </english>
+</con>
+<con id='821'>
+<arabic> كتاب الأعمال </arabic>
+<english> book of records </english>
+</con>
+<con id='822'>
+<arabic> أية صغيرة أو كبيرة </arabic>
+<english> any small or major matter </english>
+</con>
+<con id='823'>
+<arabic> إبليس و ذريته </arabic>
+<english> Iblis and his offspring </english>
+</con>
+<con id='824'>
+<arabic> موسى وفتاه يوشع بن نون </arabic>
+<english> Moses and his servant </english>
+</con>
+<con id='825'>
+<arabic> البحران في قصة موسى مع الخضر </arabic>
+<english> the two seas in the story of Moses and Khidr in ch 18 </english>
+</con>
+<con id='826'>
+<arabic> الحوت في قصة موسى مع الخضر </arabic>
+<english> the fish in the story of Moses with Khidr </english>
+</con>
+<con id='827'>
+<arabic> يوشع فتى موسى </arabic>
+<english> Joshia the servant of Moses </english>
+</con>
+<con id='828'>
+<arabic> الخضر </arabic>
+<english> Khidr in ch 18 </english>
+</con>
+<con id='829'>
+<arabic> موسى والخضر </arabic>
+<english> Moses and Khidr </english>
+</con>
+<con id='830'>
+<arabic> السفينة التي خرقها الخضر </arabic>
+<english> the ship which Khidr has broken </english>
+</con>
+<con id='831'>
+<arabic> الغلام الذي قتله الخضر </arabic>
+<english> the boy whom Khidr killed </english>
+</con>
+<con id='832'>
+<arabic> القرية في قصة موسى مع الخضر </arabic>
+<english> the village in the story of Moses with Khidr in ch 18 </english>
+</con>
+<con id='833'>
+<arabic> الجدار الذي أقامه الخضر و موسى </arabic>
+<english> the wall which was mended by Khidr and Moses </english>
+</con>
+<con id='834'>
+<arabic> مساكين </arabic>
+<english> low income person </english>
+</con>
+<con id='835'>
+<arabic> أبوا الغلام الذي قتله الخضر </arabic>
+<english> parents of the child whom Khidr killed </english>
+</con>
+<con id='836'>
+<arabic> الغلامان اليتيمان في قضة موسى مع الخضر </arabic>
+<english> the two orphans in the story of Moses with Khidr in ch 18 </english>
+</con>
+<con id='837'>
+<arabic> ذو القرنين </arabic>
+<english> dhul Qarnain </english>
+</con>
+<con id='838'>
+<arabic> مغرب الشمس </arabic>
+<english> setting place of Sun </english>
+</con>
+<con id='839'>
+<arabic> القوم اللذين عند مغرب الشمس </arabic>
+<english> the people who lived at the place of sun set </english>
+</con>
+<con id='840'>
+<arabic> القوم اللذين عند مطلع الشمس </arabic>
+<english> people who live at the place of sun rising </english>
+</con>
+<con id='841'>
+<arabic> مكان ما بين الجبلين اللذين وصله ذو القرنين </arabic>
+<english> the place between two mountains where dhul-quarnain reached </english>
+</con>
+<con id='842'>
+<arabic> القوم الذين كانوا يقطنون ما بين السدين في قصة ذي القرنين </arabic>
+<english> the people who lived between the two mountains in the story of Dhul-Qarnain in ch 18 </english>
+</con>
+<con id='843'>
+<arabic> السد الذي بناه ذو القرنين </arabic>
+<english> the separating dam which was built by Dhul-Qarnain in ch 18 </english>
+</con>
+<con id='844'>
+<arabic> المسجد الأقصى </arabic>
+<english> Al-Aqsa Mosque </english>
+</con>
+<con id='845'>
+<arabic> إفساد بني إسرائيل مرتين في بيت المقدس </arabic>
+<english> the corruption of the children of Israel twice in Jerusalem </english>
+</con>
+<con id='846'>
+<arabic> أعداء بني إسرائيل </arabic>
+<english> enemy of the children of Israel </english>
+</con>
+<con id='847'>
+<arabic> المبذرين </arabic>
+<english> wasteful person </english>
+</con>
+<con id='848'>
+<arabic> الأقرباء والمساكين وابن السبيل </arabic>
+<english> relatives, needy and the traveler </english>
+</con>
+<con id='849'>
+<arabic> اليتيم </arabic>
+<english> the orphan </english>
+</con>
+<con id='850'>
+<arabic> السمع والبصر والفؤاد </arabic>
+<english> hearing, sight and mind </english>
+</con>
+<con id='851'>
+<arabic> المحرمات المذكورة في سورة الإسراء </arabic>
+<english> the prohibitions mentioned in ch 17 </english>
+</con>
+<con id='852'>
+<arabic> أعمى القلب </arabic>
+<english> blind hearted </english>
+</con>
+<con id='853'>
+<arabic> أجل الإنسان في الدنيا </arabic>
+<english> the lifespan of a person in this world </english>
+</con>
+<con id='854'>
+<arabic> بلد </arabic>
+<english> town </english>
+</con>
+<con id='855'>
+<arabic> الخيل والبغال والحمير </arabic>
+<english> horses, mules and donkeys </english>
+</con>
+<con id='856'>
+<arabic> سبيل </arabic>
+<english> way or path </english>
+</con>
+<con id='857'>
+<arabic> أهل التذكر </arabic>
+<english> those who remember </english>
+</con>
+<con id='858'>
+<arabic> اللذين لا يؤمنون بالآخرة </arabic>
+<english> those who do not believe in the hereafter </english>
+</con>
+<con id='859'>
+<arabic> المتخلفون عن الهجرة </arabic>
+<english> those staying behind from migration for the sake of allah </english>
+</con>
+<con id='860'>
+<arabic> الأشياء التي لها ظل </arabic>
+<english> things that has shadow </english>
+</con>
+<con id='861'>
+<arabic> أنثى </arabic>
+<english> female </english>
+</con>
+<con id='862'>
+<arabic> ثمرات النخيل والأعناب </arabic>
+<english> dates and grapes fruit </english>
+</con>
+<con id='863'>
+<arabic> النحل </arabic>
+<english> bee </english>
+</con>
+<con id='864'>
+<arabic> عسل </arabic>
+<english> honey </english>
+</con>
+<con id='865'>
+<arabic> السيد المالك لليمين </arabic>
+<english> master of slaves </english>
+</con>
+<con id='866'>
+<arabic> العبد امملوك وسيده </arabic>
+<english> the slave and his master </english>
+</con>
+<con id='867'>
+<arabic> الرجل الحر </arabic>
+<english> free man </english>
+</con>
+<con id='868'>
+<arabic> الرجل الحر والمملوك </arabic>
+<english> free man and slave </english>
+</con>
+<con id='869'>
+<arabic> رجل أبكم لا يقدر على شيئ وهو كل على مولاه </arabic>
+<english> dumb and unable to do a thing, while he is a burden to his guardian </english>
+</con>
+<con id='870'>
+<arabic> رجل سليم الحواس ذو نفع للآخرين </arabic>
+<english> healthy person beneficial to others </english>
+</con>
+<con id='872'>
+<arabic> رجلان </arabic>
+<english> two men </english>
+</con>
+<con id='873'>
+<arabic> جميع الأمم </arabic>
+<english> all nations </english>
+</con>
+<con id='874'>
+<arabic> الأيمان </arabic>
+<english> oaths </english>
+</con>
+<con id='875'>
+<arabic> الجماعة من الناس </arabic>
+<english> a group of people </english>
+</con>
+<con id='876'>
+<arabic> الوفاء بالعهود </arabic>
+<english> keeping oaths </english>
+</con>
+<con id='877'>
+<arabic> قدم </arabic>
+<english> foot </english>
+</con>
+<con id='878'>
+<arabic> لسان </arabic>
+<english> tongue  </english>
+</con>
+<con id='879'>
+<arabic> المكره على الكفر </arabic>
+<english> he who is forced to disbelieve </english>
+</con>
+<con id='880'>
+<arabic> التوبة </arabic>
+<english> repentance  </english>
+</con>
+<con id='881'>
+<arabic> يوم السبت </arabic>
+<english> Saturday </english>
+</con>
+<con id='882'>
+<arabic> الصبر </arabic>
+<english> patience </english>
+</con>
+<con id='883'>
+<arabic> الكفر بالله </arabic>
+<english> disbelief </english>
+</con>
+<con id='884'>
+<arabic> باب في السماء </arabic>
+<english> gate in the sky </english>
+</con>
+<con id='885'>
+<arabic> من هم تحت تصرف الرجل مثل الذرية والخدم والدواب </arabic>
+<english> the lord of dependents like children, servants and cattle  </english>
+</con>
+<con id='886'>
+<arabic> خزائن الأشياء </arabic>
+<english> depository of things </english>
+</con>
+<con id='887'>
+<arabic> مساكن قوم لوط وقوم شعيب </arabic>
+<english> dwellings of the people of Lot and the people of Shuaib  </english>
+</con>
+<con id='888'>
+<arabic> الذين يؤمنون ببعض الكتاب ويكفرون ببعض </arabic>
+<english> those who partially believe in Quran </english>
+</con>
+<con id='889'>
+<arabic> أقوام الرسل </arabic>
+<english> people of the messengers </english>
+</con>
+<con id='890'>
+<arabic> جبار عنيد </arabic>
+<english> obstinate tyrant </english>
+</con>
+<con id='891'>
+<arabic> ماء صديد </arabic>
+<english> purulent water </english>
+</con>
+<con id='892'>
+<arabic> رماد </arabic>
+<english> ash </english>
+</con>
+<con id='893'>
+<arabic> شجر الحنظل الخبيثة </arabic>
+<english> bad tree </english>
+</con>
+<con id='894'>
+<arabic> اللذين بدلوا نعمة الله كفرا </arabic>
+<english> those who exchanged favor of Allah with disbelief </english>
+</con>
+<con id='895'>
+<arabic> الأصنام </arabic>
+<english> idols </english>
+</con>
+<con id='896'>
+<arabic> أعمدة </arabic>
+<english> pillars </english>
+</con>
+<con id='897'>
+<arabic> الصواعق </arabic>
+<english> thunderbolts </english>
+</con>
+<con id='898'>
+<arabic> العطشان </arabic>
+<english> the thirsty person </english>
+</con>
+<con id='899'>
+<arabic> فم </arabic>
+<english> mouth </english>
+</con>
+<con id='900'>
+<arabic> أدوية </arabic>
+<english> valleys </english>
+</con>
+<con id='901'>
+<arabic> المعادن </arabic>
+<english> metals </english>
+</con>
+<con id='902'>
+<arabic> زبد السيل </arabic>
+<english> rising foam of water </english>
+</con>
+<con id='903'>
+<arabic> إخوة يوسف </arabic>
+<english> brothers of Joseph </english>
+</con>
+<con id='904'>
+<arabic> قتل أو إبعاد يوسف </arabic>
+<english> killing or deporting Joseph </english>
+</con>
+<con id='905'>
+<arabic> مسافرين </arabic>
+<english> travelers  </english>
+</con>
+<con id='906'>
+<arabic> وارد الماء للمسافرين </arabic>
+<english> the person who seeks water for travelers </english>
+</con>
+<con id='907'>
+<arabic> عزيز مصر </arabic>
+<english> vazir of Egypt </english>
+</con>
+<con id='908'>
+<arabic> امرأة عزيز مصر </arabic>
+<english> wife of the vazir of Egypt </english>
+</con>
+<con id='909'>
+<arabic> يوسف وامرأة العزيز </arabic>
+<english> Joseph and the wife of the vazir </english>
+</con>
+<con id='910'>
+<arabic> صاحبا السجن مع يوسف </arabic>
+<english> the two companions of Joseph inside the jail </english>
+</con>
+<con id='911'>
+<arabic> صاحب يوسف في السجن الذي نجا </arabic>
+<english> the jail companion of Joseph who was feed </english>
+</con>
+<con id='912'>
+<arabic> صاحب يوسف في السجن الذي صلب </arabic>
+<english> the jail companion of Joseph who was executed  </english>
+</con>
+<con id='913'>
+<arabic> خبز </arabic>
+<english> bread </english>
+</con>
+<con id='914'>
+<arabic> رؤيا </arabic>
+<english> dream </english>
+</con>
+<con id='915'>
+<arabic> ملك مصر زمن يوسف </arabic>
+<english> King of Egypt at the time of Joseph </english>
+</con>
+<con id='916'>
+<arabic> سبع  بقرات سمان </arabic>
+<english> 
+Seven fat cows </english>
+</con>
+<con id='917'>
+<arabic> جلساء الملك </arabic>
+<english> the companions of a King </english>
+</con>
+<con id='918'>
+<arabic> شعب مصر </arabic>
+<english> people of Egypt </english>
+</con>
+<con id='919'>
+<arabic> حصاد الزرع </arabic>
+<english> harvest of plants </english>
+</con>
+<con id='920'>
+<arabic> سبع سنوات الجدب في قصة يوسف </arabic>
+<english> seven drought years in the story of Joseph </english>
+</con>
+<con id='921'>
+<arabic> سنة خصب </arabic>
+<english> year of bountiful plantation  </english>
+</con>
+<con id='922'>
+<arabic> رسول الملك في قصة يوسف </arabic>
+<english> messenger of the King of Egypt in the story of Joseph </english>
+</con>
+<con id='923'>
+<arabic> بنيامين أخ يوسف </arabic>
+<english> Benjamin the brother of Joseph </english>
+</con>
+<con id='924'>
+<arabic> غلمان يوسف </arabic>
+<english> servants of Joseph </english>
+</con>
+<con id='925'>
+<arabic> ثمن الميرة التي أتى بها إخوة يوسف  </arabic>
+<english> merchandize brought by the brothers of Joseph  </english>
+</con>
+<con id='926'>
+<arabic> حرس ملك مصر في قصة يوسف </arabic>
+<english> guards of the King of Egypt in the story of Joseph </english>
+</con>
+<con id='927'>
+<arabic> مكيال ملك مصر في قصة يوسف </arabic>
+<english> Measure of the King in the story of Joseph </english>
+</con>
+<con id='928'>
+<arabic> حمل بعير من الطعام </arabic>
+<english> a camel load of food </english>
+</con>
+<con id='929'>
+<arabic> السارق </arabic>
+<english> thief  </english>
+</con>
+<con id='930'>
+<arabic> أكبر إخوة يوسف </arabic>
+<english> eldest among the brothers of Joseph </english>
+</con>
+<con id='931'>
+<arabic> قافلة </arabic>
+<english> caravan </english>
+</con>
+<con id='932'>
+<arabic> قميص يوسف </arabic>
+<english> shirt of Joseph </english>
+</con>
+<con id='933'>
+<arabic> الناجين مع نوح في السفينة </arabic>
+<english> those who were saved with Noah on the ark </english>
+</con>
+<con id='934'>
+<arabic> ابن نوح الهالك </arabic>
+<english> the son of Noah who was sank </english>
+</con>
+<con id='935'>
+<arabic> نوح و ابنه الهالك في الطوفان </arabic>
+<english> Noah and his drowned son </english>
+</con>
+<con id='936'>
+<arabic> هود والمؤمنين معه </arabic>
+<english> Prophet Hud and the believers saved with him </english>
+</con>
+<con id='937'>
+<arabic> نساء قوم لوط </arabic>
+<english> women of the tribe of Lot </english>
+</con>
+<con id='938'>
+<arabic> ديار الهالكين </arabic>
+<english> residence of those destroyed by punishment </english>
+</con>
+<con id='939'>
+<arabic> الأشقياء </arabic>
+<english> wretched </english>
+</con>
+<con id='940'>
+<arabic> السعداء </arabic>
+<english> prosperous </english>
+</con>
+<con id='941'>
+<arabic> أنباء الرسل </arabic>
+<english> stories of prophets </english>
+</con>
+<con id='942'>
+<arabic> المشركين وشركاؤهم </arabic>
+<english> idols and their worshipers   </english>
+</con>
+<con id='943'>
+<arabic> أعمال الإنسان </arabic>
+<english> deeds of a person </english>
+</con>
+<con id='944'>
+<arabic> أولياء الله </arabic>
+<english> allies of Allah </english>
+</con>
+<con id='945'>
+<arabic> البشرى في الدنيا والآخرة </arabic>
+<english> good tidings in the worldly life and in the Hereafter </english>
+</con>
+<con id='946'>
+<arabic> عمار المساجد </arabic>
+<english> the frequent visitors of mosques </english>
+</con>
+<con id='947'>
+<arabic> الأحبار والرهبان </arabic>
+<english> scholars and monks </english>
+</con>
+<con id='948'>
+<arabic> مانعي الزكاة وكانزي الأموال </arabic>
+<english> those who do not give alms and keep money </english>
+</con>
+<con id='949'>
+<arabic> الذهب والفضة </arabic>
+<english> gold and silver </english>
+</con>
+<con id='950'>
+<arabic> الشهور </arabic>
+<english> months </english>
+</con>
+<con id='951'>
+<arabic> النسيئ </arabic>
+<english> postponing of restriction within sacred months </english>
+</con>
+<con id='952'>
+<arabic> الرسول محمد وأبو بكر </arabic>
+<english> Prophet Muhammad and Abu Bakar </english>
+</con>
+<con id='953'>
+<arabic> الجهاد </arabic>
+<english> jihad </english>
+</con>
+<con id='954'>
+<arabic> الأموال والأولاد </arabic>
+<english> money and children </english>
+</con>
+<con id='955'>
+<arabic> النفق في الأرض </arabic>
+<english> tunnel </english>
+</con>
+<con id='956'>
+<arabic> زكاة المال </arabic>
+<english> zakat </english>
+</con>
+<con id='957'>
+<arabic> المعذرون من الأعراب </arabic>
+<english> those with excuses among the bedouins </english>
+</con>
+<con id='958'>
+<arabic> أهل الأعذار عن الجهاد </arabic>
+<english> those who are excused from Jihad </english>
+</con>
+<con id='959'>
+<arabic> المهاجرين والأنصار </arabic>
+<english> Muhajirin and Ansar </english>
+</con>
+<con id='960'>
+<arabic> التابعين للصحابة </arabic>
+<english> followers of compaanions of the Prophet </english>
+</con>
+<con id='961'>
+<arabic> الصحابة وتابعيهم </arabic>
+<english> companions and their followers </english>
+</con>
+<con id='962'>
+<arabic> الثلاثة اللذين خلفوا عن قبول التوبة </arabic>
+<english> the three who stayed behind Jihad but were forgiven </english>
+</con>
+<con id='963'>
+<arabic> مسجد الضرار </arabic>
+<english> the mosque which the hypocrite took for causing harm </english>
+</con>
+<con id='964'>
+<arabic> مسجد قباء </arabic>
+<english> Quba mosque </english>
+</con>
+<con id='965'>
+<arabic> العير أو النفير </arabic>
+<english> the caravan or the fight (battle of Badr) </english>
+</con>
+<con id='966'>
+<arabic> من يتولي في يوم الزحف </arabic>
+<english> who retreats from battle field </english>
+</con>
+<con id='967'>
+<arabic> الخبيث </arabic>
+<english> evil </english>
+</con>
+<con id='968'>
+<arabic> قوم </arabic>
+<english> tribe </english>
+</con>
+<con id='969'>
+<arabic> العدد والعدة في الجهاد </arabic>
+<english> power and steed of war </english>
+</con>
+<con id='970'>
+<arabic> السلم </arabic>
+<english> peace treaty </english>
+</con>
+<con id='971'>
+<arabic> أسرى الحرب </arabic>
+<english> war captives </english>
+</con>
+<con id='972'>
+<arabic> اللذين آمنوا ولم يهاجروا </arabic>
+<english> the believers who did not migrate </english>
+</con>
+<con id='973'>
+<arabic> مناصرة المسلمين </arabic>
+<english> supporting weak Muslims against oppression </english>
+</con>
+<con id='974'>
+<arabic> فاحشة </arabic>
+<english> immorality </english>
+</con>
+<con id='975'>
+<arabic> أصحاب الأعراف </arabic>
+<english> people of the elevation on the partition between Paradise and Hellfire </english>
+</con>
+<con id='976'>
+<arabic> الطعام والشراب </arabic>
+<english> food and drink </english>
+</con>
+<con id='977'>
+<arabic> الليل والنهار </arabic>
+<english> Day and Night </english>
+</con>
+<con id='978'>
+<arabic> البلد الطيب </arabic>
+<english> fertile land </english>
+</con>
+<con id='979'>
+<arabic> المستضعفين من المؤمنين من قوم صالح </arabic>
+<english> weak and oppressed believers from the tribe of Salih </english>
+</con>
+<con id='980'>
+<arabic> الرسل وأقوامهم </arabic>
+<english> prophets and their people </english>
+</con>
+<con id='981'>
+<arabic> المؤمنبن مع شعيب </arabic>
+<english> the believers with prophet Shuaib </english>
+</con>
+<con id='982'>
+<arabic> مكر </arabic>
+<english> plot </english>
+</con>
+<con id='983'>
+<arabic> مناجاة الله لموسى </arabic>
+<english> appointment of Allah with Moses </english>
+</con>
+<con id='984'>
+<arabic> الجبل الذي تجلي الله فيه لموسى </arabic>
+<english> the mountain on which Allah appeared to Moses </english>
+</con>
+<con id='985'>
+<arabic> سبيل الشيطان </arabic>
+<english> ways of Satan </english>
+</con>
+<con id='986'>
+<arabic> السبعين من بني اسرائيل اللذين اختارهم موسى </arabic>
+<english> the seventy among Israelite whom Moses chose  </english>
+</con>
+<con id='987'>
+<arabic> إبتلاء الله </arabic>
+<english> trials of Allah </english>
+</con>
+<con id='988'>
+<arabic> الحق </arabic>
+<english> truth </english>
+</con>
+<con id='989'>
+<arabic> الساكتين عن المنكر في قصة أصحاب السبت </arabic>
+<english> those who kept silent upon witnessing evil in the story of sabbath  </english>
+</con>
+<con id='990'>
+<arabic> المنكرين على المعتدين في السبت </arabic>
+<english> those who opposed those who violated Sabbath </english>
+</con>
+<con id='991'>
+<arabic> الإعتداء في السبت </arabic>
+<english> violating Sabbath </english>
+</con>
+<con id='992'>
+<arabic> أحبار اليهود السوء </arabic>
+<english> Jew Rabbis who do not follow Torah </english>
+</con>
+<con id='993'>
+<arabic> أنواع المحرمات </arabic>
+<english> various kinds of forbidden sins </english>
+</con>
+<con id='994'>
+<arabic> جبل الطور </arabic>
+<english> the Tour mountain </english>
+</con>
+<con id='995'>
+<arabic> بلعم بن أبر </arabic>
+<english> Balam ibn Abar in 7:175 </english>
+</con>
+<con id='996'>
+<arabic> الكلب </arabic>
+<english> dog </english>
+</con>
+<con id='997'>
+<arabic> أعين </arabic>
+<english> eyes </english>
+</con>
+<con id='998'>
+<arabic> الأسماء الحسنى </arabic>
+<english> the most beautiful names of Allah </english>
+</con>
+<con id='999'>
+<arabic> الملحدين في اسماء الله </arabic>
+<english> those who practice deviation in the names of Allah </english>
+</con>
+<con id='1000'>
+<arabic> أرجل </arabic>
+<english> legs </english>
+</con>
+<con id='1001'>
+<arabic> الضر </arabic>
+<english> hardship </english>
+</con>
+<con id='1002'>
+<arabic> الحياة </arabic>
+<english> life </english>
+</con>
+<con id='1003'>
+<arabic> كشف الضر </arabic>
+<english> lifting hardship </english>
+</con>
+<con id='1004'>
+<arabic> الأغنياء من الكفار </arabic>
+<english> rich among the nonbelievers </english>
+</con>
+<con id='1005'>
+<arabic> مفاتح الغيب </arabic>
+<english> keys of the unseen </english>
+</con>
+<con id='1006'>
+<arabic> ورق الشجر </arabic>
+<english> tree leave </english>
+</con>
+<con id='1007'>
+<arabic> الجسد </arabic>
+<english> body </english>
+</con>
+<con id='1008'>
+<arabic> ملك الموت </arabic>
+<english> angel of death </english>
+</con>
+<con id='1009'>
+<arabic> الخوض في القرآن </arabic>
+<english> offensive comments on Quran </english>
+</con>
+<con id='1010'>
+<arabic> حجة الله </arabic>
+<english> the argument of Allah </english>
+</con>
+<con id='1011'>
+<arabic> مدعوا النبوة </arabic>
+<english> false prophets </english>
+</con>
+<con id='1012'>
+<arabic> زرع </arabic>
+<english> tree </english>
+</con>
+<con id='1013'>
+<arabic> عداوة الأنبياء </arabic>
+<english> taking prophets as enemy </english>
+</con>
+<con id='1014'>
+<arabic> ذبائح </arabic>
+<english> slaughtered meat </english>
+</con>
+<con id='1015'>
+<arabic> أكل ذبائح محرمة </arabic>
+<english> eating unlawful meat </english>
+</con>
+<con id='1016'>
+<arabic> الكفار وأوليائهم من الشياطين </arabic>
+<english> non-believers and their allies among satan </english>
+</con>
+<con id='1017'>
+<arabic> الحرث والأنعام </arabic>
+<english> plants and animals </english>
+</con>
+<con id='1018'>
+<arabic> ما اشتملت عليه الأرحام </arabic>
+<english> what wombs carry </english>
+</con>
+<con id='1019'>
+<arabic> لحم الخنزيز </arabic>
+<english> flesh of swine </english>
+</con>
+<con id='1020'>
+<arabic> البقر والغنم </arabic>
+<english> cow and sheep </english>
+</con>
+<con id='1021'>
+<arabic> حجة صحيحة </arabic>
+<english> plausible argument </english>
+</con>
+<con id='1022'>
+<arabic> شاهدين </arabic>
+<english> witnesses  </english>
+</con>
+<con id='1023'>
+<arabic> وصية الله </arabic>
+<english> Allah's advice </english>
+</con>
+<con id='1024'>
+<arabic> قاصدي البيت الحرام </arabic>
+<english> those who proceed towards Makkah </english>
+</con>
+<con id='1025'>
+<arabic> جوارح للصيد </arabic>
+<english> hunting animals and birds </english>
+</con>
+<con id='1026'>
+<arabic> المحصنات من الكتابيات </arabic>
+<english> chaste women among the people of the Book </english>
+</con>
+<con id='1027'>
+<arabic> الصعيد الطيب </arabic>
+<english> dust of earth </english>
+</con>
+<con id='1028'>
+<arabic> سكان بيت المقدس من العماليق </arabic>
+<english> inhabitants of Jerusalem among the amalikes  </english>
+</con>
+<con id='1029'>
+<arabic> الرجلان من بني إسرائيل كانا مؤيدين لقتال العماليق </arabic>
+<english> two persons among the followers of Moses encouraged others to enter Jerusalem </english>
+</con>
+<con id='1030'>
+<arabic> باب بيت المقدس </arabic>
+<english> gates of Jerusalem </english>
+</con>
+<con id='1031'>
+<arabic> موسى وربه </arabic>
+<english> Moses and his Lord </english>
+</con>
+<con id='1032'>
+<arabic> ابني آدم هابيل وقابيل </arabic>
+<english> two sons of Adam: Abil and Cain </english>
+</con>
+<con id='1033'>
+<arabic> قابيل </arabic>
+<english> Cain son of Adam </english>
+</con>
+<con id='1034'>
+<arabic> هابيل </arabic>
+<english> Abil </english>
+</con>
+<con id='1035'>
+<arabic> المحاربين لله ورسوله والمفسدين في الأرض </arabic>
+<english> who rage war against Allah and prophet and do mischief on earth </english>
+</con>
+<con id='1036'>
+<arabic> المنافقين واليهود </arabic>
+<english> hypocrites and Jews </english>
+</con>
+<con id='1037'>
+<arabic> من لم يحكم بما أنزل الله </arabic>
+<english> those who do not rule by the commands of Allah </english>
+</con>
+<con id='1038'>
+<arabic> قصاص </arabic>
+<english> retribution </english>
+</con>
+<con id='1039'>
+<arabic> المتصدق بالقصاص </arabic>
+<english> who forgives retribution </english>
+</con>
+<con id='1040'>
+<arabic> التجاوز عن القصاص </arabic>
+<english> forgiveness of retribution </english>
+</con>
+<con id='1041'>
+<arabic> أنبياء بني إسرائيل </arabic>
+<english> prophets sent to the Israelite  </english>
+</con>
+<con id='1042'>
+<arabic> إنجيل </arabic>
+<english> gospel </english>
+</con>
+<con id='1043'>
+<arabic> اللذين يوالون اليهود والنصارى </arabic>
+<english> those who befriend Jews and Christians </english>
+</con>
+<con id='1044'>
+<arabic> منافقوا اليهود </arabic>
+<english> hypocrites among the Jews </english>
+</con>
+<con id='1045'>
+<arabic> الخمر والميسر والأنصاب والأزلام </arabic>
+<english> intoxicants, gambling, [sacrificing on] stone alters [to other than Allah ], and divining arrows </english>
+</con>
+<con id='1046'>
+<arabic> الصيد </arabic>
+<english> hunted animals </english>
+</con>
+<con id='1047'>
+<arabic> جزاء قتل الصيد للمحرم </arabic>
+<english> penalty of hunting while wearing Ihram </english>
+</con>
+<con id='1048'>
+<arabic> قاتل الصيد في الحرم </arabic>
+<english> who hunts in the state of Ihram </english>
+</con>
+<con id='1049'>
+<arabic> اسئلة غير مرغوبة في الشرع </arabic>
+<english> undesired questions in Shariah </english>
+</con>
+<con id='1050'>
+<arabic> شاهدي الوصية </arabic>
+<english> witness of death will </english>
+</con>
+<con id='1051'>
+<arabic> شاهدان على الوصية من أولياء الميت </arabic>
+<english> two witness on the death will among the kins of the deceased </english>
+</con>
+<con id='1052'>
+<arabic> مائدة من السماء </arabic>
+<english> table full of food from heaven </english>
+</con>
+<con id='1053'>
+<arabic> عيسى والحواريون </arabic>
+<english> Jesus and his disciples  </english>
+</con>
+<con id='1054'>
+<arabic> جعل عيسى وأمه إلهين </arabic>
+<english> considering Jesus and his mother as god </english>
+</con>
+</concepts>

@@ -1,0 +1,59 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='114'><verse id='1'><seg id='127766'> قُلْ </seg>
+<seg id='127767'> أَعُوذُ </seg>
+<seg id='127768'> بِ </seg>
+<seg id='127769'> رَبِّ </seg>
+<seg id='127770'> ٱل </seg>
+<seg id='127771'> نَّاسِ </seg>
+</verse><verse id='2'><seg id='127772'> مَلِكِ </seg>
+<seg id='127773'> ٱل </seg>
+<seg id='127774'> نَّاسِ </seg>
+</verse><verse id='3'><seg id='127775'> إِلَٰهِ </seg>
+<seg id='127776'> ٱل </seg>
+<seg id='127777'> نَّاسِ </seg>
+</verse><verse id='4'><seg id='127778'> مِن </seg>
+<seg id='127779'> شَرِّ </seg>
+<seg id='127780'> ٱلْ </seg>
+<seg id='127781'> وَسْوَاسِ </seg>
+<seg id='127782'> ٱلْ </seg>
+<seg id='127783'> خَنَّاسِ </seg>
+</verse><verse id='5'><seg id='127784'> ٱلَّذِى </seg>
+<seg id='127785'> يُوَسْوِسُ </seg>
+<seg id='127786'> فِى </seg>
+<seg id='127787'> صُدُورِ </seg>
+<seg id='127788'> ٱل </seg>
+<seg id='127789'> نَّاسِ </seg>
+</verse><verse id='6'><seg id='127790'> مِنَ </seg>
+<seg id='127791'> ٱلْ </seg>
+<seg id='127792'> جِنَّةِ </seg>
+<seg id='127793'> وَ </seg>
+<seg id='127794'> ٱل </seg>
+<seg id='127795'> نَّاسِ </seg>
+</verse></chapter>

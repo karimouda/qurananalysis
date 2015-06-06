@@ -1,0 +1,59 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='113'><verse id='1'><seg id='127736'> قُلْ </seg>
+<seg id='127737'> أَعُوذُ </seg>
+<seg id='127738'> بِ </seg>
+<seg id='127739'> رَبِّ </seg>
+<seg id='127740'> ٱلْ </seg>
+<seg id='127741'> فَلَقِ </seg>
+</verse><verse id='2'><seg id='127742'> مِن </seg>
+<seg id='127743'> شَرِّ </seg>
+<seg id='127744'> مَا </seg>
+<seg id='127745'> خَلَقَ </seg>
+</verse><verse id='3'><seg id='127746'> وَ </seg>
+<seg id='127747'> مِن </seg>
+<seg id='127748'> شَرِّ </seg>
+<seg id='127749'> غَاسِقٍ </seg>
+<seg id='127750'> إِذَا </seg>
+<seg id='127751'> وَقَبَ </seg>
+</verse><verse id='4'><seg id='127752'> وَ </seg>
+<seg id='127753'> مِن </seg>
+<seg id='127754'> شَرِّ </seg>
+<seg id='127755'> ٱل </seg>
+<seg id='127756'> نَّفَّٰثَٰتِ </seg>
+<seg id='127757'> فِى </seg>
+<seg id='127758'> ٱلْ </seg>
+<seg id='127759'> عُقَدِ </seg>
+</verse><verse id='5'><seg id='127760'> وَ </seg>
+<seg id='127761'> مِن </seg>
+<seg id='127762'> شَرِّ </seg>
+<seg id='127763'> حَاسِدٍ </seg>
+<seg id='127764'> إِذَا </seg>
+<seg id='127765'> حَسَدَ </seg>
+</verse></chapter>

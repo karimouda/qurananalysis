@@ -1,0 +1,157 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='88'><verse id='1'><seg id='125977'> هَلْ </seg>
+<seg id='125978'> أَتَىٰ </seg>
+<pron id='1' ant='0 0' con='4'><seg id='125979'> كَ </seg></pron>
+<seg id='125980'> حَدِيثُ </seg>
+<seg id='125981'> ٱلْ </seg>
+<seg id='125982'> غَٰشِيَةِ </seg>
+</verse><verse id='2'><seg id='125983'> وُجُوهٌ </seg>
+<seg id='125984'> يَوْمَئِذٍ </seg>
+<seg id='125985'> خَٰشِعَةٌ </seg>
+</verse><verse id='3'><seg id='125986'> عَامِلَةٌ </seg>
+<seg id='125987'> نَّاصِبَةٌ </seg>
+</verse><verse id='4'><seg id='125988'> تَصْلَىٰ </seg>
+<seg id='125989'> نَارًا </seg>
+<seg id='125990'> حَامِيَةً </seg>
+</verse><verse id='5'><seg id='125991'> تُسْقَىٰ </seg>
+<seg id='125992'> مِنْ </seg>
+<seg id='125993'> عَيْنٍ </seg>
+<seg id='125994'> ءَانِيَةٍ </seg>
+</verse><verse id='6'><seg id='125995'> لَّيْسَ </seg>
+<seg id='125996'> لَ </seg>
+<pron id='2' ant='125983 125985' con='5'><seg id='125997'> هُمْ </seg></pron>
+<seg id='125998'> طَعَامٌ </seg>
+<seg id='125999'> إِلَّا </seg>
+<seg id='126000'> مِن </seg>
+<seg id='126001'> ضَرِيعٍ </seg>
+</verse><verse id='7'><seg id='126002'> لَّا </seg>
+<seg id='126003'> يُسْمِنُ </seg>
+<seg id='126004'> وَ </seg>
+<seg id='126005'> لَا </seg>
+<seg id='126006'> يُغْنِى </seg>
+<seg id='126007'> مِن </seg>
+<seg id='126008'> جُوعٍ </seg>
+</verse><verse id='8'><seg id='126009'> وُجُوهٌ </seg>
+<seg id='126010'> يَوْمَئِذٍ </seg>
+<seg id='126011'> نَّاعِمَةٌ </seg>
+</verse><verse id='9'><seg id='126012'> لِّ </seg>
+<seg id='126013'> سَعْيِ </seg>
+<pron id='3' ant='126009 126011' con='16'><seg id='126014'> هَا </seg></pron>
+<seg id='126015'> رَاضِيَةٌ </seg>
+</verse><verse id='10'><seg id='126016'> فِى </seg>
+<seg id='126017'> جَنَّةٍ </seg>
+<seg id='126018'> عَالِيَةٍ </seg>
+</verse><verse id='11'><seg id='126019'> لَّا </seg>
+<seg id='126020'> تَسْمَعُ </seg>
+<seg id='126021'> فِي </seg>
+<pron id='4' ant='126017 126018' con='12'><seg id='126022'> هَا </seg></pron>
+<seg id='126023'> لَٰغِيَةً </seg>
+</verse><verse id='12'><seg id='126024'> فِي </seg>
+<pron id='5' ant='126017 126018' con='12'><seg id='126025'> هَا </seg></pron>
+<seg id='126026'> عَيْنٌ </seg>
+<seg id='126027'> جَارِيَةٌ </seg>
+</verse><verse id='13'><seg id='126028'> فِي </seg>
+<pron id='6' ant='126017 126018' con='12'><seg id='126029'> هَا </seg></pron>
+<seg id='126030'> سُرُرٌ </seg>
+<seg id='126031'> مَّرْفُوعَةٌ </seg>
+</verse><verse id='14'><seg id='126032'> وَ </seg>
+<seg id='126033'> أَكْوَابٌ </seg>
+<seg id='126034'> مَّوْضُوعَةٌ </seg>
+</verse><verse id='15'><seg id='126035'> وَ </seg>
+<seg id='126036'> نَمَارِقُ </seg>
+<seg id='126037'> مَصْفُوفَةٌ </seg>
+</verse><verse id='16'><seg id='126038'> وَ </seg>
+<seg id='126039'> زَرَابِىُّ </seg>
+<seg id='126040'> مَبْثُوثَةٌ </seg>
+</verse><verse id='17'><seg id='126041'> أَ </seg>
+<seg id='126042'> فَ </seg>
+<seg id='126043'> لَا </seg>
+<seg id='126044'> يَنظُرُ </seg>
+<pron id='7' ant='0 0' con='5'><seg id='126045'> ونَ </seg></pron>
+<seg id='126046'> إِلَى </seg>
+<seg id='126047'> ٱلْ </seg>
+<seg id='126048'> إِبِلِ </seg>
+<seg id='126049'> كَيْفَ </seg>
+<seg id='126050'> خُلِقَتْ </seg>
+</verse><verse id='18'><seg id='126051'> وَ </seg>
+<seg id='126052'> إِلَى </seg>
+<seg id='126053'> ٱل </seg>
+<seg id='126054'> سَّمَآءِ </seg>
+<seg id='126055'> كَيْفَ </seg>
+<seg id='126056'> رُفِعَتْ </seg>
+</verse><verse id='19'><seg id='126057'> وَ </seg>
+<seg id='126058'> إِلَى </seg>
+<seg id='126059'> ٱلْ </seg>
+<seg id='126060'> جِبَالِ </seg>
+<seg id='126061'> كَيْفَ </seg>
+<seg id='126062'> نُصِبَتْ </seg>
+</verse><verse id='20'><seg id='126063'> وَ </seg>
+<seg id='126064'> إِلَى </seg>
+<seg id='126065'> ٱلْ </seg>
+<seg id='126066'> أَرْضِ </seg>
+<seg id='126067'> كَيْفَ </seg>
+<seg id='126068'> سُطِحَتْ </seg>
+</verse><verse id='21'><seg id='126069'> فَ </seg>
+<seg id='126070'> ذَكِّرْ </seg>
+<seg id='126071'> إِنَّ </seg>
+<seg id='126072'> مَآ </seg>
+<pron id='8' ant='0 0' con='4'><seg id='126073'> أَنتَ </seg></pron>
+<seg id='126074'> مُذَكِّرٌ </seg>
+</verse><verse id='22'><seg id='126075'> لَّسْ </seg>
+<pron id='9' ant='0 0' con='4'><seg id='126076'> تَ </seg></pron>
+<seg id='126077'> عَلَيْ </seg>
+<pron id='10' ant='0 0' con='179'><seg id='126078'> هِم </seg></pron>
+<seg id='126079'> بِ </seg>
+<seg id='126080'> مُصَيْطِرٍ </seg>
+</verse><verse id='23'><seg id='126081'> إِلَّا </seg>
+<seg id='126082'> مَن </seg>
+<seg id='126083'> تَوَلَّىٰ </seg>
+<seg id='126084'> وَ </seg>
+<seg id='126085'> كَفَرَ </seg>
+</verse><verse id='24'><seg id='126086'> فَ </seg>
+<seg id='126087'> يُعَذِّبُ </seg>
+<pron id='11' ant='126082 126085' con='5'><seg id='126088'> هُ </seg></pron>
+<seg id='126089'> ٱللَّهُ </seg>
+<seg id='126090'> ٱلْ </seg>
+<seg id='126091'> عَذَابَ </seg>
+<seg id='126092'> ٱلْ </seg>
+<seg id='126093'> أَكْبَرَ </seg>
+</verse><verse id='25'><seg id='126094'> إِنَّ </seg>
+<seg id='126095'> إِلَيْ </seg>
+<pron id='12' ant='0 0' con='1'><seg id='126096'> نَآ </seg></pron>
+<seg id='126097'> إِيَابَ </seg>
+<pron id='13' ant='126082 126085' con='5'><seg id='126098'> هُمْ </seg></pron>
+</verse><verse id='26'><seg id='126099'> ثُمَّ </seg>
+<seg id='126100'> إِنَّ </seg>
+<seg id='126101'> عَلَيْ </seg>
+<pron id='14' ant='0 0' con='1'><seg id='126102'> نَا </seg></pron>
+<seg id='126103'> حِسَابَ </seg>
+<pron id='15' ant='126082 126085' con='5'><seg id='126104'> هُم </seg></pron>
+</verse></chapter>

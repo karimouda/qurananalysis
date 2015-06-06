@@ -1,0 +1,61 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='111'><verse id='1'><seg id='127685'> تَبَّتْ </seg>
+<seg id='127686'> يَدَآ </seg>
+<seg id='127687'> أَبِى </seg>
+<seg id='127688'> لَهَبٍ </seg>
+<seg id='127689'> وَ </seg>
+<seg id='127690'> تَبَّ </seg>
+</verse><verse id='2'><seg id='127691'> مَآ </seg>
+<seg id='127692'> أَغْنَىٰ </seg>
+<seg id='127693'> عَنْ </seg>
+<pron id='1' ant='127687 127688' con='235'><seg id='127694'> هُ </seg></pron>
+<seg id='127695'> مَالُ </seg>
+<pron id='2' ant='127687 127688' con='235'><seg id='127696'> هُۥ </seg></pron>
+<seg id='127697'> وَ </seg>
+<seg id='127698'> مَا </seg>
+<seg id='127699'> كَسَبَ </seg>
+</verse><verse id='3'><seg id='127700'> سَ </seg>
+<seg id='127701'> يَصْلَىٰ </seg>
+<seg id='127702'> نَارًا </seg>
+<seg id='127703'> ذَاتَ </seg>
+<seg id='127704'> لَهَبٍ </seg>
+</verse><verse id='4'><seg id='127705'> وَ </seg>
+<seg id='127706'> ٱمْرَأَتُ </seg>
+<pron id='3' ant='127687 127688' con='235'><seg id='127707'> هُۥ </seg></pron>
+<seg id='127708'> حَمَّالَةَ </seg>
+<seg id='127709'> ٱلْ </seg>
+<seg id='127710'> حَطَبِ </seg>
+</verse><verse id='5'><seg id='127711'> فِى </seg>
+<seg id='127712'> جِيدِ </seg>
+<pron id='4' ant='127706 127707' con='236'><seg id='127713'> هَا </seg></pron>
+<seg id='127714'> حَبْلٌ </seg>
+<seg id='127715'> مِّن </seg>
+<seg id='127716'> مَّسَدٍۭ </seg>
+</verse></chapter>

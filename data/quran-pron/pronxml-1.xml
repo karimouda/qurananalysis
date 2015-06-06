@@ -1,0 +1,77 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='1'><verse id='1'><seg id='1'> بِ </seg>
+<seg id='2'> سْمِ </seg>
+<seg id='3'> ٱللَّهِ </seg>
+<seg id='4'> ٱل </seg>
+<seg id='5'> رَّحْمَٰنِ </seg>
+<seg id='6'> ٱل </seg>
+<seg id='7'> رَّحِيمِ </seg>
+</verse><verse id='2'><seg id='8'> ٱلْ </seg>
+<seg id='9'> حَمْدُ </seg>
+<seg id='10'> لِ </seg>
+<seg id='11'> لَّهِ </seg>
+<seg id='12'> رَبِّ </seg>
+<seg id='13'> ٱلْ </seg>
+<seg id='14'> عَٰلَمِينَ </seg>
+</verse><verse id='3'><seg id='15'> ٱل </seg>
+<seg id='16'> رَّحْمَٰنِ </seg>
+<seg id='17'> ٱل </seg>
+<seg id='18'> رَّحِيمِ </seg>
+</verse><verse id='4'><seg id='19'> مَٰلِكِ </seg>
+<seg id='20'> يَوْمِ </seg>
+<seg id='21'> ٱل </seg>
+<seg id='22'> دِّينِ </seg>
+</verse><verse id='5'><pron id='1' ant='11 11' con='1'><seg id='23'> إِيَّاكَ </seg></pron>
+<seg id='24'> نَعْبُدُ </seg>
+<seg id='25'> وَ </seg>
+<pron id='2' ant='11 11' con='1'><seg id='26'> إِيَّاكَ </seg></pron>
+<seg id='27'> نَسْتَعِينُ </seg>
+</verse><verse id='6'><seg id='28'> ٱهْدِ </seg>
+<pron id='3' ant='0 0' con='193'><seg id='29'> نَا </seg></pron>
+<seg id='30'> ٱل </seg>
+<seg id='31'> صِّرَٰطَ </seg>
+<seg id='32'> ٱلْ </seg>
+<seg id='33'> مُسْتَقِيمَ </seg>
+</verse><verse id='7'><seg id='34'> صِرَٰطَ </seg>
+<seg id='35'> ٱلَّذِينَ </seg>
+<seg id='36'> أَنْعَمْ </seg>
+<pron id='4' ant='11 11' con='1'><seg id='37'> تَ </seg></pron>
+<seg id='38'> عَلَيْ </seg>
+<pron id='5' ant='35 39' con='237'><seg id='39'> هِمْ </seg></pron>
+<seg id='40'> غَيْرِ </seg>
+<seg id='41'> ٱلْ </seg>
+<seg id='42'> مَغْضُوبِ </seg>
+<seg id='43'> عَلَيْ </seg>
+<pron id='6' ant='41 44' con='238'><seg id='44'> هِمْ </seg></pron>
+<seg id='45'> وَ </seg>
+<seg id='46'> لَا </seg>
+<seg id='47'> ٱل </seg>
+<seg id='48'> ضَّآلِّينَ </seg>
+</verse></chapter>

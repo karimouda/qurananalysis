@@ -1,0 +1,699 @@
+@CHARSET "UTF-8";
+
+
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/DroidKufi-Regular.eot);
+  src: url(/fonts/DroidKufi-Regular.eot?#iefix) format('embedded-opentype'),
+       url(/fonts/DroidKufi-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/fonts/DroidKufi-Bold.eot);
+  src: url(/fonts/DroidKufi-Bold.eot?#iefix) format('embedded-opentype'),
+       url(/fonts/DroidKufi-Bold.ttf) format('truetype');
+}
+
+
+body
+{
+	font-family: Tahoma;
+}
+
+
+#main-container
+{
+	width:90%;
+	margin: 5%;
+	min-height: 400px;
+}
+
+#options-area
+{
+	background-color: #f8f8f8;
+	margin: 60px 20% 20px 20%;
+	padding:20px;
+	border-radius:5px;
+	vertical-align: top;
+	position: relative;
+	width:60%;
+}
+
+#options-area table
+{
+	border-spacing: 0px;
+	width:90%;
+}
+
+#options-area.oa-analysis
+{
+	background-color: #4CA5FF;
+}
+
+#main-sections
+{
+	display: table;
+	background-color: #f8f8f8;
+	position: absolute;
+	top:-41px;
+}
+
+.section-item
+{
+	display: table-cell;	
+	
+	border-right: 1px dotted #999;
+	cursor: pointer;
+	font-size:16px;
+}
+
+
+
+#section-item-analysis
+{
+	background-color: #4CA5FF;
+
+}
+
+#section-item-search A
+{
+	color:#222;
+	text-decoration: none;
+	padding:10px;
+	display: inline-block;
+	font-size: 20px;
+}
+
+#section-item-analysis:HOVER
+{
+
+	opacity: 0.95;
+	filter: alpha(opacity =     95);
+
+}
+#section-item-analysis A
+{
+	color:#fff;
+	text-decoration: none;
+	padding:10px;
+	display: inline-block;
+	font-size: 20px;
+}
+
+
+#search-field
+{
+	padding:12px;
+    color:#888;
+    font-size:20px;
+	border: 1px solid #888;
+	min-width:200px;
+	width:100%;
+	display: inline-block;
+	margin:0px;
+
+
+}
+
+#doSearch 
+{
+	 background-color: hsl(75, 100%, 18%) !important;
+	 background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#82ad00", endColorstr="#445b00"); 
+	 background-image: -khtml-gradient(linear, left top, left bottom, from(#82ad00), to(#445b00));
+	 background-image: -moz-linear-gradient(top, #82ad00, #445b00);
+	 background-image: -ms-linear-gradient(top, #82ad00, #445b00); 
+	 background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #82ad00), color-stop(100%, #445b00)); 
+	 background-image: -webkit-linear-gradient(top, #82ad00, #445b00);
+	 background-image: -o-linear-gradient(top, #82ad00, #445b00);
+	 background-image: linear-gradient(#82ad00, #445b00); 
+	 border-color: hsl(75, 100%, 50%) ; 
+	 border-left:0px;
+	 border-radius:0px 5px 5px 0px;
+	 color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.26); 
+	 -webkit-font-smoothing: antialiased; 
+	 cursor: pointer;
+	 padding: 11px;
+	 margin-left: -4px !important;
+	 margin-top: -1px !important;
+	 font-size: 20px;
+
+}
+
+#doSearch:HOVER
+{
+	opacity: 0.95;
+	filter: alpha(opacity =     95);
+}
+
+#footer-section
+{
+	width: 50%;
+	margin:auto;	
+	text-align: center;
+	color:#444;
+	font-size: 12px;
+}
+
+A.footer-item
+{
+	text-decoration: none;
+	color:#1597FE;
+	font-size: 12px;
+	padding:10px 4px;
+}
+
+A.footer-item:HOVER
+{
+	color:#0D5E9B;
+}
+
+#footer-statement
+{
+	color:a8a8a8;
+	font-size: 12px;
+	padding:10px 4px;
+	
+}
+
+A.analysis-links
+{
+	color:#fff;
+	font-size: 12px;
+	font-weight:bold;
+	padding:10px 4px;
+	text-decoration: none;
+	display: inline-block;
+}
+A.analysis-links:BEFORE
+{
+	content:"۞ ";
+}
+
+A.analysis-links:ACTIVE
+{
+	color:#000;
+}
+
+A.analysis-links:HOVER
+{
+		opacity: 0.90;
+	filter: alpha(opacity =     90);
+}
+
+.analysis-table
+{
+	background-color: #FAFAFA;
+	width:auto;
+	margin:2%;
+	text-align: left;
+	
+}
+.analysis-table thead th
+{
+	color: #222;
+	background-color: #C0DE22;
+	padding:5px;
+}
+.analysis-table  td
+{
+
+	padding:5px;
+}
+
+fieldset
+{
+	float: left;	
+	width:44%;
+	min-height: 300px;
+	margin-bottom: 100px;
+}
+fieldset legend
+{
+	font-weight: bold;
+	foont-size:16px;
+}
+
+#word-frequency-fs
+{
+	width:80%;
+	margin:10px 15%;
+	float:none;
+}
+
+#quran-full-text-fs
+{
+	width:100%;
+	margin:10px 0%;
+	float:none;
+}
+
+.fqt-verse
+{
+	border-collapse: collapse;;
+	border:1px solid black;
+}
+
+#result-count
+{
+	color: #C0DE22;
+	background-color: #222;
+	padding:2px;
+	min-width:80px;
+	height:30px;
+	display:inline;
+}
+
+#fqt-search-area
+{
+		margin:10px 20%;
+		width:60%;
+}
+marked
+{
+	background-color:#0095CC;
+	color:#fff;
+	font-weight: bold;
+}
+
+marked_fg
+{
+	color:#0095CC;
+	
+	font-weight: bold;
+}
+
+#filterSearch
+{
+	height:30px;
+		border:1px solid black;
+}
+
+
+
+.wordfreq-item
+{
+	padding:1px;
+	margin:0px;
+	display: inline-block;
+	color:#191919;
+	text-decoration:none !important;
+	cursor:default;
+	line-height: 0;
+}
+
+.wordfreq-item-for-sura
+{
+		padding:4px;
+	margin:0px;
+	display: inline-block;
+	color:#191919;
+	text-decoration:none !important;
+	cursor:default;
+	line-height: 0;
+}
+
+.cloud-div *
+{
+
+}
+
+.word-cloud-fs
+{
+	width:100%;
+	margin:10px 0%;
+	float:none;
+	padding:20px 10px;
+
+}
+
+.word-cloud-fs label
+{
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.word-cloud-fs legend
+{
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#stop-words-reload-button-area
+{
+		margin:0px 35%;
+		width:30%;
+}
+
+#stop-words-reload-button-area input
+{
+
+ background-color: hsl(33, 85%, 36%) !important; background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ec8f1c", endColorstr="#a9630d"); background-image: -khtml-gradient(linear, left top, left bottom, from(#ec8f1c), to(#a9630d)); background-image: -moz-linear-gradient(top, #ec8f1c, #a9630d); background-image: -ms-linear-gradient(top, #ec8f1c, #a9630d); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ec8f1c), color-stop(100%, #a9630d)); background-image: -webkit-linear-gradient(top, #ec8f1c, #a9630d); background-image: -o-linear-gradient(top, #ec8f1c, #a9630d); background-image: linear-gradient(#ec8f1c, #a9630d); border-color: #a9630d #a9630d hsl(33, 85%, 32%); color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.26); -webkit-font-smoothing: antialiased;
+ 	 cursor: pointer;
+	 padding: 11px;
+	 font-size: 20px;
+}
+
+#loading-layer
+{
+	color:green;
+	width:200px;
+	margin:0px auto;
+	display: none;
+	
+}
+
+.result-aya
+{
+	background-color: #FFF;
+	color:#222;
+	font-size:18px;
+	font-weight:bold;
+	width: 80%;
+	margin:auto;
+	border-bottom:1px dotted green;
+	padding:10px;
+	direction: rtl;
+}
+
+.result-aya-info
+{
+	height: 30px;
+		border-bottom:1px dotted green;
+		width: 80%;
+		margin:auto;
+		padding:2px;
+}
+	
+.result-sura-info
+{
+	background-color: #FFCA1C;
+	color:#000;
+	padding:4px;
+	min-width:100px;
+	font-size:16px;
+
+
+	text-align: left;
+	direction:rtl;
+	
+	float:left;
+	
+	
+}
+
+
+.search-error-message
+{
+		
+	color:#E88C1B;
+	padding:4px;
+	
+	
+	text-align: center;
+}
+
+.search-word-suggestion
+{
+		
+	color:#444;
+	padding:4px;
+	
+	
+	
+	text-align: center;
+}
+
+.search-word-suggestion A
+{
+	text-decoration: none;
+	font-weight: bold;
+	text-transform: capitalize;
+}
+
+.result-translated-text
+{
+	display: none;
+	padding: 10px;
+	border-top: 1px solid #eee;
+	font-weight: normal;
+}
+
+.result-aya-showtranslation
+{
+		background-color: #8EC5FF;
+	color:#fff;
+	padding:4px;
+	min-width:100px;
+	font-size:14px;
+
+
+	text-align: left;
+	direction:rtl;
+	
+	float:left;
+}
+.result-aya-showtranslation A
+{
+	text-decoration: none;
+	color:#fff;
+		font-size:16px;
+}
+.result-aya-showtranslation:HOVER
+{
+
+	opacity: 0.90;
+	filter: alpha(opacity =     90);
+	cursor: pointer;	
+}
+
+#result-graph-area
+{
+	border:1px solid black;
+	min-height: 400px;
+	width:80%;
+	margin:10px auto;
+	
+}
+
+#analysis-switch-lang-button
+{
+	background-color: #000;
+	color:#fff;
+	height: 40px;
+	width: 60px;
+	float: left;
+	margin:10px;
+	padding:10px;
+	cursor: pointer;
+		text-align: center;
+}
+#analysis-switch-lang-button:HOVER
+{
+		opacity: 0.90;
+	filter: alpha(opacity =     90);
+
+}
+
+#analysis-switch-lang-button span
+{
+	font-weight: bold;
+
+	
+}
+
+
+/** Graph RECT **/
+rect 
+{
+  fill: none;
+  pointer-events: all;
+}
+
+.graph-node {
+  fill: #eee;
+  color:#222;
+  
+}
+
+.graph-cursor {
+  fill: none;
+  stroke: brown;
+  pointer-events: none;
+}
+
+.graph-link {
+
+    stroke: #eee;
+  stroke-width: 1.5px;
+}
+
+.graph-words
+{
+  fill: #2E7FBA;
+
+
+}
+
+#result-stats-chart-area
+{
+	margin:10px auto;
+	
+		width:80%;
+	min-height: 100px;
+	border:1px solid black;
+}
+
+#result-verses-area
+{
+		margin:10px auto;
+	padding:10px;
+		width:80%;
+	min-height: 100px;
+	
+}
+
+
+#results-stats-table table
+{
+	border-spacing: 10px;
+}
+
+
+#results-stats-table th
+{
+	background-color: #efefef;
+	color:#000;
+	padding:5px;
+
+	
+}
+
+#results-stats-table table td
+{
+	background-color: #fff;
+	border:1px solid #eee;
+	color:green;
+	font-weight:bold;
+	padding:5px;
+}
+
+#results-chart-area
+{
+	padding:10px;
+}
+
+.main text 
+{
+    font: 12px sans-serif;	
+}
+
+.chart-axis line, .chart-axi path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: red;
+}
+
+
+.chart-tooltip
+{
+  position: absolute;
+  width: 200px;
+  height: 30px;
+  pointer-events: none;
+  font-size: 11px;
+}
+
+
+#graph-maingraph-area
+{
+
+min-height: 400px;
+height:100%;
+width: 100%;
+margin: 10px auto;
+}
+
+#graph-verse-selection
+{
+	width:400px;
+}
+#graph-verse-or-text-selection
+{
+	text-align: center;
+}
+
+#graphing-iframe
+{
+	width: 100%;
+	height: 100%;
+	min-height: 400px;
+	overflow: none;
+	border:1px solid black;
+}
+
+#graph-verse-selection optgroup label
+{
+	 background-color: #222;
+	 color:#fff;
+	 padding:2px;
+}
+#graph-verse-selection optgroup option[value='ALL_SURA']
+{
+     color:#2E7FBA;
+}
+
+#pos-options-area
+{
+
+
+height:40px;
+width: 50%;
+margin: 10px auto;
+text-align: center;
+
+}
+
+#pos-selection
+{
+	width:200px;
+}
+
+.pos-value-div
+{
+
+	margin:auto;
+	padding:10px;
+	font-size:20px;
+	text-align: center;
+	direction: rtl;
+}
+
+#pos-data-area
+{
+	min-height:200px;
+	width: 60%;
+	margin: 10px auto;
+	text-align: center;
+}
+
+.note
+{
+	color:#ddd;
+	font-size:11px;
+}
+
+.pos-sura-info
+{
+	color:#aaa;
+}
+
+#main-credits-area
+{
+	margin:auto;
+	width:50%;
+	
+}

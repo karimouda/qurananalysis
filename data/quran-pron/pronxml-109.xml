@@ -1,0 +1,66 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='109'><verse id='1'><seg id='127617'> قُلْ </seg>
+<seg id='127618'> يَٰٓأَيُّهَا </seg>
+<seg id='127619'> ٱلْ </seg>
+<seg id='127620'> كَٰفِرُونَ </seg>
+</verse><verse id='2'><seg id='127621'> لَآ </seg>
+<seg id='127622'> أَعْبُدُ </seg>
+<seg id='127623'> مَا </seg>
+<seg id='127624'> تَعْبُدُ </seg>
+<pron id='1' ant='127619 127620' con='5'><seg id='127625'> ونَ </seg></pron>
+</verse><verse id='3'><seg id='127626'> وَ </seg>
+<seg id='127627'> لَآ </seg>
+<pron id='2' ant='127619 127620' con='5'><seg id='127628'> أَنتُمْ </seg></pron>
+<seg id='127629'> عَٰبِدُونَ </seg>
+<seg id='127630'> مَآ </seg>
+<seg id='127631'> أَعْبُدُ </seg>
+</verse><verse id='4'><seg id='127632'> وَ </seg>
+<seg id='127633'> لَآ </seg>
+<pron id='3' ant='0 0' con='4'><seg id='127634'> أَنَا۠ </seg></pron>
+<seg id='127635'> عَابِدٌ </seg>
+<seg id='127636'> مَّا </seg>
+<seg id='127637'> عَبَد </seg>
+<pron id='4' ant='127619 127620' con='5'><seg id='127638'> تُّمْ </seg></pron>
+</verse><verse id='5'><seg id='127639'> وَ </seg>
+<seg id='127640'> لَآ </seg>
+<pron id='5' ant='127619 127620' con='5'><seg id='127641'> أَنتُمْ </seg></pron>
+<seg id='127642'> عَٰبِدُونَ </seg>
+<seg id='127643'> مَآ </seg>
+<seg id='127644'> أَعْبُدُ </seg>
+</verse><verse id='6'><seg id='127645'> لَ </seg>
+<pron id='6' ant='127619 127620' con='5'><seg id='127646'> كُمْ </seg></pron>
+<seg id='127647'> دِينُ </seg>
+<pron id='7' ant='127619 127620' con='5'><seg id='127648'> كُمْ </seg></pron>
+<seg id='127649'> وَ </seg>
+<seg id='127650'> لِ </seg>
+<pron id='8' ant='0 0' con='4'><seg id='127651'> ىَ </seg></pron>
+<seg id='127652'> دِينِ </seg>
+<pron id='9' ant='0 0' con='4'><seg id='127653'>  </seg></pron>
+</verse></chapter>

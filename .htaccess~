@@ -1,0 +1,19 @@
+
+
+
+
+
+<FilesMatch ".">
+
+AuthType Basic
+AuthName "protected area"
+AuthUserFile /var/www/htfiles/leeds
+Require user leeds
+
+
+   Order      deny,allow
+   Deny from  all
+   Allow from 127.0.0.1
+   Satisfy    any
+   
+</FilesMatch>

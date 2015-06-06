@@ -1,0 +1,74 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='97'><verse id='1'><seg id='126997'> إِنَّ </seg>
+<pron id='1' ant='0 0' con='1'><seg id='126998'> آ </seg></pron>
+<seg id='126999'> أَنزَلْ </seg>
+<pron id='2' ant='0 0' con='1'><seg id='127000'> نَٰ </seg></pron>
+<pron id='3' ant='0 0' con='2'><seg id='127001'> هُ </seg></pron>
+<seg id='127002'> فِى </seg>
+<seg id='127003'> لَيْلَةِ </seg>
+<seg id='127004'> ٱلْ </seg>
+<seg id='127005'> قَدْرِ </seg>
+</verse><verse id='2'><seg id='127006'> وَ </seg>
+<seg id='127007'> مَآ </seg>
+<seg id='127008'> أَدْرَىٰ </seg>
+<pron id='4' ant='0 0' con='4'><seg id='127009'> كَ </seg></pron>
+<seg id='127010'> مَا </seg>
+<seg id='127011'> لَيْلَةُ </seg>
+<seg id='127012'> ٱلْ </seg>
+<seg id='127013'> قَدْرِ </seg>
+</verse><verse id='3'><seg id='127014'> لَيْلَةُ </seg>
+<seg id='127015'> ٱلْ </seg>
+<seg id='127016'> قَدْرِ </seg>
+<seg id='127017'> خَيْرٌ </seg>
+<seg id='127018'> مِّنْ </seg>
+<seg id='127019'> أَلْفِ </seg>
+<seg id='127020'> شَهْرٍ </seg>
+</verse><verse id='4'><seg id='127021'> تَنَزَّلُ </seg>
+<seg id='127022'> ٱلْ </seg>
+<seg id='127023'> مَلَٰٓئِكَةُ </seg>
+<seg id='127024'> وَ </seg>
+<seg id='127025'> ٱل </seg>
+<seg id='127026'> رُّوحُ </seg>
+<seg id='127027'> فِي </seg>
+<pron id='5' ant='127014 127016' con='222'><seg id='127028'> هَا </seg></pron>
+<seg id='127029'> بِ </seg>
+<seg id='127030'> إِذْنِ </seg>
+<seg id='127031'> رَبِّ </seg>
+<pron id='6' ant='127022 127023' con='19'><seg id='127032'> هِم </seg></pron>
+<seg id='127033'> مِّن </seg>
+<seg id='127034'> كُلِّ </seg>
+<seg id='127035'> أَمْرٍ </seg>
+</verse><verse id='5'><seg id='127036'> سَلَٰمٌ </seg>
+<pron id='7' ant='127036 127036' con='193'><seg id='127037'> هِىَ </seg></pron>
+<seg id='127038'> حَتَّىٰ </seg>
+<seg id='127039'> مَطْلَعِ </seg>
+<seg id='127040'> ٱلْ </seg>
+<seg id='127041'> فَجْرِ </seg>
+</verse></chapter>

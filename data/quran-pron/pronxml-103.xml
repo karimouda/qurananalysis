@@ -1,0 +1,59 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='103'><verse id='1'><seg id='127414'> وَ </seg>
+<seg id='127415'> ٱلْ </seg>
+<seg id='127416'> عَصْرِ </seg>
+</verse><verse id='2'><seg id='127417'> إِنَّ </seg>
+<seg id='127418'> ٱلْ </seg>
+<seg id='127419'> إِنسَٰنَ </seg>
+<seg id='127420'> لَ </seg>
+<seg id='127421'> فِى </seg>
+<seg id='127422'> خُسْرٍ </seg>
+</verse><verse id='3'><seg id='127423'> إِلَّا </seg>
+<seg id='127424'> ٱلَّذِينَ </seg>
+<seg id='127425'> ءَامَنُ </seg>
+<pron id='1' ant='0 0' con='193'><seg id='127426'> وا۟ </seg></pron>
+<seg id='127427'> وَ </seg>
+<seg id='127428'> عَمِلُ </seg>
+<pron id='2' ant='0 0' con='193'><seg id='127429'> وا۟ </seg></pron>
+<seg id='127430'> ٱل </seg>
+<seg id='127431'> صَّٰلِحَٰتِ </seg>
+<seg id='127432'> وَ </seg>
+<seg id='127433'> تَوَاصَ </seg>
+<pron id='3' ant='0 0' con='193'><seg id='127434'> وْا۟ </seg></pron>
+<seg id='127435'> بِ </seg>
+<seg id='127436'> ٱلْ </seg>
+<seg id='127437'> حَقِّ </seg>
+<seg id='127438'> وَ </seg>
+<seg id='127439'> تَوَاصَ </seg>
+<pron id='4' ant='0 0' con='193'><seg id='127440'> وْا۟ </seg></pron>
+<seg id='127441'> بِ </seg>
+<seg id='127442'> ٱل </seg>
+<seg id='127443'> صَّبْرِ </seg>
+</verse></chapter>

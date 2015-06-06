@@ -1,0 +1,48 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='112'><verse id='1'><seg id='127717'> قُلْ </seg>
+<pron id='1' ant='127719 127719' con='1'><seg id='127718'> هُوَ </seg></pron>
+<seg id='127719'> ٱللَّهُ </seg>
+<seg id='127720'> أَحَدٌ </seg>
+</verse><verse id='2'><seg id='127721'> ٱللَّهُ </seg>
+<seg id='127722'> ٱل </seg>
+<seg id='127723'> صَّمَدُ </seg>
+</verse><verse id='3'><seg id='127724'> لَمْ </seg>
+<seg id='127725'> يَلِدْ </seg>
+<seg id='127726'> وَ </seg>
+<seg id='127727'> لَمْ </seg>
+<seg id='127728'> يُولَدْ </seg>
+</verse><verse id='4'><seg id='127729'> وَ </seg>
+<seg id='127730'> لَمْ </seg>
+<seg id='127731'> يَكُن </seg>
+<seg id='127732'> لَّ </seg>
+<pron id='2' ant='127721 127721' con='1'><seg id='127733'> هُۥ </seg></pron>
+<seg id='127734'> كُفُوًا </seg>
+<seg id='127735'> أَحَدٌۢ </seg>
+</verse></chapter>

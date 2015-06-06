@@ -1,0 +1,88 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='101'><verse id='1'><seg id='127312'> ٱلْ </seg>
+<seg id='127313'> قَارِعَةُ </seg>
+</verse><verse id='2'><seg id='127314'> مَا </seg>
+<seg id='127315'> ٱلْ </seg>
+<seg id='127316'> قَارِعَةُ </seg>
+</verse><verse id='3'><seg id='127317'> وَ </seg>
+<seg id='127318'> مَآ </seg>
+<seg id='127319'> أَدْرَىٰ </seg>
+<pron id='1' ant='0 0' con='4'><seg id='127320'> كَ </seg></pron>
+<seg id='127321'> مَا </seg>
+<seg id='127322'> ٱلْ </seg>
+<seg id='127323'> قَارِعَةُ </seg>
+</verse><verse id='4'><seg id='127324'> يَوْمَ </seg>
+<seg id='127325'> يَكُونُ </seg>
+<seg id='127326'> ٱل </seg>
+<seg id='127327'> نَّاسُ </seg>
+<seg id='127328'> كَ </seg>
+<seg id='127329'> ٱلْ </seg>
+<seg id='127330'> فَرَاشِ </seg>
+<seg id='127331'> ٱلْ </seg>
+<seg id='127332'> مَبْثُوثِ </seg>
+</verse><verse id='5'><seg id='127333'> وَ </seg>
+<seg id='127334'> تَكُونُ </seg>
+<seg id='127335'> ٱلْ </seg>
+<seg id='127336'> جِبَالُ </seg>
+<seg id='127337'> كَ </seg>
+<seg id='127338'> ٱلْ </seg>
+<seg id='127339'> عِهْنِ </seg>
+<seg id='127340'> ٱلْ </seg>
+<seg id='127341'> مَنفُوشِ </seg>
+</verse><verse id='6'><seg id='127342'> فَ </seg>
+<seg id='127343'> أَمَّا </seg>
+<seg id='127344'> مَن </seg>
+<seg id='127345'> ثَقُلَتْ </seg>
+<seg id='127346'> مَوَٰزِينُ </seg>
+<pron id='2' ant='0 0' con='193'><seg id='127347'> هُۥ </seg></pron>
+</verse><verse id='7'><seg id='127348'> فَ </seg>
+<pron id='3' ant='127344 127347' con='210'><seg id='127349'> هُوَ </seg></pron>
+<seg id='127350'> فِى </seg>
+<seg id='127351'> عِيشَةٍ </seg>
+<seg id='127352'> رَّاضِيَةٍ </seg>
+</verse><verse id='8'><seg id='127353'> وَ </seg>
+<seg id='127354'> أَمَّا </seg>
+<seg id='127355'> مَنْ </seg>
+<seg id='127356'> خَفَّتْ </seg>
+<seg id='127357'> مَوَٰزِينُ </seg>
+<pron id='4' ant='0 0' con='193'><seg id='127358'> هُۥ </seg></pron>
+</verse><verse id='9'><seg id='127359'> فَ </seg>
+<seg id='127360'> أُمُّ </seg>
+<pron id='5' ant='127355 127358' con='211'><seg id='127361'> هُۥ </seg></pron>
+<seg id='127362'> هَاوِيَةٌ </seg>
+</verse><verse id='10'><seg id='127363'> وَ </seg>
+<seg id='127364'> مَآ </seg>
+<seg id='127365'> أَدْرَىٰ </seg>
+<pron id='6' ant='0 0' con='4'><seg id='127366'> كَ </seg></pron>
+<seg id='127367'> مَا </seg>
+<pron id='7' ant='127362 127362' con='227'><seg id='127368'> هِيَهْ </seg></pron>
+</verse><verse id='11'><seg id='127369'> نَارٌ </seg>
+<seg id='127370'> حَامِيَةٌۢ </seg>
+</verse></chapter>

@@ -1,0 +1,1440 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='34'><verse id='1'><seg id='90995'> ٱلْ </seg>
+<seg id='90996'> حَمْدُ </seg>
+<seg id='90997'> لِ </seg>
+<seg id='90998'> لَّهِ </seg>
+<seg id='90999'> ٱلَّذِى </seg>
+<seg id='91000'> لَ </seg>
+<pron id='1' ant='90997 90998' con='1'><seg id='91001'> هُۥ </seg></pron>
+<seg id='91002'> مَا </seg>
+<seg id='91003'> فِى </seg>
+<seg id='91004'> ٱل </seg>
+<seg id='91005'> سَّمَٰوَٰتِ </seg>
+<seg id='91006'> وَ </seg>
+<seg id='91007'> مَا </seg>
+<seg id='91008'> فِى </seg>
+<seg id='91009'> ٱلْ </seg>
+<seg id='91010'> أَرْضِ </seg>
+<seg id='91011'> وَ </seg>
+<seg id='91012'> لَ </seg>
+<pron id='2' ant='90997 90998' con='1'><seg id='91013'> هُ </seg></pron>
+<seg id='91014'> ٱلْ </seg>
+<seg id='91015'> حَمْدُ </seg>
+<seg id='91016'> فِى </seg>
+<seg id='91017'> ٱلْ </seg>
+<seg id='91018'> ءَاخِرَةِ </seg>
+<seg id='91019'> وَ </seg>
+<pron id='3' ant='90997 90998' con='1'><seg id='91020'> هُوَ </seg></pron>
+<seg id='91021'> ٱلْ </seg>
+<seg id='91022'> حَكِيمُ </seg>
+<seg id='91023'> ٱلْ </seg>
+<seg id='91024'> خَبِيرُ </seg>
+</verse><verse id='2'><seg id='91025'> يَعْلَمُ </seg>
+<seg id='91026'> مَا </seg>
+<seg id='91027'> يَلِجُ </seg>
+<seg id='91028'> فِى </seg>
+<seg id='91029'> ٱلْ </seg>
+<seg id='91030'> أَرْضِ </seg>
+<seg id='91031'> وَ </seg>
+<seg id='91032'> مَا </seg>
+<seg id='91033'> يَخْرُجُ </seg>
+<seg id='91034'> مِنْ </seg>
+<pron id='4' ant='91029 91030' con='18'><seg id='91035'> هَا </seg></pron>
+<seg id='91036'> وَ </seg>
+<seg id='91037'> مَا </seg>
+<seg id='91038'> يَنزِلُ </seg>
+<seg id='91039'> مِنَ </seg>
+<seg id='91040'> ٱل </seg>
+<seg id='91041'> سَّمَآءِ </seg>
+<seg id='91042'> وَ </seg>
+<seg id='91043'> مَا </seg>
+<seg id='91044'> يَعْرُجُ </seg>
+<seg id='91045'> فِي </seg>
+<pron id='5' ant='91040 91041' con='188'><seg id='91046'> هَا </seg></pron>
+<seg id='91047'> وَ </seg>
+<pron id='6' ant='90997 90998' con='1'><seg id='91048'> هُوَ </seg></pron>
+<seg id='91049'> ٱل </seg>
+<seg id='91050'> رَّحِيمُ </seg>
+<seg id='91051'> ٱلْ </seg>
+<seg id='91052'> غَفُورُ </seg>
+</verse><verse id='3'><seg id='91053'> وَ </seg>
+<seg id='91054'> قَالَ </seg>
+<seg id='91055'> ٱلَّذِينَ </seg>
+<seg id='91056'> كَفَرُ </seg>
+<pron id='7' ant='0 0' con='5'><seg id='91057'> وا۟ </seg></pron>
+<seg id='91058'> لَا </seg>
+<seg id='91059'> تَأْتِي </seg>
+<pron id='8' ant='91055 91057' con='5'><seg id='91060'> نَا </seg></pron>
+<seg id='91061'> ٱل </seg>
+<seg id='91062'> سَّاعَةُ </seg>
+<seg id='91063'> قُلْ </seg>
+<seg id='91064'> بَلَىٰ </seg>
+<seg id='91065'> وَ </seg>
+<seg id='91066'> رَبِّ </seg>
+<pron id='9' ant='0 0' con='4'><seg id='91067'> ى </seg></pron>
+<seg id='91068'> لَ </seg>
+<seg id='91069'> تَأْتِيَنَّ </seg>
+<pron id='10' ant='91055 91057' con='5'><seg id='91070'> كُمْ </seg></pron>
+<seg id='91071'> عَٰلِمِ </seg>
+<seg id='91072'> ٱلْ </seg>
+<seg id='91073'> غَيْبِ </seg>
+<seg id='91074'> لَا </seg>
+<seg id='91075'> يَعْزُبُ </seg>
+<seg id='91076'> عَنْ </seg>
+<pron id='11' ant='0 0' con='1'><seg id='91077'> هُ </seg></pron>
+<seg id='91078'> مِثْقَالُ </seg>
+<seg id='91079'> ذَرَّةٍ </seg>
+<seg id='91080'> فِى </seg>
+<seg id='91081'> ٱل </seg>
+<seg id='91082'> سَّمَٰوَٰتِ </seg>
+<seg id='91083'> وَ </seg>
+<seg id='91084'> لَا </seg>
+<seg id='91085'> فِى </seg>
+<seg id='91086'> ٱلْ </seg>
+<seg id='91087'> أَرْضِ </seg>
+<seg id='91088'> وَ </seg>
+<seg id='91089'> لَآ </seg>
+<seg id='91090'> أَصْغَرُ </seg>
+<seg id='91091'> مِن </seg>
+<seg id='91092'> ذَٰلِكَ </seg>
+<seg id='91093'> وَ </seg>
+<seg id='91094'> لَآ </seg>
+<seg id='91095'> أَكْبَرُ </seg>
+<seg id='91096'> إِلَّا </seg>
+<seg id='91097'> فِى </seg>
+<seg id='91098'> كِتَٰبٍ </seg>
+<seg id='91099'> مُّبِينٍ </seg>
+</verse><verse id='4'><seg id='91100'> لِّ </seg>
+<seg id='91101'> يَجْزِىَ </seg>
+<seg id='91102'> ٱلَّذِينَ </seg>
+<seg id='91103'> ءَامَنُ </seg>
+<pron id='12' ant='0 0' con='193'><seg id='91104'> وا۟ </seg></pron>
+<seg id='91105'> وَ </seg>
+<seg id='91106'> عَمِلُ </seg>
+<pron id='13' ant='0 0' con='193'><seg id='91107'> وا۟ </seg></pron>
+<seg id='91108'> ٱل </seg>
+<seg id='91109'> صَّٰلِحَٰتِ </seg>
+<seg id='91110'> أُو۟لَٰٓئِكَ </seg>
+<seg id='91111'> لَ </seg>
+<pron id='14' ant='91102 91109' con='11'><seg id='91112'> هُم </seg></pron>
+<seg id='91113'> مَّغْفِرَةٌ </seg>
+<seg id='91114'> وَ </seg>
+<seg id='91115'> رِزْقٌ </seg>
+<seg id='91116'> كَرِيمٌ </seg>
+</verse><verse id='5'><seg id='91117'> وَ </seg>
+<seg id='91118'> ٱلَّذِينَ </seg>
+<seg id='91119'> سَعَ </seg>
+<pron id='15' ant='0 0' con='5'><seg id='91120'> وْ </seg></pron>
+<seg id='91121'> فِىٓ </seg>
+<seg id='91122'> ءَايَٰتِ </seg>
+<pron id='16' ant='0 0' con='1'><seg id='91123'> نَا </seg></pron>
+<seg id='91124'> مُعَٰجِزِينَ </seg>
+<seg id='91125'> أُو۟لَٰٓئِكَ </seg>
+<seg id='91126'> لَ </seg>
+<pron id='17' ant='91118 91124' con='5'><seg id='91127'> هُمْ </seg></pron>
+<seg id='91128'> عَذَابٌ </seg>
+<seg id='91129'> مِّن </seg>
+<seg id='91130'> رِّجْزٍ </seg>
+<seg id='91131'> أَلِيمٌ </seg>
+</verse><verse id='6'><seg id='91132'> وَ </seg>
+<seg id='91133'> يَرَى </seg>
+<seg id='91134'> ٱلَّذِينَ </seg>
+<seg id='91135'> أُوتُ </seg>
+<pron id='18' ant='0 0' con='295'><seg id='91136'> وا۟ </seg></pron>
+<seg id='91137'> ٱلْ </seg>
+<seg id='91138'> عِلْمَ </seg>
+<seg id='91139'> ٱلَّذِىٓ </seg>
+<seg id='91140'> أُنزِلَ </seg>
+<seg id='91141'> إِلَيْ </seg>
+<pron id='19' ant='0 0' con='4'><seg id='91142'> كَ </seg></pron>
+<seg id='91143'> مِن </seg>
+<seg id='91144'> رَّبِّ </seg>
+<pron id='20' ant='0 0' con='4'><seg id='91145'> كَ </seg></pron>
+<pron id='21' ant='91139 91142' con='2'><seg id='91146'> هُوَ </seg></pron>
+<seg id='91147'> ٱلْ </seg>
+<seg id='91148'> حَقَّ </seg>
+<seg id='91149'> وَ </seg>
+<seg id='91150'> يَهْدِىٓ </seg>
+<seg id='91151'> إِلَىٰ </seg>
+<seg id='91152'> صِرَٰطِ </seg>
+<seg id='91153'> ٱلْ </seg>
+<seg id='91154'> عَزِيزِ </seg>
+<seg id='91155'> ٱلْ </seg>
+<seg id='91156'> حَمِيدِ </seg>
+</verse><verse id='7'><seg id='91157'> وَ </seg>
+<seg id='91158'> قَالَ </seg>
+<seg id='91159'> ٱلَّذِينَ </seg>
+<seg id='91160'> كَفَرُ </seg>
+<pron id='22' ant='0 0' con='5'><seg id='91161'> وا۟ </seg></pron>
+<seg id='91162'> هَلْ </seg>
+<seg id='91163'> نَدُلُّ </seg>
+<pron id='23' ant='91159 91161' con='5'><seg id='91164'> كُمْ </seg></pron>
+<seg id='91165'> عَلَىٰ </seg>
+<seg id='91166'> رَجُلٍ </seg>
+<seg id='91167'> يُنَبِّئُ </seg>
+<pron id='24' ant='91159 91161' con='5'><seg id='91168'> كُمْ </seg></pron>
+<seg id='91169'> إِذَا </seg>
+<seg id='91170'> مُزِّقْ </seg>
+<pron id='25' ant='91159 91161' con='5'><seg id='91171'> تُمْ </seg></pron>
+<seg id='91172'> كُلَّ </seg>
+<seg id='91173'> مُمَزَّقٍ </seg>
+<seg id='91174'> إِنَّ </seg>
+<pron id='26' ant='91159 91161' con='5'><seg id='91175'> كُمْ </seg></pron>
+<seg id='91176'> لَ </seg>
+<seg id='91177'> فِى </seg>
+<seg id='91178'> خَلْقٍ </seg>
+<seg id='91179'> جَدِيدٍ </seg>
+</verse><verse id='8'><seg id='91180'> أَ </seg>
+<seg id='91181'> فْتَرَىٰ </seg>
+<seg id='91182'> عَلَى </seg>
+<seg id='91183'> ٱللَّهِ </seg>
+<seg id='91184'> كَذِبًا </seg>
+<seg id='91185'> أَم </seg>
+<seg id='91186'> بِ </seg>
+<pron id='27' ant='0 0' con='4'><seg id='91187'> هِۦ </seg></pron>
+<seg id='91188'> جِنَّةٌۢ </seg>
+<seg id='91189'> بَلِ </seg>
+<seg id='91190'> ٱلَّذِينَ </seg>
+<seg id='91191'> لَا </seg>
+<seg id='91192'> يُؤْمِنُ </seg>
+<pron id='28' ant='91190 91196' con='190'><seg id='91193'> ونَ </seg></pron>
+<seg id='91194'> بِ </seg>
+<seg id='91195'> ٱلْ </seg>
+<seg id='91196'> ءَاخِرَةِ </seg>
+<seg id='91197'> فِى </seg>
+<seg id='91198'> ٱلْ </seg>
+<seg id='91199'> عَذَابِ </seg>
+<seg id='91200'> وَ </seg>
+<seg id='91201'> ٱل </seg>
+<seg id='91202'> ضَّلَٰلِ </seg>
+<seg id='91203'> ٱلْ </seg>
+<seg id='91204'> بَعِيدِ </seg>
+</verse><verse id='9'><seg id='91205'> أَ </seg>
+<seg id='91206'> فَ </seg>
+<seg id='91207'> لَمْ </seg>
+<seg id='91208'> يَرَ </seg>
+<pron id='29' ant='91190 91196' con='190'><seg id='91209'> وْا۟ </seg></pron>
+<seg id='91210'> إِلَىٰ </seg>
+<seg id='91211'> مَا </seg>
+<seg id='91212'> بَيْنَ </seg>
+<seg id='91213'> أَيْدِي </seg>
+<pron id='30' ant='91190 91196' con='190'><seg id='91214'> هِمْ </seg></pron>
+<seg id='91215'> وَ </seg>
+<seg id='91216'> مَا </seg>
+<seg id='91217'> خَلْفَ </seg>
+<pron id='31' ant='91190 91196' con='190'><seg id='91218'> هُم </seg></pron>
+<seg id='91219'> مِّنَ </seg>
+<seg id='91220'> ٱل </seg>
+<seg id='91221'> سَّمَآءِ </seg>
+<seg id='91222'> وَ </seg>
+<seg id='91223'> ٱلْ </seg>
+<seg id='91224'> أَرْضِ </seg>
+<seg id='91225'> إِن </seg>
+<seg id='91226'> نَّشَأْ </seg>
+<seg id='91227'> نَخْسِفْ </seg>
+<seg id='91228'> بِ </seg>
+<pron id='32' ant='91190 91196' con='190'><seg id='91229'> هِمُ </seg></pron>
+<seg id='91230'> ٱلْ </seg>
+<seg id='91231'> أَرْضَ </seg>
+<seg id='91232'> أَوْ </seg>
+<seg id='91233'> نُسْقِطْ </seg>
+<seg id='91234'> عَلَيْ </seg>
+<pron id='33' ant='91190 91196' con='190'><seg id='91235'> هِمْ </seg></pron>
+<seg id='91236'> كِسَفًا </seg>
+<seg id='91237'> مِّنَ </seg>
+<seg id='91238'> ٱل </seg>
+<seg id='91239'> سَّمَآءِ </seg>
+<seg id='91240'> إِنَّ </seg>
+<seg id='91241'> فِى </seg>
+<seg id='91242'> ذَٰلِكَ </seg>
+<seg id='91243'> لَ </seg>
+<seg id='91244'> ءَايَةً </seg>
+<seg id='91245'> لِّ </seg>
+<seg id='91246'> كُلِّ </seg>
+<seg id='91247'> عَبْدٍ </seg>
+<seg id='91248'> مُّنِيبٍ </seg>
+</verse><verse id='10'><seg id='91249'> وَ </seg>
+<seg id='91250'> لَ </seg>
+<seg id='91251'> قَدْ </seg>
+<seg id='91252'> ءَاتَيْ </seg>
+<pron id='34' ant='0 0' con='1'><seg id='91253'> نَا </seg></pron>
+<seg id='91254'> دَاوُۥدَ </seg>
+<seg id='91255'> مِنَّ </seg>
+<pron id='35' ant='0 0' con='1'><seg id='91256'> ا </seg></pron>
+<seg id='91257'> فَضْلًا </seg>
+<seg id='91258'> يَٰ </seg>
+<seg id='91259'> جِبَالُ </seg>
+<seg id='91260'> أَوِّبِ </seg>
+<pron id='36' ant='91259 91259' con='187'><seg id='91261'> ى </seg></pron>
+<seg id='91262'> مَعَ </seg>
+<pron id='37' ant='91254 91254' con='146'><seg id='91263'> هُۥ </seg></pron>
+<seg id='91264'> وَ </seg>
+<seg id='91265'> ٱل </seg>
+<seg id='91266'> طَّيْرَ </seg>
+<seg id='91267'> وَ </seg>
+<seg id='91268'> أَلَ </seg>
+<pron id='38' ant='0 0' con='1'><seg id='91269'> نَّا </seg></pron>
+<seg id='91270'> لَ </seg>
+<pron id='39' ant='91254 91254' con='146'><seg id='91271'> هُ </seg></pron>
+<seg id='91272'> ٱلْ </seg>
+<seg id='91273'> حَدِيدَ </seg>
+</verse><verse id='11'><seg id='91274'> أَنِ </seg>
+<seg id='91275'> ٱعْمَلْ </seg>
+<seg id='91276'> سَٰبِغَٰتٍ </seg>
+<seg id='91277'> وَ </seg>
+<seg id='91278'> قَدِّرْ </seg>
+<seg id='91279'> فِى </seg>
+<seg id='91280'> ٱل </seg>
+<seg id='91281'> سَّرْدِ </seg>
+<seg id='91282'> وَ </seg>
+<seg id='91283'> ٱعْمَلُ </seg>
+<pron id='40' ant='91254 91254' con='146'><seg id='91284'> وا۟ </seg></pron>
+<seg id='91285'> صَٰلِحًا </seg>
+<seg id='91286'> إِنِّ </seg>
+<pron id='41' ant='0 0' con='1'><seg id='91287'> ى </seg></pron>
+<seg id='91288'> بِ </seg>
+<seg id='91289'> مَا </seg>
+<seg id='91290'> تَعْمَلُ </seg>
+<pron id='42' ant='91254 91254' con='146'><seg id='91291'> ونَ </seg></pron>
+<seg id='91292'> بَصِيرٌ </seg>
+</verse><verse id='12'><seg id='91293'> وَ </seg>
+<seg id='91294'> لِ </seg>
+<seg id='91295'> سُلَيْمَٰنَ </seg>
+<seg id='91296'> ٱل </seg>
+<seg id='91297'> رِّيحَ </seg>
+<seg id='91298'> غُدُوُّ </seg>
+<pron id='43' ant='91296 91297' con='327'><seg id='91299'> هَا </seg></pron>
+<seg id='91300'> شَهْرٌ </seg>
+<seg id='91301'> وَ </seg>
+<seg id='91302'> رَوَاحُ </seg>
+<pron id='44' ant='91296 91297' con='327'><seg id='91303'> هَا </seg></pron>
+<seg id='91304'> شَهْرٌ </seg>
+<seg id='91305'> وَ </seg>
+<seg id='91306'> أَسَلْ </seg>
+<pron id='45' ant='0 0' con='1'><seg id='91307'> نَا </seg></pron>
+<seg id='91308'> لَ </seg>
+<pron id='46' ant='91295 91295' con='602'><seg id='91309'> هُۥ </seg></pron>
+<seg id='91310'> عَيْنَ </seg>
+<seg id='91311'> ٱلْ </seg>
+<seg id='91312'> قِطْرِ </seg>
+<seg id='91313'> وَ </seg>
+<seg id='91314'> مِنَ </seg>
+<seg id='91315'> ٱلْ </seg>
+<seg id='91316'> جِنِّ </seg>
+<seg id='91317'> مَن </seg>
+<seg id='91318'> يَعْمَلُ </seg>
+<seg id='91319'> بَيْنَ </seg>
+<seg id='91320'> يَدَيْ </seg>
+<pron id='47' ant='91295 91295' con='602'><seg id='91321'> هِ </seg></pron>
+<seg id='91322'> بِ </seg>
+<seg id='91323'> إِذْنِ </seg>
+<seg id='91324'> رَبِّ </seg>
+<pron id='48' ant='91295 91295' con='602'><seg id='91325'> هِۦ </seg></pron>
+<seg id='91326'> وَ </seg>
+<seg id='91327'> مَن </seg>
+<seg id='91328'> يَزِغْ </seg>
+<seg id='91329'> مِنْ </seg>
+<pron id='49' ant='91315 91316' con='378'><seg id='91330'> هُمْ </seg></pron>
+<seg id='91331'> عَنْ </seg>
+<seg id='91332'> أَمْرِ </seg>
+<pron id='50' ant='0 0' con='1'><seg id='91333'> نَا </seg></pron>
+<seg id='91334'> نُذِقْ </seg>
+<pron id='51' ant='91315 91316' con='378'><seg id='91335'> هُ </seg></pron>
+<seg id='91336'> مِنْ </seg>
+<seg id='91337'> عَذَابِ </seg>
+<seg id='91338'> ٱل </seg>
+<seg id='91339'> سَّعِيرِ </seg>
+</verse><verse id='13'><seg id='91340'> يَعْمَلُ </seg>
+<pron id='52' ant='91315 91316' con='378'><seg id='91341'> ونَ </seg></pron>
+<seg id='91342'> لَ </seg>
+<pron id='53' ant='91295 91295' con='602'><seg id='91343'> هُۥ </seg></pron>
+<seg id='91344'> مَا </seg>
+<seg id='91345'> يَشَآءُ </seg>
+<seg id='91346'> مِن </seg>
+<seg id='91347'> مَّحَٰرِيبَ </seg>
+<seg id='91348'> وَ </seg>
+<seg id='91349'> تَمَٰثِيلَ </seg>
+<seg id='91350'> وَ </seg>
+<seg id='91351'> جِفَانٍ </seg>
+<seg id='91352'> كَ </seg>
+<seg id='91353'> ٱلْ </seg>
+<seg id='91354'> جَوَابِ </seg>
+<seg id='91355'> وَ </seg>
+<seg id='91356'> قُدُورٍ </seg>
+<seg id='91357'> رَّاسِيَٰتٍ </seg>
+<seg id='91358'> ٱعْمَلُ </seg>
+<pron id='54' ant='91360 91361' con='146'><seg id='91359'> وٓا۟ </seg></pron>
+<seg id='91360'> ءَالَ </seg>
+<seg id='91361'> دَاوُۥدَ </seg>
+<seg id='91362'> شُكْرًا </seg>
+<seg id='91363'> وَ </seg>
+<seg id='91364'> قَلِيلٌ </seg>
+<seg id='91365'> مِّنْ </seg>
+<seg id='91366'> عِبَادِ </seg>
+<pron id='55' ant='0 0' con='1'><seg id='91367'> ىَ </seg></pron>
+<seg id='91368'> ٱل </seg>
+<seg id='91369'> شَّكُورُ </seg>
+</verse><verse id='14'><seg id='91370'> فَ </seg>
+<seg id='91371'> لَمَّا </seg>
+<seg id='91372'> قَضَيْ </seg>
+<pron id='56' ant='0 0' con='1'><seg id='91373'> نَا </seg></pron>
+<seg id='91374'> عَلَيْ </seg>
+<pron id='57' ant='91295 91295' con='602'><seg id='91375'> هِ </seg></pron>
+<seg id='91376'> ٱلْ </seg>
+<seg id='91377'> مَوْتَ </seg>
+<seg id='91378'> مَا </seg>
+<seg id='91379'> دَلَّ </seg>
+<pron id='58' ant='0 0' con='378'><seg id='91380'> هُمْ </seg></pron>
+<seg id='91381'> عَلَىٰ </seg>
+<seg id='91382'> مَوْتِ </seg>
+<pron id='59' ant='0 0' con='602'><seg id='91383'> هِۦٓ </seg></pron>
+<seg id='91384'> إِلَّا </seg>
+<seg id='91385'> دَآبَّةُ </seg>
+<seg id='91386'> ٱلْ </seg>
+<seg id='91387'> أَرْضِ </seg>
+<seg id='91388'> تَأْكُلُ </seg>
+<seg id='91389'> مِنسَأَتَ </seg>
+<pron id='60' ant='0 0' con='602'><seg id='91390'> هُۥ </seg></pron>
+<seg id='91391'> فَ </seg>
+<seg id='91392'> لَمَّا </seg>
+<seg id='91393'> خَرَّ </seg>
+<seg id='91394'> تَبَيَّنَتِ </seg>
+<seg id='91395'> ٱلْ </seg>
+<seg id='91396'> جِنُّ </seg>
+<seg id='91397'> أَن </seg>
+<seg id='91398'> لَّوْ </seg>
+<seg id='91399'> كَانُ </seg>
+<pron id='61' ant='91395 91396' con='378'><seg id='91400'> وا۟ </seg></pron>
+<seg id='91401'> يَعْلَمُ </seg>
+<pron id='62' ant='91395 91396' con='378'><seg id='91402'> ونَ </seg></pron>
+<seg id='91403'> ٱلْ </seg>
+<seg id='91404'> غَيْبَ </seg>
+<seg id='91405'> مَا </seg>
+<seg id='91406'> لَبِثُ </seg>
+<pron id='63' ant='91395 91396' con='378'><seg id='91407'> وا۟ </seg></pron>
+<seg id='91408'> فِى </seg>
+<seg id='91409'> ٱلْ </seg>
+<seg id='91410'> عَذَابِ </seg>
+<seg id='91411'> ٱلْ </seg>
+<seg id='91412'> مُهِينِ </seg>
+</verse><verse id='15'><seg id='91413'> لَ </seg>
+<seg id='91414'> قَدْ </seg>
+<seg id='91415'> كَانَ </seg>
+<seg id='91416'> لِ </seg>
+<seg id='91417'> سَبَإٍ </seg>
+<seg id='91418'> فِى </seg>
+<seg id='91419'> مَسْكَنِ </seg>
+<pron id='64' ant='91417 91417' con='632'><seg id='91420'> هِمْ </seg></pron>
+<seg id='91421'> ءَايَةٌ </seg>
+<seg id='91422'> جَنَّتَانِ </seg>
+<seg id='91423'> عَن </seg>
+<seg id='91424'> يَمِينٍ </seg>
+<seg id='91425'> وَ </seg>
+<seg id='91426'> شِمَالٍ </seg>
+<seg id='91427'> كُلُ </seg>
+<pron id='65' ant='91417 91417' con='632'><seg id='91428'> وا۟ </seg></pron>
+<seg id='91429'> مِن </seg>
+<seg id='91430'> رِّزْقِ </seg>
+<seg id='91431'> رَبِّ </seg>
+<pron id='66' ant='91417 91417' con='632'><seg id='91432'> كُمْ </seg></pron>
+<seg id='91433'> وَ </seg>
+<seg id='91434'> ٱشْكُرُ </seg>
+<pron id='67' ant='91417 91417' con='632'><seg id='91435'> وا۟ </seg></pron>
+<seg id='91436'> لَ </seg>
+<pron id='68' ant='91431 91432' con='1'><seg id='91437'> هُۥ </seg></pron>
+<seg id='91438'> بَلْدَةٌ </seg>
+<seg id='91439'> طَيِّبَةٌ </seg>
+<seg id='91440'> وَ </seg>
+<seg id='91441'> رَبٌّ </seg>
+<seg id='91442'> غَفُورٌ </seg>
+</verse><verse id='16'><seg id='91443'> فَ </seg>
+<seg id='91444'> أَعْرَضُ </seg>
+<pron id='69' ant='91417 91417' con='632'><seg id='91445'> وا۟ </seg></pron>
+<seg id='91446'> فَ </seg>
+<seg id='91447'> أَرْسَلْ </seg>
+<pron id='70' ant='0 0' con='1'><seg id='91448'> نَا </seg></pron>
+<seg id='91449'> عَلَيْ </seg>
+<pron id='71' ant='91417 91417' con='632'><seg id='91450'> هِمْ </seg></pron>
+<seg id='91451'> سَيْلَ </seg>
+<seg id='91452'> ٱلْ </seg>
+<seg id='91453'> عَرِمِ </seg>
+<seg id='91454'> وَ </seg>
+<seg id='91455'> بَدَّلْ </seg>
+<pron id='72' ant='0 0' con='1'><seg id='91456'> نَٰ </seg></pron>
+<pron id='73' ant='91417 91417' con='632'><seg id='91457'> هُم </seg></pron>
+<seg id='91458'> بِ </seg>
+<seg id='91459'> جَنَّتَيْ </seg>
+<pron id='74' ant='91417 91417' con='632'><seg id='91460'> هِمْ </seg></pron>
+<seg id='91461'> جَنَّتَيْنِ </seg>
+<seg id='91462'> ذَوَاتَىْ </seg>
+<seg id='91463'> أُكُلٍ </seg>
+<seg id='91464'> خَمْطٍ </seg>
+<seg id='91465'> وَ </seg>
+<seg id='91466'> أَثْلٍ </seg>
+<seg id='91467'> وَ </seg>
+<seg id='91468'> شَىْءٍ </seg>
+<seg id='91469'> مِّن </seg>
+<seg id='91470'> سِدْرٍ </seg>
+<seg id='91471'> قَلِيلٍ </seg>
+</verse><verse id='17'><seg id='91472'> ذَٰلِكَ </seg>
+<seg id='91473'> جَزَيْ </seg>
+<pron id='75' ant='0 0' con='1'><seg id='91474'> نَٰ </seg></pron>
+<pron id='76' ant='91417 91417' con='632'><seg id='91475'> هُم </seg></pron>
+<seg id='91476'> بِ </seg>
+<seg id='91477'> مَا </seg>
+<seg id='91478'> كَفَرُ </seg>
+<pron id='77' ant='91417 91417' con='632'><seg id='91479'> وا۟ </seg></pron>
+<seg id='91480'> وَ </seg>
+<seg id='91481'> هَلْ </seg>
+<seg id='91482'> نُجَٰزِىٓ </seg>
+<seg id='91483'> إِلَّا </seg>
+<seg id='91484'> ٱلْ </seg>
+<seg id='91485'> كَفُورَ </seg>
+</verse><verse id='18'><seg id='91486'> وَ </seg>
+<seg id='91487'> جَعَلْ </seg>
+<pron id='78' ant='0 0' con='1'><seg id='91488'> نَا </seg></pron>
+<seg id='91489'> بَيْنَ </seg>
+<pron id='79' ant='91417 91417' con='632'><seg id='91490'> هُمْ </seg></pron>
+<seg id='91491'> وَ </seg>
+<seg id='91492'> بَيْنَ </seg>
+<seg id='91493'> ٱلْ </seg>
+<seg id='91494'> قُرَى </seg>
+<seg id='91495'> ٱلَّتِى </seg>
+<seg id='91496'> بَٰرَكْ </seg>
+<pron id='80' ant='0 0' con='1'><seg id='91497'> نَا </seg></pron>
+<seg id='91498'> فِي </seg>
+<pron id='81' ant='91493 91499' con='633'><seg id='91499'> هَا </seg></pron>
+<seg id='91500'> قُرًى </seg>
+<seg id='91501'> ظَٰهِرَةً </seg>
+<seg id='91502'> وَ </seg>
+<seg id='91503'> قَدَّرْ </seg>
+<pron id='82' ant='0 0' con='1'><seg id='91504'> نَا </seg></pron>
+<seg id='91505'> فِي </seg>
+<pron id='83' ant='91493 91499' con='633'><seg id='91506'> هَا </seg></pron>
+<seg id='91507'> ٱل </seg>
+<seg id='91508'> سَّيْرَ </seg>
+<seg id='91509'> سِيرُ </seg>
+<pron id='84' ant='91417 91417' con='632'><seg id='91510'> وا۟ </seg></pron>
+<seg id='91511'> فِي </seg>
+<pron id='85' ant='91493 91499' con='633'><seg id='91512'> هَا </seg></pron>
+<seg id='91513'> لَيَالِىَ </seg>
+<seg id='91514'> وَ </seg>
+<seg id='91515'> أَيَّامًا </seg>
+<seg id='91516'> ءَامِنِينَ </seg>
+</verse><verse id='19'><seg id='91517'> فَ </seg>
+<seg id='91518'> قَالُ </seg>
+<pron id='86' ant='91417 91417' con='632'><seg id='91519'> وا۟ </seg></pron>
+<seg id='91520'> رَبَّ </seg>
+<pron id='87' ant='91417 91417' con='632'><seg id='91521'> نَا </seg></pron>
+<seg id='91522'> بَٰعِدْ </seg>
+<seg id='91523'> بَيْنَ </seg>
+<seg id='91524'> أَسْفَارِ </seg>
+<pron id='88' ant='91417 91417' con='632'><seg id='91525'> نَا </seg></pron>
+<seg id='91526'> وَ </seg>
+<seg id='91527'> ظَلَمُ </seg>
+<pron id='89' ant='91417 91417' con='632'><seg id='91528'> وٓا۟ </seg></pron>
+<seg id='91529'> أَنفُسَ </seg>
+<pron id='90' ant='91417 91417' con='632'><seg id='91530'> هُمْ </seg></pron>
+<seg id='91531'> فَ </seg>
+<seg id='91532'> جَعَلْ </seg>
+<pron id='91' ant='0 0' con='1'><seg id='91533'> نَٰ </seg></pron>
+<pron id='92' ant='91417 91417' con='632'><seg id='91534'> هُمْ </seg></pron>
+<seg id='91535'> أَحَادِيثَ </seg>
+<seg id='91536'> وَ </seg>
+<seg id='91537'> مَزَّقْ </seg>
+<pron id='93' ant='0 0' con='1'><seg id='91538'> نَٰ </seg></pron>
+<pron id='94' ant='91417 91417' con='632'><seg id='91539'> هُمْ </seg></pron>
+<seg id='91540'> كُلَّ </seg>
+<seg id='91541'> مُمَزَّقٍ </seg>
+<seg id='91542'> إِنَّ </seg>
+<seg id='91543'> فِى </seg>
+<seg id='91544'> ذَٰلِكَ </seg>
+<seg id='91545'> لَ </seg>
+<seg id='91546'> ءَايَٰتٍ </seg>
+<seg id='91547'> لِّ </seg>
+<seg id='91548'> كُلِّ </seg>
+<seg id='91549'> صَبَّارٍ </seg>
+<seg id='91550'> شَكُورٍ </seg>
+</verse><verse id='20'><seg id='91551'> وَ </seg>
+<seg id='91552'> لَ </seg>
+<seg id='91553'> قَدْ </seg>
+<seg id='91554'> صَدَّقَ </seg>
+<seg id='91555'> عَلَيْ </seg>
+<pron id='95' ant='91417 91417' con='632'><seg id='91556'> هِمْ </seg></pron>
+<seg id='91557'> إِبْلِيسُ </seg>
+<seg id='91558'> ظَنَّ </seg>
+<pron id='96' ant='91557 91557' con='608'><seg id='91559'> هُۥ </seg></pron>
+<seg id='91560'> فَ </seg>
+<seg id='91561'> ٱتَّبَعُ </seg>
+<pron id='97' ant='91417 91417' con='632'><seg id='91562'> و </seg></pron>
+<pron id='98' ant='91557 91557' con='608'><seg id='91563'> هُ </seg></pron>
+<seg id='91564'> إِلَّا </seg>
+<seg id='91565'> فَرِيقًا </seg>
+<seg id='91566'> مِّنَ </seg>
+<seg id='91567'> ٱلْ </seg>
+<seg id='91568'> مُؤْمِنِينَ </seg>
+</verse><verse id='21'><seg id='91569'> وَ </seg>
+<seg id='91570'> مَا </seg>
+<seg id='91571'> كَانَ </seg>
+<seg id='91572'> لَ </seg>
+<pron id='99' ant='91557 91557' con='608'><seg id='91573'> هُۥ </seg></pron>
+<seg id='91574'> عَلَيْ </seg>
+<pron id='100' ant='91417 91417' con='632'><seg id='91575'> هِم </seg></pron>
+<seg id='91576'> مِّن </seg>
+<seg id='91577'> سُلْطَٰنٍ </seg>
+<seg id='91578'> إِلَّا </seg>
+<seg id='91579'> لِ </seg>
+<seg id='91580'> نَعْلَمَ </seg>
+<seg id='91581'> مَن </seg>
+<seg id='91582'> يُؤْمِنُ </seg>
+<seg id='91583'> بِ </seg>
+<seg id='91584'> ٱلْ </seg>
+<seg id='91585'> ءَاخِرَةِ </seg>
+<seg id='91586'> مِ </seg>
+<seg id='91587'> مَّنْ </seg>
+<pron id='101' ant='0 0' con='190'><seg id='91588'> هُوَ </seg></pron>
+<seg id='91589'> مِنْ </seg>
+<pron id='102' ant='91584 91585' con='338'><seg id='91590'> هَا </seg></pron>
+<seg id='91591'> فِى </seg>
+<seg id='91592'> شَكٍّ </seg>
+<seg id='91593'> وَ </seg>
+<seg id='91594'> رَبُّ </seg>
+<pron id='103' ant='0 0' con='4'><seg id='91595'> كَ </seg></pron>
+<seg id='91596'> عَلَىٰ </seg>
+<seg id='91597'> كُلِّ </seg>
+<seg id='91598'> شَىْءٍ </seg>
+<seg id='91599'> حَفِيظٌ </seg>
+</verse><verse id='22'><seg id='91600'> قُلِ </seg>
+<seg id='91601'> ٱدْعُ </seg>
+<pron id='104' ant='0 0' con='57'><seg id='91602'> وا۟ </seg></pron>
+<seg id='91603'> ٱلَّذِينَ </seg>
+<seg id='91604'> زَعَمْ </seg>
+<pron id='105' ant='0 0' con='57'><seg id='91605'> تُم </seg></pron>
+<seg id='91606'> مِّن </seg>
+<seg id='91607'> دُونِ </seg>
+<seg id='91608'> ٱللَّهِ </seg>
+<seg id='91609'> لَا </seg>
+<seg id='91610'> يَمْلِكُ </seg>
+<pron id='106' ant='91603 91608' con='622'><seg id='91611'> ونَ </seg></pron>
+<seg id='91612'> مِثْقَالَ </seg>
+<seg id='91613'> ذَرَّةٍ </seg>
+<seg id='91614'> فِى </seg>
+<seg id='91615'> ٱل </seg>
+<seg id='91616'> سَّمَٰوَٰتِ </seg>
+<seg id='91617'> وَ </seg>
+<seg id='91618'> لَا </seg>
+<seg id='91619'> فِى </seg>
+<seg id='91620'> ٱلْ </seg>
+<seg id='91621'> أَرْضِ </seg>
+<seg id='91622'> وَ </seg>
+<seg id='91623'> مَا </seg>
+<seg id='91624'> لَ </seg>
+<pron id='107' ant='91603 91608' con='622'><seg id='91625'> هُمْ </seg></pron>
+<seg id='91626'> فِي </seg>
+<pron id='108' ant='91615 91621' con='182'><seg id='91627'> هِمَا </seg></pron>
+<seg id='91628'> مِن </seg>
+<seg id='91629'> شِرْكٍ </seg>
+<seg id='91630'> وَ </seg>
+<seg id='91631'> مَا </seg>
+<seg id='91632'> لَ </seg>
+<pron id='109' ant='0 0' con='1'><seg id='91633'> هُۥ </seg></pron>
+<seg id='91634'> مِنْ </seg>
+<pron id='110' ant='91603 91608' con='622'><seg id='91635'> هُم </seg></pron>
+<seg id='91636'> مِّن </seg>
+<seg id='91637'> ظَهِيرٍ </seg>
+</verse><verse id='23'><seg id='91638'> وَ </seg>
+<seg id='91639'> لَا </seg>
+<seg id='91640'> تَنفَعُ </seg>
+<seg id='91641'> ٱل </seg>
+<seg id='91642'> شَّفَٰعَةُ </seg>
+<seg id='91643'> عِندَ </seg>
+<pron id='111' ant='0 0' con='1'><seg id='91644'> هُۥٓ </seg></pron>
+<seg id='91645'> إِلَّا </seg>
+<seg id='91646'> لِ </seg>
+<seg id='91647'> مَنْ </seg>
+<seg id='91648'> أَذِنَ </seg>
+<seg id='91649'> لَ </seg>
+<pron id='112' ant='0 0' con='16'><seg id='91650'> هُۥ </seg></pron>
+<seg id='91651'> حَتَّىٰٓ </seg>
+<seg id='91652'> إِذَا </seg>
+<seg id='91653'> فُزِّعَ </seg>
+<seg id='91654'> عَن </seg>
+<seg id='91655'> قُلُوبِ </seg>
+<pron id='113' ant='0 0' con='19'><seg id='91656'> هِمْ </seg></pron>
+<seg id='91657'> قَالُ </seg>
+<pron id='114' ant='0 0' con='19'><seg id='91658'> وا۟ </seg></pron>
+<seg id='91659'> مَاذَا </seg>
+<seg id='91660'> قَالَ </seg>
+<seg id='91661'> رَبُّ </seg>
+<pron id='115' ant='0 0' con='19'><seg id='91662'> كُمْ </seg></pron>
+<seg id='91663'> قَالُ </seg>
+<pron id='116' ant='0 0' con='19'><seg id='91664'> وا۟ </seg></pron>
+<seg id='91665'> ٱلْ </seg>
+<seg id='91666'> حَقَّ </seg>
+<seg id='91667'> وَ </seg>
+<pron id='117' ant='91661 91662' con='1'><seg id='91668'> هُوَ </seg></pron>
+<seg id='91669'> ٱلْ </seg>
+<seg id='91670'> عَلِىُّ </seg>
+<seg id='91671'> ٱلْ </seg>
+<seg id='91672'> كَبِيرُ </seg>
+</verse><verse id='24'><seg id='91673'> قُلْ </seg>
+<seg id='91674'> مَن </seg>
+<seg id='91675'> يَرْزُقُ </seg>
+<pron id='118' ant='0 0' con='57'><seg id='91676'> كُم </seg></pron>
+<seg id='91677'> مِّنَ </seg>
+<seg id='91678'> ٱل </seg>
+<seg id='91679'> سَّمَٰوَٰتِ </seg>
+<seg id='91680'> وَ </seg>
+<seg id='91681'> ٱلْ </seg>
+<seg id='91682'> أَرْضِ </seg>
+<seg id='91683'> قُلِ </seg>
+<seg id='91684'> ٱللَّهُ </seg>
+<seg id='91685'> وَ </seg>
+<seg id='91686'> إِنَّ </seg>
+<pron id='119' ant='0 0' con='404'><seg id='91687'> آ </seg></pron>
+<seg id='91688'> أَوْ </seg>
+<pron id='120' ant='0 0' con='57'><seg id='91689'> إِيَّاكُمْ </seg></pron>
+<seg id='91690'> لَ </seg>
+<seg id='91691'> عَلَىٰ </seg>
+<seg id='91692'> هُدًى </seg>
+<seg id='91693'> أَوْ </seg>
+<seg id='91694'> فِى </seg>
+<seg id='91695'> ضَلَٰلٍ </seg>
+<seg id='91696'> مُّبِينٍ </seg>
+</verse><verse id='25'><seg id='91697'> قُل </seg>
+<seg id='91698'> لَّا </seg>
+<seg id='91699'> تُسْـَٔلُ </seg>
+<pron id='121' ant='0 0' con='57'><seg id='91700'> ونَ </seg></pron>
+<seg id='91701'> عَ </seg>
+<seg id='91702'> مَّآ </seg>
+<seg id='91703'> أَجْرَمْ </seg>
+<pron id='122' ant='0 0' con='404'><seg id='91704'> نَا </seg></pron>
+<seg id='91705'> وَ </seg>
+<seg id='91706'> لَا </seg>
+<seg id='91707'> نُسْـَٔلُ </seg>
+<seg id='91708'> عَ </seg>
+<seg id='91709'> مَّا </seg>
+<seg id='91710'> تَعْمَلُ </seg>
+<pron id='123' ant='0 0' con='57'><seg id='91711'> ونَ </seg></pron>
+</verse><verse id='26'><seg id='91712'> قُلْ </seg>
+<seg id='91713'> يَجْمَعُ </seg>
+<seg id='91714'> بَيْنَ </seg>
+<pron id='124' ant='0 0' con='585'><seg id='91715'> نَا </seg></pron>
+<seg id='91716'> رَبُّ </seg>
+<pron id='125' ant='0 0' con='585'><seg id='91717'> نَا </seg></pron>
+<seg id='91718'> ثُمَّ </seg>
+<seg id='91719'> يَفْتَحُ </seg>
+<seg id='91720'> بَيْنَ </seg>
+<pron id='126' ant='0 0' con='585'><seg id='91721'> نَا </seg></pron>
+<seg id='91722'> بِ </seg>
+<seg id='91723'> ٱلْ </seg>
+<seg id='91724'> حَقِّ </seg>
+<seg id='91725'> وَ </seg>
+<pron id='127' ant='0 0' con='1'><seg id='91726'> هُوَ </seg></pron>
+<seg id='91727'> ٱلْ </seg>
+<seg id='91728'> فَتَّاحُ </seg>
+<seg id='91729'> ٱلْ </seg>
+<seg id='91730'> عَلِيمُ </seg>
+</verse><verse id='27'><seg id='91731'> قُلْ </seg>
+<seg id='91732'> أَرُ </seg>
+<pron id='128' ant='0 0' con='57'><seg id='91733'> و </seg></pron>
+<pron id='129' ant='0 0' con='4'><seg id='91734'> نِىَ </seg></pron>
+<seg id='91735'> ٱلَّذِينَ </seg>
+<seg id='91736'> أَلْحَقْ </seg>
+<pron id='130' ant='0 0' con='57'><seg id='91737'> تُم </seg></pron>
+<seg id='91738'> بِ </seg>
+<pron id='131' ant='0 0' con='1'><seg id='91739'> هِۦ </seg></pron>
+<seg id='91740'> شُرَكَآءَ </seg>
+<seg id='91741'> كَلَّا </seg>
+<seg id='91742'> بَلْ </seg>
+<pron id='132' ant='0 0' con='1'><seg id='91743'> هُوَ </seg></pron>
+<seg id='91744'> ٱللَّهُ </seg>
+<seg id='91745'> ٱلْ </seg>
+<seg id='91746'> عَزِيزُ </seg>
+<seg id='91747'> ٱلْ </seg>
+<seg id='91748'> حَكِيمُ </seg>
+</verse><verse id='28'><seg id='91749'> وَ </seg>
+<seg id='91750'> مَآ </seg>
+<seg id='91751'> أَرْسَلْ </seg>
+<pron id='133' ant='0 0' con='1'><seg id='91752'> نَٰ </seg></pron>
+<pron id='134' ant='0 0' con='4'><seg id='91753'> كَ </seg></pron>
+<seg id='91754'> إِلَّا </seg>
+<seg id='91755'> كَآفَّةً </seg>
+<seg id='91756'> لِّ </seg>
+<seg id='91757'> ل </seg>
+<seg id='91758'> نَّاسِ </seg>
+<seg id='91759'> بَشِيرًا </seg>
+<seg id='91760'> وَ </seg>
+<seg id='91761'> نَذِيرًا </seg>
+<seg id='91762'> وَ </seg>
+<seg id='91763'> لَٰكِنَّ </seg>
+<seg id='91764'> أَكْثَرَ </seg>
+<seg id='91765'> ٱل </seg>
+<seg id='91766'> نَّاسِ </seg>
+<seg id='91767'> لَا </seg>
+<seg id='91768'> يَعْلَمُ </seg>
+<pron id='135' ant='91764 91766' con='10'><seg id='91769'> ونَ </seg></pron>
+</verse><verse id='29'><seg id='91770'> وَ </seg>
+<seg id='91771'> يَقُولُ </seg>
+<pron id='136' ant='0 0' con='57'><seg id='91772'> ونَ </seg></pron>
+<seg id='91773'> مَتَىٰ </seg>
+<seg id='91774'> هَٰذَا </seg>
+<seg id='91775'> ٱلْ </seg>
+<seg id='91776'> وَعْدُ </seg>
+<seg id='91777'> إِن </seg>
+<seg id='91778'> كُن </seg>
+<pron id='137' ant='0 0' con='404'><seg id='91779'> تُمْ </seg></pron>
+<seg id='91780'> صَٰدِقِينَ </seg>
+</verse><verse id='30'><seg id='91781'> قُل </seg>
+<seg id='91782'> لَّ </seg>
+<pron id='138' ant='0 0' con='57'><seg id='91783'> كُم </seg></pron>
+<seg id='91784'> مِّيعَادُ </seg>
+<seg id='91785'> يَوْمٍ </seg>
+<seg id='91786'> لَّا </seg>
+<seg id='91787'> تَسْتَـْٔخِرُ </seg>
+<pron id='139' ant='0 0' con='57'><seg id='91788'> ونَ </seg></pron>
+<seg id='91789'> عَنْ </seg>
+<pron id='140' ant='0 0' con='168'><seg id='91790'> هُ </seg></pron>
+<seg id='91791'> سَاعَةً </seg>
+<seg id='91792'> وَ </seg>
+<seg id='91793'> لَا </seg>
+<seg id='91794'> تَسْتَقْدِمُ </seg>
+<pron id='141' ant='0 0' con='57'><seg id='91795'> ونَ </seg></pron>
+</verse><verse id='31'><seg id='91796'> وَ </seg>
+<seg id='91797'> قَالَ </seg>
+<seg id='91798'> ٱلَّذِينَ </seg>
+<seg id='91799'> كَفَرُ </seg>
+<pron id='142' ant='0 0' con='5'><seg id='91800'> وا۟ </seg></pron>
+<seg id='91801'> لَن </seg>
+<seg id='91802'> نُّؤْمِنَ </seg>
+<seg id='91803'> بِ </seg>
+<seg id='91804'> هَٰذَا </seg>
+<seg id='91805'> ٱلْ </seg>
+<seg id='91806'> قُرْءَانِ </seg>
+<seg id='91807'> وَ </seg>
+<seg id='91808'> لَا </seg>
+<seg id='91809'> بِ </seg>
+<seg id='91810'> ٱلَّذِى </seg>
+<seg id='91811'> بَيْنَ </seg>
+<seg id='91812'> يَدَيْ </seg>
+<pron id='143' ant='91805 91806' con='2'><seg id='91813'> هِ </seg></pron>
+<seg id='91814'> وَ </seg>
+<seg id='91815'> لَوْ </seg>
+<seg id='91816'> تَرَىٰٓ </seg>
+<seg id='91817'> إِذِ </seg>
+<seg id='91818'> ٱل </seg>
+<seg id='91819'> ظَّٰلِمُونَ </seg>
+<seg id='91820'> مَوْقُوفُونَ </seg>
+<seg id='91821'> عِندَ </seg>
+<seg id='91822'> رَبِّ </seg>
+<pron id='144' ant='91818 91819' con='320'><seg id='91823'> هِمْ </seg></pron>
+<seg id='91824'> يَرْجِعُ </seg>
+<seg id='91825'> بَعْضُ </seg>
+<pron id='145' ant='91818 91819' con='320'><seg id='91826'> هُمْ </seg></pron>
+<seg id='91827'> إِلَىٰ </seg>
+<seg id='91828'> بَعْضٍ </seg>
+<seg id='91829'> ٱلْ </seg>
+<seg id='91830'> قَوْلَ </seg>
+<seg id='91831'> يَقُولُ </seg>
+<seg id='91832'> ٱلَّذِينَ </seg>
+<seg id='91833'> ٱسْتُضْعِفُ </seg>
+<pron id='146' ant='91832 91834' con='519'><seg id='91834'> وا۟ </seg></pron>
+<seg id='91835'> لِ </seg>
+<seg id='91836'> لَّذِينَ </seg>
+<seg id='91837'> ٱسْتَكْبَرُ </seg>
+<pron id='147' ant='91836 91838' con='537'><seg id='91838'> وا۟ </seg></pron>
+<seg id='91839'> لَوْلَآ </seg>
+<pron id='148' ant='91836 91838' con='537'><seg id='91840'> أَنتُمْ </seg></pron>
+<seg id='91841'> لَ </seg>
+<seg id='91842'> كُ </seg>
+<pron id='149' ant='91832 91834' con='519'><seg id='91843'> نَّا </seg></pron>
+<seg id='91844'> مُؤْمِنِينَ </seg>
+</verse><verse id='32'><seg id='91845'> قَالَ </seg>
+<seg id='91846'> ٱلَّذِينَ </seg>
+<seg id='91847'> ٱسْتَكْبَرُ </seg>
+<pron id='150' ant='91836 91838' con='537'><seg id='91848'> وا۟ </seg></pron>
+<seg id='91849'> لِ </seg>
+<seg id='91850'> لَّذِينَ </seg>
+<seg id='91851'> ٱسْتُضْعِفُ </seg>
+<pron id='151' ant='91832 91834' con='519'><seg id='91852'> وٓا۟ </seg></pron>
+<seg id='91853'> أَ </seg>
+<pron id='152' ant='91846 91848' con='537'><seg id='91854'> نَحْنُ </seg></pron>
+<seg id='91855'> صَدَدْ </seg>
+<pron id='153' ant='91846 91848' con='537'><seg id='91856'> نَٰ </seg></pron>
+<pron id='154' ant='91850 91852' con='519'><seg id='91857'> كُمْ </seg></pron>
+<seg id='91858'> عَنِ </seg>
+<seg id='91859'> ٱلْ </seg>
+<seg id='91860'> هُدَىٰ </seg>
+<seg id='91861'> بَعْدَ </seg>
+<seg id='91862'> إِذْ </seg>
+<seg id='91863'> جَآءَ </seg>
+<pron id='155' ant='91850 91852' con='519'><seg id='91864'> كُم </seg></pron>
+<seg id='91865'> بَلْ </seg>
+<seg id='91866'> كُن </seg>
+<pron id='156' ant='91850 91852' con='519'><seg id='91867'> تُم </seg></pron>
+<seg id='91868'> مُّجْرِمِينَ </seg>
+</verse><verse id='33'><seg id='91869'> وَ </seg>
+<seg id='91870'> قَالَ </seg>
+<seg id='91871'> ٱلَّذِينَ </seg>
+<seg id='91872'> ٱسْتُضْعِفُ </seg>
+<pron id='157' ant='91871 91873' con='519'><seg id='91873'> وا۟ </seg></pron>
+<seg id='91874'> لِ </seg>
+<seg id='91875'> لَّذِينَ </seg>
+<seg id='91876'> ٱسْتَكْبَرُ </seg>
+<pron id='158' ant='91875 91877' con='537'><seg id='91877'> وا۟ </seg></pron>
+<seg id='91878'> بَلْ </seg>
+<seg id='91879'> مَكْرُ </seg>
+<seg id='91880'> ٱلَّ </seg>
+<seg id='91881'> يْلِ </seg>
+<seg id='91882'> وَ </seg>
+<seg id='91883'> ٱل </seg>
+<seg id='91884'> نَّهَارِ </seg>
+<seg id='91885'> إِذْ </seg>
+<seg id='91886'> تَأْمُرُ </seg>
+<pron id='159' ant='91875 91877' con='537'><seg id='91887'> ونَ </seg></pron>
+<pron id='160' ant='91871 91873' con='519'><seg id='91888'> نَآ </seg></pron>
+<seg id='91889'> أَن </seg>
+<seg id='91890'> نَّكْفُرَ </seg>
+<seg id='91891'> بِ </seg>
+<seg id='91892'> ٱللَّهِ </seg>
+<seg id='91893'> وَ </seg>
+<seg id='91894'> نَجْعَلَ </seg>
+<seg id='91895'> لَ </seg>
+<pron id='161' ant='91892 91892' con='1'><seg id='91896'> هُۥٓ </seg></pron>
+<seg id='91897'> أَندَادًا </seg>
+<seg id='91898'> وَ </seg>
+<seg id='91899'> أَسَرُّ </seg>
+<pron id='162' ant='0 0' con='253'><seg id='91900'> وا۟ </seg></pron>
+<seg id='91901'> ٱل </seg>
+<seg id='91902'> نَّدَامَةَ </seg>
+<seg id='91903'> لَمَّا </seg>
+<seg id='91904'> رَأَ </seg>
+<pron id='163' ant='0 0' con='253'><seg id='91905'> وُا۟ </seg></pron>
+<seg id='91906'> ٱلْ </seg>
+<seg id='91907'> عَذَابَ </seg>
+<seg id='91908'> وَ </seg>
+<seg id='91909'> جَعَلْ </seg>
+<pron id='164' ant='0 0' con='1'><seg id='91910'> نَا </seg></pron>
+<seg id='91911'> ٱلْ </seg>
+<seg id='91912'> أَغْلَٰلَ </seg>
+<seg id='91913'> فِىٓ </seg>
+<seg id='91914'> أَعْنَاقِ </seg>
+<seg id='91915'> ٱلَّذِينَ </seg>
+<seg id='91916'> كَفَرُ </seg>
+<pron id='165' ant='0 0' con='5'><seg id='91917'> وا۟ </seg></pron>
+<seg id='91918'> هَلْ </seg>
+<seg id='91919'> يُجْزَ </seg>
+<pron id='166' ant='0 0' con='5'><seg id='91920'> وْنَ </seg></pron>
+<seg id='91921'> إِلَّا </seg>
+<seg id='91922'> مَا </seg>
+<seg id='91923'> كَانُ </seg>
+<pron id='167' ant='0 0' con='5'><seg id='91924'> وا۟ </seg></pron>
+<seg id='91925'> يَعْمَلُ </seg>
+<pron id='168' ant='0 0' con='5'><seg id='91926'> ونَ </seg></pron>
+</verse><verse id='34'><seg id='91927'> وَ </seg>
+<seg id='91928'> مَآ </seg>
+<seg id='91929'> أَرْسَلْ </seg>
+<pron id='169' ant='0 0' con='1'><seg id='91930'> نَا </seg></pron>
+<seg id='91931'> فِى </seg>
+<seg id='91932'> قَرْيَةٍ </seg>
+<seg id='91933'> مِّن </seg>
+<seg id='91934'> نَّذِيرٍ </seg>
+<seg id='91935'> إِلَّا </seg>
+<seg id='91936'> قَالَ </seg>
+<seg id='91937'> مُتْرَفُو </seg>
+<pron id='170' ant='0 0' con='286'><seg id='91938'> هَآ </seg></pron>
+<seg id='91939'> إِنَّ </seg>
+<pron id='171' ant='91937 91938' con='565'><seg id='91940'> ا </seg></pron>
+<seg id='91941'> بِ </seg>
+<seg id='91942'> مَآ </seg>
+<seg id='91943'> أُرْسِلْ </seg>
+<pron id='172' ant='0 0' con='147'><seg id='91944'> تُم </seg></pron>
+<seg id='91945'> بِ </seg>
+<pron id='173' ant='0 0' con='468'><seg id='91946'> هِۦ </seg></pron>
+<seg id='91947'> كَٰفِرُونَ </seg>
+</verse><verse id='35'><seg id='91948'> وَ </seg>
+<seg id='91949'> قَالُ </seg>
+<pron id='174' ant='91937 91938' con='565'><seg id='91950'> وا۟ </seg></pron>
+<pron id='175' ant='91937 91938' con='565'><seg id='91951'> نَحْنُ </seg></pron>
+<seg id='91952'> أَكْثَرُ </seg>
+<seg id='91953'> أَمْوَٰلًا </seg>
+<seg id='91954'> وَ </seg>
+<seg id='91955'> أَوْلَٰدًا </seg>
+<seg id='91956'> وَ </seg>
+<seg id='91957'> مَا </seg>
+<pron id='176' ant='91937 91938' con='565'><seg id='91958'> نَحْنُ </seg></pron>
+<seg id='91959'> بِ </seg>
+<seg id='91960'> مُعَذَّبِينَ </seg>
+</verse><verse id='36'><seg id='91961'> قُلْ </seg>
+<seg id='91962'> إِنَّ </seg>
+<seg id='91963'> رَبِّ </seg>
+<pron id='177' ant='0 0' con='4'><seg id='91964'> ى </seg></pron>
+<seg id='91965'> يَبْسُطُ </seg>
+<seg id='91966'> ٱل </seg>
+<seg id='91967'> رِّزْقَ </seg>
+<seg id='91968'> لِ </seg>
+<seg id='91969'> مَن </seg>
+<seg id='91970'> يَشَآءُ </seg>
+<seg id='91971'> وَ </seg>
+<seg id='91972'> يَقْدِرُ </seg>
+<seg id='91973'> وَ </seg>
+<seg id='91974'> لَٰكِنَّ </seg>
+<seg id='91975'> أَكْثَرَ </seg>
+<seg id='91976'> ٱل </seg>
+<seg id='91977'> نَّاسِ </seg>
+<seg id='91978'> لَا </seg>
+<seg id='91979'> يَعْلَمُ </seg>
+<pron id='178' ant='91975 91977' con='10'><seg id='91980'> ونَ </seg></pron>
+</verse><verse id='37'><seg id='91981'> وَ </seg>
+<seg id='91982'> مَآ </seg>
+<seg id='91983'> أَمْوَٰلُ </seg>
+<pron id='179' ant='91937 91938' con='565'><seg id='91984'> كُمْ </seg></pron>
+<seg id='91985'> وَ </seg>
+<seg id='91986'> لَآ </seg>
+<seg id='91987'> أَوْلَٰدُ </seg>
+<pron id='180' ant='91937 91938' con='565'><seg id='91988'> كُم </seg></pron>
+<seg id='91989'> بِ </seg>
+<seg id='91990'> ٱلَّتِى </seg>
+<seg id='91991'> تُقَرِّبُ </seg>
+<pron id='181' ant='91937 91938' con='565'><seg id='91992'> كُمْ </seg></pron>
+<seg id='91993'> عِندَ </seg>
+<pron id='182' ant='0 0' con='1'><seg id='91994'> نَا </seg></pron>
+<seg id='91995'> زُلْفَىٰٓ </seg>
+<seg id='91996'> إِلَّا </seg>
+<seg id='91997'> مَنْ </seg>
+<seg id='91998'> ءَامَنَ </seg>
+<seg id='91999'> وَ </seg>
+<seg id='92000'> عَمِلَ </seg>
+<seg id='92001'> صَٰلِحًا </seg>
+<seg id='92002'> فَ </seg>
+<seg id='92003'> أُو۟لَٰٓئِكَ </seg>
+<seg id='92004'> لَ </seg>
+<pron id='183' ant='91997 92001' con='11'><seg id='92005'> هُمْ </seg></pron>
+<seg id='92006'> جَزَآءُ </seg>
+<seg id='92007'> ٱل </seg>
+<seg id='92008'> ضِّعْفِ </seg>
+<seg id='92009'> بِ </seg>
+<seg id='92010'> مَا </seg>
+<seg id='92011'> عَمِلُ </seg>
+<pron id='184' ant='91997 92001' con='11'><seg id='92012'> وا۟ </seg></pron>
+<seg id='92013'> وَ </seg>
+<pron id='185' ant='91997 92001' con='11'><seg id='92014'> هُمْ </seg></pron>
+<seg id='92015'> فِى </seg>
+<seg id='92016'> ٱلْ </seg>
+<seg id='92017'> غُرُفَٰتِ </seg>
+<seg id='92018'> ءَامِنُونَ </seg>
+</verse><verse id='38'><seg id='92019'> وَ </seg>
+<seg id='92020'> ٱلَّذِينَ </seg>
+<seg id='92021'> يَسْعَ </seg>
+<pron id='186' ant='0 0' con='5'><seg id='92022'> وْنَ </seg></pron>
+<seg id='92023'> فِىٓ </seg>
+<seg id='92024'> ءَايَٰتِ </seg>
+<pron id='187' ant='0 0' con='1'><seg id='92025'> نَا </seg></pron>
+<seg id='92026'> مُعَٰجِزِينَ </seg>
+<seg id='92027'> أُو۟لَٰٓئِكَ </seg>
+<seg id='92028'> فِى </seg>
+<seg id='92029'> ٱلْ </seg>
+<seg id='92030'> عَذَابِ </seg>
+<seg id='92031'> مُحْضَرُونَ </seg>
+</verse><verse id='39'><seg id='92032'> قُلْ </seg>
+<seg id='92033'> إِنَّ </seg>
+<seg id='92034'> رَبِّ </seg>
+<pron id='188' ant='0 0' con='4'><seg id='92035'> ى </seg></pron>
+<seg id='92036'> يَبْسُطُ </seg>
+<seg id='92037'> ٱل </seg>
+<seg id='92038'> رِّزْقَ </seg>
+<seg id='92039'> لِ </seg>
+<seg id='92040'> مَن </seg>
+<seg id='92041'> يَشَآءُ </seg>
+<seg id='92042'> مِنْ </seg>
+<seg id='92043'> عِبَادِ </seg>
+<pron id='189' ant='0 0' con='1'><seg id='92044'> هِۦ </seg></pron>
+<seg id='92045'> وَ </seg>
+<seg id='92046'> يَقْدِرُ </seg>
+<seg id='92047'> لَ </seg>
+<pron id='190' ant='0 0' con='196'><seg id='92048'> هُۥ </seg></pron>
+<seg id='92049'> وَ </seg>
+<seg id='92050'> مَآ </seg>
+<seg id='92051'> أَنفَقْ </seg>
+<pron id='191' ant='0 0' con='87'><seg id='92052'> تُم </seg></pron>
+<seg id='92053'> مِّن </seg>
+<seg id='92054'> شَىْءٍ </seg>
+<seg id='92055'> فَ </seg>
+<pron id='192' ant='0 0' con='1'><seg id='92056'> هُوَ </seg></pron>
+<seg id='92057'> يُخْلِفُ </seg>
+<pron id='193' ant='92050 92054' con='282'><seg id='92058'> هُۥ </seg></pron>
+<seg id='92059'> وَ </seg>
+<pron id='194' ant='0 0' con='1'><seg id='92060'> هُوَ </seg></pron>
+<seg id='92061'> خَيْرُ </seg>
+<seg id='92062'> ٱل </seg>
+<seg id='92063'> رَّٰزِقِينَ </seg>
+</verse><verse id='40'><seg id='92064'> وَ </seg>
+<seg id='92065'> يَوْمَ </seg>
+<seg id='92066'> يَحْشُرُ </seg>
+<pron id='195' ant='0 0' con='57'><seg id='92067'> هُمْ </seg></pron>
+<seg id='92068'> جَمِيعًا </seg>
+<seg id='92069'> ثُمَّ </seg>
+<seg id='92070'> يَقُولُ </seg>
+<seg id='92071'> لِ </seg>
+<seg id='92072'> لْ </seg>
+<seg id='92073'> مَلَٰٓئِكَةِ </seg>
+<seg id='92074'> أَ </seg>
+<seg id='92075'> هَٰٓؤُلَآءِ </seg>
+<pron id='196' ant='92073 92073' con='19'><seg id='92076'> إِيَّاكُمْ </seg></pron>
+<seg id='92077'> كَانُ </seg>
+<pron id='197' ant='0 0' con='57'><seg id='92078'> وا۟ </seg></pron>
+<seg id='92079'> يَعْبُدُ </seg>
+<pron id='198' ant='0 0' con='57'><seg id='92080'> ونَ </seg></pron>
+</verse><verse id='41'><seg id='92081'> قَالُ </seg>
+<pron id='199' ant='0 0' con='19'><seg id='92082'> وا۟ </seg></pron>
+<seg id='92083'> سُبْحَٰنَ </seg>
+<pron id='200' ant='0 0' con='1'><seg id='92084'> كَ </seg></pron>
+<pron id='201' ant='0 0' con='1'><seg id='92085'> أَنتَ </seg></pron>
+<seg id='92086'> وَلِيُّ </seg>
+<pron id='202' ant='0 0' con='19'><seg id='92087'> نَا </seg></pron>
+<seg id='92088'> مِن </seg>
+<seg id='92089'> دُونِ </seg>
+<pron id='203' ant='0 0' con='57'><seg id='92090'> هِم </seg></pron>
+<seg id='92091'> بَلْ </seg>
+<seg id='92092'> كَانُ </seg>
+<pron id='204' ant='0 0' con='57'><seg id='92093'> وا۟ </seg></pron>
+<seg id='92094'> يَعْبُدُ </seg>
+<pron id='205' ant='0 0' con='57'><seg id='92095'> ونَ </seg></pron>
+<seg id='92096'> ٱلْ </seg>
+<seg id='92097'> جِنَّ </seg>
+<seg id='92098'> أَكْثَرُ </seg>
+<pron id='206' ant='0 0' con='57'><seg id='92099'> هُم </seg></pron>
+<seg id='92100'> بِ </seg>
+<pron id='207' ant='92096 92097' con='378'><seg id='92101'> هِم </seg></pron>
+<seg id='92102'> مُّؤْمِنُونَ </seg>
+</verse><verse id='42'><seg id='92103'> فَ </seg>
+<seg id='92104'> ٱلْ </seg>
+<seg id='92105'> يَوْمَ </seg>
+<seg id='92106'> لَا </seg>
+<seg id='92107'> يَمْلِكُ </seg>
+<seg id='92108'> بَعْضُ </seg>
+<pron id='208' ant='0 0' con='57'><seg id='92109'> كُمْ </seg></pron>
+<seg id='92110'> لِ </seg>
+<seg id='92111'> بَعْضٍ </seg>
+<seg id='92112'> نَّفْعًا </seg>
+<seg id='92113'> وَ </seg>
+<seg id='92114'> لَا </seg>
+<seg id='92115'> ضَرًّا </seg>
+<seg id='92116'> وَ </seg>
+<seg id='92117'> نَقُولُ </seg>
+<seg id='92118'> لِ </seg>
+<seg id='92119'> لَّذِينَ </seg>
+<seg id='92120'> ظَلَمُ </seg>
+<pron id='209' ant='92119 92121' con='320'><seg id='92121'> وا۟ </seg></pron>
+<seg id='92122'> ذُوقُ </seg>
+<pron id='210' ant='92119 92121' con='320'><seg id='92123'> وا۟ </seg></pron>
+<seg id='92124'> عَذَابَ </seg>
+<seg id='92125'> ٱل </seg>
+<seg id='92126'> نَّارِ </seg>
+<seg id='92127'> ٱلَّتِى </seg>
+<seg id='92128'> كُن </seg>
+<pron id='211' ant='0 0' con='57'><seg id='92129'> تُم </seg></pron>
+<seg id='92130'> بِ </seg>
+<pron id='212' ant='92125 92126' con='28'><seg id='92131'> هَا </seg></pron>
+<seg id='92132'> تُكَذِّبُ </seg>
+<pron id='213' ant='0 0' con='57'><seg id='92133'> ونَ </seg></pron>
+</verse><verse id='43'><seg id='92134'> وَ </seg>
+<seg id='92135'> إِذَا </seg>
+<seg id='92136'> تُتْلَىٰ </seg>
+<seg id='92137'> عَلَيْ </seg>
+<pron id='214' ant='0 0' con='179'><seg id='92138'> هِمْ </seg></pron>
+<seg id='92139'> ءَايَٰتُ </seg>
+<pron id='215' ant='0 0' con='1'><seg id='92140'> نَا </seg></pron>
+<seg id='92141'> بَيِّنَٰتٍ </seg>
+<seg id='92142'> قَالُ </seg>
+<pron id='216' ant='0 0' con='179'><seg id='92143'> وا۟ </seg></pron>
+<seg id='92144'> مَا </seg>
+<seg id='92145'> هَٰذَآ </seg>
+<seg id='92146'> إِلَّا </seg>
+<seg id='92147'> رَجُلٌ </seg>
+<seg id='92148'> يُرِيدُ </seg>
+<seg id='92149'> أَن </seg>
+<seg id='92150'> يَصُدَّ </seg>
+<pron id='217' ant='0 0' con='179'><seg id='92151'> كُمْ </seg></pron>
+<seg id='92152'> عَ </seg>
+<seg id='92153'> مَّا </seg>
+<seg id='92154'> كَانَ </seg>
+<seg id='92155'> يَعْبُدُ </seg>
+<seg id='92156'> ءَابَآؤُ </seg>
+<pron id='218' ant='0 0' con='179'><seg id='92157'> كُمْ </seg></pron>
+<seg id='92158'> وَ </seg>
+<seg id='92159'> قَالُ </seg>
+<pron id='219' ant='0 0' con='179'><seg id='92160'> وا۟ </seg></pron>
+<seg id='92161'> مَا </seg>
+<seg id='92162'> هَٰذَآ </seg>
+<seg id='92163'> إِلَّآ </seg>
+<seg id='92164'> إِفْكٌ </seg>
+<seg id='92165'> مُّفْتَرًى </seg>
+<seg id='92166'> وَ </seg>
+<seg id='92167'> قَالَ </seg>
+<seg id='92168'> ٱلَّذِينَ </seg>
+<seg id='92169'> كَفَرُ </seg>
+<pron id='220' ant='0 0' con='5'><seg id='92170'> وا۟ </seg></pron>
+<seg id='92171'> لِ </seg>
+<seg id='92172'> لْ </seg>
+<seg id='92173'> حَقِّ </seg>
+<seg id='92174'> لَمَّا </seg>
+<seg id='92175'> جَآءَ </seg>
+<pron id='221' ant='92168 92170' con='5'><seg id='92176'> هُمْ </seg></pron>
+<seg id='92177'> إِنْ </seg>
+<seg id='92178'> هَٰذَآ </seg>
+<seg id='92179'> إِلَّا </seg>
+<seg id='92180'> سِحْرٌ </seg>
+<seg id='92181'> مُّبِينٌ </seg>
+</verse><verse id='44'><seg id='92182'> وَ </seg>
+<seg id='92183'> مَآ </seg>
+<seg id='92184'> ءَاتَيْ </seg>
+<pron id='222' ant='0 0' con='1'><seg id='92185'> نَٰ </seg></pron>
+<pron id='223' ant='0 0' con='179'><seg id='92186'> هُم </seg></pron>
+<seg id='92187'> مِّن </seg>
+<seg id='92188'> كُتُبٍ </seg>
+<seg id='92189'> يَدْرُسُ </seg>
+<pron id='224' ant='0 0' con='179'><seg id='92190'> ونَ </seg></pron>
+<pron id='225' ant='92188 92188' con='329'><seg id='92191'> هَا </seg></pron>
+<seg id='92192'> وَ </seg>
+<seg id='92193'> مَآ </seg>
+<seg id='92194'> أَرْسَلْ </seg>
+<pron id='226' ant='0 0' con='1'><seg id='92195'> نَآ </seg></pron>
+<seg id='92196'> إِلَيْ </seg>
+<pron id='227' ant='0 0' con='179'><seg id='92197'> هِمْ </seg></pron>
+<seg id='92198'> قَبْلَ </seg>
+<pron id='228' ant='0 0' con='4'><seg id='92199'> كَ </seg></pron>
+<seg id='92200'> مِن </seg>
+<seg id='92201'> نَّذِيرٍ </seg>
+</verse><verse id='45'><seg id='92202'> وَ </seg>
+<seg id='92203'> كَذَّبَ </seg>
+<seg id='92204'> ٱلَّذِينَ </seg>
+<seg id='92205'> مِن </seg>
+<seg id='92206'> قَبْلِ </seg>
+<pron id='229' ant='0 0' con='179'><seg id='92207'> هِمْ </seg></pron>
+<seg id='92208'> وَ </seg>
+<seg id='92209'> مَا </seg>
+<seg id='92210'> بَلَغُ </seg>
+<pron id='230' ant='92204 92207' con='249'><seg id='92211'> وا۟ </seg></pron>
+<seg id='92212'> مِعْشَارَ </seg>
+<seg id='92213'> مَآ </seg>
+<seg id='92214'> ءَاتَيْ </seg>
+<pron id='231' ant='0 0' con='1'><seg id='92215'> نَٰ </seg></pron>
+<pron id='232' ant='0 0' con='179'><seg id='92216'> هُمْ </seg></pron>
+<seg id='92217'> فَ </seg>
+<seg id='92218'> كَذَّبُ </seg>
+<pron id='233' ant='92204 92207' con='249'><seg id='92219'> وا۟ </seg></pron>
+<seg id='92220'> رُسُلِ </seg>
+<pron id='234' ant='0 0' con='1'><seg id='92221'> ى </seg></pron>
+<seg id='92222'> فَ </seg>
+<seg id='92223'> كَيْفَ </seg>
+<seg id='92224'> كَانَ </seg>
+<seg id='92225'> نَكِيرِ </seg>
+<pron id='235' ant='0 0' con='1'><seg id='92226'>  </seg></pron>
+</verse><verse id='46'><seg id='92227'> قُلْ </seg>
+<seg id='92228'> إِنَّ </seg>
+<seg id='92229'> مَآ </seg>
+<seg id='92230'> أَعِظُ </seg>
+<pron id='236' ant='0 0' con='179'><seg id='92231'> كُم </seg></pron>
+<seg id='92232'> بِ </seg>
+<seg id='92233'> وَٰحِدَةٍ </seg>
+<seg id='92234'> أَن </seg>
+<seg id='92235'> تَقُومُ </seg>
+<pron id='237' ant='0 0' con='179'><seg id='92236'> وا۟ </seg></pron>
+<seg id='92237'> لِ </seg>
+<seg id='92238'> لَّهِ </seg>
+<seg id='92239'> مَثْنَىٰ </seg>
+<seg id='92240'> وَ </seg>
+<seg id='92241'> فُرَٰدَىٰ </seg>
+<seg id='92242'> ثُمَّ </seg>
+<seg id='92243'> تَتَفَكَّرُ </seg>
+<pron id='238' ant='0 0' con='179'><seg id='92244'> وا۟ </seg></pron>
+<seg id='92245'> مَا </seg>
+<seg id='92246'> بِ </seg>
+<seg id='92247'> صَاحِبِ </seg>
+<pron id='239' ant='0 0' con='179'><seg id='92248'> كُم </seg></pron>
+<seg id='92249'> مِّن </seg>
+<seg id='92250'> جِنَّةٍ </seg>
+<seg id='92251'> إِنْ </seg>
+<pron id='240' ant='92247 92248' con='4'><seg id='92252'> هُوَ </seg></pron>
+<seg id='92253'> إِلَّا </seg>
+<seg id='92254'> نَذِيرٌ </seg>
+<seg id='92255'> لَّ </seg>
+<pron id='241' ant='0 0' con='179'><seg id='92256'> كُم </seg></pron>
+<seg id='92257'> بَيْنَ </seg>
+<seg id='92258'> يَدَىْ </seg>
+<seg id='92259'> عَذَابٍ </seg>
+<seg id='92260'> شَدِيدٍ </seg>
+</verse><verse id='47'><seg id='92261'> قُلْ </seg>
+<seg id='92262'> مَا </seg>
+<seg id='92263'> سَأَلْ </seg>
+<pron id='242' ant='0 0' con='4'><seg id='92264'> تُ </seg></pron>
+<pron id='243' ant='0 0' con='179'><seg id='92265'> كُم </seg></pron>
+<seg id='92266'> مِّنْ </seg>
+<seg id='92267'> أَجْرٍ </seg>
+<seg id='92268'> فَ </seg>
+<pron id='244' ant='92267 92267' con='634'><seg id='92269'> هُوَ </seg></pron>
+<seg id='92270'> لَ </seg>
+<pron id='245' ant='0 0' con='179'><seg id='92271'> كُمْ </seg></pron>
+<seg id='92272'> إِنْ </seg>
+<seg id='92273'> أَجْرِ </seg>
+<pron id='246' ant='0 0' con='4'><seg id='92274'> ىَ </seg></pron>
+<seg id='92275'> إِلَّا </seg>
+<seg id='92276'> عَلَى </seg>
+<seg id='92277'> ٱللَّهِ </seg>
+<seg id='92278'> وَ </seg>
+<pron id='247' ant='92277 92277' con='1'><seg id='92279'> هُوَ </seg></pron>
+<seg id='92280'> عَلَىٰ </seg>
+<seg id='92281'> كُلِّ </seg>
+<seg id='92282'> شَىْءٍ </seg>
+<seg id='92283'> شَهِيدٌ </seg>
+</verse><verse id='48'><seg id='92284'> قُلْ </seg>
+<seg id='92285'> إِنَّ </seg>
+<seg id='92286'> رَبِّ </seg>
+<pron id='248' ant='0 0' con='4'><seg id='92287'> ى </seg></pron>
+<seg id='92288'> يَقْذِفُ </seg>
+<seg id='92289'> بِ </seg>
+<seg id='92290'> ٱلْ </seg>
+<seg id='92291'> حَقِّ </seg>
+<seg id='92292'> عَلَّٰمُ </seg>
+<seg id='92293'> ٱلْ </seg>
+<seg id='92294'> غُيُوبِ </seg>
+</verse><verse id='49'><seg id='92295'> قُلْ </seg>
+<seg id='92296'> جَآءَ </seg>
+<seg id='92297'> ٱلْ </seg>
+<seg id='92298'> حَقُّ </seg>
+<seg id='92299'> وَ </seg>
+<seg id='92300'> مَا </seg>
+<seg id='92301'> يُبْدِئُ </seg>
+<seg id='92302'> ٱلْ </seg>
+<seg id='92303'> بَٰطِلُ </seg>
+<seg id='92304'> وَ </seg>
+<seg id='92305'> مَا </seg>
+<seg id='92306'> يُعِيدُ </seg>
+</verse><verse id='50'><seg id='92307'> قُلْ </seg>
+<seg id='92308'> إِن </seg>
+<seg id='92309'> ضَلَلْ </seg>
+<pron id='249' ant='0 0' con='4'><seg id='92310'> تُ </seg></pron>
+<seg id='92311'> فَ </seg>
+<seg id='92312'> إِنَّ </seg>
+<seg id='92313'> مَآ </seg>
+<seg id='92314'> أَضِلُّ </seg>
+<seg id='92315'> عَلَىٰ </seg>
+<seg id='92316'> نَفْسِ </seg>
+<pron id='250' ant='0 0' con='4'><seg id='92317'> ى </seg></pron>
+<seg id='92318'> وَ </seg>
+<seg id='92319'> إِنِ </seg>
+<seg id='92320'> ٱهْتَدَيْ </seg>
+<pron id='251' ant='0 0' con='4'><seg id='92321'> تُ </seg></pron>
+<seg id='92322'> فَ </seg>
+<seg id='92323'> بِ </seg>
+<seg id='92324'> مَا </seg>
+<seg id='92325'> يُوحِىٓ </seg>
+<seg id='92326'> إِلَىَّ </seg>
+<pron id='252' ant='0 0' con='4'><seg id='92327'>  </seg></pron>
+<seg id='92328'> رَبِّ </seg>
+<pron id='253' ant='0 0' con='4'><seg id='92329'> ىٓ </seg></pron>
+<seg id='92330'> إِنَّ </seg>
+<pron id='254' ant='92328 92329' con='1'><seg id='92331'> هُۥ </seg></pron>
+<seg id='92332'> سَمِيعٌ </seg>
+<seg id='92333'> قَرِيبٌ </seg>
+</verse><verse id='51'><seg id='92334'> وَ </seg>
+<seg id='92335'> لَوْ </seg>
+<seg id='92336'> تَرَىٰٓ </seg>
+<seg id='92337'> إِذْ </seg>
+<seg id='92338'> فَزِعُ </seg>
+<pron id='255' ant='0 0' con='5'><seg id='92339'> وا۟ </seg></pron>
+<seg id='92340'> فَ </seg>
+<seg id='92341'> لَا </seg>
+<seg id='92342'> فَوْتَ </seg>
+<seg id='92343'> وَ </seg>
+<seg id='92344'> أُخِذُ </seg>
+<pron id='256' ant='0 0' con='5'><seg id='92345'> وا۟ </seg></pron>
+<seg id='92346'> مِن </seg>
+<seg id='92347'> مَّكَانٍ </seg>
+<seg id='92348'> قَرِيبٍ </seg>
+</verse><verse id='52'><seg id='92349'> وَ </seg>
+<seg id='92350'> قَالُ </seg>
+<pron id='257' ant='0 0' con='5'><seg id='92351'> وٓا۟ </seg></pron>
+<seg id='92352'> ءَامَ </seg>
+<pron id='258' ant='0 0' con='5'><seg id='92353'> نَّا </seg></pron>
+<seg id='92354'> بِ </seg>
+<pron id='259' ant='0 0' con='1'><seg id='92355'> هِۦ </seg></pron>
+<seg id='92356'> وَ </seg>
+<seg id='92357'> أَنَّىٰ </seg>
+<seg id='92358'> لَ </seg>
+<pron id='260' ant='0 0' con='5'><seg id='92359'> هُمُ </seg></pron>
+<seg id='92360'> ٱل </seg>
+<seg id='92361'> تَّنَاوُشُ </seg>
+<seg id='92362'> مِن </seg>
+<seg id='92363'> مَّكَانٍۭ </seg>
+<seg id='92364'> بَعِيدٍ </seg>
+</verse><verse id='53'><seg id='92365'> وَ </seg>
+<seg id='92366'> قَدْ </seg>
+<seg id='92367'> كَفَرُ </seg>
+<pron id='261' ant='0 0' con='5'><seg id='92368'> وا۟ </seg></pron>
+<seg id='92369'> بِ </seg>
+<pron id='262' ant='0 0' con='1'><seg id='92370'> هِۦ </seg></pron>
+<seg id='92371'> مِن </seg>
+<seg id='92372'> قَبْلُ </seg>
+<seg id='92373'> وَ </seg>
+<seg id='92374'> يَقْذِفُ </seg>
+<pron id='263' ant='0 0' con='5'><seg id='92375'> ونَ </seg></pron>
+<seg id='92376'> بِ </seg>
+<seg id='92377'> ٱلْ </seg>
+<seg id='92378'> غَيْبِ </seg>
+<seg id='92379'> مِن </seg>
+<seg id='92380'> مَّكَانٍۭ </seg>
+<seg id='92381'> بَعِيدٍ </seg>
+</verse><verse id='54'><seg id='92382'> وَ </seg>
+<seg id='92383'> حِيلَ </seg>
+<seg id='92384'> بَيْنَ </seg>
+<pron id='264' ant='0 0' con='5'><seg id='92385'> هُمْ </seg></pron>
+<seg id='92386'> وَ </seg>
+<seg id='92387'> بَيْنَ </seg>
+<seg id='92388'> مَا </seg>
+<seg id='92389'> يَشْتَهُ </seg>
+<pron id='265' ant='0 0' con='5'><seg id='92390'> ونَ </seg></pron>
+<seg id='92391'> كَ </seg>
+<seg id='92392'> مَا </seg>
+<seg id='92393'> فُعِلَ </seg>
+<seg id='92394'> بِ </seg>
+<seg id='92395'> أَشْيَاعِ </seg>
+<pron id='266' ant='0 0' con='5'><seg id='92396'> هِم </seg></pron>
+<seg id='92397'> مِّن </seg>
+<seg id='92398'> قَبْلُ </seg>
+<seg id='92399'> إِنَّ </seg>
+<pron id='267' ant='0 0' con='5'><seg id='92400'> هُمْ </seg></pron>
+<seg id='92401'> كَانُ </seg>
+<pron id='268' ant='0 0' con='5'><seg id='92402'> وا۟ </seg></pron>
+<seg id='92403'> فِى </seg>
+<seg id='92404'> شَكٍّ </seg>
+<seg id='92405'> مُّرِيبٍۭ </seg>
+</verse></chapter>

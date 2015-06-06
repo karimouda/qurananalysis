@@ -1,0 +1,72 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='102'><verse id='1'><seg id='127371'> أَلْهَىٰ </seg>
+<pron id='1' ant='0 0' con='196'><seg id='127372'> كُمُ </seg></pron>
+<seg id='127373'> ٱل </seg>
+<seg id='127374'> تَّكَاثُرُ </seg>
+</verse><verse id='2'><seg id='127375'> حَتَّىٰ </seg>
+<seg id='127376'> زُرْ </seg>
+<pron id='2' ant='0 0' con='196'><seg id='127377'> تُمُ </seg></pron>
+<seg id='127378'> ٱلْ </seg>
+<seg id='127379'> مَقَابِرَ </seg>
+</verse><verse id='3'><seg id='127380'> كَلَّا </seg>
+<seg id='127381'> سَوْفَ </seg>
+<seg id='127382'> تَعْلَمُ </seg>
+<pron id='3' ant='0 0' con='196'><seg id='127383'> ونَ </seg></pron>
+</verse><verse id='4'><seg id='127384'> ثُمَّ </seg>
+<seg id='127385'> كَلَّا </seg>
+<seg id='127386'> سَوْفَ </seg>
+<seg id='127387'> تَعْلَمُ </seg>
+<pron id='4' ant='0 0' con='196'><seg id='127388'> ونَ </seg></pron>
+</verse><verse id='5'><seg id='127389'> كَلَّا </seg>
+<seg id='127390'> لَوْ </seg>
+<seg id='127391'> تَعْلَمُ </seg>
+<pron id='5' ant='0 0' con='196'><seg id='127392'> ونَ </seg></pron>
+<seg id='127393'> عِلْمَ </seg>
+<seg id='127394'> ٱلْ </seg>
+<seg id='127395'> يَقِينِ </seg>
+</verse><verse id='6'><seg id='127396'> لَ </seg>
+<seg id='127397'> تَرَوُنَّ </seg>
+<seg id='127398'> ٱلْ </seg>
+<seg id='127399'> جَحِيمَ </seg>
+</verse><verse id='7'><seg id='127400'> ثُمَّ </seg>
+<seg id='127401'> لَ </seg>
+<seg id='127402'> تَرَوُنَّ </seg>
+<pron id='6' ant='127398 127399' con='186'><seg id='127403'> هَا </seg></pron>
+<seg id='127404'> عَيْنَ </seg>
+<seg id='127405'> ٱلْ </seg>
+<seg id='127406'> يَقِينِ </seg>
+</verse><verse id='8'><seg id='127407'> ثُمَّ </seg>
+<seg id='127408'> لَ </seg>
+<seg id='127409'> تُسْـَٔلُنَّ </seg>
+<seg id='127410'> يَوْمَئِذٍ </seg>
+<seg id='127411'> عَنِ </seg>
+<seg id='127412'> ٱل </seg>
+<seg id='127413'> نَّعِيمِ </seg>
+</verse></chapter>

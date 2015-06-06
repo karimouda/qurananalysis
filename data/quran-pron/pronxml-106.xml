@@ -1,0 +1,58 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='106'><verse id='1'><seg id='127527'> لِ </seg>
+<seg id='127528'> إِيلَٰفِ </seg>
+<seg id='127529'> قُرَيْشٍ </seg>
+</verse><verse id='2'><seg id='127530'> إِۦلَٰفِ </seg>
+<pron id='1' ant='127529 127529' con='232'><seg id='127531'> هِمْ </seg></pron>
+<seg id='127532'> رِحْلَةَ </seg>
+<seg id='127533'> ٱل </seg>
+<seg id='127534'> شِّتَآءِ </seg>
+<seg id='127535'> وَ </seg>
+<seg id='127536'> ٱل </seg>
+<seg id='127537'> صَّيْفِ </seg>
+</verse><verse id='3'><seg id='127538'> فَ </seg>
+<seg id='127539'> لْ </seg>
+<seg id='127540'> يَعْبُدُ </seg>
+<pron id='2' ant='127529 127529' con='232'><seg id='127541'> وا۟ </seg></pron>
+<seg id='127542'> رَبَّ </seg>
+<seg id='127543'> هَٰذَا </seg>
+<seg id='127544'> ٱلْ </seg>
+<seg id='127545'> بَيْتِ </seg>
+</verse><verse id='4'><seg id='127546'> ٱلَّذِىٓ </seg>
+<seg id='127547'> أَطْعَمَ </seg>
+<pron id='3' ant='127529 127529' con='232'><seg id='127548'> هُم </seg></pron>
+<seg id='127549'> مِّن </seg>
+<seg id='127550'> جُوعٍ </seg>
+<seg id='127551'> وَ </seg>
+<seg id='127552'> ءَامَنَ </seg>
+<pron id='4' ant='127529 127529' con='232'><seg id='127553'> هُم </seg></pron>
+<seg id='127554'> مِّنْ </seg>
+<seg id='127555'> خَوْفٍۭ </seg>
+</verse></chapter>

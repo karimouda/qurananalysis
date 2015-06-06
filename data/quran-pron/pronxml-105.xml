@@ -1,0 +1,65 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='105'><verse id='1'><seg id='127491'> أَ </seg>
+<seg id='127492'> لَمْ </seg>
+<seg id='127493'> تَرَ </seg>
+<seg id='127494'> كَيْفَ </seg>
+<seg id='127495'> فَعَلَ </seg>
+<seg id='127496'> رَبُّ </seg>
+<pron id='1' ant='0 0' con='4'><seg id='127497'> كَ </seg></pron>
+<seg id='127498'> بِ </seg>
+<seg id='127499'> أَصْحَٰبِ </seg>
+<seg id='127500'> ٱلْ </seg>
+<seg id='127501'> فِيلِ </seg>
+</verse><verse id='2'><seg id='127502'> أَ </seg>
+<seg id='127503'> لَمْ </seg>
+<seg id='127504'> يَجْعَلْ </seg>
+<seg id='127505'> كَيْدَ </seg>
+<pron id='2' ant='127499 127501' con='231'><seg id='127506'> هُمْ </seg></pron>
+<seg id='127507'> فِى </seg>
+<seg id='127508'> تَضْلِيلٍ </seg>
+</verse><verse id='3'><seg id='127509'> وَ </seg>
+<seg id='127510'> أَرْسَلَ </seg>
+<seg id='127511'> عَلَيْ </seg>
+<pron id='3' ant='127499 127501' con='231'><seg id='127512'> هِمْ </seg></pron>
+<seg id='127513'> طَيْرًا </seg>
+<seg id='127514'> أَبَابِيلَ </seg>
+</verse><verse id='4'><seg id='127515'> تَرْمِي </seg>
+<pron id='4' ant='127499 127501' con='231'><seg id='127516'> هِم </seg></pron>
+<seg id='127517'> بِ </seg>
+<seg id='127518'> حِجَارَةٍ </seg>
+<seg id='127519'> مِّن </seg>
+<seg id='127520'> سِجِّيلٍ </seg>
+</verse><verse id='5'><seg id='127521'> فَ </seg>
+<seg id='127522'> جَعَلَ </seg>
+<pron id='5' ant='127499 127501' con='231'><seg id='127523'> هُمْ </seg></pron>
+<seg id='127524'> كَ </seg>
+<seg id='127525'> عَصْفٍ </seg>
+<seg id='127526'> مَّأْكُولٍۭ </seg>
+</verse></chapter>

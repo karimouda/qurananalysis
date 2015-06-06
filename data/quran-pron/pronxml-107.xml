@@ -1,0 +1,70 @@
+<!--
+* PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+*====================================================================
+*  Annotation of Quranic Pronouns (version 0.1)
+*  Copyright (C) 2011 Abdul-Baquee M. Sharaf
+*  License: GNU Public License
+*
+*  This annotation contains marking pronons with <pron> tags and
+*   indentifying their antecedents as well as the concepts.
+*  This work used QAC (http://corpus.quran.com) for segmentation IDs
+*  and POS tagging.
+*
+*  TERMS OF USE:
+*
+*  - Permission is granted to copy and distribute verbatim copies
+*    of this file, but CHANGING IT IS NOT ALLOWED.
+*
+*  - This annotation can be used in any website or application,
+*    provided its source (TextMiningTheQuran.com) is clearly
+*    indicated.
+*
+*  - This copyright notice shall be included in all verbatim copies
+*    of the text, and shall be reproduced appropriately in all works
+*    derived from or containing substantial portion of this file.
+*
+*  Check updates at (http://TextMinigtheQuran.com)
+-->
+<?xml version='1.0' encoding='utf-8' ?>
+<chapter id='107'><verse id='1'><seg id='127556'> أَ </seg>
+<seg id='127557'> رَءَيْ </seg>
+<pron id='1' ant='0 0' con='4'><seg id='127558'> تَ </seg></pron>
+<seg id='127559'> ٱلَّذِى </seg>
+<seg id='127560'> يُكَذِّبُ </seg>
+<seg id='127561'> بِ </seg>
+<seg id='127562'> ٱل </seg>
+<seg id='127563'> دِّينِ </seg>
+</verse><verse id='2'><seg id='127564'> فَ </seg>
+<seg id='127565'> ذَٰلِكَ </seg>
+<seg id='127566'> ٱلَّذِى </seg>
+<seg id='127567'> يَدُعُّ </seg>
+<seg id='127568'> ٱلْ </seg>
+<seg id='127569'> يَتِيمَ </seg>
+</verse><verse id='3'><seg id='127570'> وَ </seg>
+<seg id='127571'> لَا </seg>
+<seg id='127572'> يَحُضُّ </seg>
+<seg id='127573'> عَلَىٰ </seg>
+<seg id='127574'> طَعَامِ </seg>
+<seg id='127575'> ٱلْ </seg>
+<seg id='127576'> مِسْكِينِ </seg>
+</verse><verse id='4'><seg id='127577'> فَ </seg>
+<seg id='127578'> وَيْلٌ </seg>
+<seg id='127579'> لِّ </seg>
+<seg id='127580'> لْ </seg>
+<seg id='127581'> مُصَلِّينَ </seg>
+</verse><verse id='5'><seg id='127582'> ٱلَّذِينَ </seg>
+<pron id='2' ant='127581 127581' con='233'><seg id='127583'> هُمْ </seg></pron>
+<seg id='127584'> عَن </seg>
+<seg id='127585'> صَلَاتِ </seg>
+<pron id='3' ant='127581 127581' con='233'><seg id='127586'> هِمْ </seg></pron>
+<seg id='127587'> سَاهُونَ </seg>
+</verse><verse id='6'><seg id='127588'> ٱلَّذِينَ </seg>
+<pron id='4' ant='0 0' con='193'><seg id='127589'> هُمْ </seg></pron>
+<seg id='127590'> يُرَآءُ </seg>
+<pron id='5' ant='0 0' con='193'><seg id='127591'> ونَ </seg></pron>
+</verse><verse id='7'><seg id='127592'> وَ </seg>
+<seg id='127593'> يَمْنَعُ </seg>
+<pron id='6' ant='0 0' con='193'><seg id='127594'> ونَ </seg></pron>
+<seg id='127595'> ٱلْ </seg>
+<seg id='127596'> مَاعُونَ </seg>
+</verse></chapter>
