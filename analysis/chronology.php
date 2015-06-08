@@ -32,19 +32,17 @@ loadModels("core",$lang);
        
   </head>
   <body>
-
+  
+	<?php 
+			require_once("./analysis.header.php");
+	?>
+				
   <div id='main-container'>
 			  	
-			  		<?php 
-						require_once("../header.php");
-					?>
-			  		
+
 			
 
-					<?php 
-						require_once("./analysis.header.php");
-					?>
-				
+	
 			  
 			  	
 			  	<div id='fqt-search-area'>

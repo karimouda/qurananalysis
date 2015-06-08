@@ -1,98 +1,79 @@
-<?php 
-require("../global.settings.php");
-
+<?php
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Quran Analysis | Credits</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Quran Semantic-based Search, Analysis & Expert System">
-    <meta name="author" content="">
 
-	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
-	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
-	<script type="text/javascript" src="<?=$D3_PATH?>"></script>
-	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	<link rel="icon" type="image/png" href="/qe/favicon.png">
-      	 
-	<script type="text/javascript">
-	</script>
+<fieldset class="credits-fs" >
+		  		 
+  		<legend>Base Projects</legend>
+  				    
+		<div class='info-page-text'>
+	
+				QA would not have been possible if the following projects did not exist
+	   			
+	   			<ul>
+		   			<li>Tanzil Project</li>
+		   			<li>Quranic Arabic Corpus</li>
+		   			<li>Text Mining The Quran</li>
+	   			</ul>
 
-
-  </head>
-  <body>
-
-  <div id='main-container'>
-			  	<div id='header'>
-			  	
-			  		<?php 
-						require("../header.php");
-					?>
-			  		
-			  	</div>
-
-
-			  	<div id='options-area'>
-			  		<div id='main-sections'>
-			 			<div id='section-item-search' class='section-item' >
-			  				<a href='/'>Search</a>
-			  			</div>
-			  			<div id='section-item-analysis' class='section-item'>
-			  				<a href='/analysis/'>Analysis</a>
-			  			</div>
-			  		</div>
-			   </div>
-			   
-			   	<div id="main-credits-area">
-			   			This project would not have been possible if the following projects/research did not exist
-			   			
-			   			<ul>
-				   			<li>Tanzil Project</li>
-				   			<li>Quranic Arabic Corpus</li>
-				   			<li>Text Mining The Quran</li>
-			   			</ul>
-			   			
-			   			<hr>
-			   			
-			   	</div>
-					
-
-   </div>
-   
-
-	<script type="text/javascript">
-
-				
-		$(document).ready(function()
-		{
-
-
-
+		</div>
 		
-		});
+</fieldset>
+
+<fieldset class="credits-fs" >
+		  		 
+  		<legend>Libraries</legend>
+  				    
+		<div class='info-page-text'>
 	
+				Libraries used in QA
+	   			
+	   			<ul>
+		   			Soon
+		   		
+	   			</ul>
+
+		</div>
+		
+</fieldset>
+
+<fieldset class="credits-fs" >
+		  		 
+  		<legend>People</legend>
+  				    
+		<div class='info-page-text'>
 	
+				Thanks to everyone contributed to this project
+	   			
+	   			
+	   			<ul>
+		   		Soon
+		   		
+	   			</ul>
 
-	</script>
+		</div>
+		
+</fieldset>
 
-
-
-
-
-
-	<?php 
-		require("../footer.php");
-	?>
+<fieldset class="credits-fs" >
+		  		 
+  		<legend>Papers</legend>
+  				    
+		<div class='info-page-text'>
 	
-  </body>
-</html>
+				List of key papers influenced QA
+	   			
+	   			<ul>
+		   			Soon
+		   		
+	   			</ul>
+
+		</div>
+		
+</fieldset>
 
 
-
-
-
+			   	
+	
 
 

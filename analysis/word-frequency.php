@@ -24,9 +24,9 @@ loadModels("core",$lang);
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analytics </title>
+    <title>Quran Analysis | Word Frequency </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Full Analytics System for the Quran">
+    <meta name="description" content="Word frequencies of the quran">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
@@ -39,38 +39,41 @@ loadModels("core",$lang);
        
   </head>
   <body>
-
+		<?php 
+						require_once("./analysis.header.php");
+						
+						
+		?>
   <div id='main-container'>
 			  	
-			  		<?php 
-						require_once("../header.php");
-					?>
+		
 			  		
 			
 
-					<?php 
-						require_once("./analysis.header.php");
-						
-						//preprint_r($MODEL_CORE);
-					?>
+			
 				
 			  	<div >
 			  	<?php 
-			  		$buttonString = "Reload with Stopwords Excluded";
+			  		$buttonString = "↺ Reload + Stopwords Excluded";
 			  		
 			  		if ( $withStopWordsExcluded==1)
 			  		{
-			  			$buttonString = "Reload with NO Exclusion";
+			  			$buttonString = "↺ Reload + NO Exclusion";
 			  		}
 			  	?>
-				<div id='stop-words-reload-button-area'>
-					<input type="button" value="<?=$buttonString?>" onclick="reloadWithStopWords('<?=$withStopWordsExcluded?>')">
-				</div>
+	
 	
 		  		 <fieldset id="word-frequency-fs">
 		  		 
-  				    <legend>Word Statistics</legend>
-			  		
+  				    <legend>Word Frequencies and Weights</legend>
+  				    
+			  			<div id='stop-words-reload-button-area'>
+								<input type="button" value="<?=$buttonString?>" onclick="reloadWithStopWords('<?=$withStopWordsExcluded?>')">
+						</div>
+					<div class='note' style='margin-left:20px;'>
+					<br>
+			  			* Document = "Chapter" for this TFIDF calculations
+			  		</div>
 						<table class='analysis-table' >
 			  			<thead>
 			  				<tr>
@@ -131,9 +134,7 @@ loadModels("core",$lang);
 			  			</tbody>
 			  			
 			  		</table>
-			  		<div>
-			  			* Documents = "Verses" for this TFIDF calculations
-			  		</div>
+			  		
 			  		
 			  </fieldset>
 			  	

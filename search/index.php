@@ -521,6 +521,10 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 	$SURA_NAME = $MODEL_CORE['META_DATA']['SURAS'][$SURA]['name_'.strtolower($lang)];
 
 	$SURA_NAME_LATIN = $MODEL_CORE['META_DATA']['SURAS'][$SURA]['name_trans'];
+	
+	
+	// وكذلك جلناكم امة وسطا 143/256 
+	$TOTAL_VERSES_OF_SURA = $MODEL_CORE['TOTALS']['TOTAL_PER_SURA'][$SURA]['VERSES'];
 
 	
 	//preprint_r($MODEL['QURAN_TEXT']);
@@ -583,7 +587,7 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 	<div class='result-aya-info'>
 	
 		<span class='result-sura-info' style="direction:<?=$direction?>">
-				<?=$SURA_NAME ?><?php if ( $lang=="EN") { echo " ($SURA_NAME_LATIN)"; } ?>  [<?=$AYA+1?>]
+				<?=$SURA_NAME ?><?php if ( $lang=="EN") { echo " ($SURA_NAME_LATIN)"; } ?>  [<?=$AYA+1?>/<?=$TOTAL_VERSES_OF_SURA?>]
 		</span>
 		<span class='result-aya-showtranslation' >
 		<?php 

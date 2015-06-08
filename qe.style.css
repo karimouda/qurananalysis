@@ -22,6 +22,33 @@
 body
 {
 	font-family: Tahoma;
+	margin: 0px;
+}
+
+A
+{
+	text-decoration: none;
+	color:#3E6FD8;
+}
+
+INPUT
+{
+	border:1px solid #eee;
+	color:#052F59;
+}
+
+
+INPUT[type="button"]
+{
+	cursor: pointer;
+	color:#000;
+}
+
+TEXTAREA
+{
+	border:1px solid #eee;
+	width:400px;
+	color:#052F59;
 }
 
 
@@ -158,31 +185,54 @@ body
 	font-size: 12px;
 }
 
-A.footer-item
+
+
+#copyr-statement
+{
+	color:a8a8a8;
+	font-size: 12px;
+	margin-top: 5px;
+	
+}
+
+#header-panel
+{
+	padding:0px;
+	width:100%;
+
+}
+
+#header-panel table
+{
+	margin-left:auto;
+	
+	width:430px;
+}
+
+#header-panel TR TD
+{
+	border-right:1px dashed #a8a8a8;
+	padding:0px 2px;
+	
+}
+
+#header-panel  A
 {
 	text-decoration: none;
 	color:#1597FE;
 	font-size: 12px;
-	padding:10px 4px;
+	
 }
 
-A.footer-item:HOVER
+#header-panel  A:HOVER
 {
 	color:#0D5E9B;
-}
-
-#footer-statement
-{
-	color:a8a8a8;
-	font-size: 12px;
-	padding:10px 4px;
-	
 }
 
 A.analysis-links
 {
 	color:#fff;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight:bold;
 	padding:10px 4px;
 	text-decoration: none;
@@ -200,8 +250,9 @@ A.analysis-links:ACTIVE
 
 A.analysis-links:HOVER
 {
-		opacity: 0.90;
-	filter: alpha(opacity =     90);
+
+	color:#fff;
+	font-size:15px;
 }
 
 .analysis-table
@@ -210,6 +261,7 @@ A.analysis-links:HOVER
 	width:auto;
 	margin:2%;
 	text-align: left;
+	
 	
 }
 .analysis-table thead th
@@ -224,6 +276,11 @@ A.analysis-links:HOVER
 	padding:5px;
 }
 
+.analysis-table  td:FIRST-CHILD
+{
+	width:200px;
+}
+
 fieldset
 {
 	float: left;	
@@ -234,7 +291,7 @@ fieldset
 fieldset legend
 {
 	font-weight: bold;
-	foont-size:16px;
+	foont-size:18px;
 }
 
 #word-frequency-fs
@@ -344,7 +401,8 @@ marked_fg
 
 #stop-words-reload-button-area
 {
-		margin:0px 35%;
+		margin-left:20px;
+		margin-top:10px;
 		width:30%;
 }
 
@@ -359,10 +417,11 @@ marked_fg
 
 #loading-layer
 {
-	color:green;
+	color:#000;
 	width:200px;
 	margin:0px auto;
 	display: none;
+	padding:20px;
 	
 }
 
@@ -409,7 +468,7 @@ marked_fg
 .search-error-message
 {
 		
-	color:#E88C1B;
+	color:#234;
 	padding:4px;
 	
 	
@@ -486,14 +545,29 @@ marked_fg
 	height: 40px;
 	width: 60px;
 	float: left;
-	margin:10px;
+	margin:5px;
 	padding:10px;
 	cursor: pointer;
-		text-align: center;
+	text-align: center;
 }
+
+#analysis-main-message
+{
+	margin:auto;
+	width:60%;
+	color:#202930;
+	padding-left: 60px;
+	margin-top:-20px;
+}
+
+#analysis-main-message P
+{
+	font-size:22px;
+}
+
 #analysis-switch-lang-button:HOVER
 {
-		opacity: 0.90;
+	opacity: 0.90;
 	filter: alpha(opacity =     90);
 
 }
@@ -682,7 +756,7 @@ text-align: center;
 
 .note
 {
-	color:#ddd;
+	color:#aaa;
 	font-size:11px;
 }
 
@@ -696,4 +770,121 @@ text-align: center;
 	margin:auto;
 	width:50%;
 	
+}
+
+#main-page-main-message
+{
+	margin:auto;
+	width:40%;
+	min-width:540px;
+	color:#052F59;
+	font-family: Tahoma;
+	font-weight: lighter;
+	padding:20px 0px;
+}
+
+#main-page-try
+{
+	color:#bbb;
+}
+
+
+
+.main-page-example-item
+{
+	text-decoration: none;
+	color:#1597FE;
+	font-size: 24px;
+	padding:0px;
+	font-family: Arial;
+	font-weight: lighter;
+	
+}
+
+.main-page-example-item:HOVER
+{
+	color:#0D5E9B;
+}
+
+#main-page-examples-area
+{
+	margin:10px auto;
+	width:400px;
+	margin-top: -45px;
+	
+}
+
+#info-pages-main-table
+{
+	width:90%;
+	margin:5%;
+}
+#info-pages-main-table TR TD
+{
+	padding:10px;
+}
+#info-pages-main-table TR TD:first-child
+{
+	border-right: 1px solid #345;
+}
+
+.info-page-text
+{
+	
+	font-family: arial;
+	font-size:20px;
+}
+
+#info-pages-title-column
+{
+	width:100px;
+	text-align:center;
+	vertical-align:top;
+	padding:31px 10px 30px 10px !important;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.credits-hr
+{
+	width:50%;
+}
+.credits-fs
+{
+	margin:10px;
+	padding:10px;
+}
+.credits-fs legend
+{
+	color:#052F59;
+}
+.info-page-section-title
+{
+	font-size:20px;
+	margin-top:0px;
+	color:#052F59;
+}
+.general-error-color
+{
+	color:#8c0000;
+}
+.general-success-color
+{
+	color:#3B890B;
+}
+.general-loading-color
+{
+	color:#ED9912;
+}
+#feedback_user_text
+{
+	height: 200px;
+}
+#feedback_type_area
+{
+	margin:10px 0px;
+}
+#feedback_type_area label
+{
+	color:#1E3807;
 }

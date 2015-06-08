@@ -24,9 +24,9 @@ loadModels("core",$lang);
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analysis | Analysis Totals </title>
+    <title>Quran Analysis | Scholars Section </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Full Analytics System for the Quran">
+    <meta name="description" content="Research and Analysis section in QA">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
@@ -39,182 +39,56 @@ loadModels("core",$lang);
        
   </head>
   <body>
-
+		<?php 
+			require("./analysis.header.php");
+			//preprint_r($MODEL_CORE['TOTALS']);
+			//preprint_r($MODEL_CORE);exit;
+		?>
+			  		
   <div id='main-container'>
 			  	
-			  		<?php 
-						require("../header.php");
-					?>
-			  		
+			
 			
 
-					<?php 
-						require("./analysis.header.php");
-						//preprint_r($MODEL_CORE['TOTALS']);
-						//preprint_r($MODEL_CORE);exit;
-					?>
+			
 					
 				
-			  	<div >
+			  	<div id="analysis-main-message" >
 			  	
 		
-		<fieldset> 		
-		
-			 <legend>General Totals</legend>
-			   	
-			  		<table class='analysis-table'>
-			  			<thead>
-			  				<tr>
-				  				<th>
-				  					Category
-				  				</th>
-				  				<th>
-				  					Total
-				  				</th>
-				  			</tr>
-			  			</thead>
-			  			<tbody>
-			  				<tr>
-			  					<td>Chapters</td><td><?=$MODEL_CORE['TOTALS']['SURAS']?></td>
-			  				</tr>
-			  				<tr>
-			  					<td>Verses</td><td><?=$MODEL_CORE['TOTALS']['VERSES']?></td>
-			  				</tr>
-			  				<tr>
-			  					<td>Words</td><td><?=$MODEL_CORE['TOTALS']['WORDS']?></td>
-			  				</tr>
-			  				<tr>
-			  					<td>Non-Repeated Words</td><td><?=$MODEL_CORE['TOTALS']['NRWORDS']?></td>
-			  				</tr>
-		  					<tr>
-			  					<td>Letters</td><td><?=$MODEL_CORE['TOTALS']['CHARS']?></td>
-			  				</tr>
-			  				<?php if ( $lang=="AR"):?>
-		  					<tr>
-			  					<td>Number of Pause Marks</td><td><?=count($MODEL_CORE['TOTALS']['PAUSEMARKS'])?></td>
-			  				</tr>
-		  					<tr>
-			  					<td>Pause Marks Count</td><td><?=$MODEL_CORE['TOTALS']['PAUSEMARKS_AGGREGATION']?></td>
-			  				</tr>			  				
-			  				
-		  					<tr>
-			  					<td>Sajdat Tilawa ۩</td><td><?=$MODEL_CORE['TOTALS']['SAJDAT_TELAWA']['COUNT']?></td>
-			  				</tr>
-		  					<tr>
-			  					<td>Sakta Latifa ۜ</td><td><?=$MODEL_CORE['TOTALS']['SAKTA_LATIFA']['COUNT']?></td>
-			  				</tr>
-			  				<?php endif;?>
-			  				<tr>
-			  					<td>Min Word Length</td><td><?=$MODEL_CORE['TOTALS']['MIN_WORD_LENGTH']?></td>
-			  				</tr>
-			  				<tr>
-			  					<td>Min Word</td><td><?=$MODEL_CORE['TOTALS']['MIN_WORD']?></td>
-			  				</tr>			  				
-			  				<tr>
-			  					<td>Max Word Length</td><td><?=$MODEL_CORE['TOTALS']['MAX_WORD_LENGTH']?></td>
-			  				</tr>					  				
-			  				<tr>
-			  					<td>Max Word</td><td><?=$MODEL_CORE['TOTALS']['MAX_WORD']?></td>
-			  				</tr>			  				
-			  				<tr>
-			  					<td>Avg Word Length</td><td><?=$MODEL_CORE['TOTALS']['AVG_WORD_LENGTH']?></td>
-			  				</tr>			  	
-			  				<tr>
-			  					<td>Min Verse Length</td><td><?=$MODEL_CORE['TOTALS']['MIN_VERSE_LENGTH']?></td>
-			  				</tr>
-			  				<tr>
-			  					<td>Min Verse</td><td><?=$MODEL_CORE['TOTALS']['MIN_VERSE']?></td>
-			  				</tr>			  				
-			  				<tr>
-			  					<td>Max Verse Length</td><td><?=$MODEL_CORE['TOTALS']['MAX_VERSE_LENGTH']?></td>
-			  				</tr>					  				
-			  				<tr>
-			  					<td>Max Verse</td><td><?=substr($MODEL_CORE['TOTALS']['MAX_VERSE'],0,104)."..."?></td>
-			  				</tr>			  				
-			  				<tr>
-			  					<td>Avg Verse Length</td><td><?=$MODEL_CORE['TOTALS']['AVG_VERSE_LENGTH']?></td>
-			  				</tr>
-
+				
+			   		<div style='color:#841'>
+				  		<p>
+				  			Are you a Scholar or normal user who is interested in going deep into the Quran 
+				  			to find patterns, relations and new discoveries, if so, you are in the right place ...
+				  			
+				  			
+				  		</p>
+				  		<p>
+				  			This section was created to be the swiss-knife of Quran Research, it is meant to
+				  			facilitate all kinds of Analysis work around Quran for both Arabic and English languages
+				  		</p>
 				  		
-	
-			  			</tbody>
-			  			
-			  		</table>
-			  		<?php if ( $lang=="AR"):?>
-			  		<table class='analysis-table'>
-			  			<thead>
-			  				<tr>
-				  				<th>
-				  					Pause Mark
-				  				</th>
-				  				<th>
-				  					Total
-				  				</th>
-				  			</tr>
-			  			</thead>
-			  			<tbody>
-							<?php 
-								foreach ($MODEL_CORE['TOTALS']['PAUSEMARKS'] as $pmLabel => $pmCount )
-								{
-							?>
-			  					<tr>
-				  					<td><?=$pmLabel?></td><td><?=$pmCount?></td>
-				  				</tr>			  				
-			  				<?php 
-								}
-			  				?>
-		  	
-			  			</tbody>
-			  			
-			  		</table>
-			  		<?php endif;?>
+				  		 <p style="color:#0357AA">
+				  			Click on one of the links above to start
+				  		</p>
+			  		</div>
 			  		
-				 </fieldset>		  		
-		  		 <fieldset>
-		  		 
-  				    <legend>Chapters</legend>
-			  		
-						<table class='analysis-table'>
-			  			<thead>
-			  				<tr>
-				  				<th>
-				  					Chapter Index
-				  				</th>
-				  				<th>
-				  					Chapter Name
-				  				</th>
-				  				<th>
-				  					Verses
-				  				</th>
-				  				<th>
-				  					Words
-				  				</th>
-				  				<th>
-				  					Chars
-				  				</th>
-				  			</tr>
-			  			</thead>
-			  			<tbody>
-							<?php 
-								foreach ($MODEL_CORE['TOTALS']['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
-								{
-							?>
-			  					<tr>
-			  						<td><?=$suraIndex+1?></td>
-				  					<td><?=$perSuraArr['NAME']?></td>
-				  					<td><?=$perSuraArr['VERSES']?></td>
-				  					<td><?=$perSuraArr['WORDS']?></td>
-				  					<td><?=$perSuraArr['CHARS']?></td>
-				  				</tr>			  				
-			  				<?php 
-								}
-			  				?>
-		  	
-			  			</tbody>
+			  		<ul>
+			  			<li><b>Basic Statistics</b>: Statistics about the total number of Chapters, Verses, Words, Characters and more </li>
+			  			<li><b>Word Frequencies</b>: List of all words in the Quran with their frequencies and weights calculated using the TFIDF algorithm  </li>
+						<li><b>Word clouds</b>: Word clouds for each Chapter in the Quran in addition to 2 other clouds for verse endings and beginnings ( that is clouds for first and last word in each verse ), the bigger the word size the more it is mentioned   </li>
+			  			<li><b>Full Text</b>: Listing of all verses in the Quran  </li>
+			  			<li><b>Charts</b>: A collection of charts such as "Chapter/Verse distribution" </li>
+			  			<li><b>Graphs</b>: Convert a verse or a Chapter to a Graph, each node is a word which can be connected to other words preceding or succeeding it (after excluding stopwords)  </li>
+			  			<li><b>N-Grames</b>: Choose "N" to produce an N-grame of words from the Quran</li>
+			  			<li><b>PoS</b>: PoS tagging of the Quran using Quranic Arabic Corpus, you can list verses containing any specific PoS Tag</li>
+			  			<li><b>Chronology</b>: Verse analysis taking into consideration the Chronological Order of the Quran  </li>
+			  			<li><b>Repeated Verses</b>: Listing of full repeated verses or common substring using LCS algorithms  </li>
 			  			
-			  		</table>
+			  		</ul>
 			  		
-			  </fieldset>
+			  
 			  	
 			  	</div>	
    </div>

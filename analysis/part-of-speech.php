@@ -34,19 +34,16 @@ loadModels("core,qac",$lang);
        
   </head>
   <body>
-
+	<?php 
+		require_once("./analysis.header.php");
+	?>
+				
   <div id='main-container'>
 			  	
-			  		<?php 
-						require_once("../header.php");
-					?>
-			  		
+		
 			
 
-					<?php 
-						require_once("./analysis.header.php");
-					?>
-				
+		
 			  
 			  	
 			  	<div id='pos-options-area'>
@@ -59,7 +56,7 @@ loadModels("core,qac",$lang);
 					//preprint_r($MODEL['QURANA_PRONOUNS']);
 					?>
 				
-				Select POS Tag: 
+				Select PoS Tag: 
 				<select id='pos-selection'>
 					 <option value="" selected="true">&nbsp;</option>
 						<?php 
@@ -79,8 +76,9 @@ loadModels("core,qac",$lang);
 					<div id="loading-layer">
 			  		Loading ...
 					</div>
+					
 				</div>
-	
+	<br>
 		  		
      				<div id='pos-data-area'>
 							

@@ -700,6 +700,25 @@
 		return $wordsArr[$oneBasedWordIndex-1];
 	}
 	
+	function handleDBError($sqliteDBObj)
+	{
+		$lastError = $sqliteDBObj->lastErrorCode();
+		
+		if ( $lastError!=0)
+		{
+			//UNIQUE constraint failed
+			if ( $lastError=="19")
+			{
+				return "Error, data already in DB ! ";
+			}
+			else
+			{
+				return  "Error occurred [$lastError] ";
+			}
+			
+		}
+	}
+	
 	
 	
 ?>

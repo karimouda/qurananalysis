@@ -1,3 +1,5 @@
+var _gaq = _gaq || [];
+
 function showTranslationFor(divID)
 {
 	$("#"+divID+"-translation").show();
