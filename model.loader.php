@@ -1078,23 +1078,24 @@ function loadModel($lang,$type,$file)
 				  			for ($s=0;$s<$numberOfSuras;$s++)
 				  			{
 				  				
-				  				$versesPerSura = $TOTALS_ARR['TOTAL_PER_SURA'][$s]['VERSES'];
 				  				
-				  				for ($a=0;$a<$versesPerSura;$a++)
-				  				{
+				  				//$versesPerSura = $TOTALS_ARR['TOTAL_PER_SURA'][$s]['VERSES'];
+				  				
+				  				//for ($a=0;$a<$versesPerSura;$a++)
+				  				//{
 
-						  			
-						  			if ( isset($WORDS_FREQUENCY_ARR['TOTAL_PER_VERSE'][$s][$a][$wordLabel]) )
+				  				
+						  			if ( isset($WORDS_FREQUENCY_ARR['WORDS_PER_SURA'][$s][$wordLabel]) )
 						  			{
 						  				//= $WORDS_FREQUENCY_ARR['TOTAL_PER_VERSE'][$s][$a][$wordLabel]
 						  				$documentFrequency++;
 						  			}
-				  				}
+				  				//}
  
 				  			 
 				  			}
 				  			
-				  			$inverseDocumentFrequency = log( ($numberOfVerses/$documentFrequency), 10 );
+				  			$inverseDocumentFrequency = log( ($numberOfSuras/$documentFrequency), 10 );
 				  			
 				  			$TFIDF = $termFrequency * $inverseDocumentFrequency;
 				  			
