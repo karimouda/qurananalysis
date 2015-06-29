@@ -20,7 +20,7 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
 $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
-
+$pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +61,10 @@ $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PRONOUN_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_FINAL_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
+			  	
+			  	
+			  	
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
 			  	
 			  	
 			  	 // $wordsInfoArr = getWordInfo("قوم", $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true,true);
@@ -702,14 +706,16 @@ $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 							$pos = $filteredBiGramsPOS[$biGramConcept];
 							
 							
-							// phrase weight = collective weight of terms
+							// phrase weight = average weight of inner terms
 							$biGramWords = preg_split("/ /", $biGramConcept);
 							
 							$weight=0;
 							foreach($biGramWords as $biGramTerm)
 							{
-								$weight = $weight+$finalTerms[$biGramTerm]['WEIGHT'];
+								$weight += floatval($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$biGramTerm]['TFIDF']);
 							}
+							
+							$weight = ($weight/2);
 							//////
 							
 							
@@ -721,7 +727,7 @@ $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 						
 						}
 	
-					
+						rsortBy($finalConcepts,"FREQ");
 						
 						echoN("FINAL CONCEPTS COUNT:".count($finalConcepts));
 					
@@ -732,9 +738,145 @@ $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 						
 						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts"));
 						
-						rsortBy($finalConcepts,"FREQ");
 						
-						preprint_r($finalConcepts);
+						
+						//preprint_r($finalConcepts);
+						
+						
+						
+					if ( $GENERATE_NONTAXONOMIC_RELATIONS)
+					{
+						
+						$MODEL_CORE_UTH = loadUthmaniDataModel();
+						$relationArr = array();
+						
+						
+						/* SURA'S LOOP **/
+						for ($s=0;$s<$numberOfSuras;$s++)
+						{
+							
+							
+							$suraSize = count($MODEL_CORE_UTH['QURAN_TEXT'][$s]);
+							
+							
+										
+							/* VERSES LOOP **/
+							for ($a=0;$a<$suraSize;$a++)
+							{
+								
+								$i++;
+								$verseTextUthmani = $MODEL_CORE_UTH['QURAN_TEXT'][$s][$a];
+				  				$uthmaniWordsArr = preg_split("/ /", $verseTextUthmani);
+				  
+							
+							
+							
+									  $uthmaniWordsArr = removePauseMarksFromArr($pauseMarksArr,$uthmaniWordsArr);
+							
+							
+									  $triplePatternArr = array();
+									  foreach($uthmaniWordsArr as $index => $uthmaniWord)
+									  {
+							
+									  	$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$uthmaniWord];
+									  	
+									  	
+									 
+									  //	echoN("|$uthmaniWord|$simpleWord");
+									  	
+									  	//if ( isset($finalConcepts[$simpleWord]))
+									  	//{
+									  		 $qacLocation = ($s+1).":".($a+1).":".($index+1);
+									  		 
+										 	 $qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+	
+										 	 $pos="";
+										 	 foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
+										 	 {
+											 	 $lemma = $qacWordSegmentsArr[$segmentIndex]['FEATURES']['LEM'];
+												 $pos = $pos ." ". $qacWordSegmentsArr[$segmentIndex]['TAG'];
+										 	 }
+								
+										 	// echoN("$pos|$simpleWord|$lemma|$qacLocation|$uthmaniWord");
+										 	 
+										 	 $triplePatternArr['CONCEPTS'][]=$simpleWord;
+										 	 $triplePatternArr['PATTERN'][]=trim($pos);
+										 	 
+										 	
+										 	 
+										 	 
+										 	 	
+										 	 	$joinedPattern = join(" ",array_values($triplePatternArr['PATTERN']));
+										 	 	
+										 	 	//preprint_r($triplePatternArr);
+										 	 	
+										 	 	if (   $joinedPattern=="PN V DET N"
+									  				|| $joinedPattern=="PN LOC DET N" 
+									  				|| $joinedPattern=="PN V PN")
+										 	 	{
+										 	 		
+										 	 		//preprint_r($triplePatternArr);
+										 	 		
+										 	 		
+										 	 		
+
+										 	 		if ( isset($finalConcepts[$triplePatternArr['CONCEPTS'][0]]) 
+														&& isset($finalConcepts[$triplePatternArr['CONCEPTS'][2]]) )
+										 	 		{
+										 	 			//echoN("####");
+										 	 			
+										 	 			$newRelation= array("TYPE"=>"NON-TAXONOMIC","SUBJECT"=>$triplePatternArr['CONCEPTS'][0],
+										 	 					"VERB"=>$triplePatternArr['CONCEPTS'][1],
+										 	 					"OBJECT"=>$triplePatternArr['CONCEPTS'][2],
+										 	 					"posPattern"=>$joinedPattern);
+
+														$relationHash = md5(join(",",array_values($newRelation)));
+
+														if ( !isset($relationArr[$relationHash]))
+														{
+															$relationArr[$relationHash]=$newRelation;
+														}
+										 	 			
+										 	 		}
+										 	 		
+										 	 		$triplePatternArr = array();
+										 	 		
+										 	 	}
+										 	 	else 
+										 	 	{
+										 	 	
+										 	 		if ( count($triplePatternArr['CONCEPTS'])==3  )
+										 	 		{
+										 	 			$triplePatternArr['CONCEPTS'] = array_slice($triplePatternArr['CONCEPTS'], 1,2);
+												 	 		$triplePatternArr['PATTERN'] = array_slice($triplePatternArr['PATTERN'], 1,2);
+										 	 		 }
+										 	 	}
+										 	 	
+										 	
+										 	 	
+										 	 	
+										 	 	
+										 	 
+									  	//}
+									 	 
+									 }
+									 
+									
+									 
+									
+							}
+							
+						}
+						
+						preprint_r($relationArr);
+						
+						
+						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationArr));
+							
+						
+						file_put_contents("../data/ontology/temp.final.relations", serialize($relationArr));
+						
+					}
 					
 					
 				?>

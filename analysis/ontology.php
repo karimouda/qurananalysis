@@ -50,7 +50,90 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 			  	<h1 id='ontology-title'>Quran Ontology</h1>
 			  	<div id='ontology-main-area'>
 			  	
-						SOON
+						<table id="ontology-container-table">
+							<tr>
+								<td >
+
+  				   						 
+  				   						 
+  				   						 
+  				   						 <table id='ontology-concepts-table'>
+  				   						 <tr>
+  				   						 <th>
+  				   						Concepts
+  				   						 </th>
+  				   						 </tr>
+  				   						
+  				   						 	
+  				   						 <?php
+  				   						 $finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts"));
+  				   						 
+  				   						 
+	  				   						  foreach($finalConcepts as $concept=> $conceptArr)
+	  				   						  {
+  				   						 		
+  				   						 
+  				   						 	?>
+  				   						 	   <tr>
+  				   								 <td style="background-color: #dddddd;">
+  				   						 			
+  				   						 					<?php echo  $concept?> 
+  				   						 			
+  				   						 		 </td>
+  				   						 		</tr>
+  				   						 					
+  				   						 	<?php
+  				   						 						
+  				   						 	   }
+  				   						 	?>
+  				   						 					
+  				   						 </table>
+  				   						 
+  				   				
+								</td>
+								<td>
+								
+									
+									
+								
+										 <table id='ontology-concepts-table'>
+  				   						 <tr>
+  				   						 <th>
+  				   						Relations
+  				   						 </th>
+  				   						 </tr>
+  				   						
+  				   						 	
+  				   						 <?php
+  				   						 $relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+  				   						 
+  				   						 
+  				   						 
+	  				   						  foreach($relationArr as $index=> $relationsArr)
+	  				   						  {
+  				   						 		
+  				   						 		$subject = $relationsArr['SUBJECT'];
+  				   						 		$verb = $relationsArr['VERB'];
+  				   						 		$object = $relationsArr['OBJECT'];
+  				   						 		
+  				   						 	?>
+  				   						 	   <tr>
+  				   								 <td style="background-color: #dddddd;">
+  				   						 			
+  				   						 					<?php echo  "$subject -> $verb -> $object"?> 
+  				   						 			
+  				   						 		 </td>
+  				   						 		</tr>
+  				   						 					
+  				   						 	<?php
+  				   						 						
+  				   						 	   }
+  				   						 	?>
+  				   						 					
+  				   						 </table>
+								</td>
+							</tr>
+						</table>
 				</div>
 	
 		  		

@@ -934,6 +934,41 @@ text-align: center;
 	margin: 0px auto;
 	width: 400px
 }
+#ontology-container-table 
+{
+	width:80%;
+	margin:auto;
+	
+	margin-top:10px;
+}
+
+#ontology-container-table  TD 
+{
+	vertical-align: top;
+}
+
+#ontology-concepts-table
+{
+		width:100%;
+	border:1px;
+	margin:auto;
+}
+#ontology-concepts-table TD
+{
+	vertical-align: top;
+	background-color: #fafafa;
+	width:50%;
+}
+#ontology-concepts-table TH
+{
+
+	background-color: #C0DE22;
+	color:#000;
+	padding:2px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
 #pos-words-verses-table
 {
 	width:100%;
