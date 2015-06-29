@@ -50,7 +50,12 @@
    			
    				<a href="./chronology.php<?=$langParameter?>" class='analysis-links'>Chronology</a>
    				
-   				<a href="./repeated.php<?=$langParameter?>" class='analysis-links'>Repeated Verses</a>		
+   				<a href="./repetition.php<?=$langParameter?>" class='analysis-links'>Repeated Verses</a>		
+   				<a href="./ontology.php<?=$langParameter?>" class='analysis-links'>Ontology</a>		
+   				<a href="./uthmani-to-simple.php<?=$langParameter?>" class='analysis-links'>Uthmani-to-Simple</a>
+   				<a href="./words-information.php<?=$langParameter?>" class='analysis-links'>Word Information</a>			
+   				
+   				
    				
    				
    		

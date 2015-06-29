@@ -74,6 +74,12 @@ loadModels("core",$lang);
 			  </fieldset>
 			  -->
 			  
+			  
+			
+					
+
+			  
+			  
 			  <fieldset class="word-cloud-fs">
 		  		 
   				    <legend><?php echo $MODEL_CORE['RESOURCES']['VERSE_BEGENNINGS']?></legend>

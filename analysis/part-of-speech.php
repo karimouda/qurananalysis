@@ -49,7 +49,7 @@ loadModels("core,qac",$lang);
 			  	<div id='pos-options-area'>
 					<?php 
 					
-					//preprint_r($MODEL['QAC_MATERTABLE']);
+					//preprint_r($MODEL['QAC_MASTERTABLE']);
 					//preprint_r($MODEL['QAC_POS']);
 					//preprint_r($MODEL['QAC_FEATURES']);
 					//preprint_r($MODEL_QURANA['QURANA_CONCEPTS']);
@@ -82,7 +82,7 @@ loadModels("core,qac",$lang);
 		  		
      				<div id='pos-data-area'>
 							
-							<span class='note'>based on QAC ( Quranic Arabic Corpus ) http://corpus.quran.com</span>
+							<span class='note'>based on QAC ( Quranic Arabic Corpus ), more about Tags here:http://corpus.quran.com/documentation/tagset.jsp</span>
 					</div>
 					
 					

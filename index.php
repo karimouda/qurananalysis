@@ -85,16 +85,21 @@ $query = $_GET['q'];
 			  	 		<a href="?q=Moses" class='main-page-example-item'>Moses</a>,
 			  	 		<a href="?q=Angels" class='main-page-example-item'>Angels</a>,
 			  	 		<a href="?q=Adam" class='main-page-example-item'>Adam</a>,
-			  	 		
+			  	 		<br>
 			  	 		
 			  	 		<a href="?q=Life" class='main-page-example-item'>Life</a>,
 			  	 		<a href="?q=Death" class='main-page-example-item'>Death</a>,
+			  	 		<a href="?q=Win" class='main-page-example-item'>Win</a>,
+			  	 		<a href="?q=Loss" class='main-page-example-item'>Loss</a>,
+			  	 		<a href="?q=Signs" class='main-page-example-item'>Signs</a>,
 			  	 		<a href="?q=Heaven" class='main-page-example-item'>Heaven</a>,
 			  	 		<a href="?q=Hell" class='main-page-example-item'>Hell</a>,
 			  	 		<a href="?q=Love" class='main-page-example-item'>Love</a>,
 			  	 		<a href="?q=Manners" class='main-page-example-item'>Manners</a>,
 			  	 		<a href="?q=Children" class='main-page-example-item'>Children</a>,
 			  	 		<a href="?q=Repentance" class='main-page-example-item'>Repentance</a>,
+			  	 		<a href="?q=Money" class='main-page-example-item'>Money</a>,
+			  	 		
 	
 			  	 		
 			  	 		<a href="?q=Sky" class='main-page-example-item'>Sky</a>,
@@ -109,6 +114,7 @@ $query = $_GET['q'];
 			  	 		<a href="?q=Marriage" class='main-page-example-item'>Marriage</a>,
 			  	 		<a href="?q=Jihad" class='main-page-example-item'>Jihad</a>,
 			  	 		<a href="?q=War" class='main-page-example-item'>War</a>,
+			  	 		<a href="?q=Kill" class='main-page-example-item'>Kill</a>,
 			  	 		<a href="?q=Freedom" class='main-page-example-item'>Freedom</a>,
 			  	 		<a href="?q=Martyrs" class='main-page-example-item'>Martyrs</a>
 			  	 		

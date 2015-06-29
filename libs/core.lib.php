@@ -11,6 +11,11 @@
 		echo($str."\n<br>");
 	}
 	
+	function printHTMLPageHeader()
+	{
+		echo("<html lang='en-US'><head><title>Print Page</title><meta charset='utf-8'></head><body>");
+	}
+	
 	function multibyteStringOrdinal($str)
 	{
 	
@@ -153,8 +158,44 @@
 	
 	function removeTashkeel($str)
 	{
-		return preg_replace("/[\x{0618}-\x{061A}\x{064B}-\x{0654}\x{0670}-\x{0671}\x{06DC}\x{06DF}\x{06E0}\x{06E2}\x{06E3}\x{06E5}\x{06E6}\x{06E8}\x{06EA}-\x{06ED}]/um","",$str);
+		return preg_replace("/[\x{0618}-\x{061A}\x{064B}-\x{0654}\x{0670}\x{06DC}\x{06DF}\x{06E0}\x{06E2}\x{06E3}\x{06E5}\x{06E6}\x{06E8}\x{06EA}-\x{06ED}]/um","",$str);
 		
+	
+		/* UNICODE REFERENCE
+		 * http://www.fileformat.info/info/unicode/char/0618/index.htm
+		 * 0618 = ARABIC SMALL FATHA
+		 * 0619 = ARABIC SMALL DAMMA
+		 * 061a = ARABIC SMALL KASRA
+		 * 
+		 * 064B = ARABIC FATHATAN
+		 * 064C = ARABIC DAMMATAN
+		 * 064D = ARABIC KASRATAN
+		 * 064E = ARABIC FATHA
+		 * 064F = ARABIC DAMMA
+		 * 0650 = ARABIC KASRA
+		 * 0651 = ARABIC SHADDA
+		 * 0652 = ARABIC SUKUN
+		 * 0653 = ARABIC MADDAH ABOVE
+		 * 0654 = ARABIC HAMZA ABOVE
+		 * 
+		 * 0670 = ARABIC LETTER SUPERSCRIPT ALEF - ٰ
+		 * 0671 = ARABIC LETTER ALEF WASLA - ٱ
+		 * 
+		 * 06DC = ARABIC SMALL HIGH SEEN
+		 * 06DF = ARABIC SMALL HIGH ROUNDED ZERO
+		 * 06E0 = ARABIC SMALL HIGH UPRIGHT RECTANGULAR ZERO
+		 * 06E2 = ARABIC SMALL HIGH MEEM ISOLATED FORM
+		 * 06E3 = ARABIC SMALL LOW SEEN
+		 * 06E5 = ARABIC SMALL WAW
+		 * 06E6 = ARABIC SMALL YEH
+		 * 06E8 = ARABIC SMALL HIGH NOON
+		 * 
+		 * 06EA = ARABIC EMPTY CENTRE LOW STOP
+		 * 06EB = ARABIC EMPTY CENTRE HIGH STOP
+		 * 06EC = ARABIC ROUNDED HIGH STOP WITH FILLED CENTRE
+		 * 06ED = ARABIC SMALL LOW MEEM
+		 * 
+		 */
 	}
 	
 	function stripBOM($str)
@@ -357,6 +398,112 @@
 		return $pauseMarksArr;
 	}
 	
+	
+	/**
+	 * Arabic To Buckwalter translation based on table on QAC website
+	 * http://corpus.quran.com/java/buckwalter.jsp
+	 *
+	 *
+	 * @param String $transliteratedStr
+	 * @return string
+	 */
+	function arabicToBuckwalter($arabicStr)
+	{
+	
+		$buckwalterStr = "";
+	
+		$BUCKWATER_EXTENDED_MAP = array();
+			
+
+		$BUCKWATER_EXTENDED_MAP[1569]="'";
+		$BUCKWATER_EXTENDED_MAP[1571]=">";
+		$BUCKWATER_EXTENDED_MAP[1572]="&";
+		$BUCKWATER_EXTENDED_MAP[1573]="<";
+		$BUCKWATER_EXTENDED_MAP[1574]="}";
+		$BUCKWATER_EXTENDED_MAP[1575]="A";
+		$BUCKWATER_EXTENDED_MAP[1576]="b";
+		$BUCKWATER_EXTENDED_MAP[1577]="p";
+		$BUCKWATER_EXTENDED_MAP[1578]="t";
+		$BUCKWATER_EXTENDED_MAP[1579]="v";
+		$BUCKWATER_EXTENDED_MAP[1580]="j";
+		$BUCKWATER_EXTENDED_MAP[1581]="H";
+		$BUCKWATER_EXTENDED_MAP[1582]="x";
+		$BUCKWATER_EXTENDED_MAP[1583]="d";
+		$BUCKWATER_EXTENDED_MAP[1584]="*";
+		$BUCKWATER_EXTENDED_MAP[1585]="r";
+		$BUCKWATER_EXTENDED_MAP[1586]="z";
+		$BUCKWATER_EXTENDED_MAP[1587]="s";
+		$BUCKWATER_EXTENDED_MAP[1588]="$";
+		$BUCKWATER_EXTENDED_MAP[1589]="S";
+		$BUCKWATER_EXTENDED_MAP[1590]="D";
+		$BUCKWATER_EXTENDED_MAP[1591]="T";
+		$BUCKWATER_EXTENDED_MAP[1592]="Z";
+		$BUCKWATER_EXTENDED_MAP[1593]="E";
+		$BUCKWATER_EXTENDED_MAP[1594]="g";
+		$BUCKWATER_EXTENDED_MAP[1600]="_";
+		$BUCKWATER_EXTENDED_MAP[1601]="f";
+		$BUCKWATER_EXTENDED_MAP[1602]="q";
+		$BUCKWATER_EXTENDED_MAP[1603]="k";
+		$BUCKWATER_EXTENDED_MAP[1604]="l";
+		$BUCKWATER_EXTENDED_MAP[1605]="m";
+		$BUCKWATER_EXTENDED_MAP[1606]="n";
+		$BUCKWATER_EXTENDED_MAP[1607]="h";
+		$BUCKWATER_EXTENDED_MAP[1608]="w";
+		$BUCKWATER_EXTENDED_MAP[1609]="Y";
+		$BUCKWATER_EXTENDED_MAP[1610]="y";
+		$BUCKWATER_EXTENDED_MAP[1611]="F";
+		$BUCKWATER_EXTENDED_MAP[1612]="N";
+		$BUCKWATER_EXTENDED_MAP[1613]="K";
+		$BUCKWATER_EXTENDED_MAP[1614]="a";
+		$BUCKWATER_EXTENDED_MAP[1615]="u";
+		$BUCKWATER_EXTENDED_MAP[1616]="i";
+		$BUCKWATER_EXTENDED_MAP[1617]="~";
+		$BUCKWATER_EXTENDED_MAP[1618]="o";
+		$BUCKWATER_EXTENDED_MAP[1619]="^";
+		$BUCKWATER_EXTENDED_MAP[1620]="#";
+		$BUCKWATER_EXTENDED_MAP[1648]="`";
+		$BUCKWATER_EXTENDED_MAP[1649]="{";
+		$BUCKWATER_EXTENDED_MAP[1756]=":";
+		$BUCKWATER_EXTENDED_MAP[1759]="@";
+		$BUCKWATER_EXTENDED_MAP[1760]="\"";
+		$BUCKWATER_EXTENDED_MAP[1762]="[";
+		$BUCKWATER_EXTENDED_MAP[1763]=";";
+		$BUCKWATER_EXTENDED_MAP[1765]=",";
+		$BUCKWATER_EXTENDED_MAP[1766]=".";
+		$BUCKWATER_EXTENDED_MAP[1768]="!";
+		$BUCKWATER_EXTENDED_MAP[1770]="-";
+		$BUCKWATER_EXTENDED_MAP[1771]="+";
+		$BUCKWATER_EXTENDED_MAP[1772]="%";
+		$BUCKWATER_EXTENDED_MAP[1773]="]";
+	
+			
+
+	
+		
+	
+		for($index=0;$index<mb_strlen($arabicStr);$index++)
+		{
+			$char =mb_substr($arabicStr,$index,2);
+				
+		
+			$ordinal = multibyteCharOrdinal($char);
+			
+			// stop if char not a buckwalter char or space
+			if ( !isset($BUCKWATER_EXTENDED_MAP[$ordinal]) && $char!=" " && $char!="2" )
+			{
+				throw new Exception("Strign contains invalid chars [$char]");
+			}
+			
+			$buckwalterStr = $buckwalterStr . $BUCKWATER_EXTENDED_MAP[$ordinal];
+		}
+			
+			
+			
+		return $buckwalterStr;
+	
+	
+	}
+		
 	/**
 	 * Buckwalter reverse translation based on table on QAC website
 	 * http://corpus.quran.com/java/buckwalter.jsp
@@ -658,6 +805,7 @@
 	
 	function removePauseMarksFromArr($pauseMarksArr,$targetArr)
 	{
+		global $saktaLatifaMark,$sajdahMark;
 
 		$newArr = array();
 
@@ -665,7 +813,7 @@
 	
 			foreach($targetArr as $index => $value)
 			{
-				if ( !isset($pauseMarksArr[$value]) )
+				if ( !isset($pauseMarksArr[$value]) && $value != $saktaLatifaMark && $value != $sajdahMark  )
 				{
 					$newArr[]=$value;
 				
@@ -693,9 +841,9 @@
 	{
 		$wordsArr = preg_split("/ /", $verseText);
 
-		
+	
 		$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'],$wordsArr);
-		
+	
 		
 		return $wordsArr[$oneBasedWordIndex-1];
 	}
@@ -719,6 +867,640 @@
 		}
 	}
 	
+	function findSmallestWordInArray($arr)
+	{
+		$smallestLength = 999;
+		$smallestIndex = -1;
+		
+		foreach ($arr as $index => $word)
+		{
+			if ( empty($word)) continue;
+			
+			//echoN($word.$index);
+			
+			$lengthOfCurrentWord = mb_strlen($word);
+			
+			if ( $lengthOfCurrentWord <  $smallestLength)
+			{
+				$smallestLength = $lengthOfCurrentWord;
+				$smallestIndex = $index;
+				
+			}
+		}
+		
+		//preprint_r($arr);
+		//echoN($smallestIndex."-".$smallestLength);
+		
+		return $arr[$smallestIndex];
+		
+		
+	}
 	
+	
+	function loadUthmaniDataModel()
+	{
+		return  apc_fetch("MODEL_CORE[AR_UTH]");
+	}
+	
+	
+
+	
+	
+	function loadUthmaniToSimpleMappingTable()
+	{
+		return apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
+	}
+	
+	function loadLemmaToSimpleMappingTable()
+	{
+		return apc_fetch("LEMMA_TO_SIMPLE_WORD_MAP");
+	}	
+
+	
+	// doen not contain tashkeel
+	function isSimpleQuranWord($str)
+	{
+		if ( removeTashkeel($str)==$str) return true;
+		
+		return false;
+	}
+	
+	function initArrayWithZero(&$arrItem)
+	{
+		if ( empty($arrItem))
+		{
+			$arrItem=0;
+		}
+	}
+	
+	function plotHistogram($data)
+	{
+		session_start();
+		$_SESSION['PLOTTING_DATA'] = $data ;
+		
+		echo "<IFRAME id='plotting-frame' SRC='/tools/plotting/histogram.php'>";
+		echo "</IFRAME>";
+	}
+	
+	function arrayToCSV($data)
+	{
+		foreach($data as $key=>$val)
+		{
+			echoN($key.",".$val);
+		}
+	}
+	
+	function histogramFromArray($data)
+	{
+		$histoBins = array();
+		
+		foreach( $data as $key => $value)
+		{
+		
+			initArrayWithZero($histoBins[$value]);
+			
+			$histoBins[$value]++;
+		}
+		
+		return $histoBins;
+		
+	}
+	
+	function advanceArrayCounter(&$arr,$numberOfMoves)
+	{
+		for($i=0;$i<$numberOfMoves;$i++)
+		{
+			next($arr);
+		}
+	}
+	
+	/*
+	 * $threshold: frequency of verse repetition, returned verses will have freq more than the specified threshold
+	 */
+	function getRepeatedVerses($threshold=1)
+	{
+		global $MODEL_CORE,$numberOfSuras;
+		
+	
+		
+		$repeatedVerses = array();
+		
+			$i=0;
+			/* SURA'S LOOP **/
+			for ($s=0;$s<$numberOfSuras;$s++)
+			{
+				
+				
+				$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+						
+						/* VERSES LOOP **/
+				for ($a=0;$a<$suraSize;$a++)
+				{
+						
+					$i++;
+					$verseText = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+						
+						
+					initArrayWithZero($repeatedVerses[$verseText]);
+						
+					$repeatedVerses[$verseText]++;
+				
+				}
+			
+			}
+			
+			arsort($repeatedVerses);
+				
+			
+				
+			$repeatedVerses = array_filter($repeatedVerses, 
+					function($v) use ($threshold) 
+					{
+						return	$v > $threshold; 
+					} );
+			
+			return $repeatedVerses;
+	}
+
+	/*
+	 * $threshold: frequency of Ngrams repetition, returned ngrams with frequency more than the specified threshold
+	*/
+	function getNGrams($n,$threshold=0)
+	{
+		global $MODEL_CORE,$numberOfSuras;
+		
+		
+		$grams = $n;
+		
+		$nGramesArr = array();
+		
+		$i=0;
+		/* SURA'S LOOP **/
+		for ($s=0;$s<$numberOfSuras;$s++)
+		{
+			
+			
+			$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+				
+			/* VERSES LOOP **/
+			for ($a=0;$a<$suraSize;$a++)
+			{
+				
+				$i++;
+				$verseText = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+				
+				
+						
+					$wordsArr = preg_split("/ /", $verseText);
+				
+					$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'], $wordsArr);
+				
+				
+							$verseLength = count($wordsArr);
+				
+							// 3 grames in 2 words verse
+							if ( $grams > $verseLength)
+							{
+								continue;
+							}
+							
+				
+				// echoN("$verseLength-$grams");
+				// groups loop
+				for ($group=0;$group<=($verseLength-$grams);$group++)
+				{
+					
+					// reset ngrame to start accumulating by start of each verse
+					$nGrameString = "";
+					reset($wordsArr);
+						
+					//move array cursor according to the start of the new group
+					advanceArrayCounter($wordsArr,$group);
+						
+						
+					// words loop
+						for ($w=0;$w<$grams;$w++)
+						{
+						$word = current($wordsArr);
+						//echoN("|$word|");
+					
+						$nGrameString = $nGrameString." ".$word;
+					
+					next($wordsArr);
+				}
+					
+				$nGrameString = trim($nGrameString);
+					
+				initArrayWithZero($nGramesArr[$nGrameString]);
+					
+				$nGramesArr[$nGrameString]++;
+				
+			}
+			
+			
+			
+				
+			
+				
+			}
+		}
+		
+		arsort($nGramesArr);
+		
+			
+		
+		$nGramesArr = array_filter($nGramesArr,
+										function($v) use ($threshold)
+										{
+											return	$v > $threshold;
+										} );
+		
+		return $nGramesArr;
+	}
+	
+	
+	/*
+	 * $threshold: frequency of PoS-Ngrams repetition, returned ngrams with frequency more than the specified threshold
+	*/
+	function getPoSNGrams($posPatternString,$threshold=0)
+	{
+		global $MODEL_CORE,$numberOfSuras,$quranCorpusMorphologyFile;
+	
+	
+		$grams = $n;
+	
+		$nGramesArr = array();
+		
+		
+		/////////////////////////////////
+		$patternArr = preg_split("/ /",$posPatternString);
+		
+		$posTagsCountInPattern = count($patternArr);
+		
+		
+		$qacFileLinesArr = file($quranCorpusMorphologyFile,FILE_IGNORE_NEW_LINES);
+		
+		
+		
+		$headerIndex=0;
+		$segmentIndex=1;
+		while( current($qacFileLinesArr) !== false)
+		{
+		
+		
+		
+			$headerIndex++;
+		
+			//ignore header sections
+			if ( $headerIndex <= 57)
+			{
+				next($qacFileLinesArr);
+				continue;
+			}
+		
+		
+		
+			$line = current($qacFileLinesArr);
+		
+			//echoN( htmlentities($line));
+		
+			// convert columns to array
+			$lineArr = preg_split("/\t/",$line);
+		
+		
+		
+		
+			$location = $lineArr[0];
+			$formOrSegment = $lineArr[1];
+			$formOrSegmentAR = buckwalterReverseTransliteration($formOrSegment);
+			$posTAG = $lineArr[2];
+		
+			// remove brackets from location and keep it only SURA/AYA/WORDINDEX/SEGMENTINDEX
+			$masterID = preg_replace("/\(|\)|/", "", $location);
+		
+			$locationArr = preg_split("/\:/", $masterID);
+		
+		
+		
+		
+			$posTaggedNGramsStr = "";
+			if ( $posTAG == $patternArr[0] || $patternArr[0]=="*")
+			{
+					
+				//echoN("### $posTAG-".buckwalterReverseTransliteration($formOrSegment)."-$location");
+					
+				$posTaggedNGramsStr = $formOrSegmentAR;
+				$numberOfGramsFound = 1;
+					
+				//echoN($posTaggedNGramsStr);
+					
+				$prevVerseNumber = $locationArr[1];
+					
+				for($i=0;$i<$posTagsCountInPattern-1;$i++)
+				{
+			
+			
+					$line = next($qacFileLinesArr);
+			
+					//echoN($line);
+			
+					// convert columns to array
+					$lineArr = preg_split("/\t/",$line);
+			
+			
+			
+					$location = $lineArr[0];
+					$formOrSegment = $lineArr[1];
+					$formOrSegmentAR = buckwalterReverseTransliteration($formOrSegment);
+					$posTAG = $lineArr[2];
+			
+					// remove brackets from location and keep it only SURA/AYA/WORDINDEX/SEGMENTINDEX
+					$masterID = preg_replace("/\(|\)|/", "", $location);
+			
+					$locationArr = preg_split("/\:/", $masterID);
+			
+					$currentVerseNumber = $locationArr[1];
+			
+							//preprint_r($locationArr);
+							//echoN("$prevVerseNumber!=$currentVerseNumber");
+			
+					if ( $prevVerseNumber!=$currentVerseNumber)
+					{
+						break;
+					}
+			
+					$prevVerseNumber = $currentVerseNumber;
+			
+					if ( $posTAG == $patternArr[$numberOfGramsFound] || $patternArr[$numberOfGramsFound]=="*")
+					{
+						$posTaggedNGramsStr = $posTaggedNGramsStr." ".$formOrSegmentAR;
+							
+						$numberOfGramsFound++;
+							
+						//echoN($posTaggedNGramsStr);
+							
+						//echoN("2- $posTAG-$formOrSegment");
+			
+					}
+					else
+					{
+						// revert back to the postition after the first checked POS in the pattern
+						for($v=1;$v<$numberOfGramsFound;$v++)
+						{
+							rewind($qacFileLinesArr);
+						}
+						
+						break;
+					}
+	
+
+
+				}
+					
+				//echoN("$posTagsCountInPattern == $numberOfGramsFound"."-$location");
+					
+				if ( $posTagsCountInPattern == $numberOfGramsFound)
+				{
+	
+					$posTaggedNGramsStr = trim($posTaggedNGramsStr);
+	
+					initArrayWithZero($nGramesArr[$posTaggedNGramsStr]);
+	
+					$nGramesArr[$posTaggedNGramsStr]++;
+				}
+				//preprint_r($nGramesArr);
+
+			}
+		
+		
+			next($qacFileLinesArr);
+		
+		}
+		
+		/////////////////////////////////
+		
+		
+		arsort($nGramesArr);
+		
+			
+		
+		$nGramesArr = array_filter($nGramesArr,
+				function($v) use ($threshold)
+				{
+					return	$v > $threshold;
+				} );
+		
+		return $nGramesArr;
+		
+	}
+	
+	function getWordInfo($word,$MODEL_CORE,$MODEL_SEARCH,$MODEL_QAC,$fast=FALSE,$exactWord=FALSE)
+	{
+
+		$wordInfoArr = array();
+		
+		$word = trim($word);
+		$wordUthmani = "";;
+		$wordSimple = "";;
+		
+		$UTHMANI_TO_SIMPLE_WORD_MAP_VS = loadUthmaniToSimpleMappingTable();
+		
+		
+		if ( isSimpleQuranWord($word))
+		{
+		
+		
+			$wordUthmani = $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$word];
+			$wordSimple = $word;
+		}
+		else
+		{
+			$wordUthmani = $word;
+			
+			
+			//preprint_r($UTHMANI_TO_SIMPLE_WORD_MAP_VS);
+			
+		
+			// tashkeel of last char is significant, ex: lemmas will probably not be in the MAP because of that
+			$wordSimple =  $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$wordUthmani];;
+		
+			
+		}
+		
+
+		
+		$freqArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$wordSimple];
+		
+		//preprint_r($freqArr);
+		
+		$wordInfoArr['WORD_SIMPLE']=$wordSimple;
+		$wordInfoArr['WORD_UTHMANI']=$wordUthmani;
+				
+		/*echoN("Simple:".$wordSimple);
+		 echoN("Uthmani:".$wordUthmani);
+		
+		
+		
+		echoN("Repetition:".$freqArr['TF']);
+		echoN("TF-IDF Weight:".round($freqArr['TFIDF'],2));
+		
+		
+		
+		*/
+		
+		$wordInfoArr['TF']=$freqArr['TF'];
+		$wordInfoArr['TFIDF']=round($freqArr['TFIDF'],2);
+
+		
+		//preprint_r($MODEL_QAC['QAC_MASTERTABLE']);
+		//preprint_r(array_keys($MODEL_QAC['QAC_FEATURES']));
+		
+		$buckwalterTransliteration = "";
+		$posTagsArr = array();
+		$lemmasArr = array();
+		$wordRoot ="";
+		
+		$versesArr = array();
+		$versesTagsArr = array();
+		
+		$buckwalterTransliteration = "";
+		$wordRoot="";
+		
+	
+		if ( empty($wordSimple) || count($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple])==0)
+		{
+			return null;
+		}
+		
+		
+		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple] as $documentArrInIndex)
+		{
+
+		
+			$SURA = $documentArrInIndex['SURA'];
+			$AYA = $documentArrInIndex['AYA'];
+			$INDEX_IN_AYA_EMLA2Y = $documentArrInIndex['INDEX_IN_AYA_EMLA2Y'];
+			$INDEX_IN_AYA_UTHMANI= $documentArrInIndex['INDEX_IN_AYA_UTHMANI'];
+			$WORD_TYPE = $documentArrInIndex['WORD_TYPE'];
+			$EXTRA_WORD_TYPE_INFO = $documentArrInIndex['EXTRA_INFO'];
+			
+			
+			// INGORE ROOT SOURCES AND PRONOUNS, WE ONLY NEED THE NROMAL CORRESPONDING WORD
+			if ( $WORD_TYPE=="PRONOUN_ANTECEDENT" || $WORD_TYPE=="ROOT" ) continue;
+		
+		
+			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
+				
+			
+		
+			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
+			//exit;
+		
+			// search QAC for roots and LEMMAS for this word
+			foreach ( $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation] as $segmentIndex => $segmentDataArr)
+			{
+				$tag = $segmentDataArr['TAG'];
+				$segmentWord = $segmentDataArr['FORM_AR'];
+				$segmentWordSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord];
+				$buckwalterTransliteration = $segmentDataArr['FORM_EN'];
+				$lemma  = $segmentDataArr['FEATURES']['LEM'];
+				
+				
+				$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);
+		
+				
+		
+				$wordId = (getWordIndexFromQACLocation($qacLocation));
+				
+				if ( $exactWord==TRUE)
+				{
+					$wordFromVerseAtLocation = getWordFromVerseByIndex($MODEL_CORE, $verseText, $wordId);
+					
+					if ( $wordSimple!==$wordFromVerseAtLocation) continue;
+				}
+				
+				//echoN("$segmentWord|$tag");
+				
+				//for segments like ال no corresponding simple words to compare, not our target segment, so continue
+				//if ( empty($segmentWordSimple)) continue;
+		
+				if ( isset($segmentDataArr['FEATURES']['ROOT']) && $segmentDataArr['FEATURES']['ROOT']!=-1)
+				{
+					$wordRoot =  $segmentDataArr['FEATURES']['ROOT'];
+				}
+		
+				$posTagsArr[$tag]=1;
+				$lemmasArr[$lemma]=1;
+		
+				
+		
+				//echoN("|$segmentWordSimple|$wordSimple|$segmentWord");
+			
+		
+					
+				
+		
+				//$verseText = markSpecificWordInText($verseText,$wordId,$segmentWordSimple,"marked_fg");
+		
+				$verseHash = md5($verseText);
+		
+				if ( !isset($versesArr[$verseHash]))
+				{
+					$versesArr[$verseHash] = $verseText;
+					
+				
+				}
+				
+				if ( !isset($versesTagsArr[$verseHash]) )
+				{
+					$versesTagsArr[$verseHash]="";
+				}
+				
+				$versesTagsArr[$verseHash] = $versesTagsArr[$verseHash]." ".$tag;
+					
+					
+		
+		
+		
+		
+					
+			}
+			
+			// we don't need all inverted index list except for verses, only break if we found at least one word
+			if ( $fast==true && !empty($versesArr))
+			{
+				break;
+			}
+		}
+		
+		$wordInfoArr['BUCKWALTER']=$buckwalterTransliteration;
+		$wordInfoArr['ROOT']=$wordRoot;
+		$wordInfoArr['LEM']=$lemmasArr;
+		$wordInfoArr['POS']=$posTagsArr;
+		$wordInfoArr['VERSES']=$versesArr;
+		$wordInfoArr['VERSES_POS_TAGS']=$versesTagsArr;
+		
+		
+		return $wordInfoArr;
+	}
+	
+	function showTechnicalError($error)
+	{
+		echoN("<div id='technical-error'>$error</div>");
+	}
+	
+	function getKeyIndexFromArray($arr, $sentKey)
+	{
+		$counter =1;
+		foreach ($arr as $key=>$val)
+		{
+			if ( $sentKey==$key)
+			{
+				return $counter;
+			}
+			
+			$counter++;
+		}
+	}
 	
 ?>

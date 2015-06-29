@@ -37,7 +37,7 @@ function loadModels($modelsToBeLoaded,$lang)
 {
 	
 	global $modelSources,$serializedModelFile,$quranMetaDataFile,$META_DATA,$MODEL_CORE,$MODEL_SEARCH,$MODEL_QAC,$MODEL_QURANA;
-	global $UTHMANI_TO_SIMPLE_WORD_MAP, $numberOfSuras;
+	global $UTHMANI_TO_SIMPLE_WORD_MAP, $numberOfSuras,$pauseMarksFile;
 	
 	//not working
 	gc_enable();
@@ -181,6 +181,9 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	############ Uthmani/Simple mapping table #################
 	
+	$pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
+
+	
 	/* SURA'S LOOP **/
 	for ($s=0;$s<$numberOfSuras;$s++)
 	{
@@ -197,21 +200,40 @@ function loadModels($modelsToBeLoaded,$lang)
 		  $verseTextUthmani = $MODEL_CORE["AR_UTH"]['QURAN_TEXT'][$s][$a];
 		  $uthmaniWordsArr = preg_split("/ /", $verseTextUthmani);
 		  
+		  
+		  $simpleWordsArr = removePauseMarksFromArr($pauseMarksArr,$simpleWordsArr);
+		  
+		  $uthmaniWordsArr = removePauseMarksFromArr($pauseMarksArr,$uthmaniWordsArr);
+		  
 
 		  $UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)]=array();
 		  
+		  
+		  
 		  $wtwIndex =0;
+
 		  foreach($uthmaniWordsArr as $index => $wordUthmani)
 		  {
+	
+		  	  $lemma = $MODEL_QAC['QAC_MASTERTABLE'][($s+1).":".($a+1).":".($index+1)][0]['FEATURES']['LEM'];
 		  	
+		  	  // to handle multi segment words such as الدنيا 
+		  	  if ( empty($lemma))
+		  	  {
+		  	  	$lemma = $MODEL_QAC['QAC_MASTERTABLE'][($s+1).":".($a+1).":".($index+1)][1]['FEATURES']['LEM'];
+		  	  }
+		  	  //echoN("|$lemma|$wordUthmani");
+		  	  
 		  	  //$wtwIndex (INDEX_IN_AYA_EMLA2Y) needs to be 1 based  ( UTHMANI=IMLA2Y )
 		  	  $UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)][($index+1)]=($wtwIndex+1);
 		  	
 		  	  $wordSimple = $simpleWordsArr[$wtwIndex++];
 		  	  
+		  	  //$UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)][($index+1)."-".$wordUthmani]=($wtwIndex)."-".$wordSimple;
+		  	  
 		  	  /* for ayas which are different in size, do the following
 		  	   * if the current word is  ويا  or  ها or   يا
-		  	   * then joint it with the next word and make then one word
+		  	   * then join it with the next word and make them one word
 		  	   */ 
 		  	  if (count($uthmaniWordsArr) != count($simpleWordsArr) 
 		  	  	&& ($wordSimple=="يا" || $wordSimple=="ها" ||$wordSimple =="ويا") )
@@ -219,6 +241,7 @@ function loadModels($modelsToBeLoaded,$lang)
 		  	  		// example 0 => 1
 		  	  		$UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)][($index+1)]=($wtwIndex+1);
 		  	  		
+		  	  		//[($index+1)."-".$wordUthmani]=($wtwIndex+1)."-".$wordSimple;
 		  	  		$wordSimple = $wordSimple ." ".$simpleWordsArr[$wtwIndex++];
 		  	  		
 		  	  		
@@ -228,16 +251,36 @@ function loadModels($modelsToBeLoaded,$lang)
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordUthmani]=$wordSimple;
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordSimple]=$wordUthmani;
 			  
+			  if (!empty($lemma))
+			  {
+			  	if (!isset($LEMMA_TO_SIMPLE_WORD_MAP[$lemma]))
+			  	{
+			 	 	$LEMMA_TO_SIMPLE_WORD_MAP[$lemma]=$wordSimple;
+			  	}
+			  	else
+			  	{
+			  		$oldSimple = $LEMMA_TO_SIMPLE_WORD_MAP[$lemma];
+			  		
+			  		if ( myLevensteinEditDistance($oldSimple, $lemma) >  myLevensteinEditDistance($wordSimple, $lemma) )
+			  		{
+			  			$LEMMA_TO_SIMPLE_WORD_MAP[$lemma]=$wordSimple;
+			  		}
+			  		
+			  	}
+			  }
 			  
+		
 			  
 			  
 		  }
+		  
+
 		  
 		  
 		}
 	}
 	  
-
+	
 	
 	$res = apc_store("UTHMANI_TO_SIMPLE_WORD_MAP",$UTHMANI_TO_SIMPLE_WORD_MAP);
 	
@@ -247,7 +290,9 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	if ( $res===false){ throw new Exception("Can't cache UTHMANI_TO_SIMPLE_LOCATION_MAP"); }
 	
+	$res = apc_store("LEMMA_TO_SIMPLE_WORD_MAP",$LEMMA_TO_SIMPLE_WORD_MAP);
 	
+	if ( $res===false){ throw new Exception("Can't cache LEMMA_TO_SIMPLE_WORD_MAP"); }
 	
 	//// ENRICH INVERTED INDEX BY UTHMANI-EMLA2Y INDEXES
 	//echoN(count($MODEL_SEARCH['AR']['INVERTED_INDEX']));
@@ -639,7 +684,7 @@ function loadModel($lang,$type,$file)
 				$conceptNameEN = (string)$conceptObj->english;
 				$conceptNameAR = (string)$conceptObj->arabic;
 				
-				$quranaConcecpts[$conceptID]= array("EN"=>trim($conceptNameEN),"AR"=>trim($conceptNameAR));
+				$quranaConcecpts[$conceptID]= array("EN"=>trim($conceptNameEN),"AR"=>trim($conceptNameAR),"FREQ"=>0);
 				
 			}
 			
@@ -716,6 +761,8 @@ function loadModel($lang,$type,$file)
 							
 							//echoN("$quranaSegmentForm $qacSegment $wordId");
 							
+							
+							$quranaConcecpts[$conceptID]["FREQ"]++;
 							
 							// fill pronouns array
 							$quranaResolvedPronouns["$suraID:$verseID:$wordId"][]= array("CONCEPT_ID"=>$conceptID,
@@ -1219,7 +1266,7 @@ function loadModel($lang,$type,$file)
 		
 				  		if ( $lang=="AR"  )
 				  		{
-					  		$MODEL_QAC['QAC_MATERTABLE'] = $qacMasterSegmentTable;
+					  		$MODEL_QAC['QAC_MASTERTABLE'] = $qacMasterSegmentTable;
 					  		$MODEL_QAC['QAC_POS'] = $qacPOSTable;
 					  		$MODEL_QAC['QAC_FEATURES'] = $qacFeaturesTable;
 					  		
@@ -1231,6 +1278,8 @@ function loadModel($lang,$type,$file)
 					  		
 					  		if ( $res===false){ throw new Exception("Can't cache MODEL_QAC"); }
 					  		
+					  		
+					  		rsortBy($quranaConcecpts,'FREQ');
 					  		
 					  		$MODEL_QURANA['QURANA_CONCEPTS'] = $quranaConcecpts;
 					  		$MODEL_QURANA['QURANA_PRONOUNS'] = $quranaResolvedPronouns;

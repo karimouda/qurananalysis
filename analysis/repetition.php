@@ -44,8 +44,61 @@ loadModels("core",$lang);
 	
 			  
 			  	
-			  	<div id='fqt-search-area'>
-					SOON
+			  	<div id='repetition-area'>
+					<?php 
+					
+					$repeatedVerses = array();
+					
+					$repeatedVerses = getRepeatedVerses();
+					
+					
+					
+					
+					$repeatedVersesCount = count($repeatedVerses);
+						
+					
+					?>
+					
+					<table id='ngrams-results-table'>
+					<thead>
+					<tr>
+						<td colspan='2'>
+							
+							<b><?=addCommasToNumber($repeatedVersesCount) ?></b> Verses
+							
+							
+						</td>
+					</tr>
+					</thead>
+					<tr>
+					<th>
+						Words
+					</th>
+					<th>
+						Frequency
+					</th>
+					</tr>
+					
+					<?php
+				
+	
+					
+					foreach($repeatedVerses as $key=>$val)
+					{
+						
+					?>
+					<tr>	
+						<td>
+							<?=$key?>
+						</td>
+						<td>
+							<?=$val?>
+						</td>
+					</tr>
+					<?php 
+					}
+					?>
+					</table>
 				</div>
 	
 		  		

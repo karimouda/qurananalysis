@@ -89,7 +89,7 @@ if ( $lang=="AR")
 		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
 		{
 			
-		
+	
 	
 			$SURA = $documentArrInIndex['SURA'];
 			$AYA = $documentArrInIndex['AYA'];
@@ -109,10 +109,10 @@ if ( $lang=="AR")
 			//echoN($word);
 			//echoN($WORD_TYPE);
 			//preprint_r($documentArrInIndex);
-			//preprint_r($MODEL_QAC['QAC_MATERTABLE'][$qacLocation]);
+			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 			
 			// search QAC for roots and LEMMAS for this word
-			foreach ( $MODEL_QAC['QAC_MATERTABLE'][$qacLocation] as $segmentIndex => $segmentDataArr)
+			foreach ( $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation] as $segmentIndex => $segmentDataArr)
 			{
 				$segmentFormAR = $segmentDataArr['FORM_AR'];
 				$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentFormAR];
@@ -132,16 +132,19 @@ if ( $lang=="AR")
 					$stemOfQueryWord = $segmentDataArr['FEATURES']['LEM'];
 					
 					
-					
-					/*if ( empty($stemOfQueryWord) || empty($rootOfQueryQord))
+					/*
+					if ( empty($stemOfQueryWord) || empty($rootOfQueryQord))
 					{
+						preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 						echoN($rootOfQueryQord);
 						echoN($stemOfQueryWord);
 						exit;
 					}*/
 					
+									
+					
 					// add the STEMS to out extended query words
-					if ( !isset($extendedQueryWordsArr[$rootOfQueryQord])) { $extendedQueryWordsArr[$rootOfQueryQord]=1;}
+					if ( !empty($rootOfQueryQord) && !isset($extendedQueryWordsArr[$rootOfQueryQord])) { $extendedQueryWordsArr[$rootOfQueryQord]=1;}
 					if ( !isset($extendedQueryWordsArr[$stemOfQueryWord])) { $extendedQueryWordsArr[$stemOfQueryWord]=1;}
 					
 					
@@ -155,13 +158,16 @@ if ( $lang=="AR")
 		}
 	}
 	
+
+	
 	/** GET EMLA2Y (SIMPLE) WORDS CORRESPONSING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX 
 	 *  ADD TO EXTENDED QUERY WORDS
 	 * **/
 	foreach ($extendedQueryWordsArr as $word => $dummy)
 	{
 	
-		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
+		
+		
 	
 		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
 		{
@@ -174,11 +180,13 @@ if ( $lang=="AR")
 
 			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
 			
-			//preprint_r($MODEL_QAC['QAC_MATERTABLE'][$qacLocation]);
+			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 			
 			$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);
 			
 			$wordFromVerse = getWordFromVerseByIndex($MODEL_CORE,$verseText,$INDEX_IN_AYA_EMLA2Y);
+			
+ 	
 			
 			
 			if ( $WORD_TYPE=="PRONOUN_ANTECEDENT")
@@ -202,7 +210,8 @@ if ( $lang=="AR")
 	}
 }
 
-//preprint_r($extendedQueryWordsArr);exit;
+
+
 /**
  * GET ALL RESULT FORM INDEX USING EXTENDED QUERY WORD (WHICH INCLUDES ALL VARIATIONS AND PRONOUNS)
  */
@@ -240,7 +249,7 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 		
 		//echoN($word);
 		//preprint_r($documentArrInIndex);
-		//preprint_r($MODEL_QAC['QAC_MATERTABLE'][$qacLocation]);
+		//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 		
 		if (!isset($scoringTable[$SURA.":".$AYA])) 
 		{
@@ -381,7 +390,7 @@ if ( empty($scoringTable))
 				$index =0;
 				 foreach($suggestionsArr  as $suggestedWord => $dummyFlag)
 				 {
-				 	if ( $index++>5) break;
+				 	if ( $index++>10) break;
 				 	
 				 	?>
 				 	<a href='?q=<?=urlencode($suggestedWord)?>'><?=$suggestedWord?></a>&nbsp;
