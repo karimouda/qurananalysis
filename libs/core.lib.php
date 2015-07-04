@@ -1081,21 +1081,31 @@
 					// words loop
 						for ($w=0;$w<$grams;$w++)
 						{
-						$word = current($wordsArr);
-						//echoN("|$word|");
+							$word = current($wordsArr);
+							//echoN("|$word|");
 					
-						$nGrameString = $nGrameString." ".$word;
+							$nGrameString = $nGrameString." ".$word;
 					
-					next($wordsArr);
-				}
+							next($wordsArr);
+						}
 					
-				$nGrameString = trim($nGrameString);
-					
-				initArrayWithZero($nGramesArr[$nGrameString]);
-					
-				$nGramesArr[$nGrameString]++;
+						$nGrameString = trim($nGrameString);
+							
+						initArrayWithZero($nGramesArr[$nGrameString]);
+						
+						if ( $nGrameString=="شهر رمضان")
+						{
+							var_dump($nGramesArr[$nGrameString]);
+						}
+							
+						$nGramesArr[$nGrameString]++;
+						
+						if ( $nGrameString=="شهر رمضان")
+						{
+							var_dump($nGramesArr[$nGrameString]);
+						}
 				
-			}
+				}
 			
 			
 			
@@ -1401,9 +1411,19 @@
 			{
 				$tag = $segmentDataArr['TAG'];
 				$segmentWord = $segmentDataArr['FORM_AR'];
-				$segmentWordSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord];
+				
+				$segmentWordSimple="";
+				if ( isset($UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord] ))
+				{
+					$segmentWordSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord];
+				}
+				
 				$buckwalterTransliteration = $segmentDataArr['FORM_EN'];
-				$lemma  = $segmentDataArr['FEATURES']['LEM'];
+				
+				if ( isset($segmentDataArr['FEATURES']['LEM']) )
+				{
+					$lemma  = $segmentDataArr['FEATURES']['LEM'];
+				}
 				
 				
 				$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);

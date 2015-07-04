@@ -66,63 +66,42 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  	
 			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
 			  	
-			  	
-			  	 // $wordsInfoArr = getWordInfo("قوم", $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true,true);
-			  	
-			  	 // preprint_r($wordsInfoArr);
-			  	  //exit;
-			  		
-			  	
-					/*$aya = "ءَايَة";
-					echoN("X:".($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS["ءَايَةً"]));
-					echoN("Y:".($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS["آية"]));
-					echoN("Z:".($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS["آية"]=="$aya"));
-					echoN("A:"."ءَايَة");
-					*/
-					//preprint_r($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS);
-					//exit;
-					
-					//exit;
+
 					
 			if ( $GENERATE_TERMS == true )
 			{
 			  	
+				/** Returns words from QAC by PoS tags - grouped by lemma **/
 			  	function getWordsByPos(&$finalTerms,$POS)
 			  	{
 			  		global $MODEL_QAC,$MODEL_CORE,$UTHMANI_TO_SIMPLE_LOCATION_MAP,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
 			  		global $LEMMA_TO_SIMPLE_WORD_MAP;
 			  		
 			  		
-			  		
+			  		// Get all segment in QAC for that PoS
 			  		foreach($MODEL_QAC['QAC_POS'][$POS] as $location => $segmentId)
 			  		{
-			  			//echoN($location);
-			  			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$location]);
-			  			//echoN($segmentId);
-			  			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']);
+
+			  			// get Word, Lema and root
 			  			$segmentWord = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FORM_AR'];
 			  			$segmentWordLema = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['LEM'];
 			  			$segmentWordRoot = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['ROOT'];
 			  			$verseLocation = substr($location,0,strlen($location)-2);
 			  			//$segmentWord = removeTashkeel($segmentWord);
 			  	
+			  			
+			  			// get word index in verse
 			  			$wordIndex = (getWordIndexFromQACLocation($location));
 			  	
-			  			//echoN($segmentWord);
+
 			  			//$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];
 			  	
+			  			// get simple version of the word index
 			  			$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location,$UTHMANI_TO_SIMPLE_LOCATION_MAP);
 			  	
-			  			//echoN("$segmentWord");
-			  	
-			  			// 						if ( $location=="3:37:19" && $segmentId==2)
-			  			// 						{
-			  			// 							preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$location]);
-			  				// 							exit;
-			  				// 						}
-			  					
-			  	
-			  				$verseText = getVerseByQACLocation($MODEL_CORE,$location);
+
+			  			// get verse text 
+			  			$verseText = getVerseByQACLocation($MODEL_CORE,$location);
 			  				
 			  				//$imla2yWord = getWordFromVerseByIndex($MODEL_CORE,$verseText,$imla2yWordIndex);
 			  				
@@ -373,7 +352,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					if ( $GENERATE_PHRASE_TERMS)
 					{
 						
-							$phraseTerms = getNGrams(2,2);
+							$phraseTerms = getNGrams(2);
 							
 							//$phraseTermsHIST = histogramFromArray($phraseTerms);
 							
@@ -511,6 +490,8 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									$filteredBiGramsPOS[$biGram]=$posTagsForCurrentBiGram;
 									$allPOSCombinations[trim($posTagsForCurrentBiGram)]++;
 									$allPOSTags = array_merge($allPOSTags ,array_keys($posTagsArr));
+									
+									//echoN("|$biGram|$posTagsForCurrentBiGram");
 								}
 							}
 							
@@ -590,20 +571,20 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						
 						
-						$QuranaCommonBiGrams = array();
+						$QuranaCommonBiGramsPos = array();
 						
 						foreach($commonBiGramsConceptsWithQurana as $biGram=>$dummy)
 						{
-							$QuranaCommonBiGrams[trim($filteredBiGramsPOS[$biGram])]++;
+							$QuranaCommonBiGramsPos[trim($filteredBiGramsPOS[$biGram])]++;
 							
 							
-							$commonBiGramsConceptsWithQurana[$biGram]++;//=$biGram." ".trim($filteredBiGramsPOS[$biGram]);
+							
 						}
 						
 						preprint_r($commonBiGramsConceptsWithQurana);
 						
-						arsort($QuranaCommonBiGrams);
-						preprint_r($QuranaCommonBiGrams);
+						arsort($QuranaCommonBiGramsPos);
+						preprint_r($QuranaCommonBiGramsPos);
 						
 						
 						$quranaConceptsMatch = 0;
@@ -731,6 +712,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						echoN("FINAL CONCEPTS COUNT:".count($finalConcepts));
 					
+						preprint_r($finalConcepts);
 						
 						file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
 					}

@@ -12,9 +12,11 @@
  	<ul>
 	   	<li>Quran Text (From Tanzil) + Translations</li>
 	   	<li>Files from previous research (QAC and Pronouns)</li>
-	   	<li>Stop Words</li>
-	   	<li>QA Ontology</li>
-	   	<li>QA Sentiment Analysis Corpus</li>
+	   	<li>Quran Stop Words</li>
+	   	<li>QA Quran Ontology</li>
+	   	<li>Simple to Uthmani word mapping</li>
+
+	    
    	</ul>
 	
 	<a target="_blank" href="https://github.com/karimouda/qurananalysis">hhttps://github.com/karimouda/qurananalysis</a> (will be accessible in October 2015)
