@@ -55,6 +55,18 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  	
 			  	<?php
 			  	
+			  	
+			  	//$phraseTerms = getNGrams(2);
+			  		
+
+
+			  	//echoN("COUNT:".count($phraseTerms));
+			  	
+			  	//preprint_r($phraseTerms);
+			  	
+			  	//exit;
+			  	
+			  	
 			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
@@ -112,9 +124,12 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  				$superscriptAlef = json_decode('"\u0670"');
 			  				
 			  				
-			  				$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
+			  				//$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
 			  				
-			  				/*if(mb_strpos($segmentWordLema, $superscriptAlef) !==false)
+			  				
+			  				// this block is important since $LEMMA_TO_SIMPLE_WORD_MAP is not good for  non $superscriptAlef words
+			  				// ex زيت lemma is converted to زيتها which spoiled the ontology concept list results
+			  				if(mb_strpos($segmentWordLema, $superscriptAlef) !==false)
 			  				{
 			  					
 			  					$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
@@ -123,7 +138,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  				else
 			  				{
 			  					$imla2yWord = $segmentWordNoTashkeel;
-			  				}*/
+			  				}
 			  				
 			  				
 			  				
@@ -221,6 +236,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 				
 					<?php 
 					
+					
+					
+					
 						rsortBy($finalTerms,"FREQ");
 						
 						echoN("<hr>");
@@ -241,6 +259,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						echoN("Terms Count Capped:<b>".count($finalTerms)."</b>");
 						
+						//echoN("Stop Words Excluded");
 						foreach ($finalTerms as $term => $termArr )
 						{
 							$simpleWord = $termArr['SIMPLE_WORD'];
@@ -248,11 +267,19 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 							if ( isset($MODEL_CORE['STOP_WORDS'][$simpleWord] ) )
 							{
+								//echoN("$term");
 								unset($finalTerms[$term]);
 							}
 						}
 						
+						
+						
 						echoN("Terms Count After SW Exclusion:<b>".count($finalTerms)."</b>");
+						
+						
+				
+						
+						
 						
 						echoN("<hr>");
 						
@@ -362,6 +389,13 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							//preprint_r($phraseTerms);
 							echoN("COUNT B4 FILTER:".count($phraseTerms));
 							
+							$wordsInfoArr = array();
+							foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
+							{
+							
+								$wordsInfoArr[$wordLabel] = getWordInfo($wordLabel, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
+							}
+							
 							$filteredBiGrams = array();
 							$filteredBiGramsPOS = array();
 							
@@ -392,9 +426,10 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 										break;
 									}*/
 									
-									$wordsInfoArr = getWordInfo($singleWord, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
+									$singleWordInfoArr = $wordsInfoArr[$singleWord];
 									
-									$posTagsArr = $wordsInfoArr['POS'];
+									
+									$posTagsArr = $singleWordInfoArr['POS'];
 									
 									
 									
@@ -445,7 +480,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									
 									
 									//|| isset($posTagsArr['PRON'] )
-									//&& $wordsInfoArr["BUCKWALTER"]!="{l~a*iyna" )
+									//&& $singleWordInfoArr["BUCKWALTER"]!="{l~a*iyna" )
 
 									
 									
@@ -502,7 +537,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 							foreach ($filteredBiGrams as $biGram=>$freq)
 							{
-								//echoN("$biGram: $freq | "); //$filteredBiGramsPOS[$biGram]
+								echoN("$biGram: $freq | "); //$filteredBiGramsPOS[$biGram]
 							
 								
 							}
@@ -519,6 +554,35 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							preprint_r($allPOSCombinations);
 								
 					}		
+					
+					
+					
+					/*$qacConcepts  = file("/home/karimo/Documents/SelfManagment/2013-LifeChangeStuff/Masters/Leeds/Semester_2/Project/QE/Data/Existing ontologies/QAC.clean.arabic",FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
+					
+					$myConcepts1 = array_keys($filteredBiGrams);
+					$myConcepts2 = array();
+					
+					foreach ($finalTerms as $term => $termArr )
+					{
+						
+							
+						$simpleWord = $termArr['SIMPLE_WORD'];
+						$myConcepts2[] = $simpleWord;
+					}
+					
+					$intersection1 = array_intersect($qacConcepts,$myConcepts1);
+					$intersection2 = array_intersect($qacConcepts,$myConcepts2);
+					
+					$intersection = array_merge($intersection1,$intersection2);
+					
+					//preprint_r($finalTerms);
+					preprint_r($qacConcepts);
+					preprint_r($myConcepts1);
+					preprint_r($myConcepts2);
+					preprint_r($intersection);
+					echoN(count($intersection));
+					exit;
+					*/
 					
 					
 					if ( $GENERATE_PRONOUN_CONCEPTS)
@@ -723,6 +787,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						
 						//preprint_r($finalConcepts);
+						
+						
+					
 						
 						
 						
