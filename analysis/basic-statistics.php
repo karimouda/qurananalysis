@@ -144,7 +144,7 @@ loadModels("core",$lang);
 			  			<thead>
 			  				<tr>
 				  				<th>
-				  					Pause Mark
+				  					Pause Marks Count
 				  				</th>
 				  				<th>
 				  					Total

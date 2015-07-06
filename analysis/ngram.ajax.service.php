@@ -45,7 +45,7 @@ else if ( $ngramsType==1)
 					$nGramesArr = array();
 					
 					
-					$nGramesArr = getNGrams($grams,2);
+					$nGramesArr = getNGrams($grams);
 					
 					
 					
