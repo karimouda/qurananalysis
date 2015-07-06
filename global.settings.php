@@ -66,7 +66,7 @@ $numberOfSuras = 114;
 $basmalaText = "بسم الله الرحمن الرحيم";
 $basmalaTextUthmani = "بِّسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 $basmalaTextUthmani2 = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
-
+$mandatoryStop = "ۘ";
 
 
 ## LOCATION SIGNIFICANT ##

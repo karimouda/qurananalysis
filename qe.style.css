@@ -1179,3 +1179,55 @@ text-align: center;
 	width:40%;
 	margin-top:20px;
 }
+
+#pause-marks-area
+{
+		margin:0px auto;
+	width:200px;
+}
+#pause-marks-selection
+{
+	margin:0px auto;
+	width:30px;
+	font-size: 32px !important;
+	padding:2px 10px;
+
+}
+
+.pausemarks-style
+{
+	font-size:32px; 
+	 vertical-align: bottom;
+	 display: inline-block;
+	 height: 25px;
+	 padding:0px 10px;
+	 background-color: #000;
+	 color:#fff;
+}
+
+
+#pausemarks-verses-table
+{
+	width:80%;
+	border:1px;
+	margin:auto;
+	margin-top:10px;
+	
+}
+
+#pausemarks-verses-table TD
+{
+	vertical-align: top;
+	background-color: #fafafa;
+}
+
+#pausemarks-verses-table TH
+{
+
+	background-color: #C0DE22;
+	color:#000;
+	padding:2px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
