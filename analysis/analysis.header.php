@@ -54,6 +54,7 @@
    				<a href="./ontology.php<?=$langParameter?>" class='analysis-links'>Ontology</a>		
    				<a href="./uthmani-to-simple.php<?=$langParameter?>" class='analysis-links'>Uthmani-to-Simple</a>
    				<a href="./words-information.php<?=$langParameter?>" class='analysis-links'>Word Information</a>			
+   				<a href="./pause-marks.php<?=$langParameter?>" class='analysis-links'>Pause Marks</a>			
    				
    				
    				
