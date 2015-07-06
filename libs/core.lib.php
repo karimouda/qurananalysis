@@ -803,6 +803,12 @@
 		return ($_SERVER['REMOTE_ADDR']=="127.0.0.1" );
 	}
 	
+	function isPauseMark($value,$pauseMarksArr,$saktaLatifaMark,$sajdahMark)
+	{
+		
+		
+		return (isset($pauseMarksArr[$value]) || $value == $saktaLatifaMark || $value == $sajdahMark);
+	}
 	function removePauseMarksFromArr($pauseMarksArr,$targetArr)
 	{
 		global $saktaLatifaMark,$sajdahMark;
@@ -813,7 +819,7 @@
 	
 			foreach($targetArr as $index => $value)
 			{
-				if ( !isset($pauseMarksArr[$value]) && $value != $saktaLatifaMark && $value != $sajdahMark  )
+				if ( !isPauseMark($value,$pauseMarksArr,$saktaLatifaMark,$sajdahMark) )
 				{
 					$newArr[]=$value;
 				
@@ -1027,7 +1033,7 @@
 	*/
 	function getNGrams($n,$threshold=0)
 	{
-		global $MODEL_CORE,$numberOfSuras;
+		global $MODEL_CORE,$numberOfSuras,$mandatoryStop,$saktaLatifaMark,$sajdahMark;
 		
 		
 		$grams = $n;
@@ -1053,12 +1059,13 @@
 						
 					$wordsArr = preg_split("/ /", $verseText);
 				
-					$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'], $wordsArr);
+					//$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'], $wordsArr);
 				
 				
 							$verseLength = count($wordsArr);
 				
 							// 3 grames in 2 words verse
+							//REVISIT PAUSE MARKS COUNT HERE
 							if ( $grams > $verseLength)
 							{
 								continue;
@@ -1077,33 +1084,68 @@
 					//move array cursor according to the start of the new group
 					advanceArrayCounter($wordsArr,$group);
 						
+						$subsentenceStopFlag =0 ;
+						$nGramsWordCount =0;
+						
+						//echoN("-- NEW GROUP --");
 						
 					// words loop
-						for ($w=0;$w<$grams;$w++)
+						while( ($nGramsWordCount < $grams)  )
 						{
 							$word = current($wordsArr);
 							//echoN("|$word|");
+							
 					
+							if ( isPauseMark($word,$MODEL_CORE['TOTALS']['PAUSEMARKS'],$saktaLatifaMark,$sajdahMark) )
+							{
+							
+								// in case of mandatory pause, just jump and start a new group after the pause
+								if ($word == $mandatoryStop)
+								{
+									//echoN($verseText);
+									$subsentenceStopFlag=1;
+										
+									//echoN("####".$nGrameString);
+									// group will be incremented again by  the loop after break, so it will be +2 for bigrams
+									$group+=($grams-1);
+									break;
+										
+								}
+							
+								// in case of all pause-words except mandatory pause, just ignore pause and get next word
+								next($wordsArr);
+								$group+=($grams-1);
+								continue;
+							}
+							
 							$nGrameString = $nGrameString." ".$word;
+							
+							$nGramsWordCount++;
 					
 							next($wordsArr);
 						}
 					
-						$nGrameString = trim($nGrameString);
+						
+						
+					
 							
+						
+						
+						if ( $subsentenceStopFlag==1)
+						{
+							
+							//to prevent  "يسمعون و الموتى" mandatory stop case
+							continue;
+						}
+					
+							
+						$nGrameString = trim($nGrameString);
+						
 						initArrayWithZero($nGramesArr[$nGrameString]);
 						
-						if ( $nGrameString=="شهر رمضان")
-						{
-							var_dump($nGramesArr[$nGrameString]);
-						}
-							
 						$nGramesArr[$nGrameString]++;
 						
-						if ( $nGrameString=="شهر رمضان")
-						{
-							var_dump($nGramesArr[$nGrameString]);
-						}
+						
 				
 				}
 			
