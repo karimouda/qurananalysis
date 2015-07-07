@@ -1157,7 +1157,8 @@ function loadModel($lang,$type,$file)
 				  		}
 				  		/** END OF TFIDF TABLE **/
 				  		
-				  		rsortBy($WORDS_FREQUENCY_ARR['WORDS_TFIDF'],'TFIDF');
+				  		
+				  		rsortBy($WORDS_FREQUENCY_ARR['WORDS_TFIDF'],'TF');
 				  		
 				  		//preprint_r($WORDS_FREQUENCY_ARR['WORDS_TFIDF']);
 				  		

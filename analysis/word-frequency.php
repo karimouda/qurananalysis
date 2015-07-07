@@ -78,7 +78,7 @@ loadModels("core",$lang);
 			  			<thead>
 			  				<tr>
 				  				<th>
-				  					Index
+				  					Rank
 				  				</th>
 				  				<th>
 				  					Word
@@ -96,7 +96,7 @@ loadModels("core",$lang);
 				  					Inverse Document Frequency
 				  				</th>
 				  				<th>
-				  					TFIDF
+				  					TFIDF Weight
 				  				</th>
 				  			</tr>
 			  			</thead>
