@@ -1185,7 +1185,7 @@
 		
 		
 		/////////////////////////////////
-		$patternArr = preg_split("/ /",$posPatternString);
+		$patternArr = preg_split("/[ ]+/",$posPatternString);
 		
 		$posTagsCountInPattern = count($patternArr);
 		
