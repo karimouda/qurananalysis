@@ -48,8 +48,17 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
 //preprint_r($UTHMANI_TO_SIMPLE_LOCATION_MAP);
 
+$isPhraseSearch = false;
+
+$matchesCount = preg_match("/\".*?\"/", $query);
+
+if ( $matchesCount >=1 ) $isPhraseSearch = true;
+
+
 /// CLEANING
 $query = cleanAndTrim($query);
+
+
 
 $query = removeTashkeel($query);
 
@@ -78,7 +87,7 @@ $extendedQueryWordsArr = array_fill_keys($queryWordsArr,1);
 
 //preprint_r($extendedQueryWordsArr);
 
-if ( $lang=="AR")
+if ( $lang=="AR" && $isPhraseSearch==false)
 {
 	/** GET ROOT/STEM FOR EACH QUERY WORD **/
 	foreach ($queryWordsArr as $word)
@@ -235,6 +244,20 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 		
 		//echo getQACLocationStr($SURA,$AYA,$INDEX_IN_AYA_EMLA2Y);
 		$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
+		
+		
+		if ( $isPhraseSearch )
+		{
+			$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
+			
+			//echoN("|$query|$verseText");
+			
+			if ( mb_strpos($verseText,$query)===false)
+			{
+				continue;
+			}
+			
+		}
 		
 		//echoN("$qacLocation|$targetQACLocation|$word|$EXTRA_INFO|$WORD_TYPE");
 		
@@ -557,8 +580,18 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 	// empty in case of only pronouns
 	if ( !empty($WORDS_IN_AYA))
 	{
-		// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
-		$TEXT = preg_replace("/(".join("|",array_keys($WORDS_IN_AYA)).")/mui", "<marked>\\1</marked>", $TEXT);
+		if ( $isPhraseSearch )
+		{
+			// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
+			$TEXT = preg_replace("/(".$query.")/mui", "<marked>\\1</marked>", $TEXT);
+				
+		}
+		else 
+		{
+			// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
+			$TEXT = preg_replace("/(".join("|",array_keys($WORDS_IN_AYA)).")/mui", "<marked>\\1</marked>", $TEXT);
+				
+		}
 	}
 	
 	
@@ -596,8 +629,12 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 	<div class='result-aya-info'>
 	
 		<span class='result-sura-info' style="direction:<?=$direction?>">
-				<?=$SURA_NAME ?><?php if ( $lang=="EN") { echo " ($SURA_NAME_LATIN)"; } ?>  [<?=$AYA+1?>/<?=$TOTAL_VERSES_OF_SURA?>]
+				<?=$SURA_NAME ?>
+				<?php if ( $lang=="EN") { echo " ($SURA_NAME_LATIN)"; } ?> 
+			[<?=($SURA+1).":".($AYA+1)?>]
+				 <?php/*$TOTAL_VERSES_OF_SURA*/?> 
 		</span>
+
 		<span class='result-aya-showtranslation' >
 		<?php 
 			$showTransText = "Show Translation";
@@ -609,6 +646,7 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 		?>
 			<a href="javascript:showTranslationFor('<?=$documentID?>')"><?=$showTransText?></a>
 		</span>
+	
 		
 		<span>
 			<?php echo $MATCH_TYPE?>
