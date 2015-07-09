@@ -208,7 +208,7 @@
 	{
 		//« spoils arabic words = 0xab
 		$tobeReplacedStr = "\t\n\r\0\x0B~!$%&;^*()+=-<>?\"',”“.][»";
-		return trim(trim($str),$tobeReplacedStr);
+		return trim(trim(trim($str),$tobeReplacedStr));
 	}
 
 	
@@ -1563,6 +1563,30 @@
 			
 			$counter++;
 		}
+	}
+	
+	function isSegmentPartOfConceptSegments($conceptsArr, $segment)
+	{
+		foreach ($conceptsArr as $conceptName=>$conceptArr)
+		{
+			$extraArr = $conceptArr['EXTRA'];
+			$simpleWord = $extraArr['SIMPLE_WORD'];
+			
+			foreach ($extraArr['SEG'] as $uthmaniSegment=>$simpleName)
+			{
+				//echoN("$uthmaniSegment==$segment");
+				
+				if ( $uthmaniSegment==$segment)
+				{
+					
+					return $simpleWord;
+				}
+			}
+				
+			
+		}
+		
+		return false;
 	}
 	
 ?>
