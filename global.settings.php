@@ -73,5 +73,40 @@ $mandatoryStop = "ۘ";
 require_once($MAIN_ROOT_PATH."/libs/core.lib.php");
 require_once($MAIN_ROOT_PATH."/model.loader.php");
 
-register_shutdown_function('shutdown');
+
+if ( isDevEnviroment() )
+{
+	error_reporting(E_ALL);
+	ini_set('display_errors', true);
+	function shutdown()
+	{
+	
+		$isSevereError = false;
+		$errorArr = error_get_last();
+		
+		if (!empty($errorArr) )
+		{
+				
+			switch($errorArr['type'])
+			{
+				case E_ERROR:
+					//case E_USER_ERROR:
+				case E_CORE_ERROR:
+				case E_COMPILE_ERROR:
+					$isSevereError = true;
+					break;
+				default:
+					// do nothing
+	
+			}
+		}
+	
+		if ($isSevereError)
+		{
+			echo "SEVERE ERROR: ".$errorArr['message'];
+		}
+	}
+	
+	register_shutdown_function('shutdown');
+}
 ?>
