@@ -1,5 +1,30 @@
 <?php 
 
+	function shutdown()
+	{
+		$isSevereError = false;
+		$errorArr = error_get_last();
+		if (!empty($errorArr) )
+		{
+			switch($errorArr['type'])
+			{
+				case E_ERROR:
+					//case E_USER_ERROR:
+				case E_CORE_ERROR:
+				case E_COMPILE_ERROR:
+					$isSevereError = true;
+					break;
+				default:
+					// do nothing
+						
+			}
+		}
+	
+		if ($isSevereError)
+		{
+			echo "SEVERE ERROR: ".$errorArr['message'];
+		}
+	}
 	
 	function preprint_r($arr)
 	{
@@ -196,6 +221,72 @@
 		 * 06ED = ARABIC SMALL LOW MEEM
 		 * 
 		 */
+	}
+	
+	/*
+	 * Shallow unexhaustive conversion from uthmani ito simple
+	 * Shoud ONLY be used for non quranic words, for words in the quran use UTHMANI_TO_SIMPLE_WORD_MAP table
+	 * 
+	 * One of the uses to to group uthmani words such as lemmas
+	 */
+	function shallowUthmaniToSimpleConversion($str)
+	{
+		$str=  preg_replace("/[\x{0618}-\x{061A}\x{064B}-\x{0654}\x{06DC}\x{06DF}\x{06E0}\x{06E2}\x{06E3}\x{06E5}\x{06E6}\x{06E8}\x{06EA}-\x{06ED}]/um","",$str);
+	
+		
+		
+		$str =  preg_replace("/ءا/um","آ",$str);
+		
+		
+		//الرحمن
+		$str =  preg_replace("/(م[\x{0670}]ن)/um","من",$str);
+		
+		$str =  preg_replace("/ى$/um","ي",$str);
+		
+		$str=  preg_replace("/[\x{0670}]$/um","",$str);
+		
+		$str=  preg_replace("/[\x{0670}]/um","ا",$str);
+		
+		$str=  preg_replace("/[\x{0671}]/um","ا",$str);
+		
+		return $str;
+		
+	
+		/* UNICODE REFERENCE
+		 * http://www.fileformat.info/info/unicode/char/0618/index.htm
+		* 0618 = ARABIC SMALL FATHA
+		* 0619 = ARABIC SMALL DAMMA
+		* 061a = ARABIC SMALL KASRA
+		*
+		* 064B = ARABIC FATHATAN
+		* 064C = ARABIC DAMMATAN
+		* 064D = ARABIC KASRATAN
+		* 064E = ARABIC FATHA
+		* 064F = ARABIC DAMMA
+		* 0650 = ARABIC KASRA
+		* 0651 = ARABIC SHADDA
+		* 0652 = ARABIC SUKUN
+		* 0653 = ARABIC MADDAH ABOVE
+		* 0654 = ARABIC HAMZA ABOVE
+		*
+		* 0670 = ARABIC LETTER SUPERSCRIPT ALEF - ٰ
+		* 0671 = ARABIC LETTER ALEF WASLA - ٱ
+		*
+		* 06DC = ARABIC SMALL HIGH SEEN
+		* 06DF = ARABIC SMALL HIGH ROUNDED ZERO
+		* 06E0 = ARABIC SMALL HIGH UPRIGHT RECTANGULAR ZERO
+		* 06E2 = ARABIC SMALL HIGH MEEM ISOLATED FORM
+		* 06E3 = ARABIC SMALL LOW SEEN
+		* 06E5 = ARABIC SMALL WAW
+		* 06E6 = ARABIC SMALL YEH
+		* 06E8 = ARABIC SMALL HIGH NOON
+		*
+		* 06EA = ARABIC EMPTY CENTRE LOW STOP
+		* 06EB = ARABIC EMPTY CENTRE HIGH STOP
+		* 06EC = ARABIC ROUNDED HIGH STOP WITH FILLED CENTRE
+		* 06ED = ARABIC SMALL LOW MEEM
+		*
+		*/
 	}
 	
 	function stripBOM($str)
