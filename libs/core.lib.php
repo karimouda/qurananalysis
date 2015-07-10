@@ -1,30 +1,6 @@
 <?php 
 
-	function shutdown()
-	{
-		$isSevereError = false;
-		$errorArr = error_get_last();
-		if (!empty($errorArr) )
-		{
-			switch($errorArr['type'])
-			{
-				case E_ERROR:
-					//case E_USER_ERROR:
-				case E_CORE_ERROR:
-				case E_COMPILE_ERROR:
-					$isSevereError = true;
-					break;
-				default:
-					// do nothing
-						
-			}
-		}
-	
-		if ($isSevereError)
-		{
-			echo "SEVERE ERROR: ".$errorArr['message'];
-		}
-	}
+
 	
 	function preprint_r($arr)
 	{
@@ -1656,7 +1632,7 @@
 		}
 	}
 	
-	function isSegmentPartOfConceptSegments($conceptsArr, $segment)
+	function getConceptBySegment($conceptsArr, $segment)
 	{
 		foreach ($conceptsArr as $conceptName=>$conceptArr)
 		{
@@ -1679,5 +1655,43 @@
 		
 		return false;
 	}
+	
+	function getConceptByLemma($conceptsArr, $lemma)
+	{
+		foreach ($conceptsArr as $conceptName=>$conceptArr)
+		{
+			$extraArr = $conceptArr['EXTRA'];
+			$simpleWord = $extraArr['SIMPLE_WORD'];
+				
+		
+				//echoN("$uthmaniSegment==$segment");
+	
+				if ( $extraArr['LEM']==$lemma)
+				{
+						
+					return $simpleWord;
+				}
+			
+	
+				
+		}
+	
+		return false;
+	}
+	
+	function addNewRelation(&$relationArr,$type,$subject,$verb,$object,$posPattern)
+ 	{
+ 		$newRelation= array("TYPE"=>$type,"SUBJECT"=>$subject,
+ 								"VERB"=>$verb,
+ 								"OBJECT"=>$object,
+ 								"posPattern"=>$joinedPattern);
+ 						
+ 		$relationHash = md5(join(",",array_values($newRelation)));
+ 						
+ 		if ( !isset($relationArr[$relationHash]))
+ 		{
+ 			$relationArr[$relationHash]=$newRelation;
+ 		}
+ 	}
 	
 ?>
