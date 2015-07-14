@@ -1,8 +1,11 @@
 <?php 
+
 require_once("../global.settings.php");
 require_once("../libs/core.lib.php");
 
 $lang = "AR";
+
+
 
 
 
@@ -21,6 +24,7 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
 $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,17 +71,21 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  	//exit;
 			  	
 			  	
-			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
+			  	$GENERATE_CONCEPTS_SWITCH = FALSE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PRONOUN_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_FINAL_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
+			  	$GENERATE_ADJECTIVE_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  	
 			  	
-			  	
+			  	$GENERATE_TAXONOMIC_RELATIONS = TRUE;
 			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
 			  	
+
+			  	$finalConcepts = array();
+			  	$relationsArr = array();
 
 					
 			if ( $GENERATE_TERMS == true )
@@ -122,32 +130,74 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  				$segmentWordNoTashkeel = removeTashkeel($segmentWordLema);
 			  				
 			  				$superscriptAlef = json_decode('"\u0670"');
-			  				
+			  				$alefWasla = "ٱ"; //U+0671
 			  				
 			  				//$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
 			  				
 			  				
 			  				// this block is important since $LEMMA_TO_SIMPLE_WORD_MAP is not good for  non $superscriptAlef words
 			  				// ex زيت lemma is converted to زيتها which spoiled the ontology concept list results
-			  				if(mb_strpos($segmentWordLema, $superscriptAlef) !==false)
+			  				if(mb_strpos($segmentWordLema, $superscriptAlef) !==false
+							   || mb_strpos($segmentWordLema, $alefWasla) !==false )
 			  				{
 			  					
-			  					$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
+			  					$imla2yWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWordLema];
+			  					
+			  					if (empty($imla2yWord))
+			  					{
+			  						$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
+			  					}
 			  					
 			  				}
 			  				else
 			  				{
-			  					$imla2yWord = $segmentWordNoTashkeel;
+			  					$imla2yWord = shallowUthmaniToSimpleConversion($segmentWordLema);//$segmentWordNoTashkeel;
 			  				}
 			  				
 			  				
 			  				
+			  				/// in case the word was not found after removing tashkeel, try the lema mappign table
+			  				$termWeightArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$imla2yWord];
+			  					
+			  			
+			  				
+			  				// NOT WORKIGN BECAUSE LEMMAS WILL NOT BE IN SIMPLE WORDS LIST و الصابيئن =>صَّٰبِـِٔين
+			  				// if the word after removing tashkeel is not found in quran simple words list, then try lemma table
+			  				/*if (!isset($MODEL_CORE['WORDS_FREQUENCY']['WORDS'][$imla2yWord]) )
+			  				{
+			  					$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
+			  					
+			  					if ( empty($imla2yWord) )
+			  					{
+			  						echoN($segmentWordLema);
+			  						echoN($imla2yWord);
+			  						preprint_r($LEMMA_TO_SIMPLE_WORD_MAP);
+			  						preprint_r($MODEL_CORE['WORDS_FREQUENCY']['WORDS']);
+			  						exit;
+			  					}
+			  				}*/
+			  					
+			  				
+			  				if ( empty($termWeightArr))
+			  				{
+			  					//only for weight since the lema table decrease qurana matching 
+			  					$imla2yWordForWeight = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
+			  					$termWeightArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$imla2yWordForWeight];
+			  					
+			  					
+			  				}
+			  				
+			  				$termWeight = $termWeightArr['TFIDF'];
+			  				////////////////////////////////////////////
 			  	
 			  				$termWord = $segmentWordLema;//$imla2yWord;//"|$segmentWord| ".$imla2yWord ." - $location:$segmentId - $wordIndex=$imla2yWordIndex";
 			  				
 			  				if ( !isset($finalTerms[$termWord]))
 			  				{
-			  					$finalTerms[$termWord] = array("LEM"=>$segmentWordLema,"FREQ"=>0, "POS"=>$POS,"SEG"=>array(),"SIMPLE_WORD"=>$imla2yWord,"ROOT"=>$segmentWordRoot);
+			  					$finalTerms[$termWord] = array("LEM"=>$segmentWordLema,"FREQ"=>0, 
+			  							"POS"=>$POS,"SEG"=>array(),"SIMPLE_WORD"=>$imla2yWord,
+			  							"ROOT"=>$segmentWordRoot,"WEIGHT"=>$termWeight,"ASA"=>array(),"ENG_TRANSLATION"=>"",
+			  							"DBPEDIA_LINK"=>"", "DESC_AR"=>"");
 			  				}
 			  		
 		  					$finalTerms[$termWord]["FREQ"]=$finalTerms[$termWord]["FREQ"]+1;
@@ -290,11 +340,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 							$simpleWord = $termArr['SIMPLE_WORD'];
 
-							$termWeightArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$simpleWord];
-							
-							$termWeight = $termWeightArr['TFIDF'];
-							
-							$finalTerms[$term]['WEIGHT']=$termWeight;
+						
 							
 							if ( $PRESENTATION=="TABLE")
 							{
@@ -324,7 +370,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									<?=$termArr['ROOT']?>
 								</td>
 								<td>
-									<?=round($finalTerms[$term]['WEIGHT'],2)?>
+									<?=round($termArr['WEIGHT'],2)?>
 								</td>
 								<td>
 									<?= join(",", array_keys($termArr['POSES']))?>
@@ -372,6 +418,10 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						
 					}
+					
+					
+					
+				
 						
 						
 					////### EXTRACTING PHRASE TERMS USING NGRAMS
@@ -535,12 +585,12 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 								
 							//preprint_r($filteredBiGrams);
 							
-							foreach ($filteredBiGrams as $biGram=>$freq)
+						/*foreach ($filteredBiGrams as $biGram=>$freq)
 							{
 								echoN("$biGram: $freq | "); //$filteredBiGramsPOS[$biGram]
 							
 								
-							}
+							}*/
 								
 							
 							//preprint_r($allPOSTags);
@@ -684,26 +734,36 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							foreach ($conceptsListArr as $key=>$conceptArr)
 							{
 								
-								$arWord = $conceptArr['AR'];
+								$quranaArWord = $conceptArr['AR'];
 								
-								if ( $arWord=="null" || empty($arWord) ) continue;
+								if ( $quranaArWord=="null" || empty($quranaArWord) ) continue;
 								
-								$conceptWordsArr = preg_split("/ /", $arWord);
+								$conceptWordsArr = preg_split("/ /", $quranaArWord);
 								// 1 for concepts, 2 for bigrams
 								if ( count($conceptWordsArr) ==1 )
 								{
 									
 									
 								
+									$mySimpleWordWithDet = "ال"."$mySimpleWord";
+									
+								
 							
 							
 							
-							
-									if ( $mySimpleWord==$arWord && !isset($commonConceptsWithQurana[$arWord]))
+									if ( ( $mySimpleWord==$quranaArWord || $mySimpleWordWithDet==$quranaArWord ) && 
+										 (!isset($commonConceptsWithQurana[$quranaArWord])  ) 
+									 )
 									{
 										//echoN($arWord);
 										
-										$commonConceptsWithQurana[$arWord]=$termArr;
+										if ( $quranaArWord!=$mySimpleWord)
+										{
+											$termArr['ASA'][] = $quranaArWord;
+										}
+										
+										// $mySimpleWord to avoid duplicate words one without ال
+										$commonConceptsWithQurana[$mySimpleWord]=$termArr;
 											
 										$quranaConceptsMatch++;
 										break;
@@ -716,6 +776,8 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 								
 						}
 						
+						
+						
 						echoN("QURANA 1-word Concepts=$quranaConcepts");
 						echoN("MATCHING QURANA 1-word Concepts=$quranaConceptsMatch");
 						
@@ -725,18 +787,66 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					
 					}
 					
+					if ( $GENERATE_ADJECTIVE_CONCEPTS)
+					{
+						$counter = 0;
+						foreach ($finalTerms as $lemaUthmani=>$termArr)
+						{
+							
+							$pos = $termArr['POS'];
+							
+						
+							
+							if ( $pos=="ADJ")
+							{
+								if ( $counter++> 100) break;
+								
+								$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$lemaUthmani];
+							
+									
+								if ( !empty($simpleWord))
+								{
+									$mergedWord = $simpleWord;
+								}
+								else
+								{
+									$uthmaniWordNoTashkeel = shallowUthmaniToSimpleConversion($lemaUthmani);
+									$mergedWord = $uthmaniWordNoTashkeel;
+								}
+									
+								
+								echoN("$lemaUthmani|$simpleWord|$uthmaniWordNoTashkeel");
+									
+									
+								if ( !isset($finalConcepts[$mergedWord]))
+								{
+								
+									
+								
+									
+									$finalConcepts[$mergedWord]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"ADJECTIVE","FREQ"=>$termArr['FREQ'],"EXTRA"=>$termArr);
+								
+								
+								
+								
+								}
+							}
+						}
+					}
+					
+					//preprint_r($finalConcepts);exit;
+					
 					
 					if ( $GENERATE_FINAL_CONCEPTS )
 					{
 						
-						/// SELECTING FINAL LIST OF CONCEPTS
-						$finalConcepts = array();
+					
 						
 						$amxConceptFreq = -99;
 						//$finalTerms
 						foreach ($commonConceptsWithQurana as $concept=>$termArr)
 						{
-							$finalConcepts[$concept]=array("TYPE"=>"TERM","FREQ"=>$termArr['FREQ'],"EXTRA"=>$termArr);
+							$finalConcepts[$concept]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"TERM","FREQ"=>$termArr['FREQ'],"EXTRA"=>$termArr);
 							
 							if ( $termArr['FREQ'] > $amxConceptFreq)
 							{
@@ -768,7 +878,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 							$extra = array("POS"=>$pos,"WEIGHT"=>$weight);
 							
-							$finalConcepts[$biGramConcept]=array("TYPE"=>"PHRASE","FREQ"=>$freq,"EXTRA"=>$extra);
+							$finalConcepts[$biGramConcept]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"PHRASE","FREQ"=>$freq,"EXTRA"=>$extra);
 						
 						}
 	
@@ -776,9 +886,10 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						echoN("FINAL CONCEPTS COUNT:".count($finalConcepts));
 					
-						preprint_r($finalConcepts);
+						//preprint_r($finalConcepts);
 						
 						file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
+						file_put_contents("../data/ontology/temp.all.terms", serialize($finalTerms));
 					}
 					
 						
@@ -790,14 +901,126 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 						
 					
+					if ( $GENERATE_TAXONOMIC_RELATIONS )
+					{
 						
+						////////////////////////// ADJECTIVE HYPERNYMS ////////////////////////////////
+						$adjName = "صفة";
+						
+						$finalConcepts[$adjName]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>array("ASA"=>array()));
+						
+						
+						// ADJ PARENT + relations
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+							$exPhase = $coneptArr['EXTRACTION_PHASE'];
+							
+							
+							if ( $exPhase=="ADJECTIVE")
+							{
+								$type = "TAXONOMIC";
+								addNewRelation($relationsArr,$type,$concept,"هى",$adjName,"ADJ");
+							}
+						}
+						
+						
+					
+						/////////////////////////////////////////////////////////////////////
+				
+						// DIDN'T DO THIS BECAUSE IT NEEDS CONTEXT قُرْءَانًا أَعْجَمِيًّا لَّ
+						//$triGrams2 = getPoSNGrams("ACC PN ADJ");
+						
+						
+						///////// PROPER NOUNS AJDECTIVES ////////////////////////
+						$triGrams4 = getPoSNGrams("PN ADJ ADJ");
+						preprint_r($triGrams4);
+						
+						// ADJ PARENT + relations
+						foreach($triGrams4 as $bigram => $freq)
+						{
+							$biGramWords = preg_split("/ /",$bigram);
+								
+							$concept = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[0]];
+							$adj1 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[1]];
+							$adj2 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[2]];
+							
+							
+								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj1]) )
+								{
+										$hasQuality = "من صفاتة";
+										$type = "TAXONOMIC";
+										addNewRelation($relationsArr,$type,$concept,$hasQuality,$adj1,"ADJ");
+									
+								}
+								
+								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj2]) )
+								{
+									$hasQuality = "من صفاتة";
+									$type = "TAXONOMIC";
+									addNewRelation($relationsArr,$type,$concept,$hasQuality,$adj2,"ADJ");
+										
+								}
+								
+							
+							
+						}
+						
+						/////////////// PHRASE CONCEPTS HYPERNYMS (PARENT-CHILD) ///////////////
+					
+						foreach($finalConcepts as $concept => $conceptArr)
+						{
+							
+							$type = $conceptArr['EXTRACTION_PHASE'];
+							$pos = $conceptArr['EXTRA']['POS'];
+							
+							if ( $type=="PHRASE")
+							{
+								$biGramWords = preg_split("/ /",$concept);
+							
+								
+								$parentConcept = $biGramWords[0];
+								
+								$wordInfoArr = getWordInfo($parentConcept, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
+								
+								$parentPosArr = $wordInfoArr['POS'];
+								
+								
+								
+								if ( !isset($parentPosArr['PN']) && !isset($parentPosArr['N']) && !isset($parentPosArr['ADJ']) ) continue;
+								
+								$subclassConcept = $concept;
+								
+								if (!isset($finalConcepts[$parentConcept]))
+								{
+									$finalConcepts[$parentConcept]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"TBOX","FREQ"=>1,"EXTRA"=>array("ASA"=>array()));
+								}
+					
+						
+									$hasQuality = "نوع من";
+									$type = "TAXONOMIC";
+									addNewRelation($relationsArr,$type,$subclassConcept,$hasQuality,$parentConcept,"$pos");
+										
+							
+							}
+						
+								
+								
+						}
+
+
+						///////////////////////////////////////////////////////////////////
+						
+						file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
+						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						
+					}	
 						
 						
 					if ( $GENERATE_NONTAXONOMIC_RELATIONS)
 					{
 						
 						$MODEL_CORE_UTH = loadUthmaniDataModel();
-						$relationArr = array();
+					
 						
 						
 						/* SURA'S LOOP **/
@@ -823,6 +1046,10 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									  $uthmaniWordsArr = removePauseMarksFromArr($pauseMarksArr,$uthmaniWordsArr);
 							
 							
+									  $verseLemmas = array();
+									  $versePrevWords = array();
+									  $versePrevPatterns = array();
+									  
 									  $triplePatternArr = array();
 									  foreach($uthmaniWordsArr as $index => $uthmaniWord)
 									  {
@@ -840,13 +1067,29 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 										 	 $qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
 	
 										 	 $pos="";
+										 	 $allSegments = "";
+									
 										 	 foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
 										 	 {
 											 	 $lemma = $qacWordSegmentsArr[$segmentIndex]['FEATURES']['LEM'];
-												 $pos = $pos ." ". $qacWordSegmentsArr[$segmentIndex]['TAG'];
+											 	 
+											 	 $segmentAR = $qacWordSegmentsArr[$segmentIndex]['FORM_AR'];
+											 	 $newTag = $qacWordSegmentsArr[$segmentIndex]['TAG'];;
+											 	 if ( $newTag=="PN" || $newTag=="N" || $newTag=="ADJ")
+											 	 {
+											 		 $allSegments.=$segmentAR;
+											 	 }
+												 $pos = $pos ." ". $newTag;
+												 
+												 $verseLemmas[$simpleWord]=$lemma;
+												 
+												
 										 	 }
+										 	 
+										 	 $verseSegments[$simpleWord]=$allSegments;
 								
 										 	// echoN("$pos|$simpleWord|$lemma|$qacLocation|$uthmaniWord");
+										 	 
 										 	 
 										 	 $triplePatternArr['CONCEPTS'][]=$simpleWord;
 										 	 $triplePatternArr['PATTERN'][]=trim($pos);
@@ -857,35 +1100,71 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 										 	 	
 										 	 	$joinedPattern = join(" ",array_values($triplePatternArr['PATTERN']));
 										 	 	
-										 	 	//preprint_r($triplePatternArr);
 										 	 	
-										 	 	if (   $joinedPattern=="PN V DET N"
-									  				|| $joinedPattern=="PN LOC DET N" 
-									  				|| $joinedPattern=="PN V PN")
+										 	 	
+										 	 	$concept1 = $triplePatternArr['CONCEPTS'][0];
+										 	 	$concept2 = $triplePatternArr['CONCEPTS'][2];
+										 	 	$verb = $triplePatternArr['CONCEPTS'][1];
+										 	 
+										 	 	
+										 	 	if (  
+													( 
+														//الله -> يحب -> المتقين
+ 													     ($joinedPattern=="PN V DET N" && $triplePatternArr['CONCEPTS'][1]!="قال")
+													  || ($joinedPattern=="PN NEG V DET N" )
+														//الله -> مع -> المتقين
+									  				  || $joinedPattern=="PN LOC DET N" 
+													    //ٱللَّهَ ٱصْطَفَىٰٓ ءَادَمَ
+									  				  || $joinedPattern=="PN V PN"
+													    //مُّحَمَّدٌ رَّسُولُ ٱللَّهِ
+													  || ( $joinedPattern=="PN N PN" && !isset($versePrevWords['قالت']) && !isset($versePrevWords['وقالت']) )
+													    // NOTE: NEG يخلف[1] => الله[2] => عهده
+													    //عَصَىٰٓ ءَادَمُ رَبَّ هُ
+													  || $joinedPattern=="V PN N PRON"
+									  				)
+													&& 
+													( $concept1!= $concept2 )
+												)
 										 	 	{
 										 	 		
 										 	 		//preprint_r($triplePatternArr);
 										 	 		
-										 	 		
-										 	 		
-
-										 	 		if ( isset($finalConcepts[$triplePatternArr['CONCEPTS'][0]]) 
-														&& isset($finalConcepts[$triplePatternArr['CONCEPTS'][2]]) )
+										 	 		if ( $joinedPattern=="V PN N PRON")
 										 	 		{
-										 	 			//echoN("####");
+										 	 			$concept1Temp = $concept1;
+										 	 			$concept1 = $triplePatternArr['CONCEPTS'][1];
+										 	 			$concept2 = $triplePatternArr['CONCEPTS'][2];
+										 	 			$verb = $concept1Temp;
 										 	 			
-										 	 			$newRelation= array("TYPE"=>"NON-TAXONOMIC","SUBJECT"=>$triplePatternArr['CONCEPTS'][0],
-										 	 					"VERB"=>$triplePatternArr['CONCEPTS'][1],
-										 	 					"OBJECT"=>$triplePatternArr['CONCEPTS'][2],
-										 	 					"posPattern"=>$joinedPattern);
+										 	 		}
+										 
+										 	 		$concept1Segment = $verseSegments[$concept1];
+										 	 		$concept2Segment = $verseSegments[$concept2];
+										 	 		
+										 	 		$concept1Lemma = $verseLemmas[$concept1];
+										 	 		$concept2Lemma = $verseLemmas[$concept2];
+										 	 		
 
-														$relationHash = md5(join(",",array_values($newRelation)));
-
-														if ( !isset($relationArr[$relationHash]))
-														{
-															$relationArr[$relationHash]=$newRelation;
-														}
+										 	 		if ( (isset($finalConcepts[$concept1]) || ($concept1=getConceptByLemma($finalConcepts,$concept1Lemma)) )
+														&& (isset($finalConcepts[$concept2]) || ($concept2=getConceptByLemma($finalConcepts,$concept2Lemma)) )
+									  				 )
+										 	 		{
+										 	 			echoN("####");
 										 	 			
+										 	 				$type = "NON-TAXONOMIC";
+										 					addNewRelation($relationsArr,$type,$concept1,$verb,$concept2,$joinedPattern);
+										 				
+										 					
+										 	 			
+										 	 		}
+										 	 		//pattern found but concepts not found in concept list
+										 	 		else
+										 	 		{
+										 	 			echoN("__________");
+										 	 			echoN("|$concept1Lemma|$concept2Lemma");
+										 	 			preprint_r($finalConcepts[$concept2]);
+										 	 			preprint_r($triplePatternArr);
+										 	 			echoN($joinedPattern);
 										 	 		}
 										 	 		
 										 	 		$triplePatternArr = array();
@@ -896,8 +1175,14 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 										 	 	
 										 	 		if ( count($triplePatternArr['CONCEPTS'])==3  )
 										 	 		{
-										 	 			$triplePatternArr['CONCEPTS'] = array_slice($triplePatternArr['CONCEPTS'], 1,2);
-												 	 		$triplePatternArr['PATTERN'] = array_slice($triplePatternArr['PATTERN'], 1,2);
+										 	 			
+										 	 			$droppedConcept = array_slice($triplePatternArr['CONCEPTS'], 1,2);;
+										 	 			$droppedPattern = array_slice($triplePatternArr['PATTERN'], 1,2);;
+										 	 			$versePrevWords[$droppedConcept]=1;
+										 	 			$versePrevPatterns[$droppedPattern]=1;
+										 	 			
+										 	 			$triplePatternArr['CONCEPTS'] = $droppedConcept;
+												 	 	$triplePatternArr['PATTERN'] = $droppedPattern;
 										 	 		 }
 										 	 	}
 										 	 	
@@ -917,15 +1202,704 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 						}
 						
-						preprint_r($relationArr);
+						preprint_r($relationsArr);
 						
 						
-						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationArr));
+						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationsArr));
 							
 						
-						file_put_contents("../data/ontology/temp.final.relations", serialize($relationArr));
+						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
 						
 					}
+					
+					$poTaggedSubsentences = getPoSTaggedSubsentences();
+					
+					//preprint_r($poTaggedSubsentences);exit;
+					
+					//echoN("SubSentences Count:".addCommasToNumber(count($poTaggedSubsentences)));
+					
+					function addRelation(&$relationsArr, $subject,$verb,$object,$joinedPattern)
+					{
+						global  $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
+					
+					
+						$subject = shallowUthmaniToSimpleConversion($subject);
+						$object = shallowUthmaniToSimpleConversion($object);
+					
+						echoN("---SUBJ:<b>{$subject}</b> VERB:$verb OBJ:<b>{$object}</b>");
+					
+						addNewRelation($relationsArr,"NON-TAXONOMIC",$subject,$verb,$object,$joinedPattern);
+					}
+					
+					function resolvePronouns($qacLocation)
+					{
+						global $MODEL_QURANA;
+						$pronArr = array();
+						$index=0;
+						//echoN($qacLocation);
+						//if ( $qacLocation=="3:146:11")
+							//preprint_r($MODEL_QURANA['QURANA_PRONOUNS']);
+						foreach($MODEL_QURANA['QURANA_PRONOUNS'][$qacLocation] as $coneptArr)
+						{
+								
+							$coneptId = $coneptArr['CONCEPT_ID'];
+							$conceptName = $MODEL_QURANA['QURANA_CONCEPTS'][$coneptId]['AR'];
+						
+							echoN($conceptName);
+						
+							// qurana null concept
+							//if ( $conceptName=="null") continue;
+						
+							$pronArr[$index++]=$conceptName;
+						}
+						
+						return $pronArr;
+					}
+					
+					$ssPoSAggregation = array();
+					$ssPoSAggregationCorrespondingSent = array();
+					
+					//$METHOD = "GENERAL_RULE";
+					$METHOD = "LCS_RULES";
+					
+					if ( $METHOD=="GENERAL_RULE")
+					{
+
+					
+					
+
+					
+							
+		
+							/*$targetWord = "الله";
+							$handledVerses = array();
+							
+							foreach ($MODEL_SEARCH['INVERTED_INDEX'][$targetWord] as   $documentArrInIndex)
+							{
+									
+							
+							
+								$SURA = $documentArrInIndex['SURA'];
+								$AYA = $documentArrInIndex['AYA'];
+		
+		
+							
+								$qacLocation = ($SURA+1).":".($AYA+1);
+								
+								
+								
+								
+								//multiple pronouns for same verse
+								if (isset($handledVerses[$qacLocation])) continue;
+								//echoN($qacLocation);
+								
+								$handledVerses[$qacLocation]=1;
+								
+								$subSentenceIndex=1;
+								
+								$currentArrayItem = $poTaggedSubsentences[$qacLocation."-$subSentenceIndex"];
+								while(!empty($currentArrayItem) )
+								{
+									
+									//preprint_r($currentArrayItem);
+									
+									$subSentenceLocation = $qacLocation."-$subSentenceIndex";
+					
+									$wordsArr = $poTaggedSubsentences[$subSentenceLocation]['WORDS'];
+									$posArr = $poTaggedSubsentences[$subSentenceLocation]['POS_TAGS'];
+										
+									$ssPoSPattern = join(", ",$posArr);
+										
+									$subSentenceStr = join(" ",$wordsArr);
+									
+									
+									
+									
+										$ssPoSAggregation[$ssPoSPattern]++;
+									
+										$ssPoSAggregationCorrespondingSent[$subSentenceLocation] = array($ssPoSPattern,$subSentenceStr);
+									
+									
+									$subSentenceIndex++;
+									
+									$subSentenceLocation = $qacLocation."-$subSentenceIndex";
+									
+									$currentArrayItem = $poTaggedSubsentences[$subSentenceLocation];
+									
+									
+								}
+								
+								
+								
+							}
+							
+							*/
+							foreach($poTaggedSubsentences as $location => $dataArr)
+							{
+								$wordsArr = $poTaggedSubsentences[$location]['WORDS'];
+								$posArr = $poTaggedSubsentences[$location]['POS_TAGS'];
+								
+								$ssPoSPattern = join(", ",$posArr);
+								
+								$subSentenceStr = join(" ",$wordsArr);
+									
+				
+								$ssPoSAggregationCorrespondingSent[$location] = array($ssPoSPattern,$subSentenceStr);
+									
+							
+									
+								
+							}
+							
+					
+							function flushProperRelations(&$relationsArr,&$conceptsArr,&$verb,&$lastSubject,$ssPoSPattern,&$filledConcepts)
+							{
+								
+								
+								if ( count($conceptsArr)>=2   )
+								{
+										
+									if (empty($verb))
+									{
+										$verb = "n/a";
+									}
+									
+									
+										
+									if ( $conceptsArr[0]!=$conceptsArr[1])
+									{
+										addRelation($relationsArr, $conceptsArr[0],$verb,$conceptsArr[1],$ssPoSPattern);
+										
+										if ( count($conceptsArr)>2 )
+										{
+											addRelation($relationsArr, $conceptsArr[1],"n/a",$conceptsArr[2],$ssPoSPattern);
+											addRelation($relationsArr, $conceptsArr[0],"n/a",$conceptsArr[2],$ssPoSPattern);
+										}
+									}
+									
+									$conceptsArr=array();
+									$verb = null;
+									$filledConcepts=0;
+								}
+									
+									
+								if ( count($conceptsArr)==1 && !empty($verb) && !empty($lastSubject) && $conceptsArr[0]!=$lastSubject)
+								{
+										
+									//echoN("||||".$conceptsArr[0]."|".$lastSubject);
+										
+										
+										
+										
+									$temp = $conceptsArr[0];
+									$conceptsArr[0] = $lastSubject;
+									$conceptsArr[1] = $temp;
+								
+		
+									// many problems
+									if ( $conceptsArr[0]!=$conceptsArr[1])
+									{
+										addRelation($relationsArr, $conceptsArr[0],$verb,$conceptsArr[1],$ssPoSPattern);
+									}
+									
+									
+								
+									
+									$conceptsArr=array();
+									$verb = null;
+		
+									$filledConcepts=0;
+								}
+							}
+							
+							
+							function isNounPhrase($posPattern)
+							{
+								return ( $posPattern=="N" || $posPattern=="PN" || $posPattern=="DET N"
+									);
+									//REMOVED || $posPattern=="N PRON"  نصيبك
+							}
+							
+							
+							
+							 $lastVerseId = null;
+							 
+							 foreach ($ssPoSAggregationCorrespondingSent as $ssLocation => $ssArray)
+							 {
+		
+							 	//	echoN("________");
+							 	$ssPoSPattern = $ssArray[0];
+							 	$subSentenceStr = $ssArray[1];
+								//echoN("<b>$subSentenceStr</b>");
+								
+								//echoN("$ssPoSPattern");
+								
+								
+								$verseId = substr($ssLocation, 0, strlen($ssLocation)-2);
+								
+								$patternArr = preg_split("/,/",$ssPoSPattern);
+								$WordsArr = preg_split("/ /",$subSentenceStr);
+								
+								$verb = $lastPosPattern = $lastSubject = null;
+								$conceptsArr = array();
+								$filledConcepts = 0;
+								$flushAndResetFlag = false;
+								
+								if ( $lastVerseId!=$verseId)
+								{
+									$qacVerseIndex=1;
+									$lastVerseId = $verseId;
+								}
+								
+								$lastWord = null;
+								
+								foreach($patternArr as $index => $posPattern)
+								{
+									$posPattern = trim($posPattern);
+									
+									//echoN($posPattern);
+									
+									$currentWord = current($WordsArr);
+									
+									$qacLocation = substr($ssLocation, 0, strlen($ssLocation)-2) .":".($qacVerseIndex);
+									
+							
+									//echoN($qacLocation);
+									
+									$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+							
+									$featuresArr = array();
+									foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
+									{
+										$features = $qacWordSegmentsArr[$segmentIndex]['FEATURES'];
+										
+										$featuresArr = array_merge($featuresArr,$features);
+									}
+		
+									//preprint_r($featuresArr);
+									
+									
+									
+										//echoN($featuresArr['ROOT']);
+										
+										if ( $index > 0 && strpos($posPattern,"ACC")!==false ||
+											 strpos($posPattern,"REM")!==false ||
+											strpos($posPattern,"SUB")!==false ||
+											strpos($posPattern,"COND")!==false ||
+											strpos($posPattern,"CONJ P PRON")!==false ||
+		
+											$featuresArr['ROOT']=="قول"
+										)
+										{
+											
+											
+											flushProperRelations($relationsArr,$conceptsArr,$verb,$lastSubject,$ssPoSPattern,$filledConcepts);
+											
+											if ( $featuresArr['ROOT']=="قول" || strpos($posPattern,"COND")!==false)
+											{
+												$qacVerseIndex += (count($patternArr)-($index+1))+1;
+												break;
+											}
+										}
+										
+										if ( strpos($posPattern,"V")!==false && !isset($featuresArr['PASS'] ) )//MAGHOOL
+										{
+											if ( isset($featuresArr['IMPF']))
+											{
+												$verbRepresentation = $currentWord;
+											}
+											else
+											{
+												$verbRepresentation = $featuresArr['LEM'];
+											}
+											
+											//echoN("VERB:$verb|$verbRepresentation|$posPattern|");
+											//echoN($lastPosPattern);
+										
+												if ( strpos($ssPoSPattern,"NEG")!==false || strpos($ssPoSPattern,"PRO")!==false )
+												{
+													$verb = $verb." ".$verbRepresentation;
+												}
+												else
+												{
+													$verb = $verbRepresentation;
+												}
+												
+												
+												if ( strpos($lastPosPattern,"NEG")!==false || strpos($lastPosPattern,"PRO")!==false )
+												{
+													$verb = $lastWord." ".$verb;
+												}
+											
+										}else 								
+										if ( strpos($posPattern,"P")!==false &&  strpos($lastPosPattern,"V")!==false)
+										{
+											
+											
+											if ( !empty($verb) && strpos($verb, " ")===false)
+											{
+												$verb = $verb." ".$currentWord;
+											}
+										}
+									
+										if ( isNounPhrase($posPattern))
+										{
+											//echoN("==$currentWord==$posPattern");
+											//preprint_r($conceptsArr[$filledConcepts-1]);
+											if ( isNounPhrase($lastPosPattern))
+											{
+												$conceptsArr[$filledConcepts-1]=$conceptsArr[$filledConcepts-1]." ".$currentWord;
+											}
+											else
+											{
+												$conceptsArr[$filledConcepts++]=$currentWord;
+											}
+											
+										
+											
+										}
+										
+										if ( strpos($posPattern,"PRON")!==false  )
+										{
+											//echoN($ssLocation);
+											
+											
+											
+											//echoN($qacLocation);
+											//preprint_r($MODEL_QURANA['QURANA_PRONOUNS'][$qacLocation]);
+											
+											foreach($MODEL_QURANA['QURANA_PRONOUNS'][$qacLocation] as $coneptArr)
+											{
+											
+												$coneptId = $coneptArr['CONCEPT_ID'];
+												$conceptName = $MODEL_QURANA['QURANA_CONCEPTS'][$coneptId]['AR'];
+												
+												//echoN($conceptName);
+												
+												// qurana null concept
+												if ( $conceptName=="null") break;
+												
+												$conceptsArr[$filledConcepts++]=$conceptName;
+											}
+											
+											if ($posPattern=="N PRON"  )
+											{
+												
+												$nounSegment =  $featuresArr['LEM'];
+												$tempConceptArr = array();
+												$tempConceptArr[0] = $conceptsArr[$filledConcepts-1];
+												$tempConceptArr[1] = $nounSegment;
+												
+												$tempVerb = "يملك";
+												flushProperRelations($relationsArr,$tempConceptArr,$tempVerb,$nounSegment,$ssPoSPattern,$filledConcepts);
+											}
+											
+											//echoN(">--- INPRON --");
+										//	preprint_r($conceptsArr);
+											//echoN("V:".$verb);
+											//echoN("Last Sub:".$lastSubject);
+											flushProperRelations($relationsArr,$conceptsArr,$verb,$lastSubject,$ssPoSPattern,$filledConcepts);
+											//echoN("<--- INPRON --");
+											
+									
+											
+											
+										}
+										
+										
+										// last item in loop, check any pending relations
+										if ( $index+1 >= count($patternArr))
+										{
+											//echoN("DOWN");
+											flushProperRelations($relationsArr,$conceptsArr,$verb,$lastSubject,$ssPoSPattern,$filledConcepts);
+										}
+										
+										$lastPosPattern = $posPattern;
+									
+									
+									//echoN("$currentWord|$posPattern");
+									
+										$qacVerseIndex++;
+										
+										$lastWord = $currentWord;
+									next($WordsArr);
+								}
+								
+								
+								
+								
+								
+								
+							 }
+					}
+					else
+					if ( $METHOD=="LCS_RULES")
+					{
+						//preprint_r($poTaggedSubsentences);
+						function getVerbSegment($qacWordSegmentsArr, $sentPos)
+						{
+							foreach($qacWordSegmentsArr as $segmentIndex=>$segmentArr)
+							{
+								$segmentPos = $segmentArr['TAG'];
+									
+								if ( $sentPos==$segmentPos )
+								{
+									return $segmentArr;
+								}
+						
+							}
+						}
+						
+						function trimVerb($verb)
+						{
+							
+							return preg_replace("/وَ|فَ/um", "", $verb);
+						}
+						
+						/*
+						$rules = file("../data/ontology/lcs.postags.2plus.all.rules",FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
+						
+						preprint_r($rules);
+						
+						$filteredRules = array();
+						$counter =0;
+						foreach ($rules as $rulePatternAndFreq)
+						{
+							
+							
+							$lineArr = preg_split("/\|/", $rulePatternAndFreq);
+							$rulePattern = $lineArr[0];
+							if ( strpos($rulePattern, "V")!==false )
+							{
+								if ( $counter++ > 100 ) break;
+								
+								$filteredRules[$rulePattern]=preg_replace("/,/", "", $rulePattern);
+							}
+						}
+						echoN(count($filteredRules));
+						//preprint_r($filteredRules);
+						*/
+						
+						
+						$filteredRules["V PRON, P, N, PN"]=1;
+						$filteredRules["V PRON PRON"]=1;
+						
+						$filteredRules["V PRON, DET N"]=1;
+						$filteredRules["V PRON, N PRON"]=1;
+						
+						
+						foreach( $filteredRules as $rulePattern=>$strippedRulePattern)
+						{
+							//$rule = "V PRON, P, N, PN";
+							//$rule = "V PRON PRON";
+							$rule = $rulePattern;
+							
+							foreach($poTaggedSubsentences as $location => $dataArr)
+							{
+									$wordsArr = $poTaggedSubsentences[$location]['WORDS'];
+									$posArr =   $poTaggedSubsentences[$location]['POS_TAGS'];
+									$qacIndexes = $poTaggedSubsentences[$location]['QAC_WORD_INDEXES'];
+									
+									
+									$ssPoSPattern = join(", ",$posArr);
+									
+									$subSentenceStr = join(" ",$wordsArr);
+									
+									
+										
+					
+									if ( strstr($ssPoSPattern, $rule)!==false)
+									{
+										echoN($subSentenceStr);
+										//echoN($location);
+										echoN($ssPoSPattern);
+										echoN($rule);
+										$startOfRule= strpos($ssPoSPattern, $rule);
+										//echoN("SP:".$startOfRule);
+										$prePatternStr = substr($ssPoSPattern, 0,$startOfRule);
+										$numberOfWordsPrePattern = preg_match_all("/,/", $prePatternStr);
+										$numberOfWordsInRule = (preg_match_all("/,/", $rule)+1);
+										//echoN("# of words prepattern:".$numberOfWordsPrePattern);	
+										//echoN("# of words in rule:".$numberOfWordsInRule);
+										
+										$startArrayIndexOfPattern = $numberOfWordsPrePattern;
+										
+										$verseId = substr($location, 0, strlen($location)-2);
+						
+										
+					
+	
+										
+										$qacStartWordIndexInVerse = $qacIndexes[$startArrayIndexOfPattern];
+										$qacBaseLocation = $verseId;
+										//echoN($qacLocation);
+										
+										
+										// preventive TAGS
+										if ( preg_match("/VOC|COND/",$prePatternStr) )
+										{
+											continue;
+										}
+										
+										
+										//preprint_r($qacWordSegmentsArr);
+										$prevPoS = $prevWord= null;
+										if ($startArrayIndexOfPattern-1 >= 0  )
+										{
+											$prevPoS = $posArr[$startArrayIndexOfPattern-1];
+											$prevWord  = $wordsArr[$startArrayIndexOfPattern-1];
+										}
+										
+										
+										switch($rule)
+										{
+											case "V PRON PRON":
+												
+												$qacWordLocation = $qacBaseLocation .":".($qacStartWordIndexInVerse);
+													
+												$pronounConceptArr = resolvePronouns($qacWordLocation);
+												$subject = $pronounConceptArr[0];
+												$object = $pronounConceptArr[1];
+												
+												//qurana bug
+												if ( empty($pronounConceptArr)) continue;
+												if ( $subject=="null" || $object=="null") continue;
+												
+												
+												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
+													
+												$verbSegmentArr = getVerbSegment($qacWordSegmentsArr,"V");
+												$verbLemma = $verbSegmentArr['FORM_AR'];
+												//preprint_r($verbSegmentArr);
+												//echoN($verbLemma);
+												//preprint_r($pronounConceptArr);
+												
+												$isImperative = isset($verbSegmentArr['FEATURES']['IMPV']);
+													
+												// null concept
+												if ( $subject=="null" ) continue;
+												if ( $isImperative) continue;
+													
+													
+												$verb = $verbLemma;
+													
+												if ( preg_match("/NEG|PRO([ ]|\,)/", $prevPoS))
+												{
+													$verb = $prevWord." ".$verb;
+												}
+													
+												
+												addRelation($relationsArr, $subject, $verb, $object, $rule);
+												
+											break;
+											
+											case "V PRON, P, N, PN":
+												
+											
+												$qacWordLocation = $qacBaseLocation .":".($qacStartWordIndexInVerse);
+												
+												$pronounConceptArr = resolvePronouns($qacWordLocation);
+												$subject = $pronounConceptArr[0];
+									
+												//qurana bug
+												if ( empty($pronounConceptArr)) continue;
+												
+	
+												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
+												
+												$verbSegmentArr = getVerbSegment($qacWordSegmentsArr,"V");
+												$verbLemma = $verbSegmentArr['FEATURES']['LEM'];
+												$isImperative = isset($verbSegmentArr['FEATURES']['IMPV']);
+												
+												preprint_r($verbSegmentArr);
+												
+												// null concept
+												if ( $subject=="null" ) continue;
+												if ( $isImperative) continue;
+												
+												
+												$verb = $verbLemma." ".$wordsArr[$startArrayIndexOfPattern+1];
+												
+												if ( preg_match("/NEG|PRO/", $prevPoS))
+												{
+													$verb = $prevWord." ".$verb;
+												}
+												
+												$object = $wordsArr[$startArrayIndexOfPattern+2]." ".$wordsArr[$startArrayIndexOfPattern+3];
+												addRelation($relationsArr, $subject, $verb, $object, $rule);
+											break;
+											//
+											//يَغْفِرْ لَ كُمْ ذُنُوبَ كُمْ
+											case "V PRON, DET N":
+											case "V PRON, N PRON":
+												$qacWordLocation = $qacBaseLocation .":".($qacStartWordIndexInVerse);
+													
+												$pronounConceptArr = resolvePronouns($qacWordLocation);
+												$subject = $pronounConceptArr[0];
+							
+												$object = $wordsArr[$startArrayIndexOfPattern+1];
+												
+												//qurana bug
+												if ( empty($pronounConceptArr)) continue;
+												if ( $subject=="null" || $object=="null") continue;
+												
+												
+												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
+													
+												$verbSegmentArr = getVerbSegment($qacWordSegmentsArr,"V");
+												$verbLemma = $verbSegmentArr['FORM_AR'];
+												//preprint_r($verbSegmentArr);
+												//echoN($verbLemma);
+												//preprint_r($pronounConceptArr);
+												
+												$isImperative = isset($verbSegmentArr['FEATURES']['IMPV']);
+													
+												// null concept
+												if ( $subject=="null" ) continue;
+												if ( $isImperative) continue;
+													
+													
+												$verb = trimVerb($wordsArr[$startArrayIndexOfPattern]);//$verbLemma;
+													
+												if ( preg_match("/NEG|PRO([ ]|\,)/", $prevPoS))
+												{
+													$verb = $prevWord." ".$verb;
+												}
+													
+												
+												addRelation($relationsArr, $subject, $verb, $object, $rule);
+											break;
+											
+										}
+	
+										//$ruleBoundry = ($numberOfCommasInPattern+$numberOfWordsInRule);
+										/*for($i=$numberOfCommasInPattern;$i<$ruleBoundry;$i++)
+										{
+											echoN("I:".$i);
+											echoN($posArr[$i]);
+											echoN($wordsArr[$i]);
+											
+											//$qacLocation = $verseId .":".($qacVerseIndex);
+											//$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+											
+											
+										}*/
+										
+										
+										
+									}
+										
+									
+										
+									
+							}
+						}
+					}
+				
+					
+	
+					preprint_r($relationsArr);
+					file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
 					
 					
 				?>
