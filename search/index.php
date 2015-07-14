@@ -252,13 +252,14 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 			
 			
 			//echoN("|$query|$verseText");
+			$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/um", $verseText);
 			
-			if ( mb_strpos($verseText,$query)===false)
+			if ( $numberOfOccurencesForWord ==0)
 			{
 				continue;
 			}
 			
-			$numberOfOccurencesForWord = preg_match_all("/$query/um", $verseText);
+			
 			
 		}
 		else
