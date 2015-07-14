@@ -245,10 +245,11 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 		//echo getQACLocationStr($SURA,$AYA,$INDEX_IN_AYA_EMLA2Y);
 		$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
 		
+		$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
 		
 		if ( $isPhraseSearch )
 		{
-			$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
+			
 			
 			//echoN("|$query|$verseText");
 			
@@ -257,8 +258,15 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 				continue;
 			}
 			
+			$numberOfOccurencesForWord = preg_match_all("/$query/um", $verseText);
+			
+		}
+		else
+		{
+			$numberOfOccurencesForWord = preg_match_all("/$word/um", $verseText);
 		}
 		
+		//echoN($numberOfOccurencesForWord);
 		//echoN("$qacLocation|$targetQACLocation|$word|$EXTRA_INFO|$WORD_TYPE");
 		
 
@@ -281,6 +289,7 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 			$scoringTable[$SURA.":".$AYA]['SCORE']=0;
 			$scoringTable[$SURA.":".$AYA]['FREQ']=0;
 			$scoringTable[$SURA.":".$AYA]['DISTANCE']=0;
+			$scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES']=0;
 			$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
 			$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
 			$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']=array();
@@ -292,13 +301,19 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 			
 		}
 		
-
+	
 		
-		if ( !isset($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]) && in_array($word,$queryWordsArr) 
-			&& $scoringTable[$SURA.":".$AYA]['FREQ']>0 )
+		
+		$scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES'] = $numberOfOccurencesForWord;
+		
+		//echoN($numberOfOccurencesForWord);
+		
+		if ( !isset($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]) &&  
+			$numberOfOccurencesForWord > 0 &&
+			$scoringTable[$SURA.":".$AYA]['FREQ']>0 )
 		{
 			// Raise the frequency (score) of ayas containing more than one of the query items
-			$scoringTable[$SURA.":".$AYA]['FREQ']*=10;
+			$scoringTable[$SURA.":".$AYA]['FREQ']=$numberOfOccurencesForWord*10;
 		}
 		else
 		{
@@ -458,15 +473,19 @@ $frequencyPerSuraArr = array();
 
 foreach ($scoringTable as $verseID => $scoringArr)
 {
+	/*
+	 * SURA and AYA IDS are 0 based instrad of 1  
+	 */
 	$suraID = $scoringArr['SURA']+1;
 	$ayaID = $scoringArr['AYA'];
 	$freq = $scoringArr['FREQ'];
+	$wordOccurences = $scoringArr['WORD_OCCURENCES'];
 	
 	$uniqueResultSuras[$suraID]=1;
 	
 
 	$uniqueResultVerses[$verseID]=1;
-	$uniqueResultRepetitionCount += 1;
+	$uniqueResultRepetitionCount += $wordOccurences;
 	
 	if ( !isset($frequencyPerSuraArr[$suraID]) ) $frequencyPerSuraArr[$suraID]=0;
 	$frequencyPerSuraArr[$suraID]+=1;
@@ -530,7 +549,7 @@ rsortBy($scoringTable, 'SCORE');
 
 $searchResultText = array();
 
-
+preprint_r($scoringTable);
 
 foreach($scoringTable as $documentID => $documentScoreArr)
 {
