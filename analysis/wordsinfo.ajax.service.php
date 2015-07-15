@@ -46,7 +46,7 @@ $word = $_GET['word'];
 					<table id='words-info-table'>
 					<thead>
 					<tr>
-						<td colspan='4'>
+						<td colspan='6'>
 
 						</td>
 					</tr>
@@ -123,14 +123,30 @@ $word = $_GET['word'];
 							<?=join(" ", array_keys($wordInfoArr['LEM']))?>
 						</td>
 					</tr>	
-					<tr>
 					
-						<th colspan='4'>
+					
+					<tr>
+						<th >
+						Features
+						</th>
+						<td colspan='6'>
+							<?=echoN(join(",",array_keys($wordInfoArr['FEATURES'])));?>
+						</td>
+	
+						
+					</tr>	
+					<tr>
+						
+						<th colspan='5'>
 							Verses (<?=count($wordInfoArr['VERSES'])?>)
 						</th>
 						<th>
 						Tag
 						</th>
+						<th>
+						Loc
+						</th>
+						
 						
 					</tr>		
 					<?php 
@@ -139,7 +155,8 @@ $word = $_GET['word'];
 					
 					?>
 					<tr>
-						<td colspan='4'>
+						
+						<td colspan='5'>
 							<?php
 							
 							//$verseText = markSpecificWordInText($verseText,$wordId,$wordSimple,"");
@@ -154,6 +171,7 @@ $word = $_GET['word'];
 						<td style="background-color: #cacaff">
 						<?=$wordInfoArr['VERSES_POS_TAGS'][$location]?>
 						</td>
+						<td><?=$location?></td>
 					</tr>
 					<?php 
 					endforeach;
