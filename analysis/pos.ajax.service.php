@@ -22,6 +22,7 @@ loadModels("core,qac",$lang);
 $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 
 $POS = $_GET['pos'];
+$features = $_GET['features'];
 
 $MODEL_CORE_UTH = loadUthmaniDataModel();
 
@@ -35,6 +36,10 @@ if ( ($POS=="") )
 					$markedVerses = array();
 					$unrepeatedWords = array();
 					//preprint_r($MODEL_QAC['QAC_POS'][$POS]);
+					
+					$allOccurencesCount = count($MODEL_QAC['QAC_POS'][$POS]);
+					
+					//preprint_r($MODEL_QAC['QAC_POS'][$POS]);exit;
 
 					foreach($MODEL_QAC['QAC_POS'][$POS] as $location => $segmentId)
 					{
@@ -54,6 +59,21 @@ if ( ($POS=="") )
 							$segmentWordSimple = preg_replace("/\x{0671}/um","ا",$segmentWordSimple);
 						}
 						*/
+						
+						if ( !empty($features) )
+						{
+							$featuresArr = preg_split("/,/",$features);
+							$isFeatureFound = false;
+							foreach($featuresArr as $oneFeature)
+							{
+								$isFeatureFound = isset($MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES'][$features]);
+							}
+						
+							if ( $isFeatureFound==false)
+							{
+								continue;
+							}
+						}
 						
 						if ( !isset($unrepeatedWords[$segmentWord]))
 						{
@@ -85,7 +105,12 @@ if ( ($POS=="") )
 					}
 					
 					?>
-					<div id='pos-words-verses-statistics'> <b><?=addCommasToNumber(count($unrepeatedWords))?></b> Words - <b><?=addCommasToNumber(count($markedVerses))?></b> Verses  </div>
+					<div id='pos-words-verses-statistics'> 
+					
+					
+					<b><?=addCommasToNumber($allOccurencesCount)?></b> All Segments - 
+					<b><?=addCommasToNumber(count($unrepeatedWords))?></b> Distinct Words - 
+					<b><?=addCommasToNumber(count($markedVerses))?></b> Verses  </div>
 					
 					<table id='pos-words-verses-table'>
 					<tr>
