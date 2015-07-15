@@ -55,18 +55,18 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 								<td >
 
   				   						 
-  				   						 
+  				   						 <?php  $finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts")); ?>
   				   						 
   				   						 <table id='ontology-concepts-table'>
   				   						 <tr>
   				   						 <th>
-  				   						Concepts
+  				   						Concepts (<?=count($finalConcepts)?>)
   				   						 </th>
   				   						 </tr>
   				   						
   				   						 	
   				   						 <?php
-  				   						 $finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts"));
+  				   						
   				   						 
   				   						 
 	  				   						  foreach($finalConcepts as $concept=> $conceptArr)
@@ -95,17 +95,20 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 								
 									
 									
-								
+										<?php 
+										 $relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+										 
+										 ?>
 										 <table id='ontology-concepts-table'>
   				   						 <tr>
-  				   						 <th>
-  				   						Relations
+  				   						 <th colspan='2'>
+  				   						Relations (<?=count($relationArr)?>)
   				   						 </th>
   				   						 </tr>
   				   						
   				   						 	
   				   						 <?php
-  				   						 $relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+  				   						
   				   						 
   				   						 
   				   						 
@@ -116,13 +119,23 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
   				   						 		$verb = $relationsArr['VERB'];
   				   						 		$object = $relationsArr['OBJECT'];
   				   						 		
+  				   						 		$type = $relationsArr['TYPE'];
+  				   						 		$posPattern = $relationsArr['POS_PATTERN'];
+  				   						 		
   				   						 	?>
   				   						 	   <tr>
   				   								 <td style="background-color: #dddddd;">
   				   						 			
-  				   						 					<?php echo  "$subject -> $verb -> $object"?> 
+  				   						 				<?php echo  "$subject -> $verb -> $object"?> 
   				   						 			
   				   						 		 </td>
+  				   						 		 <td style='color:#eee'>
+  				   						 		 		<?php echo  $type?> 
+  				   						 		 </td>
+  				   						 		 <!--  <td style='color:#eee'>
+  				   						 		 		<?php echo  "";//$posPattern?> 
+  				   						 		 </td>
+  				   						 		 --> 
   				   						 		</tr>
   				   						 					
   				   						 	<?php
