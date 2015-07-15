@@ -835,6 +835,19 @@
 		return  $locationArr[2];
 	}
 	
+	function markWordWithoutWordIndex($text,$charsToBeMarked,$markingTagName)
+	{
+
+	
+		$text =   preg_replace("/(".$charsToBeMarked.")/mui", "<$markingTagName>\\1</$markingTagName>",$text);
+	
+	
+			
+		return $text;
+			
+
+	}
+	
 	function markSpecificWordInText($TEXT,$wordIndex,$charsToBeMarked,$markingTagName)
 	{
 		global $MODEL_CORE;
@@ -897,6 +910,19 @@
 		return $newArr;
 	}
 	
+	
+	function removePauseMarkFromVerse($verseText)
+	{
+		global $MODEL_CORE,$saktaLatifaMark,$sajdahMark;
+	
+		$pauseMarksPattern  = join("|",array_keys($MODEL_CORE['TOTALS']['PAUSEMARKS']))."|$saktaLatifaMark|$sajdahMark";
+		
+		
+		$verseText =  preg_replace("/$pauseMarksPattern/um", "", $verseText);
+		$verseText = preg_replace("/[ ]{2}/um", " ", $verseText);
+
+		return $verseText;
+	}
 	
 	function getImla2yWordIndexByUthmaniLocation($uthmaniQACLocation,$UTHMANI_TO_SIMPLE_LOCATION_MAP)
 	{
@@ -1479,6 +1505,8 @@
 		$lemmasArr = array();
 		$wordRoot ="";
 		
+		$featuresArr = array();
+		
 		$versesArr = array();
 		$versesTagsArr = array();
 		
@@ -1534,6 +1562,7 @@
 					$lemma  = $segmentDataArr['FEATURES']['LEM'];
 				}
 				
+				$featuresArr = array_merge($segmentDataArr['FEATURES']);
 				
 				$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);
 		
@@ -1571,21 +1600,21 @@
 		
 				//$verseText = markSpecificWordInText($verseText,$wordId,$segmentWordSimple,"marked_fg");
 		
-				$verseHash = md5($verseText);
+				$qacVerseLocation = substr($qacLocation,0,strrpos($qacLocation,":"));
 		
-				if ( !isset($versesArr[$verseHash]))
+				if ( !isset($versesArr[$qacVerseLocation]))
 				{
-					$versesArr[$verseHash] = $verseText;
+					$versesArr[$qacVerseLocation] = $verseText;
 					
 				
 				}
 				
-				if ( !isset($versesTagsArr[$verseHash]) )
+				if ( !isset($versesTagsArr[$qacVerseLocation]) )
 				{
-					$versesTagsArr[$verseHash]="";
+					$versesTagsArr[$qacVerseLocation]="";
 				}
 				
-				$versesTagsArr[$verseHash] = $versesTagsArr[$verseHash]." ".$tag;
+				$versesTagsArr[$qacVerseLocation] = $versesTagsArr[$qacVerseLocation]." ".$tag;
 					
 					
 		
@@ -1608,6 +1637,8 @@
 		$wordInfoArr['POS']=$posTagsArr;
 		$wordInfoArr['VERSES']=$versesArr;
 		$wordInfoArr['VERSES_POS_TAGS']=$versesTagsArr;
+		$wordInfoArr['FEATURES']=$featuresArr;
+		
 		
 		
 		return $wordInfoArr;
@@ -1684,7 +1715,7 @@
  		$newRelation= array("TYPE"=>$type,"SUBJECT"=>$subject,
  								"VERB"=>$verb,
  								"OBJECT"=>$object,
- 								"posPattern"=>$joinedPattern);
+ 								"POS_PATTERN"=>$posPattern);
  						
  		$relationHash = md5(join(",",array_values($newRelation)));
  						
@@ -1693,5 +1724,353 @@
  			$relationArr[$relationHash]=$newRelation;
  		}
  	}
+ 	
+ 	
+
+ 	function getPoSTaggedSubsentences($coreModelUsed = "UTH")
+ 	{
+ 		global $MODEL_CORE,$MODEL_QAC,$numberOfSuras;
+ 		global $saktaLatifaMark, $sajdahMark;
+ 	
+ 		
+ 	
+ 		$posTaggedSubSentencesArr = array();
+ 	
+ 	
+ 		$MODEL_USED = null;
+ 		if ( $coreModelUsed=="UTH")
+ 		{
+ 			$MODEL_USED = loadUthmaniDataModel();
+ 		}else
+ 		{
+ 			$MODEL_USED = $MODEL_CORE;
+ 		}
+ 			
+ 		
+ 		
+ 		/* SURA'S LOOP **/
+ 		for ($s=0;$s<$numberOfSuras;$s++)
+ 		{
+ 			
+ 			
+	 		$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+	 			
+	 			
+	 		
+	 		/* VERSES LOOP **/
+	 		for ($a=0;$a<$suraSize;$a++)
+	 		{
+	 		
+	 		  $i++;
+	 		  $verseTextUthmani = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+	 		  $uthmaniWordsArr = preg_split("/ /", $verseTextUthmani);
+	 		
+ 		  	
+	 		 // echoN($verseTextUthmani);
+ 		  	
+	 		   $subsentenceIndex = 1;
+	 		  
+	 		  	$verseLocation = ($s+1).":".($a+1)."-".$subsentenceIndex;
+	 		  	
+	 		  	if (!isset($posTaggedSubSentencesArr[$verseLocation]))
+	 		  	{
+	 		  		$posTaggedSubSentencesArr[$verseLocation] = array("WORDS"=>array(),"POS_TAGS"=>array(),"QAC_WORD_INDEXES"=>array());
+	 		  	}
+				
+ 		  			//$uthmaniWordsArr = removePauseMarksFromArr($pauseMarksArr,$uthmaniWordsArr);
+ 		  				
+ 		  				
+ 		  			$wordsInSubSentence = 0;
+ 		  			$verseNonPauseWordsIndex = 1;
+ 		  			foreach($uthmaniWordsArr as $index => $uthmaniWord)
+ 		  			{
+ 		  				
+ 		  				//echoN("$index|$uthmaniWord");
+ 		  				
+ 		  				if ( isPauseMark($uthmaniWord, $MODEL_CORE['TOTALS']['PAUSEMARKS'], $saktaLatifaMark, $sajdahMark) )
+ 		  				{
+ 		  					
+ 		  					$subsentenceIndex++;
+ 		  					//echoN("-----".$subsentenceIndex);
+ 		  					$wordsInSubSentence=0;
+ 		  					$verseLocation = ($s+1).":".($a+1)."-".$subsentenceIndex;
+ 		  					continue;
+ 		  				}
+ 		  				
+ 		  				
+ 		  				
+ 		  				//$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$uthmaniWord];
+ 		
+ 		
+ 		  				$qacLocation = ($s+1).":".($a+1).":".($verseNonPauseWordsIndex);
+ 		
+ 		  				$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+ 		
+ 		  				//echoN($qacLocation);
+ 		  				//echoN($verseLocation);
+ 		  			
+ 		  				
+ 		  				
+ 		  
+ 		  				if (!isset($posTaggedSubSentencesArr[$verseLocation]))
+ 		  				{
+ 		  					$posTaggedSubSentencesArr[$verseLocation] = array("WORDS"=>array(),"POS_TAGS"=>array(),"QAC_WORD_INDEXES"=>array());
+ 		  				}
+ 		  				
+ 		  				
+ 		  				$posTaggedSubSentencesArr[$verseLocation]['WORDS'][$wordsInSubSentence]=($uthmaniWord);
+ 		  					
+ 		  				//echoN(print_r($qacWordSegmentsArr,true));
+ 		  				
+ 		  				$currentWordTags = "";
+ 		  				foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
+ 		  				{
+	 		  				//$lemma = $qacWordSegmentsArr[$segmentIndex]['FEATURES']['LEM'];
+	 		
+	 		  				//$segmentAR = $qacWordSegmentsArr[$segmentIndex]['FORM_AR'];
+	 		  				$newTag = $qacWordSegmentsArr[$segmentIndex]['TAG'];
+	 		  				
+	 		  				$currentWordTags = $currentWordTags." ".$newTag;
+	 		  				
+	 		  				
+
+ 		  				}
+ 		  				
+ 		  				$posTaggedSubSentencesArr[$verseLocation]['POS_TAGS'][$wordsInSubSentence]=trim($currentWordTags);
+ 		  				$posTaggedSubSentencesArr[$verseLocation]['QAC_WORD_INDEXES'][$wordsInSubSentence]=$verseNonPauseWordsIndex;
+ 		  				
+ 		  				$wordsInSubSentence++;
+ 		  				$verseNonPauseWordsIndex++;
+ 		  				
+ 		  				//preprint_r($posTaggedSubSentencesArr[$verseLocation]);
+ 		  				
+ 		  				
+ 		  			}
+ 		  			//echoN("###".$verseLocation);
+ 		  			
+	 		}
+ 		}
+ 		  					
+ 	
+ 
+ 	return $posTaggedSubSentencesArr;
+ 	
+ 	}
+ 	
+ 	function getLCSModifiedAlgorithm($str1, $str2)
+ 	{
+ 		$str1 = trim( $str1 );
+ 		$str2 = trim( $str2 );
+ 	
+ 		if (empty( $str1 ) || empty( $str1 )) 
+ 		{
+ 			return null;
+ 		}
+ 	
+ 		$str1Arr = preg_split("/ /", $str1 );
+ 		$str2Arr = preg_split("/ /", $str2 );
+ 	
+ 		// empty or short strings
+ 		if ( count($str1Arr)<=2 && count($str2Arr)<=2)
+ 		{
+ 			return null;
+ 		}
+ 	
+ 	
+ 	
+ 		// only 1 or non common words
+ 		if ( count(array_intersect($str1Arr, $str2Arr))<=1)
+ 		{
+ 			
+ 			return null;
+ 		}
+ 	
+ 		$len1 = count( $str1Arr );
+ 		$len2 = count( $str2Arr );
+ 	
+ 		$match2dArray = array();
+ 	
+ 		$longestLen = 0;
+ 		$longestSubStr = "";
+ 	
+ 		$csStringArr = array();
+ 	
+ 		for($i = 0; $i < $len1; $i++)
+ 		{
+	 		$rowWord = $str1Arr[$i];
+	 			
+		 		for($v = 0; $v < $len2; $v++)
+		 		{
+		 			// INSTED OF LOOPING UP THERE
+		 			if (!isset( $match2dArray[$i][$v] ))
+		 			{
+		 				$match2dArray[$i][$v] = 0;
+		 			}
+		 	
+		 			$colWord = $str2Arr[$v];
+		 	
+		 			if ($rowWord === $colWord)
+		 			{
+		 				$newLength = $match2dArray[$i][$v] + 1;
+		 					
+		 				$match2dArray[$i + 1][$v + 1] = $newLength;
+		 				
+			 			if ($newLength > $longestLen)
+			 			{
+			 				$longestLen = $newLength;
+			 	
+			 				$longestSubStr = "";
+			 	
+			 				if ($newLength == $longestLen && $longestLen>1)
+			 				{
+			 					
+				 				$startPointer = (($i + 1) - $longestLen);
+				 					
+				 				$endPointer = $startPointer + $longestLen;
+				 					
+				 				for($x = $startPointer; $x < $endPointer; $x++)
+				 				{
+				 					$longestSubStr .= $str1Arr[$x] . " ";
+				 				}
+				 					
+				 				$longestSubStr = trim( $longestSubStr );
+				 					
+				 				
+			 				}
+			 			}
+		 			}
+		 		}
+		 	}
+		 	
+		 	//$longestSubStr="ومن شر النفاثات في العقد";
+		 	//echoN($longestSubStr);
+		 	$longestStrArr = preg_split("/ /", $longestSubStr);
+		 	
+		 	//preprint_r($longestStrArr);
+		 	
+		 	
+		 	$arrLength = count($longestStrArr);
+		 	
+		 	/////// STRING ORDERED PERMUTATION BRUTE FORCE 
+		 	for($groups=0;$groups<$arrLength-1;$groups++)
+		 	{
+		 		
+		 			$groupAdvancer = 0;
+				 	for($v=$groups;$v< $arrLength-1;$v++)
+				 	{
+				 		$commonSS = "";
+				 		
+				 		
+				 		$subStringSize = 2+$groups;
+				 		for($groupItem=0;$groupItem<$subStringSize;$groupItem++)
+				 		{
+				 			//echoN("$groups|$v|$groupItem|$groupAdvancer");
+				 			
+				 			$commonSS = $commonSS." ".$longestStrArr[$groupAdvancer];
+				 			
+				 			$groupAdvancer++;
+				 		}
+				 		$groupAdvancer-=($subStringSize-1);
+				 		
+				 		$csStringArr[]=trim($commonSS);
+				 		
+				 	}
+		 		
+		 	}
+		 	////////////////
+		 	
+		 	
+		 	
+ 	
+ 	
+ 	
+ 			$match2dArray = null;
+ 	
+ 			return $csStringArr;
+ 	}
+ 				
+	function getLCS($str1, $str2) 
+	{
+		$str1 = trim( $str1 );
+		$str2 = trim( $str2 );
+		
+		if (empty( $str1 ) || empty( $str1 )) {
+			return null;
+		}
+		
+		$str1Arr = preg_split("/ /", $str1 );
+		$str2Arr = preg_split("/ /", $str2 );
+		
+		// empty or short strings
+		if ( count($str1Arr)<=2 && count($str2Arr)<=2)
+		{
+			return null;
+		}
+		
+		
+		
+		// only 1 or non common words
+		if ( count(array_intersect($str1Arr, $str2Arr))<=1) 
+		{
+			return null;
+		}
+		
+		$len1 = count( $str1Arr );
+		$len2 = count( $str2Arr );
+		
+		$match2dArray = array();
+		
+		$longestLen = 0;
+		$longestSubStr = "";
+		
+		for($i = 0; $i < $len1; $i++) 
+		{
+			$rowWord = $str1Arr[$i];
+			
+			for($v = 0; $v < $len2; $v++) 
+			{
+				// INSTED OF LOOPING UP THERE
+				if (!isset( $match2dArray[$i][$v] )) 
+				{
+					$match2dArray[$i][$v] = 0;
+				}
+				
+				$colWord = $str2Arr[$v];
+				
+				if ($rowWord === $colWord)
+				{
+					$newLength = $match2dArray[$i][$v] + 1;
+					
+					$match2dArray[$i + 1][$v + 1] = $newLength;
+					
+					if ($newLength > $longestLen) 
+					{
+						$longestLen = $newLength;
+						
+						$longestSubStr = "";
+						
+						if ($newLength == $longestLen)
+						{
+							
+							$startPointer = (($i + 1) - $longestLen);
+							
+							$endPointer = $startPointer + $longestLen;
+							
+							for($x = $startPointer; $x < $endPointer; $x++) 
+							{
+								$longestSubStr .= $str1Arr[$x] . " ";
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		$longestSubStr = trim( $longestSubStr );
+		
+		$match2dArray = null;
+		
+		return $longestSubStr;
+	}
 	
 ?>
