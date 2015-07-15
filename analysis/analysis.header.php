@@ -46,16 +46,20 @@
    				<br>
    				<a href="./graph.php<?=$langParameter?>" class='analysis-links'>Graphs</a>
    				<a href="./ngrams.php<?=$langParameter?>" class='analysis-links'>N-Grams</a>
-   				<a href="./part-of-speech.php<?=$langParameter?>" class='analysis-links'>PoS</a>
+   				<a href="./pos-ngrams.php<?=$langParameter?>" class='analysis-links'>PoS Patterns (PoS-NGrams)</a>
+   				<a href="./part-of-speech.php<?=$langParameter?>" class='analysis-links'>PoS Query</a>
    			
    				<a href="./chronology.php<?=$langParameter?>" class='analysis-links'>Chronology</a>
    				
-   				<a href="./repetition.php<?=$langParameter?>" class='analysis-links'>Repeated Verses</a>		
+   				<a href="./repetition-verses.php<?=$langParameter?>" class='analysis-links'>Repeated Verses</a>		
+   				<a href="./repetition-common-substrings.php<?=$langParameter?>" class='analysis-links'>Repeated Phrases (Common Substrings)</a>	
    				<a href="./ontology.php<?=$langParameter?>" class='analysis-links'>Ontology</a>		
    				<a href="./uthmani-to-simple.php<?=$langParameter?>" class='analysis-links'>Uthmani-to-Simple</a>
    				<a href="./words-information.php<?=$langParameter?>" class='analysis-links'>Word Information</a>			
    				<a href="./pause-marks.php<?=$langParameter?>" class='analysis-links'>Pause Marks</a>			
    				
+   				<a href="./word-context-collocation.php<?=$langParameter?>" class='analysis-links'>Collocation</a>
+   				<a href="./word-context-concordance.php<?=$langParameter?>" class='analysis-links'>Concordance</a>
    				
    				
    				
