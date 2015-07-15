@@ -235,14 +235,26 @@ function loadModels($modelsToBeLoaded,$lang)
 		  	   * if the current word is  ويا  or  ها or   يا
 		  	   * then join it with the next word and make them one word
 		  	   */ 
+		  	  
 		  	  if (count($uthmaniWordsArr) != count($simpleWordsArr) 
-		  	  	&& ($wordSimple=="يا" || $wordSimple=="ها" ||$wordSimple =="ويا") )
+		  	  	&& ($wordSimple=="يا" || $wordSimple=="ها" ||$wordSimple =="ويا" || $wordUthmani=="وَأَلَّوِ") )
 		  	  	{
-		  	  		// example 0 => 1
-		  	  		$UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)][($index+1)]=($wtwIndex+1);
-		  	  		
-		  	  		//[($index+1)."-".$wordUthmani]=($wtwIndex+1)."-".$wordSimple;
-		  	  		$wordSimple = $wordSimple ." ".$simpleWordsArr[$wtwIndex++];
+		  	  		if ($wordUthmani=="يَبْنَؤُمَّ")
+		  	  		{
+		  	  			// example 0 => 1
+		  	  			$UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)][($index+1)]=($wtwIndex+1);
+		  	  			
+		  	  			//[($index+1)."-".$wordUthmani]=($wtwIndex+1)."-".$wordSimple;
+		  	  			$wordSimple = $wordSimple ." ".$simpleWordsArr[$wtwIndex++]." ".$simpleWordsArr[$wtwIndex++];
+		  	  		}
+		  	  		else
+		  	  		{
+			  	  		// example 0 => 1
+			  	  		$UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)][($index+1)]=($wtwIndex+1);
+			  	  		
+			  	  		//[($index+1)."-".$wordUthmani]=($wtwIndex+1)."-".$wordSimple;
+			  	  		$wordSimple = $wordSimple ." ".$simpleWordsArr[$wtwIndex++];
+		  	  		}
 		  	  		
 		  	  		
 		  	  		//echoN("$wordUthmani:$wordSimple");
