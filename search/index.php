@@ -250,9 +250,13 @@ foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 		if ( $isPhraseSearch )
 		{
 			
-			
+			/*
+			 *
+			* NOTE: A DECISION SHOULD BE TAKEN TO SERACH AROUND AND REMOVE PAUSE MARKS OR NOT
+			*/
+			$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
 			//echoN("|$query|$verseText");
-			$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/um", $verseText);
+			$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/um", $verseTextWithoutPauseMarks);
 			
 			if ( $numberOfOccurencesForWord ==0)
 			{
@@ -550,7 +554,7 @@ rsortBy($scoringTable, 'SCORE');
 
 $searchResultText = array();
 
-preprint_r($scoringTable);
+//preprint_r($scoringTable);
 
 foreach($scoringTable as $documentID => $documentScoreArr)
 {
