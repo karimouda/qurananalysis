@@ -73,6 +73,11 @@ loadModels("core,qac",$lang);
 							}
 					  ?>
 					</select>
+					<br>
+					
+					Features: <input  type="text" name="features" id="features" ></input>
+					<br>
+					<input  type="button" name="submit" id="submit" value="Find" ></input>
 					<div id="loading-layer">
 			  		Loading ...
 					</div>
@@ -102,34 +107,45 @@ loadModels("core,qac",$lang);
 		
 		});
 
+		function doSubmit()
+		{
+			 var selectedPOS = $("#pos-selection option:selected").val();
+
+		
+		        var features = $("#features").val();
+		        
+
+				if ( selectedPOS=="" )
+				{
+					return;
+				}
+
+				$("#loading-layer").show();
+
+				doGetPOSData(selectedPOS,features);
+		}
+
+		$("#submit").click(function()
+		{
+			doSubmit();
+		});
 
 		$("#pos-selection").change(function()
 		{
-	        var selectedPOS = $("option:selected", this).val();
-
-
-			if ( selectedPOS=="" )
-			{
-				return;
-			}
-
-			$("#loading-layer").show();
-
-			doGetPOSData(selectedPOS);
-
+	       
+			doSubmit();
 				  
 		});
 
 		
-		function doGetPOSData(selectedPOS)
+		function doGetPOSData(selectedPOS,features)
 		{
 		
-
 	
-
+	
 				
 				$.ajaxSetup({
-					url:  "/analysis/pos.ajax.service.php?lang=<?=$lang?>&pos="+encodeURIComponent(selectedPOS),
+					url:  "/analysis/pos.ajax.service.php?lang=<?=$lang?>&pos="+encodeURIComponent(selectedPOS)+"&features="+features,
 					global: false,
 					type: "GET"
 					
