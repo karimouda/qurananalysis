@@ -76,7 +76,7 @@ require_once($MAIN_ROOT_PATH."/model.loader.php");
 
 if ( isDevEnviroment() )
 {
-	error_reporting(E_ALL);
+	error_reporting(E_ERROR);
 	ini_set('display_errors', true);
 	function shutdown()
 	{

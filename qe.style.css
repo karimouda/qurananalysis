@@ -35,8 +35,9 @@ INPUT
 {
 	border:1px solid #eee;
 	color:#052F59;
-	min-height: 30px;
+	min-height: 22px;
 	padding:2px;
+	outline-color: #0074bc;
 }
 
 
@@ -281,6 +282,9 @@ A.analysis-links:BEFORE
 A.analysis-links:ACTIVE
 {
 	color:#000;
+	outline-width:2px;
+	outline-color: #fff;
+	outline-style: dotted;
 }
 
 A.analysis-links:HOVER
@@ -288,6 +292,16 @@ A.analysis-links:HOVER
 
 	color:#fff;
 	font-size:15px;
+}
+
+A.analysis-links:FOCUS
+{
+
+	color:#fff;
+	font-size:15px;
+		outline-width:2px;
+	outline-color: #000;
+	outline-style: dotted;
 }
 
 .analysis-table
@@ -376,6 +390,23 @@ marked_fg
 	color:#0095CC;
 	
 	font-weight: bold;
+}
+
+.marked_for_concordance
+{
+	color:red;
+	
+	font-weight: bold;
+	display: inline-block;
+
+}
+marked_for_concordance_right_left
+{
+	color:#0095CC;
+	
+	font-weight: bold;
+	display: inline-block;
+
 }
 
 #filterSearch
@@ -932,7 +963,7 @@ text-align: center;
 {
 
 	margin: 0px auto;
-	width: 400px
+	width: 800px
 }
 #ontology-container-table 
 {
@@ -957,7 +988,7 @@ text-align: center;
 {
 	vertical-align: top;
 	background-color: #fafafa;
-	width:50%;
+	
 }
 #ontology-concepts-table TH
 {
@@ -1229,5 +1260,91 @@ text-align: center;
 	padding:2px;
 	vertical-align: middle;
 	white-space: nowrap;
+}
+
+#words-context-options
+{
+	margin:auto;
+	width:400px;
+	
+}
+
+#words-context-area
+{
+
+	margin: 0px auto;
+	width: 80%;
+}
+
+
+#words-pos-context-table
+{
+	margin:auto;
+	width:90%;
+	margin-top:20px;
+}
+
+#words-pos-context-table TD
+{
+	vertical-align: top;
+	background-color: #fafafa;
+}
+
+#words-pos-context-table TH
+{
+
+	background-color: #C0DE22;
+	color:#000;
+	padding:2px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+#target-pos-level-zero-cell
+{
+	font-size: 32px;
+	
+	background-color: #000 !important;
+	color:#fff;
+	padding:10px;
+	padding-top:30px;
+	text-align: center;
+}
+
+.analysis-title-header
+{
+	margin:auto;
+	width:50%;
+	margin:10px auto;
+	text-align: center;
+}
+
+#words-pos-concordance-table
+{
+	margin:auto;
+	width:90%;
+	margin-top:20px;
+}
+
+#words-pos-concordance-table TD
+{
+	vertical-align: top;
+	background-color: #fafafa;
+}
+
+#words-pos-concordance-table TH
+{
+
+	background-color: #C0DE22;
+	color:#000;
+	padding:2px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.concordance-list
+{
+	list-style-type: none;
+	color:#aaa;
 }
 
