@@ -46,27 +46,13 @@ loadModels("core",$lang);
 			  	
 			  	<div id='ngrames-options'>
 					
-					<div id='ngrames-radio'>
-						<input id="normal-ngrams-type" type='radio' name='ngrams-radio' value='1' checked="true" />
-						<label for="normal-ngrams-type">N-Grams</label>
-						<input id="pos-ngrams-type"type='radio' name='ngrams-radio' value='2' />
-						<label for="pos-ngrams-type">PoS Tagged N-Grams</label>
-					</div>
+	
 						
 							
 					<span id='normal-ngrams-type-span'>
 					<input type="text" id="grams-number" value="2" size='1' maxlength="2" autofocus="true"/>-Grams
 					</span>
-					
-				
-					<span id='pos-ngrams-type-span'>
-					
-					<span class='note'>Supported Tags: "*" and all <a target='_new' href='http://corpus.quran.com/documentation/tagset.jsp'>QAC Tags</a></span>
-					<br>
-					PoS Pattern <input type="text" id="pos-pattern" placeholder="PN V" />
-					
-					
-					</span>
+	
 					
 					<input type="button" id='ngrams-submit' value='Find' />
 				</div>
@@ -98,42 +84,17 @@ loadModels("core",$lang);
 		
 		});
 
-		$("input:radio[name=ngrams-radio]").change(function()
-				{
-					var selectedRadio = $(this).val();
-
-					$("#ngrames-options SPAN").show();
-					
-					if ( selectedRadio == 1)
-					{
-							$("#pos-ngrams-type-span").hide();
-							
-					}
-					else
-					{
-						$("#normal-ngrams-type-span").hide();
-					}
-				});
 
 		$("#ngrams-submit").click(function()
 		{
 	       
 
-	    	var  selectedRadio = $("input:radio[name=ngrams-radio]:checked").val();
+	
 
-	    	var parameter = "";
-	    	
-	    	if ( selectedRadio == 1)
-			{
-	    		parameter = $("#grams-number").val();
-	    		 
-
-					
-			}
-			else
-			{
-				parameter = $("#pos-pattern").val();
-			}
+	  
+	  
+				parameter = $("#grams-number").val();
+			
 			
     		if ( parameter=="" )
 			{
@@ -144,13 +105,13 @@ loadModels("core",$lang);
 
 			$("#loading-layer").show();
 
-			doGetNGrams(selectedRadio,parameter);
+			doGetNGrams(parameter);
 
 				  
 		});
 
 		
-		function doGetNGrams(selectedRadio,parameter)
+		function doGetNGrams(parameter)
 		{
 		
 
@@ -158,7 +119,7 @@ loadModels("core",$lang);
 
 				
 				$.ajaxSetup({
-					url:  "/analysis/ngram.ajax.service.php?lang=<?=$lang?>&parameter="+parameter+"&ngramsType="+selectedRadio,
+					url:  "/analysis/ngrams.ajax.service.php?lang=<?=$lang?>&parameter="+parameter,
 					global: false,
 					type: "GET"
 					
