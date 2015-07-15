@@ -79,6 +79,8 @@ $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 									<td><?=$mapTermKey?></td>
 									
 									<td><?=$mapTermVal?></td>
+									
+									<!--  <td><?/*myLevensteinEditDistance(removeTashkeel($mapTermKey), $mapTermVal)*/?></td>-->
 								</tr>
 								<?php 
 								}
