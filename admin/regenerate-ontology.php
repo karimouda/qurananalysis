@@ -80,8 +80,15 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  	$GENERATE_ADJECTIVE_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  	
 			  	
-			  	$GENERATE_TAXONOMIC_RELATIONS = TRUE;
-			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
+			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;
+			  	
+			  	
+			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = TRUE;
+			  	
+			  	$ENRICH_CONCEPTS_METADATA = TRUE;
+			  	$ENRICH_RELATIONS_METADATA = TRUE;
+			  	
 			  	
 
 			  	$finalConcepts = array();
@@ -1200,7 +1207,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									
 							}
 							
-						}
+						
 						
 						preprint_r($relationsArr);
 						
@@ -1700,8 +1707,13 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									$posArr =   $poTaggedSubsentences[$location]['POS_TAGS'];
 									$qacIndexes = $poTaggedSubsentences[$location]['QAC_WORD_INDEXES'];
 									
+									/*preprint_r($posArr);
+									preprint_r($wordsArr);
+									preprint_r($qacIndexes);
+									*/
 									
 									$ssPoSPattern = join(", ",$posArr);
+									//echoN("---$ssPoSPattern");
 									
 									$subSentenceStr = join(" ",$wordsArr);
 									
@@ -1779,6 +1791,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												// null concept
 												if ( $subject=="null" ) continue;
 												if ( $isImperative) continue;
+												if ( empty($subject) || empty($object) ) continue;
 													
 													
 												$verb = $verbLemma;
@@ -1811,7 +1824,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												$verbLemma = $verbSegmentArr['FEATURES']['LEM'];
 												$isImperative = isset($verbSegmentArr['FEATURES']['IMPV']);
 												
-												preprint_r($verbSegmentArr);
+												//preprint_r($verbSegmentArr);
 												
 												// null concept
 												if ( $subject=="null" ) continue;
@@ -1826,6 +1839,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												}
 												
 												$object = $wordsArr[$startArrayIndexOfPattern+2]." ".$wordsArr[$startArrayIndexOfPattern+3];
+												
+												if ( empty($subject) || empty($object) ) continue;
+												
 												addRelation($relationsArr, $subject, $verb, $object, $rule);
 											break;
 											//
@@ -1837,10 +1853,27 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												$pronounConceptArr = resolvePronouns($qacWordLocation);
 												$subject = $pronounConceptArr[0];
 							
-												$object = $wordsArr[$startArrayIndexOfPattern+1];
+												if ( $rule=="V PRON, N PRON")
+												{
+													// remove PRON chars from word
+													$qacWordLocationForSecondWord = $qacBaseLocation .":".($qacStartWordIndexInVerse+1);
+													$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocationForSecondWord];
+													$nounSegmentArr = getVerbSegment($qacWordSegmentsArr,"N");
+													$nounSegment = $nounSegmentArr['FEATURES']['LEM'];
+													/////
+													$object = $nounSegment;
+												}
+												else
+												{
+													$object = $wordsArr[$startArrayIndexOfPattern+1];;
+												}
+												
+												//echoN($startArrayIndexOfPattern);
+												//preprint_r($wordsArr);
 												
 												//qurana bug
 												if ( empty($pronounConceptArr)) continue;
+												if ( empty($subject) || empty($object) ) continue;
 												if ( $subject=="null" || $object=="null") continue;
 												
 												
@@ -1901,6 +1934,96 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					preprint_r($relationsArr);
 					file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
 					
+					
+					}
+					
+					function getTermArrBySimpleWord($finalTerms, $sentSimpleWord)
+					{
+						
+						
+						foreach ($finalTerms as $lemaUthmani=>$termArr)
+						{
+							
+							$mySimpleWord = $termArr['SIMPLE_WORD'];
+							
+							//echoN("$sentSimpleWord==$mySimpleWord");
+							
+							if ( $sentSimpleWord==$mySimpleWord)
+							{
+								return $termArr;
+							}
+							
+						}
+						
+						return false;
+					}
+					
+					 
+					if ( $EXTRACT_NEWCONCEPTS_FROM_RELATIONS )
+					{
+						$relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts"));
+						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
+						
+						
+						
+						$notInCounceptsCounter = 0;
+						$handled = array();
+						foreach($relationArr as $hash => $relationsArr)
+						{
+							$relationsType = $relationsArr['TYPE'];
+							
+							if ( $relationsType =="NON-TAXONOMIC")
+							{
+								$subject = 	$relationsArr['SUBJECT'];
+								$object = $relationsArr['OBJECT'];
+								
+								if ( !isset($finalConcepts[$subject]) && !isset($handled[$subject]))
+								{
+									echoN("NOT IN CONCEPTS:S:$subject");
+									$notInCounceptsCounter++;
+									
+									$handled[$subject]=1;
+									
+									$termsArr = getTermArrBySimpleWord($finalTerms,$subject);
+									
+									$freq = $termsArr['FREQ'];
+									
+									$extra = array("POS"=>"SUBJECT","WEIGHT"=>$termsArr['WEIGHT']);
+									$finalConcepts[$subject]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"POPULATION_FROM_RELATIONS","FREQ"=>$freq,"EXTRA"=>$extra);
+										
+								}
+								if ( !isset($finalConcepts[$object]) && !isset($handled[$object]))
+								{
+									echoN("NOT IN CONCEPTS:O:$object");
+									$notInCounceptsCounter++;
+									
+									$handled[$object]=1;
+									
+									$termsArr = getTermArrBySimpleWord($finalTerms,$object);
+									
+									$freq = $termsArr['FREQ'];
+									
+									$extra = array("POS"=>"OBJECT","WEIGHT"=>$termsArr['WEIGHT']);
+									$finalConcepts[$object]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"POPULATION_FROM_RELATIONS","FREQ"=>$freq,"EXTRA"=>$extra);
+									
+									
+									
+
+									
+								}
+								
+							}
+							
+							
+							//file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
+						}
+						
+						echoN("Concepts Added: $notInCounceptsCounter");
+						
+						preprint_r($finalConcepts);
+						
+					}
 					
 				?>
 				
