@@ -1331,8 +1331,11 @@
 			$posTaggedNGramsStr = "";
 			if ( $posTAG == $patternArr[0] || $patternArr[0]=="*")
 			{
-					
-				//echoN("### $posTAG-".buckwalterReverseTransliteration($formOrSegment)."-$location");
+				//if ( strpos($location,"59:24")!==false)
+				//{
+					//echoN("### $posTAG-".buckwalterReverseTransliteration($formOrSegment)."-$location");
+					//preprint_r($patternArr);
+				//}
 					
 				$posTaggedNGramsStr = $formOrSegmentAR;
 				$numberOfGramsFound = 1;
@@ -1366,11 +1369,16 @@
 			
 					$currentVerseNumber = $locationArr[1];
 			
+					//if ( strpos($location,"59:24")!==false)
+					//{
 							//preprint_r($locationArr);
 							//echoN("$prevVerseNumber!=$currentVerseNumber");
+							//preprint_r($lineArr);
+					//}
 			
 					if ( $prevVerseNumber!=$currentVerseNumber)
 					{
+						prev($qacFileLinesArr);
 						break;
 					}
 			
@@ -1392,7 +1400,7 @@
 						// revert back to the postition after the first checked POS in the pattern
 						for($v=1;$v<$numberOfGramsFound;$v++)
 						{
-							rewind($qacFileLinesArr);
+							prev($qacFileLinesArr);
 						}
 						
 						break;
