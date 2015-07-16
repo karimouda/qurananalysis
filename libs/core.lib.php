@@ -1959,6 +1959,7 @@
 		 	
 		 	$arrLength = count($longestStrArr);
 		 	
+		 	//TODO: CAN BE SOLVED USING 2 WHILE LOOPS INSTEAD 
 		 	/////// STRING ORDERED PERMUTATION BRUTE FORCE 
 		 	for($groups=0;$groups<$arrLength-1;$groups++)
 		 	{
