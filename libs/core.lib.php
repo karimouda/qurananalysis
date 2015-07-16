@@ -1723,13 +1723,19 @@
  		$newRelation= array("TYPE"=>$type,"SUBJECT"=>$subject,
  								"VERB"=>$verb,
  								"OBJECT"=>$object,
- 								"POS_PATTERN"=>$posPattern);
+ 								"POS_PATTERN"=>$posPattern,
+ 								"FREQ"=>0,
+ 								"ENG_TRANSLATION"=>"");
  						
  		$relationHash = md5(join(",",array_values($newRelation)));
  						
  		if ( !isset($relationArr[$relationHash]))
  		{
  			$relationArr[$relationHash]=$newRelation;
+ 		}
+ 		else
+ 		{
+ 			$relationArr[$relationHash]['FREQ']++;
  		}
  	}
  	
@@ -1761,7 +1767,7 @@
  		{
  			
  			
-	 		$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+	 		$suraSize = count($MODEL_USED['QURAN_TEXT'][$s]);
 	 			
 	 			
 	 		
@@ -1770,7 +1776,7 @@
 	 		{
 	 		
 	 		  $i++;
-	 		  $verseTextUthmani = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+	 		  $verseTextUthmani = $MODEL_USED['QURAN_TEXT'][$s][$a];
 	 		  $uthmaniWordsArr = preg_split("/ /", $verseTextUthmani);
 	 		
  		  	
@@ -1817,7 +1823,15 @@
  		  				//echoN($qacLocation);
  		  				//echoN($verseLocation);
  		  			
- 		  				
+ 		  				//DEBUG
+ 		  				/*if ( (($s+1).":".($a+1))=="47:38" && $subsentenceIndex==4)
+ 		  				{
+ 		  					echon($verseNonPauseWordsIndex);
+ 		  					echoN($qacLocation);
+ 		  					preprint_r($qacWordSegmentsArr);
+ 		  					preprint_r($uthmaniWordsArr);exit;
+ 		  					
+ 		  				}*/
  		  				
  		  
  		  				if (!isset($posTaggedSubSentencesArr[$verseLocation]))
