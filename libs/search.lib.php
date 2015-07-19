@@ -1,16 +1,21 @@
 <?php 
 
-
-function getDistanceByCommonChars($word1,$word2)
+/*
+ * Get second level similarity distance by counting the common unique characters in both strings
+ * The higher the distance the more both strings are similar
+ */
+function getDistanceByCommonUniqueChars($word1,$word2)
 {
 	$word1Arr =  preg_split('//u', $word1, -1, PREG_SPLIT_NO_EMPTY);
     $word2Arr =  preg_split('//u', $word2, -1, PREG_SPLIT_NO_EMPTY);
 
-    $commonChars = implode((array_intersect($word1Arr, $word2Arr)));
     
-   
+    $uniqueCommonChars = array_unique(array_intersect($word1Arr, $word2Arr));
+    
+    $commonChars = implode($uniqueCommonChars);
+    
+ 
 
-    //echoN($commonChars);
     
     return mb_strlen($commonChars);
 }
@@ -30,8 +35,9 @@ function getSimilarWords($queryWords)
 		foreach ($queryWords as $wordFromQuery)
 		{
 			
+			//echoN("abs(mb_strlen($wordFromQuran)-mb_strlen($wordFromQuery))=".(abs(mb_strlen($wordFromQuran)-mb_strlen($wordFromQuery))));
 			
-			// only one char len diff between words for not compoaring all 14k words
+			// only one char len diff between words for not comparing all 14k words
 			if ( abs(mb_strlen($wordFromQuran)-mb_strlen($wordFromQuery)) <=3 )
 			{
 				
@@ -43,7 +49,10 @@ function getSimilarWords($queryWords)
 				
 				if ( $distance <=3 )
 				{
-					$simmilarWords[$wordFromQuran] = getDistanceByCommonChars($wordFromQuran,$wordFromQuery);
+					// compund score of both min edit distance and common unique chars
+					$simmilarWords[$wordFromQuran] = (1/$distance)+getDistanceByCommonUniqueChars($wordFromQuran,$wordFromQuery);
+					
+					//echoN($simmilarWords[$wordFromQuran]);
 				}
 				
 				
@@ -56,6 +65,7 @@ function getSimilarWords($queryWords)
 	
 	//sort words by simmilarity to query
 	arsort($simmilarWords);
+	
 	//preprint_r($simmilarWords);
 	
 	return $simmilarWords;
