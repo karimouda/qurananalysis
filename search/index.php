@@ -428,6 +428,7 @@ if ( empty($scoringTable))
 		{
 			?>
 			Do you Mean:
+			<br>
 			<?php 
 			
 				$index =0;
@@ -436,7 +437,7 @@ if ( empty($scoringTable))
 				 	if ( $index++>10) break;
 				 	
 				 	?>
-				 	<a href='?q=<?=urlencode($suggestedWord)?>'><?=$suggestedWord?></a>&nbsp;
+				 	<a href='?q=<?=urlencode($suggestedWord)?>'><?=$suggestedWord?></a>&nbsp;<br>
 				 	<?php
 				 	
 				 }
