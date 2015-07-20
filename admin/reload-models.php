@@ -1,6 +1,11 @@
 <?php 
 require("../global.settings.php");
+require_once(dirname(__FILE__)."/../libs/core.lib.php");
 
+if ( isDevEnviroment())
+{
+	printHTMLPageHeader();
+}
 $cacheInfo = apc_cache_info('user');
 
 echoN("CACHE MEM BEFROE:".$cacheInfo['mem_size']);
@@ -17,6 +22,8 @@ echoN("CACHE MEM AFTER RELOAD:".$cacheInfo['mem_size']);
 
 preprint_r($cacheInfo);
 
+
+echoN("DONE");
 
 ?>
 
