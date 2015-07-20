@@ -1,6 +1,8 @@
 <?php 
 require_once(dirname(__FILE__)."/global.settings.php");
 require_once(dirname(__FILE__)."/libs/core.lib.php");
+require_once(dirname(__FILE__)."/libs/wordnet.lib.php");
+
 
 
 
@@ -33,12 +35,20 @@ $META_DATA['SURAS']=array();
 $UTHMANI_TO_SIMPLE_WORD_MAP = array();
 $UTHMANI_TO_SIMPLE_LOCATION_MAP = array();
 
+$TRANSLATION_MAP_EN_TO_AR = array();
+$TRANSLATION_MAP_AR_TO_EN = array();
+$TRANSLITERATION_WORDS_MAP = array();
+$TRANSLITERATION_VERSES_MAP = array();
+
 function loadModels($modelsToBeLoaded,$lang)
 {
 	
 	global $modelSources,$serializedModelFile,$quranMetaDataFile,$META_DATA,$MODEL_CORE,$MODEL_SEARCH,$MODEL_QAC,$MODEL_QURANA;
 	global $UTHMANI_TO_SIMPLE_WORD_MAP, $numberOfSuras,$pauseMarksFile;
+	global $TRANSLATION_MAP_EN_TO_AR,$TRANSLATION_MAP_AR_TO_EN,$TRANSLITERATION_WORDS_MAP,$TRANSLITERATION_VERSES_MAP;
+	global $wordByWordTranslationFile,$transliterationFile;
 	
+
 	//not working
 	gc_enable();
 	
@@ -180,9 +190,16 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 	############ Uthmani/Simple mapping table #################
+	############ AND WORD-WORD TRANSLATION AND TRANSLITERATION #################
 	
 	$pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
+	
+	$wordByWordFileArr = file($wordByWordTranslationFile,FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
+	
+	$translitertationArr = file($transliterationFile,FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
 
+	$WORD_SENSES_EN = array();
+	$WORD_SENSES_AR = array();
 	
 	/* SURA'S LOOP **/
 	for ($s=0;$s<$numberOfSuras;$s++)
@@ -205,10 +222,23 @@ function loadModels($modelsToBeLoaded,$lang)
 		  
 		  $uthmaniWordsArr = removePauseMarksFromArr($pauseMarksArr,$uthmaniWordsArr);
 		  
-
-		  $UTHMANI_TO_SIMPLE_LOCATION_MAP[($s+1).":".($a+1)]=array();
+		  $verseLocation = ($s+1).":".($a+1);
+		  $UTHMANI_TO_SIMPLE_LOCATION_MAP[$verseLocation]=array();
 		  
 		  
+		  ///////// Transliteration /////////////
+		  $transliterationLine = current($translitertationArr);
+		  next($translitertationArr);
+		  $lineParts = preg_split("/\|/", $transliterationLine);
+		  $verseTransliteration = $lineParts[2];
+		  
+		  
+		  $TRANSLITERATION_VERSES_MAP[$verseLocation]=$verseTransliteration;
+		  
+		  $wordsTransliterationArr = preg_split("/ /", $verseTransliteration);
+		 // preprint_r($wordsTransliterationArr);exit;
+		  
+		  /////////////////////////////////////////////////
 		  
 		  $wtwIndex =0;
 
@@ -260,6 +290,35 @@ function loadModels($modelsToBeLoaded,$lang)
 		  	  		//echoN("$wordUthmani:$wordSimple");
 		  	  		
 		  	  	}
+		  	  	
+		  	  //	printHTMLPageHeader();
+		  	  //	echoN("$wordSimple|$wordUthmani");
+		  	  
+		  	  	
+		  	  ///////// english translation ////////
+		  	  $wordByWordTranslationLine = current($wordByWordFileArr);
+		  	  next($wordByWordFileArr);
+		  
+		  	  $linePartsArr = preg_split("/\|/",$wordByWordTranslationLine);
+		  	  $englishTranslationForCurrentWord = $linePartsArr[5];
+		  	  /////////////////////////////////////////////////
+		  	  
+		  	  
+		  	
+		  	  $WORD_SENSES_EN[$englishTranslationForCurrentWord][$wordUthmani]++;
+		  	  $WORD_SENSES_AR[$wordUthmani][$englishTranslationForCurrentWord]++;
+		  	
+		  	  	
+		  	  $TRANSLATION_MAP_EN_TO_AR[$englishTranslationForCurrentWord]=$wordUthmani;
+		  	  $TRANSLATION_MAP_AR_TO_EN[$wordUthmani]=$englishTranslationForCurrentWord;
+		  	  $TRANSLITERATION_WORDS_MAP[$wordUthmani]=$wordsTransliterationArr[$index];
+		  	  
+		  	 // preprint_r($TRANSLATION_MAP_EN_TO_AR);
+		  	 // preprint_r($TRANSLATION_MAP_AR_TO_EN);
+		  	 // preprint_r($TRANSLITERATION_WORDS_MAP);
+		  	  	
+		  	 // 	exit;
+		  	  	
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordUthmani]=$wordSimple;
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordSimple]=$wordUthmani;
 			  
@@ -293,7 +352,13 @@ function loadModels($modelsToBeLoaded,$lang)
 	}
 	  
 	
+	/// WORDNET
+	loadWordnet();
+	/////////////
+
 	
+	
+	// CAN'T BE ADDED IN THE CORE_MODEL since the mapping happens after loadModel
 	$res = apc_store("UTHMANI_TO_SIMPLE_WORD_MAP",$UTHMANI_TO_SIMPLE_WORD_MAP);
 	
 	if ( $res===false){ throw new Exception("Can't cache UTHMANI_TO_SIMPLE_WORD_MAP"); }
@@ -305,6 +370,28 @@ function loadModels($modelsToBeLoaded,$lang)
 	$res = apc_store("LEMMA_TO_SIMPLE_WORD_MAP",$LEMMA_TO_SIMPLE_WORD_MAP);
 	
 	if ( $res===false){ throw new Exception("Can't cache LEMMA_TO_SIMPLE_WORD_MAP"); }
+
+	$res = apc_store("WORDS_TRANSLATIONS_EN_AR",$TRANSLATION_MAP_EN_TO_AR);
+	
+	if ( $res===false){ throw new Exception("Can't cache WORDS_TRANSLATIONS_EN_AR"); }
+	
+	$res = apc_store("WORDS_TRANSLATIONS_AR_EN",$TRANSLATION_MAP_AR_TO_EN);
+	
+	if ( $res===false){ throw new Exception("Can't cache WORDS_TRANSLATIONS_AR_EN"); }
+	
+	$res = apc_store("WORDS_TRANSLITERATION",$TRANSLITERATION_WORDS_MAP);
+	
+	if ( $res===false){ throw new Exception("Can't cache WORDS_TRANSLITERATION"); }
+	
+
+	$res = apc_store("WORD_SENSES_EN",$WORD_SENSES_EN);
+	
+	if ( $res===false){ throw new Exception("Can't cache WORD_SENSES_EN"); }
+	
+	$res = apc_store("WORD_SENSES_AR",$WORD_SENSES_AR);
+	
+	if ( $res===false){ throw new Exception("Can't cache $WORD_SENSES_AR"); }
+	
 	
 	//// ENRICH INVERTED INDEX BY UTHMANI-EMLA2Y INDEXES
 	//echoN(count($MODEL_SEARCH['AR']['INVERTED_INDEX']));
@@ -370,6 +457,9 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 	
+	
+	
+	
 }
 
 function loadModel($lang,$type,$file)
@@ -379,6 +469,7 @@ function loadModel($lang,$type,$file)
 		global $numberOfSuras,$numberOfVerses,$quranMetaDataFile,$arabicStopWordsFile,$englishStopWordsFile;
 		global $META_DATA,$basmalaText,$englishResourceFile,$arabicResourceFile,$quranCorpusMorphologyFile;
 		global $quranaPronounResolutionConceptsFile,$quranaPronounResolutionDataFileTemplate,$quranFileUthmaniAR;
+		global $TRANSLATION_MAP_EN_TO_AR,$TRANSLATION_MAP_AR_TO_EN,$TRANSLITERATION_WORDS_MAP,$TRANSLITERATION_VERSES_MAP;
 		global $basmalaTextUthmani2;
 				
 		$QURAN_TEXT = array();
@@ -1249,6 +1340,9 @@ function loadModel($lang,$type,$file)
 				  		$MODEL_CORE[$lang]['QURAN_TEXT'] = $QURAN_TEXT;
 
 				  		$MODEL_CORE[$lang]['RESOURCES']=$RESOURCES;
+				  		
+			
+				  	
 				  		
 				  		
 				  		
