@@ -1671,73 +1671,8 @@
 		}
 	}
 	
-	function getConceptBySegment($conceptsArr, $segment)
-	{
-		foreach ($conceptsArr as $conceptName=>$conceptArr)
-		{
-			$extraArr = $conceptArr['EXTRA'];
-			$simpleWord = $extraArr['SIMPLE_WORD'];
-			
-			foreach ($extraArr['SEG'] as $uthmaniSegment=>$simpleName)
-			{
-				//echoN("$uthmaniSegment==$segment");
-				
-				if ( $uthmaniSegment==$segment)
-				{
-					
-					return $simpleWord;
-				}
-			}
-				
-			
-		}
-		
-		return false;
-	}
-	
-	function getConceptByLemma($conceptsArr, $lemma)
-	{
-		foreach ($conceptsArr as $conceptName=>$conceptArr)
-		{
-			$extraArr = $conceptArr['EXTRA'];
-			$simpleWord = $extraArr['SIMPLE_WORD'];
-				
-		
-				//echoN("$uthmaniSegment==$segment");
-	
-				if ( $extraArr['LEM']==$lemma)
-				{
-						
-					return $simpleWord;
-				}
-			
-	
-				
-		}
-	
-		return false;
-	}
-	
-	function addNewRelation(&$relationArr,$type,$subject,$verb,$object,$posPattern)
- 	{
- 		$newRelation= array("TYPE"=>$type,"SUBJECT"=>$subject,
- 								"VERB"=>$verb,
- 								"OBJECT"=>$object,
- 								"POS_PATTERN"=>$posPattern,
- 								"FREQ"=>0,
- 								"ENG_TRANSLATION"=>"");
- 						
- 		$relationHash = md5(join(",",array_values($newRelation)));
- 						
- 		if ( !isset($relationArr[$relationHash]))
- 		{
- 			$relationArr[$relationHash]=$newRelation;
- 		}
- 		else
- 		{
- 			$relationArr[$relationHash]['FREQ']++;
- 		}
- 	}
+
+
  	
  	
 
@@ -2096,4 +2031,42 @@
 		return $longestSubStr;
 	}
 	
+	function cleanEnglishTranslation($engTranslation)
+	{
+		$cleaned1 =  preg_replace("/\(|\)|\-|\;/", " ", $engTranslation);
+		$cleaned2 =  preg_replace("/[ ]{2}/", " ", $cleaned1);
+		return ucfirst($cleaned2);
+	}
+	
+	function removeStopwordsAndTrim($str,$lang="AR")
+	{
+		global $englishStopWordsFile,$arabicStopWordsFile;
+		
+		$stopWordsFile = $arabicStopWordsFile;
+		
+		if ( $lang=="EN")
+		{
+			$stopWordsFile = $englishStopWordsFile;
+			$str = strtolower($str);
+		}
+		
+		$stopWordsArr = getStopWordsArrByFile($stopWordsFile);
+		
+		$strArr  = preg_split("/ /", $str);
+		
+		preprint_r($strArr);
+	
+		
+		$newStr = array();
+		foreach ($strArr as $index => $word)
+		{
+			if ( empty($word) || isset($stopWordsArr[$word])) continue;
+			
+			$newStr[] = $word;
+		}
+		
+		return implode(" ", $newStr);
+	}
+	
+
 ?>
