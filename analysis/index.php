@@ -15,7 +15,7 @@ if ( isset($_GET['lang']) )
 }
 
 
-loadModels("core",$lang);
+
 
 
 
@@ -41,8 +41,7 @@ loadModels("core",$lang);
   <body>
 		<?php 
 			require("./analysis.header.php");
-			//preprint_r($MODEL_CORE['TOTALS']);
-			//preprint_r($MODEL_CORE);exit;
+	
 		?>
 			  		
   <div id='main-container'>
