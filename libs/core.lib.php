@@ -200,7 +200,7 @@
 	}
 	
 	/*
-	 * Shallow unexhaustive conversion from uthmani ito simple
+	 * Shallow non-exhaustive conversion from uthmani ito simple
 	 * Shoud ONLY be used for non quranic words, for words in the quran use UTHMANI_TO_SIMPLE_WORD_MAP table
 	 * 
 	 * One of the uses to to group uthmani words such as lemmas
@@ -217,6 +217,7 @@
 		//الرحمن
 		$str =  preg_replace("/(م[\x{0670}]ن)/um","من",$str);
 		
+		//does not work with مُّوسَى
 		$str =  preg_replace("/ى$/um","ي",$str);
 		
 		$str=  preg_replace("/[\x{0670}]$/um","",$str);
@@ -2033,7 +2034,7 @@
 	
 	function cleanEnglishTranslation($engTranslation)
 	{
-		$cleaned1 =  preg_replace("/\(|\)|\-|\;/", " ", $engTranslation);
+		$cleaned1 =  preg_replace("/\(|\)|\-|\;|\[|\]/", " ", $engTranslation);
 		$cleaned2 =  preg_replace("/[ ]{2}/", " ", $cleaned1);
 		return ucfirst($cleaned2);
 	}
@@ -2054,12 +2055,14 @@
 		
 		$strArr  = preg_split("/ /", $str);
 		
-		preprint_r($strArr);
+		//preprint_r($strArr);
 	
 		
 		$newStr = array();
 		foreach ($strArr as $index => $word)
 		{
+		
+			
 			if ( empty($word) || isset($stopWordsArr[$word])) continue;
 			
 			$newStr[] = $word;
@@ -2068,5 +2071,72 @@
 		return implode(" ", $newStr);
 	}
 	
+	function getQACSegmentByPos($qacWordSegmentsArr, $sentPos)
+	{
+		foreach($qacWordSegmentsArr as $segmentIndex=>$segmentArr)
+		{
+			$segmentPos = $segmentArr['TAG'];
+				
+			if ( $sentPos==$segmentPos )
+			{
+				return $segmentArr;
+			}
+	
+		}
+	}
+	
+	function getQuranaConceptEntryByARWord($queryWordOrPhrase)
+	{
+		global $MODEL_QURANA;
+		
+		$conceptsListArr  = $MODEL_QURANA['QURANA_CONCEPTS'];
+
+		
+		foreach ($conceptsListArr as $key=>$conceptArr)
+		{
+		
+			$arWord = $conceptArr['AR'];
+			
+			if ( $queryWordOrPhrase==$arWord)
+			{
+				return $conceptArr;
+			}
+			
+		}
+		
+		return false;
+	}
+	
+	function isMultiWordStr($str)
+	{
+		return (preg_match("/ /", $str)>0);
+	}
+	
+	function removeBasicEnglishStopwordsNoNegation($str)
+	{
+		
+		
+		
+		$basicStopWordsArr = array("she"=>1,"he"=>1,"i"=>1,"a"=>1,"an"=>1,"and"=>1,"are"=>1,"as"=>1,"us"=>1,"at"=>1,"be"=>1,"but"=>1,"by"=>1,"for"=>1,"if"=>1,"in"=>1,"into"=>1,"is"=>1,"it"=>1,"no"=>1,"of"=>1,"on"=>1,"we"=>1,"them"=>1,"or"=>1,"such"=>1,"that"=>1,"the"=>1,"their"=>1,"then"=>1,"there"=>1,"these"=>1,"they"=>1,"this"=>1,"him"=>1,"so"=>1,"to"=>1,"was"=>1,"were"=>1,"will"=>1,"with"=>1,"you"=>1,"have"=>1);
+		
+		$str = strtolower($str);
+		
+		$strArr  = preg_split("/ /", $str);
+		
+		//preprint_r($strArr);
+	
+		
+		$newStr = array();
+		foreach ($strArr as $index => $word)
+		{
+		
+			
+			if ( empty($word) || isset($basicStopWordsArr[$word])) continue;
+			
+			$newStr[] = $word;
+		}
+		
+		return implode(" ", $newStr);
+	}
 
 ?>
