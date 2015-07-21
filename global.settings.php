@@ -30,9 +30,13 @@ mb_internal_encoding("UTF-8");
 
 
 $quranMetaDataFile = dirname(__FILE__)."/data/quran-data.xml";
-$quranFileEN = dirname(__FILE__)."/data/en.sahih";
+$quranFileEN = dirname(__FILE__)."/data/translations/en.sahih";
 $quranFileAR = dirname(__FILE__)."/data/quran-simple-clean.txt";
 $quranFileUthmaniAR = dirname(__FILE__)."/data/quran-uthmani.txt";
+
+$wordByWordTranslationFile = dirname(__FILE__)."/data/translations/word-by-word-english.txt";
+$transliterationFile = dirname(__FILE__)."/data/transliteration/en.transliteration.txt";
+$wordnetDir = dirname(__FILE__)."/data/wordnet/dict/";
 
 $quranFileAR_XML = dirname(__FILE__)."/data/quran-simple-clean.xml";
 $quranCorpusMorphologyFile = dirname(__FILE__)."/data/quranic-corpus-morphology-0.4.txt";
