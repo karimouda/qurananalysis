@@ -1,6 +1,11 @@
 <?php 
 require_once(dirname(__FILE__)."/../global.settings.php");
-require_once(dirname(__FILE__)."/core.lib.php");
+
+function cleanWordnetCollocation($str)
+{
+	return strtr($str,"_", " ");
+}
+
 
 function getSymbolDescriptionFromMappingTable($symbol)
 {
@@ -99,7 +104,7 @@ function populateIndexArrByPoS(&$wordnetIndex,$pos)
 		//lemma  pos  synset_cnt  p_cnt  [ptr_symbol...]  sense_cnt  tagsense_cnt   synset_offset  [synset_offset...] 
 		$lineArr = explode(" ", $line);
 		
-		$lemma = strtr($lineArr[0],"_", " "); 
+		$lemma = cleanWordnetCollocation($lineArr[0]);
 		
 		//$numberOfEntriesForLemma = count($wordnetIndex[$lemma]);
 		
@@ -115,6 +120,8 @@ function populateIndexArrByPoS(&$wordnetIndex,$pos)
 		
 		$wordnetIndex[$lemma][$pos]['POINTERS_TYPES']=array();
 		
+		$synsetPoimtersArr = array();
+		
 		$currentArrIndex = 4;
 		for($i=0;$i< $pointerCount;$i++)
 		{
@@ -124,6 +131,8 @@ function populateIndexArrByPoS(&$wordnetIndex,$pos)
 			
 			//https://wordnet.princeton.edu/wordnet/man/wninput.5WN.html
 			$wordnetIndex[$lemma][$pos]['POINTERS_TYPES'][$singlePointer]=$symbolDesc;
+			
+			$synsetPoimtersArr[$i]=$singlePointer;
 		}
 		
 		$currentIndex =$currentArrIndex+$i;
@@ -219,7 +228,7 @@ function getSynsetDataByPoS($pos)
 		for($i=0;$i< $numberOfWordsInSynset;$i++)
 		{
 			
-			$word = $lineArr[$currentArrIndex++];
+			$word = cleanWordnetCollocation($lineArr[$currentArrIndex++]);
 			
 			//not sure what is this
 			$wordLexId = $lineArr[$currentArrIndex++];
@@ -259,7 +268,7 @@ function getSynsetDataByPoS($pos)
 
 function getLongPoSName($smallPOS)
 {
-	$trans = array("n" => "noun", "v" => "verb", "a" => "adj", "s" => "adv", "r" => "adv");
+	$trans = array("n" => "noun", "v" => "verb", "a" => "adj", "s" => "adj", "r" => "adv");
 	return  strtr($smallPOS,$trans);
 }
 
@@ -308,24 +317,15 @@ function loadWordnet()
 	
 }
 
-function getWordnetEntryByWordString($wordToSearchFor)
+function getWordnetEntryByWordString($wordToSearchFor, $includeOnlyRelationsOfType="")
 {
+	global $MODEL_WORDNET;
+	
+	if ( empty($MODEL_WORDNET)) { throw  new Exception("Wordnet module is not loaded!"); }
 	if (empty($wordToSearchFor)) return false;
 	
 	
-	$wordToSearchFor = strtolower($wordToSearchFor);
-	
-	$wordnetIndex  = apc_fetch("WORDNET_INDEX");
-	
-	$lexicoSemanticCategories = apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
-	
-	$dataArr = apc_fetch("WORDNET_DATA");
-	
-	if ( empty($wordnetIndex) || empty($lexicoSemanticCategories) || empty($dataArr) )
-	{
-		echo "WORDNET MODEL NOT CACHED";
-		return false;
-	}
+
 	
 	$wordnetInfoArr = array();
 	$wordnetInfoArr['SYNONYMS']=array();
@@ -333,7 +333,10 @@ function getWordnetEntryByWordString($wordToSearchFor)
 	$wordnetInfoArr['RELATIONSHIPS']=array();
 	$wordnetInfoArr['WORD']=$wordToSearchFor;
 	
-	foreach( $wordnetIndex[$wordToSearchFor] as $pos => $currIndexArr)
+	// Not found in Wordnet
+	if ( !isset($MODEL_WORDNET['INDEX'][$wordToSearchFor])) return false;
+
+	foreach( $MODEL_WORDNET['INDEX'][$wordToSearchFor] as $pos => $currIndexArr)
 	{
 	
 		
@@ -348,25 +351,34 @@ function getWordnetEntryByWordString($wordToSearchFor)
 			
 			$wordnetInfoArr['POS'][$pos]=1;
 			
-			
+			// each synset in INDEX
 			foreach($wordIndexEntryArr['SYNSETS'] as $index => $fileOffset)
 			{
-				$entryArr = $dataArr[$pos][$fileOffset];
+				$entryArr = $MODEL_WORDNET['DATA'][$pos][$fileOffset];
 				
-				//preprint_r($entryArr);
+		
 				
-				$wordnetInfoArr['SYNONYMS'] = array_merge(array_keys($entryArr[WORDS]),$wordnetInfoArr['SYNONYMS']);
-			
+				
+				if ( !isset($wordnetInfoArr['SYNONYMS'][$pos]))
+				{
+					$wordnetInfoArr['SYNONYMS'][$pos]  = array_keys($entryArr['WORDS']);
+				}
+				else 
+				{
+					$wordnetInfoArr['SYNONYMS'][$pos]  = array_merge(array_keys($entryArr['WORDS']),$wordnetInfoArr['SYNONYMS'][$pos]);
+				}
+				
 				$lexicoSemanticCategoryID =$entryArr['SEMANTIC_CATEGORY_ID'];
 				
-				$semanticType = $lexicoSemanticCategories[$lexicoSemanticCategoryID];
+				$semanticType = $MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES'][$lexicoSemanticCategoryID];
 			
 				$semanticType = ucfirst(substr($semanticType, strpos($semanticType, ".")+1));
 				
-				$wordnetInfoArr['SEMANTIC_TYPES'][$semanticType]=1;
+				$wordnetInfoArr['SEMANTIC_TYPES'][$pos][$index]=$semanticType;
 				
 				$wordnetInfoArr['GLOSSARY'][$pos] = $entryArr['GLOSSARY'];;
 				
+				// EACH POINTER IN THE CURRENT SYNSET
 				foreach($entryArr['POINTERS'] as $index2 => $pointersArr)
 				{
 					$pointerOffset = $pointersArr['SYNSET_OFFSET'];
@@ -374,7 +386,7 @@ function getWordnetEntryByWordString($wordToSearchFor)
 					$pointerPoS = getLongPoSName($pointersArr['POS']);
 					
 					
-					$pointerEntryArr = $dataArr[$pointerPoS][$pointerOffset];
+					$pointerEntryArr = $MODEL_WORDNET['DATA'][$pointerPoS][$pointerOffset];
 					
 					$pointerGLoss = $pointerEntryArr['GLOSSARY'];
 					$pointerWordsArr = $pointerEntryArr['WORDS'];
@@ -382,7 +394,7 @@ function getWordnetEntryByWordString($wordToSearchFor)
 					$pointerWordsEditedArr = array();
 					foreach($pointerWordsArr as $word=>$dummy)
 					{
-						$word = ucfirst($word);
+						$word = cleanWordnetCollocation(ucfirst($word));
 						$pointerWordsEditedArr[$word]=1;
 					}
 					
@@ -399,7 +411,7 @@ function getWordnetEntryByWordString($wordToSearchFor)
 				
 			}
 			
-			$wordnetInfoArr['SYNONYMS'] = array_unique($wordnetInfoArr['SYNONYMS']);
+			$wordnetInfoArr['SYNONYMS'][$pos] = array_unique($wordnetInfoArr['SYNONYMS'][$pos]);
 			
 			
 			
@@ -413,9 +425,9 @@ function getWordnetEntryByWordString($wordToSearchFor)
 	
 }
 
-loadWordnet();
 
-$wordnetInfoArr = getWordnetEntryByWordString("Sky");
-preprint_r($wordnetInfoArr);
+
+
+
 
 ?>
