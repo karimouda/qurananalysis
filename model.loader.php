@@ -21,6 +21,8 @@ $MODEL_SEARCH = array();
 $MODEL_QAC = array();
 $MODEL_QURANA = array();
 
+$MODEL_WORDNET = array();
+
 
 foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $lang)
 {
@@ -47,6 +49,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	global $UTHMANI_TO_SIMPLE_WORD_MAP, $numberOfSuras,$pauseMarksFile;
 	global $TRANSLATION_MAP_EN_TO_AR,$TRANSLATION_MAP_AR_TO_EN,$TRANSLITERATION_WORDS_MAP,$TRANSLITERATION_VERSES_MAP;
 	global $wordByWordTranslationFile,$transliterationFile;
+	global $MODEL_WORDNET;
 	
 
 	//not working
@@ -67,6 +70,10 @@ function loadModels($modelsToBeLoaded,$lang)
 		// split list by comma
 		$modelListArr = preg_split("/,/",trim($modelsToBeLoaded));
 		
+		
+	
+		
+		
 		/**
 		 * TODO: CHANGE THE CODE TO REFERENCE APC MEMORY DIRECTLY INSTEAD OF LOADING DATA IN EACH SCRIPT
 		 */
@@ -76,6 +83,34 @@ function loadModels($modelsToBeLoaded,$lang)
 			//echoN("$modelName $lang ".time());
 			//echoN($modelName);
 			
+			if ( $modelName=="wordnet")
+			{
+				$MODEL_WORDNET['INDEX']  = apc_fetch("WORDNET_INDEX");
+				
+				if ($MODEL_WORDNET['INDEX']===false )
+				{
+					echo "MODEL_WORDNET['INDEX'] NOT CACHED";exit;
+				}
+				
+				
+				$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+				
+				if ($MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']===false )
+				{
+					echo " MODEL MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES'] NOT CACHED";exit;
+				}
+				
+				
+				$MODEL_WORDNET['DATA'] = apc_fetch("WORDNET_DATA");
+				
+				if ($MODEL_WORDNET['DATA']===false )
+				{
+					echo "MODEL MODEL_WORDNET['DATA'] NOT CACHED";exit;
+				}
+				
+				
+			}
+				
 			if ( ($modelName=="core"))
 			{
 				//$MODEL_CORE = json_decode((file_get_contents("$serializedModelFile.core")),TRUE);
