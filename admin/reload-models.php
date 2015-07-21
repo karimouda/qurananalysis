@@ -15,7 +15,7 @@ $cacheInfo = apc_cache_info('user');
 
 echoN("CACHE MEM AFTER CLEAR:".$cacheInfo['mem_size']);
 
-loadModels("core,search,qac,qurana");
+loadModels("core,search,qac,qurana,wordnet");
 
 $cacheInfo = apc_cache_info('user');
 echoN("CACHE MEM AFTER RELOAD:".$cacheInfo['mem_size']);
