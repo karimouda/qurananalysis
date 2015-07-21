@@ -18,7 +18,7 @@
 
 <p class='info-page-text'>
 
-	QA started as an MSc project in <a target="_blank" href='http://www.leeds.ac.uk/'>University of Leeds</a> 2015 supervised by <a target="_blank" href='www.comp.leeds.ac.uk/eric/'>Eric Atwell</a>,
+	QA started as an MSc project in <a target="_blank" href='http://www.leeds.ac.uk/'>University of Leeds</a> 2015 supervised by <a target="_blank" href='http://www.comp.leeds.ac.uk/eric/'>Eric Atwell</a>,
 	the project aimed to glu-together and build on previous research done in the university 
 	and to provide an opensource base for Quran Analysis work paving the way for innovation in this area
 	  
