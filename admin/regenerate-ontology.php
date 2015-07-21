@@ -2,6 +2,13 @@
 
 require_once("../global.settings.php");
 require_once("../libs/core.lib.php");
+require_once("../libs/microsoft.translator.api.lib.php");
+require_once("../libs/pos.tagger.lib.php");
+require_once("../libs/ontology.lib.php");
+
+
+
+
 
 $lang = "AR";
 
@@ -14,7 +21,8 @@ if ( isset($_GET['lang']) )
 	$lang = $_GET['lang'];
 }
 
-loadModels("core,search,qac,qurana",$lang);
+loadModels("core,search,qac,qurana,wordnet",$lang);
+
 
 $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 
@@ -24,6 +32,19 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
 $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
+
+
+
+
+
+
+
+$WORDS_TRANSLATIONS_EN_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
+
+$WORDS_TRANSLATIONS_AR_EN = apc_fetch("WORDS_TRANSLATIONS_AR_EN");
+
+$WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
+
 
 ?>
 <!DOCTYPE html>
@@ -71,23 +92,44 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  	//exit;
 			  	
 			  	
-			  	$GENERATE_CONCEPTS_SWITCH = FALSE;
+			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PRONOUN_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
-			  	$GENERATE_FINAL_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_ADJECTIVE_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
+			  	$GENERATE_FINAL_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
+			  				  	
 			  	
-			  	
-			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
-			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;
+			  	$GENERATE_TAXONOMIC_RELATIONS = TRUE;
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
 			  	
 			  	
 			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = TRUE;
 			  	
-			  	$ENRICH_CONCEPTS_METADATA = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_WORDNET = TRUE;
+			  	
 			  	$ENRICH_RELATIONS_METADATA = TRUE;
+			  	
+			  	
+			
+			  	
+			  	$wordsInfoArr = unserialize(file_get_contents("../data/cache/words.info.all"));
+			  		
+			  	// not cahed yet
+			  	if  ( empty($wordsInfoArr) )
+			  	{
+			  		foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
+			  		{
+			  	
+			  			$wordsInfoArr[$wordLabel] = getWordInfo($wordLabel, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
+			  		}
+			  	
+			  		file_put_contents("../data/cache/words.info.all", serialize($wordsInfoArr));
+			  	
+			  	}
 			  	
 			  	
 
@@ -98,140 +140,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			if ( $GENERATE_TERMS == true )
 			{
 			  	
-				/** Returns words from QAC by PoS tags - grouped by lemma **/
-			  	function getWordsByPos(&$finalTerms,$POS)
-			  	{
-			  		global $MODEL_QAC,$MODEL_CORE,$UTHMANI_TO_SIMPLE_LOCATION_MAP,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
-			  		global $LEMMA_TO_SIMPLE_WORD_MAP;
-			  		
-			  		
-			  		// Get all segment in QAC for that PoS
-			  		foreach($MODEL_QAC['QAC_POS'][$POS] as $location => $segmentId)
-			  		{
-
-			  			// get Word, Lema and root
-			  			$segmentWord = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FORM_AR'];
-			  			$segmentWordLema = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['LEM'];
-			  			$segmentWordRoot = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['ROOT'];
-			  			$verseLocation = substr($location,0,strlen($location)-2);
-			  			//$segmentWord = removeTashkeel($segmentWord);
-			  	
-			  			
-			  			// get word index in verse
-			  			$wordIndex = (getWordIndexFromQACLocation($location));
-			  	
-
-			  			//$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];
-			  	
-			  			// get simple version of the word index
-			  			$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location,$UTHMANI_TO_SIMPLE_LOCATION_MAP);
-			  	
-
-			  			// get verse text 
-			  			$verseText = getVerseByQACLocation($MODEL_CORE,$location);
-			  				
-			  				//$imla2yWord = getWordFromVerseByIndex($MODEL_CORE,$verseText,$imla2yWordIndex);
-			  				
-			  				
-			  				//echoN("|$segmentWord|$imla2yWord");
-			  				$segmentWordNoTashkeel = removeTashkeel($segmentWordLema);
-			  				
-			  				$superscriptAlef = json_decode('"\u0670"');
-			  				$alefWasla = "ٱ"; //U+0671
-			  				
-			  				//$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
-			  				
-			  				
-			  				// this block is important since $LEMMA_TO_SIMPLE_WORD_MAP is not good for  non $superscriptAlef words
-			  				// ex زيت lemma is converted to زيتها which spoiled the ontology concept list results
-			  				if(mb_strpos($segmentWordLema, $superscriptAlef) !==false
-							   || mb_strpos($segmentWordLema, $alefWasla) !==false )
-			  				{
-			  					
-			  					$imla2yWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWordLema];
-			  					
-			  					if (empty($imla2yWord))
-			  					{
-			  						$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
-			  					}
-			  					
-			  				}
-			  				else
-			  				{
-			  					$imla2yWord = shallowUthmaniToSimpleConversion($segmentWordLema);//$segmentWordNoTashkeel;
-			  				}
-			  				
-			  				
-			  				
-			  				/// in case the word was not found after removing tashkeel, try the lema mappign table
-			  				$termWeightArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$imla2yWord];
-			  					
-			  			
-			  				
-			  				// NOT WORKIGN BECAUSE LEMMAS WILL NOT BE IN SIMPLE WORDS LIST و الصابيئن =>صَّٰبِـِٔين
-			  				// if the word after removing tashkeel is not found in quran simple words list, then try lemma table
-			  				/*if (!isset($MODEL_CORE['WORDS_FREQUENCY']['WORDS'][$imla2yWord]) )
-			  				{
-			  					$imla2yWord = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
-			  					
-			  					if ( empty($imla2yWord) )
-			  					{
-			  						echoN($segmentWordLema);
-			  						echoN($imla2yWord);
-			  						preprint_r($LEMMA_TO_SIMPLE_WORD_MAP);
-			  						preprint_r($MODEL_CORE['WORDS_FREQUENCY']['WORDS']);
-			  						exit;
-			  					}
-			  				}*/
-			  					
-			  				
-			  				if ( empty($termWeightArr))
-			  				{
-			  					//only for weight since the lema table decrease qurana matching 
-			  					$imla2yWordForWeight = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
-			  					$termWeightArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$imla2yWordForWeight];
-			  					
-			  					
-			  				}
-			  				
-			  				$termWeight = $termWeightArr['TFIDF'];
-			  				////////////////////////////////////////////
-			  	
-			  				$termWord = $segmentWordLema;//$imla2yWord;//"|$segmentWord| ".$imla2yWord ." - $location:$segmentId - $wordIndex=$imla2yWordIndex";
-			  				
-			  				if ( !isset($finalTerms[$termWord]))
-			  				{
-			  					$finalTerms[$termWord] = array("LEM"=>$segmentWordLema,"FREQ"=>0, 
-			  							"POS"=>$POS,"SEG"=>array(),"SIMPLE_WORD"=>$imla2yWord,
-			  							"ROOT"=>$segmentWordRoot,"WEIGHT"=>$termWeight,"ASA"=>array(),"ENG_TRANSLATION"=>"",
-			  							"DBPEDIA_LINK"=>"", "DESC_AR"=>"");
-			  				}
-			  		
-		  					$finalTerms[$termWord]["FREQ"]=$finalTerms[$termWord]["FREQ"]+1;
-		  					
-		  					if ( !isset($finalTerms[$termWord]["SEG"][$segmentWord]) )
-		  					{
-		  						$finalTerms[$termWord]["SEG"][$segmentWord]=$imla2yWord;
-		  					
-		  					}
-		  					
-		  					if ( !isset($finalTerms[$termWord]["POSES"][$POS]))
-		  					{
-		  						$finalTerms[$termWord]["POSES"][$POS]=1;
-		  					}
-		  					
-		  					
-		  			
-			  				
-			  	
-			  	
-			  	
-			  	
-			  				 
-			  			}
-			  			 
-			  			return $finalTerms;
-			  		}
+			
 			  		
 			  	
 			  	 	$finalTerms = array();
@@ -242,6 +151,8 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 			  		getWordsByPos($finalTerms,"PN");
 			  		echoN("PN:<b>".(count($finalTerms))."</b>");
 			  		$last=count($finalTerms);
+			  		
+			  	
 			  		
 			  		getWordsByPos($finalTerms,"ADJ");
 			  		echoN("ADJ:<b>".(count($finalTerms)-$last)."</b>");
@@ -446,12 +357,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							//preprint_r($phraseTerms);
 							echoN("COUNT B4 FILTER:".count($phraseTerms));
 							
-							$wordsInfoArr = array();
-							foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
-							{
 							
-								$wordsInfoArr[$wordLabel] = getWordInfo($wordLabel, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
-							}
+							
+						
 							
 							$filteredBiGrams = array();
 							$filteredBiGramsPOS = array();
@@ -609,6 +517,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 							arsort($allPOSCombinations);
 							preprint_r($allPOSCombinations);
+							
+							
+							
 								
 					}		
 					
@@ -640,7 +551,6 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					echoN(count($intersection));
 					exit;
 					*/
-					
 					
 					if ( $GENERATE_PRONOUN_CONCEPTS)
 					{
@@ -766,8 +676,10 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 										
 										if ( $quranaArWord!=$mySimpleWord)
 										{
-											$termArr['ASA'][] = $quranaArWord;
+											$termArr['AKA']['AR'] = $quranaArWord;
 										}
+										
+										$termArr['EXTRA']['TRANSLATION_EN']=$conceptArr['EN'];
 										
 										// $mySimpleWord to avoid duplicate words one without ال
 										$commonConceptsWithQurana[$mySimpleWord]=$termArr;
@@ -793,6 +705,8 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						
 					
 					}
+					
+				
 					
 					if ( $GENERATE_ADJECTIVE_CONCEPTS)
 					{
@@ -831,8 +745,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									
 								
 									
-									$finalConcepts[$mergedWord]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"ADJECTIVE","FREQ"=>$termArr['FREQ'],"EXTRA"=>$termArr);
-								
+							
+									addNewConcept($finalConcepts, $mergedWord, "A-BOX", "ADJECTIVE", $termArr['FREQ'], "");
+									$finalConcepts[$mergedWord]['EXTRA']=$termArr;
 								
 								
 								
@@ -841,19 +756,24 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 						}
 					}
 					
-					//preprint_r($finalConcepts);exit;
+					echoN("@@@@".count($finalConcepts));
 					
-					
+		
 					if ( $GENERATE_FINAL_CONCEPTS )
 					{
 						
-					
+						$quranaConceptsListArr  = $MODEL_QURANA['QURANA_CONCEPTS'];
 						
 						$amxConceptFreq = -99;
 						//$finalTerms
 						foreach ($commonConceptsWithQurana as $concept=>$termArr)
 						{
-							$finalConcepts[$concept]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"TERM","FREQ"=>$termArr['FREQ'],"EXTRA"=>$termArr);
+
+							
+							addNewConcept($finalConcepts, $concept, "A-BOX", "TERM", $termArr['FREQ'], $engTranslation);
+							$finalConcepts[$concept]['EXTRA']=$termArr;
+
+					
 							
 							if ( $termArr['FREQ'] > $amxConceptFreq)
 							{
@@ -883,10 +803,16 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 							//$weight = round($freq/$maxConceptFreq,2);
 							
-							$extra = array("POS"=>$pos,"WEIGHT"=>$weight);
-							
-							$finalConcepts[$biGramConcept]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"PHRASE","FREQ"=>$freq,"EXTRA"=>$extra);
+							$quranaConceptArr = getQuranaConceptEntryByARWord($biGramConcept);
+				
 						
+							$engTranslation = ucfirst($quranaConceptArr['EN']);
+							
+							addNewConcept($finalConcepts, $biGramConcept, "A-BOX", "PHRASE", $freq, $engTranslation);
+							$finalConcepts[$biGramConcept]['EXTRA']['POS']=$pos;
+							$finalConcepts[$biGramConcept]['EXTRA']['WEIGHT']=$weight;
+							
+							
 						}
 	
 						rsortBy($finalConcepts,"FREQ");
@@ -895,26 +821,28 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					
 						//preprint_r($finalConcepts);
 						
-						file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
+						file_put_contents("../data/ontology/temp.final.concepts.stage1", serialize($finalConcepts));
 						file_put_contents("../data/ontology/temp.all.terms", serialize($finalTerms));
 					}
 					
 						
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts"));
 						
 						
+			
 						
-						//preprint_r($finalConcepts);
 						
 						
 					
 					if ( $GENERATE_TAXONOMIC_RELATIONS )
 					{
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage1"));
+						
 						
 						////////////////////////// ADJECTIVE HYPERNYMS ////////////////////////////////
 						$adjName = "صفة";
 						
-						$finalConcepts[$adjName]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>array("ASA"=>array()));
+						$finalConcepts[$adjName]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>generateEmptyConceptMetadata());
+						$finalConcepts[$adjName]['EXTRA']['ENG_TRANSLATION']='Attribute';
 						
 						
 						// ADJ PARENT + relations
@@ -926,7 +854,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							if ( $exPhase=="ADJECTIVE")
 							{
 								$type = "TAXONOMIC";
-								addNewRelation($relationsArr,$type,$concept,"هى",$adjName,"ADJ");
+								addRelation($relationsArr,$type,$concept,"هى",$adjName,"ADJ","is kind of");
 							}
 						}
 						
@@ -954,17 +882,17 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj1]) )
 								{
-										$hasQuality = "من صفاتة";
+										$hasAttribute = "من صفاتة";
 										$type = "TAXONOMIC";
-										addNewRelation($relationsArr,$type,$concept,$hasQuality,$adj1,"ADJ");
+										addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj1,"ADJ","has attribute");
 									
 								}
 								
 								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj2]) )
 								{
-									$hasQuality = "من صفاتة";
+									$hasAttribute = "من صفاتة";
 									$type = "TAXONOMIC";
-									addNewRelation($relationsArr,$type,$concept,$hasQuality,$adj2,"ADJ");
+									addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj2,"ADJ","has attribute");
 										
 								}
 								
@@ -987,8 +915,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 								
 								$parentConcept = $biGramWords[0];
 								
-								$wordInfoArr = getWordInfo($parentConcept, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
+								$wordInfoArr = $wordsInfoArr[$parentConcept];//getWordInfo($parentConcept, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
 								
+							
 								$parentPosArr = $wordInfoArr['POS'];
 								
 								
@@ -999,13 +928,14 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 								
 								if (!isset($finalConcepts[$parentConcept]))
 								{
-									$finalConcepts[$parentConcept]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"TBOX","FREQ"=>1,"EXTRA"=>array("ASA"=>array()));
+									$finalConcepts[$parentConcept]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>generateEmptyConceptMetadata());
+									$finalConcepts[$parentConcept]['EXTRA']['ENG_TRANSLATION']=cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$parentConcept]);
 								}
 					
 						
-									$hasQuality = "نوع من";
+									$hasType = "نوع من";
 									$type = "TAXONOMIC";
-									addNewRelation($relationsArr,$type,$subclassConcept,$hasQuality,$parentConcept,"$pos");
+									addNewRelation($relationsArr,$type,$subclassConcept,$hasType,$parentConcept,"$pos","is kind of");
 										
 							
 							}
@@ -1017,12 +947,12 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 
 						///////////////////////////////////////////////////////////////////
 						
-						file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
+						file_put_contents("../data/ontology/temp.final.concepts.stage2", serialize($finalConcepts));
 						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
 						
 					}	
 						
-						
+											
 					if ( $GENERATE_NONTAXONOMIC_RELATIONS)
 					{
 						
@@ -1159,7 +1089,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 										 	 			echoN("####");
 										 	 			
 										 	 				$type = "NON-TAXONOMIC";
-										 					addNewRelation($relationsArr,$type,$concept1,$verb,$concept2,$joinedPattern);
+										 					addRelation($relationsArr,$type,$concept1,$verb,$concept2,$joinedPattern);
 										 				
 										 					
 										 	 			
@@ -1209,15 +1139,10 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							
 						
 						
-						preprint_r($relationsArr);
-						
-						
-						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationsArr));
-							
-						
-						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
-						
+					
 					}
+					
+			
 					
 					$poTaggedSubsentences = getPoSTaggedSubsentences();
 					
@@ -1225,43 +1150,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					
 					//echoN("SubSentences Count:".addCommasToNumber(count($poTaggedSubsentences)));
 					
-					function addRelation(&$relationsArr, $subject,$verb,$object,$joinedPattern)
-					{
-						global  $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
 					
 					
-						$subject = shallowUthmaniToSimpleConversion($subject);
-						$object = shallowUthmaniToSimpleConversion($object);
 					
-						echoN("---SUBJ:<b>{$subject}</b> VERB:$verb OBJ:<b>{$object}</b>");
-					
-						addNewRelation($relationsArr,"NON-TAXONOMIC",$subject,$verb,$object,$joinedPattern);
-					}
-					
-					function resolvePronouns($qacLocation)
-					{
-						global $MODEL_QURANA;
-						$pronArr = array();
-						$index=0;
-						//echoN($qacLocation);
-						//if ( $qacLocation=="3:146:11")
-							//preprint_r($MODEL_QURANA['QURANA_PRONOUNS']);
-						foreach($MODEL_QURANA['QURANA_PRONOUNS'][$qacLocation] as $coneptArr)
-						{
-								
-							$coneptId = $coneptArr['CONCEPT_ID'];
-							$conceptName = $MODEL_QURANA['QURANA_CONCEPTS'][$coneptId]['AR'];
-						
-							echoN($conceptName);
-						
-							// qurana null concept
-							//if ( $conceptName=="null") continue;
-						
-							$pronArr[$index++]=$conceptName;
-						}
-						
-						return $pronArr;
-					}
 					
 					$ssPoSAggregation = array();
 					$ssPoSAggregationCorrespondingSent = array();
@@ -1359,73 +1250,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							}
 							
 					
-							function flushProperRelations(&$relationsArr,&$conceptsArr,&$verb,&$lastSubject,$ssPoSPattern,&$filledConcepts)
-							{
-								
-								
-								if ( count($conceptsArr)>=2   )
-								{
-										
-									if (empty($verb))
-									{
-										$verb = "n/a";
-									}
-									
-									
-										
-									if ( $conceptsArr[0]!=$conceptsArr[1])
-									{
-										addRelation($relationsArr, $conceptsArr[0],$verb,$conceptsArr[1],$ssPoSPattern);
-										
-										if ( count($conceptsArr)>2 )
-										{
-											addRelation($relationsArr, $conceptsArr[1],"n/a",$conceptsArr[2],$ssPoSPattern);
-											addRelation($relationsArr, $conceptsArr[0],"n/a",$conceptsArr[2],$ssPoSPattern);
-										}
-									}
-									
-									$conceptsArr=array();
-									$verb = null;
-									$filledConcepts=0;
-								}
-									
-									
-								if ( count($conceptsArr)==1 && !empty($verb) && !empty($lastSubject) && $conceptsArr[0]!=$lastSubject)
-								{
-										
-									//echoN("||||".$conceptsArr[0]."|".$lastSubject);
-										
-										
-										
-										
-									$temp = $conceptsArr[0];
-									$conceptsArr[0] = $lastSubject;
-									$conceptsArr[1] = $temp;
-								
-		
-									// many problems
-									if ( $conceptsArr[0]!=$conceptsArr[1])
-									{
-										addRelation($relationsArr, $conceptsArr[0],$verb,$conceptsArr[1],$ssPoSPattern);
-									}
-									
-									
-								
-									
-									$conceptsArr=array();
-									$verb = null;
-		
-									$filledConcepts=0;
-								}
-							}
 							
-							
-							function isNounPhrase($posPattern)
-							{
-								return ( $posPattern=="N" || $posPattern=="PN" || $posPattern=="DET N"
-									);
-									//REMOVED || $posPattern=="N PRON"  نصيبك
-							}
 							
 							
 							
@@ -1643,25 +1468,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 					if ( $METHOD=="LCS_RULES")
 					{
 						//preprint_r($poTaggedSubsentences);
-						function getVerbSegment($qacWordSegmentsArr, $sentPos)
-						{
-							foreach($qacWordSegmentsArr as $segmentIndex=>$segmentArr)
-							{
-								$segmentPos = $segmentArr['TAG'];
-									
-								if ( $sentPos==$segmentPos )
-								{
-									return $segmentArr;
-								}
+					
 						
-							}
-						}
-						
-						function trimVerb($verb)
-						{
-							
-							return preg_replace("/وَ|فَ/um", "", $verb);
-						}
+				
 						
 						/*
 						$rules = file("../data/ontology/lcs.postags.2plus.all.rules",FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
@@ -1780,7 +1589,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												
 												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
 													
-												$verbSegmentArr = getVerbSegment($qacWordSegmentsArr,"V");
+												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
 												$verbLemma = $verbSegmentArr['FORM_AR'];
 												//preprint_r($verbSegmentArr);
 												//echoN($verbLemma);
@@ -1794,15 +1603,15 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												if ( empty($subject) || empty($object) ) continue;
 													
 													
-												$verb = $verbLemma;
+												$verb = $wordsArr[$startArrayIndexOfPattern];;//$verbLemma;
 													
 												if ( preg_match("/NEG|PRO([ ]|\,)/", $prevPoS))
 												{
 													$verb = $prevWord." ".$verb;
 												}
 													
-												
-												addRelation($relationsArr, $subject, $verb, $object, $rule);
+												$type = "NON-TAXONOMIC";
+												addRelation($relationsArr,$type, $subject, $verb, $object, $rule);
 												
 											break;
 											
@@ -1820,7 +1629,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 	
 												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
 												
-												$verbSegmentArr = getVerbSegment($qacWordSegmentsArr,"V");
+												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
 												$verbLemma = $verbSegmentArr['FEATURES']['LEM'];
 												$isImperative = isset($verbSegmentArr['FEATURES']['IMPV']);
 												
@@ -1842,7 +1651,9 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												
 												if ( empty($subject) || empty($object) ) continue;
 												
-												addRelation($relationsArr, $subject, $verb, $object, $rule);
+												$type = "NON-TAXONOMIC";
+												
+												addRelation($relationsArr, $type,$subject, $verb, $object, $rule);
 											break;
 											//
 											//يَغْفِرْ لَ كُمْ ذُنُوبَ كُمْ
@@ -1853,13 +1664,21 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												$pronounConceptArr = resolvePronouns($qacWordLocation);
 												$subject = $pronounConceptArr[0];
 							
+											
 												if ( $rule=="V PRON, N PRON")
 												{
 													// remove PRON chars from word
 													$qacWordLocationForSecondWord = $qacBaseLocation .":".($qacStartWordIndexInVerse+1);
 													$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocationForSecondWord];
-													$nounSegmentArr = getVerbSegment($qacWordSegmentsArr,"N");
+													$nounSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"N");
 													$nounSegment = $nounSegmentArr['FEATURES']['LEM'];
+													
+													/*echoN($qacWordLocationForSecondWord);
+													preprint_r($qacWordSegmentsArr);
+													preprint_r($nounSegmentArr);
+													echoN($nounSegment);
+													*/
+													
 													/////
 													$object = $nounSegment;
 												}
@@ -1879,7 +1698,7 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												
 												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
 													
-												$verbSegmentArr = getVerbSegment($qacWordSegmentsArr,"V");
+												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
 												$verbLemma = $verbSegmentArr['FORM_AR'];
 												//preprint_r($verbSegmentArr);
 												//echoN($verbLemma);
@@ -1892,15 +1711,17 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 												if ( $isImperative) continue;
 													
 													
-												$verb = trimVerb($wordsArr[$startArrayIndexOfPattern]);//$verbLemma;
+												$verb = $verbLemma;//trimVerb($wordsArr[$startArrayIndexOfPattern]);//$verbLemma;
 													
 												if ( preg_match("/NEG|PRO([ ]|\,)/", $prevPoS))
 												{
 													$verb = $prevWord." ".$verb;
 												}
 													
+											
 												
-												addRelation($relationsArr, $subject, $verb, $object, $rule);
+												$type = "NON-TAXONOMIC";
+												addRelation($relationsArr,$type, $subject, $verb, $object, $rule);
 											break;
 											
 										}
@@ -1931,45 +1752,33 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 				
 					
 	
-					preprint_r($relationsArr);
-					file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
 					
+						preprint_r($relationsArr);
+						
+						
+						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationsArr));
+							
+						
+						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						
 					
 					}
 					
-					function getTermArrBySimpleWord($finalTerms, $sentSimpleWord)
-					{
-						
-						
-						foreach ($finalTerms as $lemaUthmani=>$termArr)
-						{
-							
-							$mySimpleWord = $termArr['SIMPLE_WORD'];
-							
-							//echoN("$sentSimpleWord==$mySimpleWord");
-							
-							if ( $sentSimpleWord==$mySimpleWord)
-							{
-								return $termArr;
-							}
-							
-						}
-						
-						return false;
-					}
+					
+					
 					
 					 
 					if ( $EXTRACT_NEWCONCEPTS_FROM_RELATIONS )
 					{
-						$relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts"));
+						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage2"));
 						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
 						
-						
+			
 						
 						$notInCounceptsCounter = 0;
 						$handled = array();
-						foreach($relationArr as $hash => $relationsArr)
+						foreach($relationsArr as $hash => $relationsArr)
 						{
 							$relationsType = $relationsArr['TYPE'];
 							
@@ -1989,8 +1798,26 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									
 									$freq = $termsArr['FREQ'];
 									
-									$extra = array("POS"=>"SUBJECT","WEIGHT"=>$termsArr['WEIGHT']);
-									$finalConcepts[$subject]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"POPULATION_FROM_RELATIONS","FREQ"=>$freq,"EXTRA"=>$extra);
+									
+									
+									if( isMultiWordStr($subject))
+									{
+										$quranaConceptArr = getQuranaConceptEntryByARWord($subject);
+										
+										
+										$engTranslation = ucfirst($quranaConceptArr['EN']);
+									}
+									else 
+									{
+										$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$subject];
+										$engTranslation = ucfirst(cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$uthmaniWord]));
+									}
+									
+									addNewConcept($finalConcepts, $subject, "A-BOX", "POPULATION_FROM_RELATIONS", $freq, $engTranslation);
+									$finalConcepts[$subject]['EXTRA']['POS']="SUBJECT";
+									$finalConcepts[$subject]['EXTRA']['WEIGHT']=$termsArr['WEIGHT'];
+									
+									
 										
 								}
 								if ( !isset($finalConcepts[$object]) && !isset($handled[$object]))
@@ -2004,9 +1831,26 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 									
 									$freq = $termsArr['FREQ'];
 									
-									$extra = array("POS"=>"OBJECT","WEIGHT"=>$termsArr['WEIGHT']);
-									$finalConcepts[$object]=array("CONCEPT_TYPE"=>"A-BOX","EXTRACTION_PHASE"=>"POPULATION_FROM_RELATIONS","FREQ"=>$freq,"EXTRA"=>$extra);
+
 									
+										
+										
+									if( isMultiWordStr($object))
+									{
+										$quranaConceptArr = getQuranaConceptEntryByARWord($object);
+									
+									
+										$engTranslation = ucfirst($quranaConceptArr['EN']);
+									}
+									else
+									{
+										$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$object];
+										$engTranslation = ucfirst(cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$uthmaniWord]));
+									}
+									
+									addNewConcept($finalConcepts, $object, "A-BOX", "POPULATION_FROM_RELATIONS", $freq, $engTranslation);
+									$finalConcepts[$object]['EXTRA']['POS']="SUBJECT";
+									$finalConcepts[$object]['EXTRA']['WEIGHT']=$termsArr['WEIGHT'];
 									
 									
 
@@ -2016,15 +1860,670 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 							}
 							
 							
-							//file_put_contents("../data/ontology/temp.final.concepts", serialize($finalConcepts));
+							file_put_contents("../data/ontology/temp.final.concepts.stage3", serialize($finalConcepts));
 						}
 						
 						echoN("Concepts Added: $notInCounceptsCounter");
 						
 						preprint_r($finalConcepts);
 						
+						echoN("Final Concepts Count:". count($finalConcepts));
+						
 					}
 					
+					exit;
+					
+					
+					if ( $ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION)
+					{
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage3"));
+						
+			
+				
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+							
+							$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$concept];
+							
+							echoN($uthmaniWord);
+							
+							$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWord];
+							
+							if ( empty($engTranslationB4Cleaning))
+							{
+								//try adding ال
+								$conceptWithAL = "ال".$concept;
+								//echoN($conceptWithAL);
+								$uthmaniWordForTranslation = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$conceptWithAL];
+								//echoN($uthmaniWordForTranslation);
+								
+								$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWordForTranslation];
+							}
+							//echoN($engTranslationB4Cleaning);
+						
+							
+							$englishTranslation = cleanEnglishTranslation($engTranslationB4Cleaning);
+							
+							
+							//echoN("$uthmaniWord|$englishTranslation|$engTranslationB4Cleaning");
+							
+							$englishTransliteration = $WORDS_TRANSLITERATION[$uthmaniWord];
+							
+							$finalConcepts[$concept]['EXTRA']['TRANSLATION_EN'] = $englishTranslation;
+							
+							$finalConcepts[$concept]['EXTRA']['TRANSLITERATION_EN'] = $englishTransliteration;
+								
+							
+						}
+						
+				
+						
+						preprint_r($finalConcepts);
+						echoN(count($finalConcepts));
+						//exit;
+						
+						file_put_contents("../data/ontology/temp.final.concepts.stage4", serialize($finalConcepts));
+
+					}
+					
+					
+
+					
+				
+					
+					
+					if ( $ENRICH_CONCEPTS_METADATA_DBPEDIA)
+					{
+						$newConcepts = array();
+						$dbpediaCacheArr = array();
+						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage4"));
+						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
+						
+						$dbpediaCacheArr = unserialize(file_get_contents("../data/cache/dbpedia.resources"));
+						
+						
+						$TRANSLATION_CACHE_EN_AR = unserialize(file_get_contents("../data/cache/translation.en.ar"));
+						
+						
+						
+						$typeNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+						$resourceIDTemplate = "http://live.dbpedia.org/resource/{NAME}";
+						$urlTemplate = "http://live.dbpedia.org/data/{NAME}.json";
+						$wikipediaIDTemplate = "http://en.wikipedia.org/wiki/{NAME}";
+						
+						
+					
+						$stopWordsArr = getStopWordsArrByFile($englishStopWordsFile);
+						
+						$typesArr = array();
+						$conceptsFiltered=0;
+						$conceptsEnriched=0;
+						$newConceptsAdded = 0;
+						$newRelationsAdded=0;
+						
+						$enrichedFinalConcepts = $finalConcepts;
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+							
+							
+							
+							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameAr  = $concept;;//$coneptArr['EXTRA']['SIMPLE_WORD'];
+							
+						
+							
+							
+							if ( !empty($conceptNameEn) &&
+								 preg_match("/ /",$conceptNameEn) == 0 &&
+								!isset($stopWordsArr[strtolower($conceptNameEn)]) )
+							{
+								echoN("NOT FILTERED:$conceptNameEn|$conceptNameAr");
+								$conceptsFiltered++;
+							
+							
+							
+								  $conceptName  = $conceptNameEn;
+								  $url = str_replace("{NAME}", $conceptName, $urlTemplate);
+								  $resourceID = str_replace("{NAME}", $conceptName, $resourceIDTemplate);
+								  $wikipediaID = str_replace("{NAME}", $conceptName, $wikipediaIDTemplate);
+								  
+								  
+								  if ( !isset($dbpediaCacheArr[$conceptName]))
+								  {
+								 
+										
+										
+										
+										echoN($url);
+										echoN($resourceID);
+										echoN($wikipediaID);
+										
+										$jsonText = file_get_contents($url);
+										
+										$jsonArr = json_decode($jsonText,true);
+										
+										
+										if ( !empty($jsonArr))
+										{
+											// add to cache
+											$dbpediaCacheArr[$conceptName]=$jsonArr;
+										}
+								  }
+								  // get from cache
+								  else
+								  {
+									 $jsonArr =  $dbpediaCacheArr[$conceptName];
+								  }
+											
+											
+									$typesArr = $jsonArr[$resourceID][$typeNS];
+									$abstract = $jsonArr[$resourceID]["http://live.dbpedia.org/ontology/abstract"][0]['value'];
+								
+									
+									
+									if ( empty($typesArr) || empty($abstract))
+									{
+										echoN("--NO TYPE OR ABSTRACT");
+									}
+									else
+									{
+										
+										$typesArrFiltered = array();
+											
+										foreach($typesArr as $index => $typeArr)
+										{
+											$typeValue = $typeArr['value'];
+										
+											
+											
+											if ( strpos($typeValue, "schema.org")!==false ||
+											strpos($typeValue, "dbpedia.org/ontology")!==false ||
+											strpos($typeValue, "xmlns.com/foaf")!==false ||
+											strpos($typeValue, "umbel.org")!==false ||
+
+											strpos($typeValue, "yago/Person")!==false	)
+											{
+												
+												
+												if ( strpos($typeValue, "yago/Person")!==false )
+												{
+													$typeName = "Person";
+												}
+												else
+												{
+													$typeName = substr($typeValue, strrpos($typeValue, "/")+1);
+												}
+												
+												if ( $typeName== "Agent" || $typeName=="BiologicalLivingObject") continue;
+												
+									
+												
+												$typesArrFiltered[$typeName]= $typeValue;
+											}
+										}
+											
+										$thumbnail = $jsonArr[$resourceID]["http://live.dbpedia.org/ontology/thumbnail"][0]['value'];
+										$depiction = $jsonArr[$resourceID]["http://xmlns.com/foaf/0.1/depiction"][0]['value'];
+										
+										$finalImage = $thumbnail;
+										
+										if ( empty($finalImage) )
+										{
+											$finalImage = $depiction;
+										}
+										
+										
+											
+										$namesArr = $jsonArr[$resourceID]["http://xmlns.com/foaf/0.1/name"];
+										
+										$filteredNames = array();
+										foreach($namesArr as $index => $nameArr)
+										{
+											$filteredNames[]=$nameArr['value'];
+										}
+										
+										echoN("Names:".join(",",$filteredNames));
+										echoN("Image:".$finalImage);
+										echoN("Types:".join(",",array_keys($typesArrFiltered)));
+										echoN("Abstract:".$abstract);
+										echoN("URL:".$url);
+										
+										//preprint_r($typesArr);
+										//preprint_r($jsonArr);
+										//exit;
+										
+										$parentClassConceptsArr = array();
+										
+										foreach($typesArrFiltered as $type=>$url)
+										{
+											$parentClassConceptsArr[$type]=1;
+										}
+										 
+										
+										$conceptType = getConceptTypeFromDescriptionText($abstract);
+										
+										if ( !empty($conceptType))
+										{
+											$conceptType = ucfirst(strtolower($conceptType));
+											
+											$parentClassConceptsArr[$conceptType]=1;
+										}
+									
+										//preprint_r($parentClassConceptsArr);
+										
+										
+										///////// enrich concept 
+										
+										$enrichedFinalConcepts[$concept]['EXTRA']['DBPEDIA_LINK']=$resourceID;
+										$enrichedFinalConcepts[$concept]['EXTRA']['WIKIPEDIA_LINK']=$wikipediaID;
+										$enrichedFinalConcepts[$concept]['EXTRA']['IMAGES']['DBPEDIA']=$finalImage;
+										
+										$enrichedFinalConcepts[$concept]['EXTRA']['DESC_EN']['DBPEDIA']=$abstract;
+										//$enrichedFinalConcepts[$concept]['EXTRA']['ASA']=array_merge($filteredNames,$finalConcepts[$concept]['EXTRA']['ASA']);
+										
+										
+										
+										//preprint_r($enrichedFinalConcepts);
+										///////////////////////
+										
+										///////// add parent concepts
+										
+										
+										
+										
+										preprint_r($parentClassConceptsArr);
+										foreach($parentClassConceptsArr as   $parentConceptEN=>$dummy)
+										{
+											$exPhase = "ENRICHMENT_DBPEDIA";
+											$parentConceptEN = ucfirst($parentConceptEN);
+											
+											
+											$TRANSLATION_CACHE_EN_AR[$parentConceptEN] = "?";
+									
+									
+											
+											if ( !isset($enrichedFinalConcepts[$parentConceptEN]))
+											{
+												$enrichedFinalConcepts[$parentConceptEN]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>$exPhase,"FREQ"=>1,"EXTRA"=>array("AKA"=>array(),"TRANSLATION_EN"=>$parentConceptEN));
+												$newConceptsAdded++;
+												
+												$newConcepts[$parentConceptEN]=1;
+												
+											}
+												
+											
+											
+												$type = "TAXONOMIC";
+												addRelation($relationsArr,$type,$concept,"هو",$parentConceptEN,"");
+											
+										}
+										///////////////////////
+							
+										
+										echoN("--------------------------<BR>ENRICHED:$conceptNameEn|$conceptNameAr");
+											
+										$conceptsEnriched++;
+										
+										
+										
+									}
+
+											
+											
+											
+											
+											
+							}
+										
+										
+										
+										
+						  
+							
+							
+					}
+					
+					
+					/*$url = "https://ar.wikipedia.org/w/api.php?action=query&titles=الأرض&prop=revisions&rvprop=content&format=json";
+							
+					$jsonText = file_get_contents($url);
+										
+					$jsonArr = json_decode($jsonText,true);
+					
+					preprint_r($jsonArr);
+					*/
+										
+							//preprint_r($relationsArr);exit;
+							
+							//$typesArr = $jsonArr[$resourceID][$typeNS];
+							
+							//preprint_r($typesArr);
+							
+							//preprint_r($jsonArr);
+							
+							//exit;
+							
+						preprint_r($newConcepts);
+								
+								
+							
+						
+						
+						echoN("Concepts Filtered:$conceptsFiltered");
+						echoN("Concepts Enriched from (DBPEDIA):$conceptsEnriched");
+						
+						echoN("New Concepts Added:$newConceptsAdded");
+						
+						
+						file_put_contents("../data/cache/dbpedia.resources", serialize($dbpediaCacheArr));
+						file_put_contents("../data/cache/translation.en.ar", serialize($TRANSLATION_CACHE_EN_AR));
+					
+						file_put_contents("../data/ontology/temp.final.concepts.stage5", serialize($enrichedFinalConcepts));
+						
+			
+						
+						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+					}
+					
+					
+					if ( $ENRICH_CONCEPTS_METADATA_WORDNET)
+					{
+						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage5"));
+						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
+
+						
+						$TRANSLATION_CACHE_EN_AR = unserialize(file_get_contents("../data/cache/translation.en.ar"));
+						
+						
+					
+					
+					
+						
+						
+						$conceptsEnriched=0;
+						$newConceptsAdded = 0;
+						$newRelationsAdded=0;
+						
+						$newConceptsAddedArr = array();
+						$enrichedFinalConcepts = $finalConcepts;
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+								
+						
+								
+							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameAr  = $concept;;//$coneptArr['EXTRA']['SIMPLE_WORD'];
+										
+							$conceptNameEn = removeStopwordsAndTrim($conceptNameEn,"EN");
+							
+					
+							$lexicoSemanticCategories = apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+							
+							$wordnetInfoArr = getWordnetEntryByWordString($conceptNameEn);
+							
+							if ( empty($wordnetInfoArr))
+							{
+							
+								if ( $conceptNameEn[(strlen($conceptNameEn)-1)]=="s")
+								{
+									echoN($conceptNameEn);
+									echoN("=============".substr($conceptNameEn,0,-1));
+									//try removing plural (s)
+									$wordnetInfoArr = getWordnetEntryByWordString(substr($conceptNameEn,0,-1));
+								}
+							}
+							
+							/*if ($conceptNameEn=="Land")
+							{
+								preprint_r($wordnetInfoArr);
+								$wordnetIndex  = apc_fetch("WORDNET_INDEX");
+								
+								$lexicoSemanticCategories = apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+								
+								$dataArr = apc_fetch("WORDNET_DATA");
+								
+								$lowerName  = strtolower($conceptNameEn);
+								
+								//preprint_r($wordnetIndex[$lowerName]);
+								
+								foreach($wordnetIndex[$lowerName]['noun']['SYNSETS'] as $index => $pointer)
+								{
+									
+									//preprint_r($dataArr['noun'][$pointer]);
+									$semantic = $dataArr['noun'][$pointer]['SEMANTIC_CATEGORY_ID'];
+									$wordsStr = join(",",array_keys($dataArr['noun'][$pointer]['WORDS']));
+								
+									
+									echoN("$pointer|$semantic|$wordsStr");
+									
+									foreach($dataArr['noun'][$pointer]['POINTERS'] as $index => $arr)
+									{
+										if ( $arr['SYMBOL_DESC']!="Hypernym")
+										{
+											continue;
+										}
+										
+										echoN($arr['SYNSET_OFFSET']."-".$arr['SYMBOL_DESC']);
+									}
+									
+								}
+								
+							}*/
+							
+							
+							if ( !empty($wordnetInfoArr) )
+							{
+								$conceptsEnriched++;
+								
+								$qacPOS = $coneptArr['EXTRA']['POS'];
+								$wordnetPOS = mapQACPoSToWordnetPoS($qacPOS);
+								
+								
+								
+								
+								preprint_r($coneptArr);
+								
+								$wordnetInfoArrayForConcept = $wordnetInfoArr;
+								
+								preprint_r($wordnetInfoArrayForConcept);
+								
+							
+								$conceptMeaningEN = trim($wordnetInfoArr['GLOSSARY'][$wordnetPOS]);
+								
+								
+								$TRANSLATION_CACHE_EN_AR[$conceptMeaningEN] = "?";
+								
+								$enrichedFinalConcepts[$concept]['EXTRA']['MEANING_EN']['WORDNET']=$conceptMeaningEN;
+								$handledSemanticTypes = array();
+								foreach($wordnetInfoArr['SEMANTIC_TYPES'][$wordnetPOS] as $dummy => $semanticType)
+								{
+									
+									if ( isset($handledSemanticTypes[$semanticType])) continue;
+									
+									$handledSemanticTypes[$semanticType] = 1;
+									
+									$parentConceptName = $semanticType;
+									
+									if ( !isset($finalConcepts[$semanticType]))
+									{
+											
+									
+										
+										$exPhase = "ENRICHMENT_WORDNET";
+										
+										//$parentConceptEN = ucfirst($parentConceptEN);
+										$conceptType = "T-BOX";
+										
+										
+										$res = addNewConcept($enrichedFinalConcepts,$parentConceptName,$conceptType,$exPhase,1 ,$newConceptName);
+										
+										if ( $res==true)
+										{
+											echoN("$parentConceptName|$concept");
+											$newConceptsAdded++;
+											
+											$newConceptsAddedArr[$parentConceptName]=1;
+										}
+									}
+									
+											
+										$relationType = "TAXONOMIC";
+										$res = addRelation($relationsArr,$relationType,$concept,"هو",$parentConceptName,"");
+										
+										if ( $res==true)
+										{
+											$newRelationsAdded++;
+										}
+										
+									
+									
+								}
+								
+								$synonymsArr = $wordnetInfoArr['SYNONYMS'][$wordnetPOS];
+								
+								foreach($synonymsArr as $index => $synonym)
+								{
+									//echoN("------$synonym!=$conceptNameEn");
+									if ( $synonym!=$conceptNameEn)
+									{
+										$enrichedFinalConcepts[$concept]['EXTRA']['AKA']['EN'][]=cleanWordnetCollocation($synonym);
+										
+									}
+									
+									
+								}
+								
+								
+								foreach($wordnetInfoArr['RELATIONSHIPS'][$wordnetPOS] as $relIndex => $relArr)
+								{
+										$relType = $relArr['RELATION'];
+										
+										if ( stripos($relType,"Hypernym")!==false)
+										{
+											$wordsArr = $relArr['WORDS'];
+											$semanticTypeID = $relArr['SEMANTIC_CATEGORY_ID'];
+											$semanticType = $lexicoSemanticCategories[$semanticTypeID];
+												
+											$semanticType = ucfirst(substr($semanticType, strpos($semanticType, ".")+1));
+											
+											$glossary = $relArr['GLOSSARY'];
+											
+											$hypernym = key($wordsArr);
+											
+												if ( !isset($handledSemanticTypes[$hypernym]))
+												{
+													
+													$handledSemanticTypes[$hypernym] = 1;
+														
+													$parentConceptName = cleanWordnetCollocation($hypernym);
+														
+													if ( !isset($finalConcepts[$hypernym]))
+													{
+															
+															
+													
+														
+														
+														$exPhase = "ENRICHMENT_WORDNET";
+													
+														//$parentConceptEN = ucfirst($parentConceptEN);
+														$conceptType = "T-BOX";
+													
+													
+														$res = addNewConcept($enrichedFinalConcepts,$parentConceptName,$conceptType,$exPhase,1 ,$parentConceptName);
+													
+														if ( $res==true)
+														{
+															
+															$newConceptsAdded++;
+																
+															$newConceptsAddedArr[$parentConceptName]=1;
+														}
+														
+														$enrichedFinalConcepts[$parentConceptName]['EXTRA']['MEANING_EN']['WORDNET']=$glossary;
+														
+														
+														foreach($wordsArr as  $synonym => $dummy)
+														{
+															
+															if ( $synonym!=$parentConceptName)
+															{
+																$enrichedFinalConcepts[$parentConceptName]['EXTRA']['AKA']['EN'][]=cleanWordnetCollocation($synonym);
+														
+															}
+																
+																
+														}
+														
+													}
+														
+														
+													$relationType = "TAXONOMIC";
+													$res = addRelation($relationsArr,$relationType,$concept,"هو",$parentConceptName,"");
+													
+													if ( $res==true)
+													{
+														$newRelationsAdded++;
+													}
+												}
+											
+											
+										}
+										
+									
+								}
+								
+								
+								
+								
+								
+								
+								
+								
+							}
+							//if ( $conceptsEnriched>3) break;
+						
+						
+							
+						}
+						
+						echoN("Concepts Enriched from (WORDNET):$conceptsEnriched");
+						
+						echoN("New Concepts Added:$newConceptsAdded");
+						echoN("New Relations Added:$newRelationsAdded");
+						
+						preprint_r($TRANSLATION_CACHE_EN_AR);
+						preprint_r($newConceptsAddedArr);
+						preprint_r($enrichedFinalConcepts);
+						
+						
+						file_put_contents("../data/cache/translation.en.ar", serialize($TRANSLATION_CACHE_EN_AR));
+							
+						file_put_contents("../data/ontology/temp.final.concepts.stage6", serialize($enrichedFinalConcepts));
+						
+							
+						
+						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						
+					}
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					//////////// COPY/FI FILIZE FINAL CONCEPTS /////////////////////////////
+					
+					$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage6"));
+					
+					file_put_contents("../data/ontology/temp.final.concepts.final", serialize($finalConcepts));
+					
+					////////////////////////////////////////////////////////////////////////
 				?>
 				
 					
