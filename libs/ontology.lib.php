@@ -66,7 +66,7 @@ function addNewConcept(&$finalConceptsArr,$newConceptName,$coneptType,$exPhase,$
 		
 		if ( !empty($engTranslation))
 		{
-			$conceptMetaDataArr['TRANSLATION_EN']=$engTranslation;
+			$conceptMetaDataArr['EXTRA']['TRANSLATION_EN']=$engTranslation;
 		}
 		
 		$finalConceptsArr[$newConceptName]=array("CONCEPT_TYPE"=>$coneptType,"EXTRACTION_PHASE"=>$exPhase,"FREQ"=>$freq,"EXTRA"=>$conceptMetaDataArr);
@@ -599,6 +599,23 @@ function getWordsByPos(&$finalTerms,$POS)
 	}
 	 
 	return $finalTerms;
+}
+
+function loadExcludedConceptsArr()
+{
+	$fileArr = file("../data/ontology/excluded.concepts",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+	
+	$EXCLUDED_CONCEPTS = array();
+	
+	foreach($fileArr as  $conceptName)
+	{
+
+		$EXCLUDED_CONCEPTS[$conceptName]=1;
+		
+	}
+	
+	return $EXCLUDED_CONCEPTS;
+	
 }
 
 
