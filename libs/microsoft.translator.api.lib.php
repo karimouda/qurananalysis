@@ -153,11 +153,11 @@ function translateText($text)
 		// Interprets a string of XML into an object.
 		$xmlObj = simplexml_load_string ( $strResponse );
 		
-		var_dump($xmlObj);
+		//var_dump($xmlObj);
 		
 		if ( empty($xmlObj[0])) return null;
 		
-		//second [0] to avoid SimpleXMLElemtn serialization problem
+		//second [0] to avoid SimpleXMLElement serialization problem
 		return $xmlObj[0][0];
 
 	} catch ( Exception $e ) {
