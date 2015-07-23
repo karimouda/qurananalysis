@@ -38,6 +38,9 @@ $wordByWordTranslationFile = dirname(__FILE__)."/data/translations/word-by-word-
 $transliterationFile = dirname(__FILE__)."/data/transliteration/en.transliteration.txt";
 $wordnetDir = dirname(__FILE__)."/data/wordnet/dict/";
 
+$customTranslationTableFile = dirname(__FILE__)."/data/generated/translation.en-ar.table";
+
+
 $quranFileAR_XML = dirname(__FILE__)."/data/quran-simple-clean.xml";
 $quranCorpusMorphologyFile = dirname(__FILE__)."/data/quranic-corpus-morphology-0.4.txt";
 $quranaPronounResolutionConceptsFile = dirname(__FILE__)."/data/quran-pron/concepts.xml";
