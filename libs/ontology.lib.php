@@ -66,8 +66,11 @@ function addNewConcept(&$finalConceptsArr,$newConceptName,$coneptType,$exPhase,$
 		
 		if ( !empty($engTranslation))
 		{
-			$conceptMetaDataArr['EXTRA']['TRANSLATION_EN']=$engTranslation;
+			$conceptMetaDataArr['TRANSLATION_EN']=$engTranslation;
 		}
+		
+		$newConceptName = trim($newConceptName);
+		$engTranslation = trim($engTranslation);
 		
 		$finalConceptsArr[$newConceptName]=array("CONCEPT_TYPE"=>$coneptType,"EXTRACTION_PHASE"=>$exPhase,"FREQ"=>$freq,"EXTRA"=>$conceptMetaDataArr);
 		
@@ -88,13 +91,13 @@ function printRelation($relationArrEntry)
 
 function addNewRelation(&$relationArr,$type,$subject,$verbSimple,$object,$posPattern,$verbEngTranslation,$verbUthmani)
 {
-	$newRelation= array("TYPE"=>$type,"SUBJECT"=>$subject,
-			"VERB"=>$verbSimple,
-			"OBJECT"=>$object,
+	$newRelation= array("TYPE"=>$type,"SUBJECT"=>trim($subject),
+			"VERB"=>trim($verbSimple),
+			"OBJECT"=>trim($object),
 			"POS_PATTERN"=>$posPattern,
 			"FREQ"=>1,
-			"VERB_ENG_TRANSLATION"=>$verbEngTranslation,
-			"VERB_UTHMANI"=>$verbUthmani);
+			"VERB_ENG_TRANSLATION"=>trim($verbEngTranslation),
+			"VERB_UTHMANI"=>trim($verbUthmani));
 	
 	printRelation($newRelation);
 	
@@ -187,13 +190,15 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 			{
 				
 				$translatableVerb = $verbPart;
+				
 				if ( isSimpleQuranWord($verbPart) )
 				{
 					$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verbPart];
 				}
 				else
 				{
-					$verbSimple = $verbSimple." ".$verbPart;
+					$simplePart = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verbPart];
+					$verbSimple = $verbSimple." ".$simplePart;
 				}
 				
 				$verbPartTranslated = cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$translatableVerb]);
@@ -212,7 +217,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 	
 	if ( empty($verbSimple))
 	{
-		$verbSimple = shallowUthmaniToSimpleConversion($verbUthmani);
+		$verbSimple = removeTashkeel(shallowUthmaniToSimpleConversion($verbUthmani));
 	}
 
 		

@@ -326,6 +326,9 @@ function getWordnetEntryByWordString($wordToSearchFor, $includeOnlyRelationsOfTy
 	
 	
 
+	$wordToSearchFor = strtolower($wordToSearchFor);
+	
+
 	
 	$wordnetInfoArr = array();
 	$wordnetInfoArr['SYNONYMS']=array();
@@ -335,6 +338,8 @@ function getWordnetEntryByWordString($wordToSearchFor, $includeOnlyRelationsOfTy
 	
 	// Not found in Wordnet
 	if ( !isset($MODEL_WORDNET['INDEX'][$wordToSearchFor])) return false;
+	
+
 
 	foreach( $MODEL_WORDNET['INDEX'][$wordToSearchFor] as $pos => $currIndexArr)
 	{
@@ -419,12 +424,18 @@ function getWordnetEntryByWordString($wordToSearchFor, $includeOnlyRelationsOfTy
 			
 	}
 	
+	
 	return $wordnetInfoArr;
 	
-	return false;
+	
+	
 	
 }
 
+function getGlossaryFirstPart($glossary)
+{
+	return trim(substr($glossary, 0,strpos($glossary, ";") ));
+}
 
 
 

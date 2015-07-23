@@ -2138,5 +2138,12 @@
 		
 		return implode(" ", $newStr);
 	}
+	
+	
+	function convertXMLStringObjectToString($obj)
+	{
+		return (string)$obj;
+		
+	}
 
 ?>

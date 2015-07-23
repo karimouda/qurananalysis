@@ -157,8 +157,10 @@ function translateText($text)
 		
 		if ( empty($xmlObj[0])) return null;
 		
-		//second [0] to avoid SimpleXMLElement serialization problem
-		return $xmlObj[0][0];
+
+		//(string) casting to avoid SimpleXMLElement serialization problem
+		// trim for endlines
+		return trim((string)$xmlObj[0]);
 
 	} catch ( Exception $e ) {
 		echo "Exception: " . $e->getMessage () . PHP_EOL;
