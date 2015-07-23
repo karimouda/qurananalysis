@@ -5,6 +5,8 @@ require_once("../libs/core.lib.php");
 require_once("../libs/microsoft.translator.api.lib.php");
 require_once("../libs/pos.tagger.lib.php");
 require_once("../libs/ontology.lib.php");
+require_once("../libs/custom.translation.table.lib.php");
+
 
 
 
@@ -44,6 +46,14 @@ $WORDS_TRANSLATIONS_EN_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
 $WORDS_TRANSLATIONS_AR_EN = apc_fetch("WORDS_TRANSLATIONS_AR_EN");
 
 $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
+
+
+
+
+	
+$CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
+
+
 
 
 ?>
@@ -92,7 +102,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 			  	//exit;
 			  	
 			  	
-			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
+			  	$GENERATE_CONCEPTS_SWITCH = FALSE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
@@ -111,7 +121,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = TRUE;
 			  	$ENRICH_CONCEPTS_METADATA_WORDNET = TRUE;
 			  	
-			  	$ENRICH_RELATIONS_METADATA = TRUE;
+			  	$FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;;
 			  	
 			  	
 			
@@ -676,7 +686,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 										
 										if ( $quranaArWord!=$mySimpleWord)
 										{
-											$termArr['AKA']['AR'] = $quranaArWord;
+											$termArr['AKA']['AR']['QURANA'] = $quranaArWord;
 										}
 										
 										$termArr['EXTRA']['TRANSLATION_EN']=$conceptArr['EN'];
@@ -756,7 +766,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						}
 					}
 					
-					echoN("@@@@".count($finalConcepts));
+					
 					
 		
 					if ( $GENERATE_FINAL_CONCEPTS )
@@ -1865,13 +1875,14 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						
 						echoN("Concepts Added: $notInCounceptsCounter");
 						
-						preprint_r($finalConcepts);
+						//preprint_r($finalConcepts);
+					
 						
 						echoN("Final Concepts Count:". count($finalConcepts));
 						
 					}
 					
-					exit;
+				
 					
 					
 					if ( $ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION)
@@ -1883,33 +1894,40 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						foreach($finalConcepts as $concept => $coneptArr)
 						{
 							
+							$currentEnglishTranslation = $coneptArr['EXTRA']['TRANSLATION_EN'];
 							$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$concept];
 							
-							echoN($uthmaniWord);
-							
-							$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWord];
-							
-							if ( empty($engTranslationB4Cleaning))
+							if ( empty($currentEnglishTranslation))
 							{
-								//try adding ال
-								$conceptWithAL = "ال".$concept;
-								//echoN($conceptWithAL);
-								$uthmaniWordForTranslation = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$conceptWithAL];
-								//echoN($uthmaniWordForTranslation);
+							
 								
-								$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWordForTranslation];
+								
+								echoN($uthmaniWord);
+								
+								$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWord];
+								
+								if ( empty($engTranslationB4Cleaning))
+								{
+									//try adding ال
+									$conceptWithAL = "ال".$concept;
+									//echoN($conceptWithAL);
+									$uthmaniWordForTranslation = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$conceptWithAL];
+									//echoN($uthmaniWordForTranslation);
+									
+									$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWordForTranslation];
+								}
+								//echoN($engTranslationB4Cleaning);
+							
+								
+								$englishTranslation = cleanEnglishTranslation($engTranslationB4Cleaning);
+								
+								$finalConcepts[$concept]['EXTRA']['TRANSLATION_EN'] = $englishTranslation;
+								//echoN("$uthmaniWord|$englishTranslation|$engTranslationB4Cleaning");
 							}
-							//echoN($engTranslationB4Cleaning);
-						
-							
-							$englishTranslation = cleanEnglishTranslation($engTranslationB4Cleaning);
-							
-							
-							//echoN("$uthmaniWord|$englishTranslation|$engTranslationB4Cleaning");
 							
 							$englishTransliteration = $WORDS_TRANSLITERATION[$uthmaniWord];
 							
-							$finalConcepts[$concept]['EXTRA']['TRANSLATION_EN'] = $englishTranslation;
+							
 							
 							$finalConcepts[$concept]['EXTRA']['TRANSLITERATION_EN'] = $englishTransliteration;
 								
@@ -1943,7 +1961,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						$dbpediaCacheArr = unserialize(file_get_contents("../data/cache/dbpedia.resources"));
 						
 						
-						$TRANSLATION_CACHE_EN_AR = unserialize(file_get_contents("../data/cache/translation.en.ar"));
+					
 						
 						
 						
@@ -2139,26 +2157,47 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 											$parentConceptEN = ucfirst($parentConceptEN);
 											
 											
-											$TRANSLATION_CACHE_EN_AR[$parentConceptEN] = "?";
-									
+											//////////// NEW DBPEDIA CONCEPT HANDLING
+											$parentConceptName = $parentConceptEN;
+											
+											if (!isFoundInTranslationTable($parentConceptEN))
+											{
+												//echoN("|$parentConceptEN|");
+												$tentitaveTranslation = translateText($parentConceptEN);
+												
+												
+												
+												addTranslationEntry($parentConceptEN, "CONCEPT",$tentitaveTranslation );
+												
+												$parentConceptName = $tentitaveTranslation;
+											}
+											else 
+											{
+												$customTranslationEntry = getTranlationEntryByEntryKeyword($parentConceptEN);
+													
+												
+												$parentConceptName  = $customTranslationEntry['AR_TEXT'];
+											}
 									
 											
-											if ( !isset($enrichedFinalConcepts[$parentConceptEN]))
+											if ( !isset($enrichedFinalConcepts[$parentConceptName]))
 											{
-												$enrichedFinalConcepts[$parentConceptEN]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>$exPhase,"FREQ"=>1,"EXTRA"=>array("AKA"=>array(),"TRANSLATION_EN"=>$parentConceptEN));
+												$enrichedFinalConcepts[$parentConceptName]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>$exPhase,"FREQ"=>1,"EXTRA"=>array("AKA"=>array(),"TRANSLATION_EN"=>$parentConceptEN));
 												$newConceptsAdded++;
 												
-												$newConcepts[$parentConceptEN]=1;
+												$newConcepts[$parentConceptName]=1;
 												
 											}
 												
 											
 											
 												$type = "TAXONOMIC";
-												addRelation($relationsArr,$type,$concept,"هو",$parentConceptEN,"");
+												addRelation($relationsArr,$type,$concept,"هو",$parentConceptName,"is kind of");
+												
+											//////////////////////////////////////////////////////
 											
 										}
-										///////////////////////
+										
 							
 										
 										echoN("--------------------------<BR>ENRICHED:$conceptNameEn|$conceptNameAr");
@@ -2217,7 +2256,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						
 						
 						file_put_contents("../data/cache/dbpedia.resources", serialize($dbpediaCacheArr));
-						file_put_contents("../data/cache/translation.en.ar", serialize($TRANSLATION_CACHE_EN_AR));
+						
 					
 						file_put_contents("../data/ontology/temp.final.concepts.stage5", serialize($enrichedFinalConcepts));
 						
@@ -2234,7 +2273,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
 
 						
-						$TRANSLATION_CACHE_EN_AR = unserialize(file_get_contents("../data/cache/translation.en.ar"));
+						
 						
 						
 					
@@ -2248,6 +2287,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						
 						$newConceptsAddedArr = array();
 						$enrichedFinalConcepts = $finalConcepts;
+						////// ENRICJ ALL CONCEPT USING WORDNET MODEL
 						foreach($finalConcepts as $concept => $coneptArr)
 						{
 								
@@ -2312,7 +2352,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 								
 							}*/
 							
-							
+							// DATA FOUND IN WORDNET FOR THE CURRENT CONCEPT
 							if ( !empty($wordnetInfoArr) )
 							{
 								$conceptsEnriched++;
@@ -2330,13 +2370,39 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 								preprint_r($wordnetInfoArrayForConcept);
 								
 							
-								$conceptMeaningEN = trim($wordnetInfoArr['GLOSSARY'][$wordnetPOS]);
+
+								
+								$conceptMeaningEN = getGlossaryFirstPart($wordnetInfoArr['GLOSSARY'][$wordnetPOS]);
+								
+								$conceptMeaningAR = "";
+								
+								//////////// MEANING TRANSLATION 
+								if (!isFoundInTranslationTable($conceptMeaningEN))
+								{
+									echoN("|$conceptMeaningEN|");
+									$tentitaveTranslation = translateText($conceptMeaningEN);
+									addTranslationEntry($conceptMeaningEN, "DESC",$tentitaveTranslation );
+									
+									$conceptMeaningAR = $tentitaveTranslation;
+								}
+								else
+								{
+									$customTranslationEntry = getTranlationEntryByEntryKeyword($conceptMeaningEN);
+										
+								
+									$conceptMeaningAR  = $customTranslationEntry['AR_TEXT'];
+								}
+								/////////////////////////////////////////////
 								
 								
-								$TRANSLATION_CACHE_EN_AR[$conceptMeaningEN] = "?";
-								
+								////////////////////// MEANING ENRICHMENT 
 								$enrichedFinalConcepts[$concept]['EXTRA']['MEANING_EN']['WORDNET']=$conceptMeaningEN;
+								$enrichedFinalConcepts[$concept]['EXTRA']['MEANING_AR']['WORDNET']=$conceptMeaningAR;
+								////////////////////////////////////////
+								
 								$handledSemanticTypes = array();
+								
+								///////////////// ENRICH CONCEPT BY WORDNET SEMANTIC TYPES
 								foreach($wordnetInfoArr['SEMANTIC_TYPES'][$wordnetPOS] as $dummy => $semanticType)
 								{
 									
@@ -2344,9 +2410,29 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 									
 									$handledSemanticTypes[$semanticType] = 1;
 									
-									$parentConceptName = $semanticType;
+
+									$englishConceptName = $semanticType;
+									$finalConceptName = $englishConceptName;
 									
-									if ( !isset($finalConcepts[$semanticType]))
+									if (isFoundInTranslationTable($finalConceptName))
+									{
+										$customTranslationEntry = getTranlationEntryByEntryKeyword($finalConceptName);
+									
+										$finalConceptName = $customTranslationEntry['AR_TEXT'];
+									}
+									else
+									{
+										$tentitaveTranslation = translateText($finalConceptName);
+										
+										
+										
+										addTranslationEntry($englishConceptName, "CONCEPT",$tentitaveTranslation );
+										
+										$finalConceptName = $tentitaveTranslation;
+									}
+									
+									// DIDN'T FIND NEITHER ARABIC OR ENGLISH CONCEPTS IN FINAL CONCEPTS LIST
+									if ( !isset($finalConcepts[$finalConceptName]))
 									{
 											
 									
@@ -2356,21 +2442,73 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 										//$parentConceptEN = ucfirst($parentConceptEN);
 										$conceptType = "T-BOX";
 										
+									
 										
-										$res = addNewConcept($enrichedFinalConcepts,$parentConceptName,$conceptType,$exPhase,1 ,$newConceptName);
+										
+										$res = addNewConcept($enrichedFinalConcepts,$finalConceptName,$conceptType,$exPhase,1 ,$englishConceptName);
+										
+										
 										
 										if ( $res==true)
 										{
-											echoN("$parentConceptName|$concept");
+											echoN("$finalConceptName|$concept|$englishConceptName");
 											$newConceptsAdded++;
 											
-											$newConceptsAddedArr[$parentConceptName]=1;
+											$newConceptsAddedArr[$finalConceptName]=1;
 										}
+										
+										
+										
+										///////////////////// ENRICH NEWLY ADDED CONCEPT
+										
+										$semanticTypeWordInfoArr = getWordnetEntryByWordString($englishConceptName);
+										
+										
+										
+										$conceptMeaningEN = getGlossaryFirstPart($semanticTypeWordInfoArr['GLOSSARY'][$wordnetPOS]);
+										
+										if (isFoundInTranslationTable($glossary))
+										{
+											$customTranslationEntry = getTranlationEntryByEntryKeyword($glossary);
+										
+											$glossaryAR = $customTranslationEntry['AR_TEXT'];
+										}
+										else
+										{
+											$tentitaveTranslation = translateText($glossary);
+										
+										
+										
+											addTranslationEntry($glossary, "DESC",$tentitaveTranslation );
+												
+											$glossaryAR = $tentitaveTranslation;
+										}
+										
+										
+										$enrichedFinalConcepts[$finalConceptName]['EXTRA']['MEANING_EN']['WORDNET']=$glossary;
+										$enrichedFinalConcepts[$finalConceptName]['EXTRA']['MEANING_AR']['WORDNET']=$glossaryAR;
+											
+										$synonymsArr = trim($semanticTypeWordInfoArr['SYNONYMS'][$wordnetPOS]);
+										
+										foreach($synonymsArr as  $synonym => $dummy)
+										{
+												
+											if ( $synonym!=$finalConceptName)
+											{
+												$enrichedFinalConcepts[$finalConceptName]['EXTRA']['AKA']['EN']['WORDNET']=cleanWordnetCollocation($synonym);
+										
+											}
+										
+										
+										}
+										
+										//////////////////////////////////////////////////////
+										
 									}
 									
 											
 										$relationType = "TAXONOMIC";
-										$res = addRelation($relationsArr,$relationType,$concept,"هو",$parentConceptName,"");
+										$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is kind of");
 										
 										if ( $res==true)
 										{
@@ -2388,7 +2526,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 									//echoN("------$synonym!=$conceptNameEn");
 									if ( $synonym!=$conceptNameEn)
 									{
-										$enrichedFinalConcepts[$concept]['EXTRA']['AKA']['EN'][]=cleanWordnetCollocation($synonym);
+										$enrichedFinalConcepts[$concept]['EXTRA']['AKA']['EN']['WORDNET']=cleanWordnetCollocation($synonym);
 										
 									}
 									
@@ -2408,18 +2546,43 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 												
 											$semanticType = ucfirst(substr($semanticType, strpos($semanticType, ".")+1));
 											
-											$glossary = $relArr['GLOSSARY'];
+
+											
+											$glossary = getGlossaryFirstPart($relArr['GLOSSARY']);
 											
 											$hypernym = key($wordsArr);
+											
+											echoN("==|$hypernym|");
 											
 												if ( !isset($handledSemanticTypes[$hypernym]))
 												{
 													
 													$handledSemanticTypes[$hypernym] = 1;
 														
-													$parentConceptName = cleanWordnetCollocation($hypernym);
+													$englishConceptName = cleanWordnetCollocation($hypernym);
+													
+													$finalConceptName = $englishConceptName;
 														
-													if ( !isset($finalConcepts[$hypernym]))
+													if (isFoundInTranslationTable($englishConceptName))
+													{
+														$customTranslationEntry = getTranlationEntryByEntryKeyword($englishConceptName);
+													
+														$finalConceptName = $customTranslationEntry['AR_TEXT'];
+													}
+													else
+													{
+														$tentitaveTranslation = translateText($englishConceptName);
+													
+													
+													
+														addTranslationEntry($englishConceptName, "CONCEPT",$tentitaveTranslation );
+														
+														$finalConceptName = $tentitaveTranslation;
+													}
+													
+													
+													// DIDN'T FIND NEITHER ARABIC OR ENGLISH CONCEPTS IN FINAL CONCEPTS LIST
+													if ( !isset($finalConcepts[$finalConceptName]))
 													{
 															
 															
@@ -2431,26 +2594,51 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 														//$parentConceptEN = ucfirst($parentConceptEN);
 														$conceptType = "T-BOX";
 													
+														
+														
+												
 													
-														$res = addNewConcept($enrichedFinalConcepts,$parentConceptName,$conceptType,$exPhase,1 ,$parentConceptName);
+														$res = addNewConcept($enrichedFinalConcepts,$finalConceptName,$conceptType,$exPhase,1 ,$englishConceptName);
 													
 														if ( $res==true)
 														{
 															
 															$newConceptsAdded++;
 																
-															$newConceptsAddedArr[$parentConceptName]=1;
+															$newConceptsAddedArr[$finalConceptName]=1;
 														}
 														
-														$enrichedFinalConcepts[$parentConceptName]['EXTRA']['MEANING_EN']['WORDNET']=$glossary;
+														$enrichedFinalConcepts[$finalConceptName]['EXTRA']['MEANING_EN']['WORDNET']=$glossary;
 														
+														
+														if (isFoundInTranslationTable($glossary))
+														{
+															$customTranslationEntry = getTranlationEntryByEntryKeyword($glossary);
+														
+															$glossaryAR = $customTranslationEntry['AR_TEXT'];
+														}
+														else
+														{
+															$tentitaveTranslation = translateText($glossary);
+																
+																
+																
+															addTranslationEntry($glossary, "DESC",$tentitaveTranslation );
+															
+															$glossaryAR = $tentitaveTranslation;
+														}
+														
+														
+														
+														$enrichedFinalConcepts[$finalConceptName]['EXTRA']['MEANING_AR']['WORDNET']=$glossaryAR;
+													
 														
 														foreach($wordsArr as  $synonym => $dummy)
 														{
 															
 															if ( $synonym!=$parentConceptName)
 															{
-																$enrichedFinalConcepts[$parentConceptName]['EXTRA']['AKA']['EN'][]=cleanWordnetCollocation($synonym);
+																$enrichedFinalConcepts[$finalConceptName]['EXTRA']['AKA']['EN']['WORDNET']=cleanWordnetCollocation($synonym);
 														
 															}
 																
@@ -2461,7 +2649,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 														
 														
 													$relationType = "TAXONOMIC";
-													$res = addRelation($relationsArr,$relationType,$concept,"هو",$parentConceptName,"");
+													$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is kind of");
 													
 													if ( $res==true)
 													{
@@ -2494,18 +2682,137 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 						echoN("New Concepts Added:$newConceptsAdded");
 						echoN("New Relations Added:$newRelationsAdded");
 						
-						preprint_r($TRANSLATION_CACHE_EN_AR);
+						
+						
 						preprint_r($newConceptsAddedArr);
 						preprint_r($enrichedFinalConcepts);
+				
 						
 						
-						file_put_contents("../data/cache/translation.en.ar", serialize($TRANSLATION_CACHE_EN_AR));
 							
 						file_put_contents("../data/ontology/temp.final.concepts.stage6", serialize($enrichedFinalConcepts));
-						
-							
-						
 						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						
+					}
+					
+					
+					if ($FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS)
+					{
+						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage6"));
+
+						
+						$conceptsRemoved=0;
+						$relationsRemoved = 0;
+
+						$filteredConcepts = array();
+						
+
+						
+						$EXCLUDED_CONCEPTS = loadExcludedConceptsArr();
+						
+						preprint_r($EXCLUDED_CONCEPTS);
+						
+						/// CONCEPTS
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+								
+						
+								
+							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameAr  = $concept;
+							
+							//echoN("$conceptNameAr|$conceptNameEn|".isset( $EXCLUDED_CONCEPTS[$conceptNameAr]));
+							
+							if (isset( $EXCLUDED_CONCEPTS[$conceptNameAr]) || isset( $EXCLUDED_CONCEPTS[$conceptNameEn]) )
+							{
+								
+								$conceptsRemoved++;
+								continue;
+							}
+
+							
+							
+							$filteredConcepts[$concept]=$coneptArr;
+							
+							
+						}
+						
+						
+						/// RELATIONS FILTER
+						
+						$RELATIONS_EXCLUSION_RULES = array();
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"ابن","OBJECT"=>"الله");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"الله","VERB"=>"*","OBJECT"=>"الشخص");
+						
+						
+						
+						$filteredRelationsArr = array();
+						
+						foreach($relationsArr as $hash => $relationsArr)
+						{
+							$relationsType = $relationsArr['TYPE'];
+							
+							$subject = 	$relationsArr['SUBJECT'];
+							$object = $relationsArr['OBJECT'];
+							$verbSimple = $relationsArr['VERB'];
+							
+							
+							if ( $subject==$object)
+							{
+								$relationsRemoved++;
+								continue;
+							}
+							
+							echoN("$subject|$object|".isset($EXCLUDED_CONCEPTS[$subject]));
+							
+							// IF CONCEPTS ARE EXCLUDED, RELATIONS ARE ALSO EXSCLUDED
+							if ( isset($EXCLUDED_CONCEPTS[$subject]) || isset($EXCLUDED_CONCEPTS[$object]))
+							{
+								$relationsRemoved++;
+								continue;
+							}
+								
+							
+							$ruleFlag = false;
+							foreach($RELATIONS_EXCLUSION_RULES as $index=>$ruleArr)
+							{
+								if ( 
+									($ruleArr["SUBJECT"]=="*" || $ruleArr["SUBJECT"]==$subject) &&
+									($ruleArr["VERB"]=="*" || $ruleArr["VERB"]==$verbSimple) &&
+									($ruleArr["OBJECT"]=="*" || $ruleArr["OBJECT"]==$object) 
+						           )
+								   {
+								      $relationsRemoved++;
+								      $ruleFlag = true;
+									  break;
+								   }
+							}
+							
+							if ( $ruleFlag == true)
+							{
+								$relationsRemoved++;
+								continue;
+							}
+							
+							$filteredRelationsArr[$hash] = $relationsArr;
+							
+						}
+						
+						
+						
+						
+								
+						
+						echoN("Concepts Removed:$conceptsRemoved");
+						echoN("Relations Removed:$relationsRemoved");
+
+						echoN(count($filteredRelationsArr));
+						
+						
+						
+						file_put_contents("../data/ontology/temp.final.concepts.stage7", serialize($filteredConcepts));
+						file_put_contents("../data/ontology/temp.final.relations", serialize($filteredRelationsArr));
 						
 					}
 					
@@ -2514,12 +2821,10 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 					
 					
 					
-					
-					
-					
 					//////////// COPY/FI FILIZE FINAL CONCEPTS /////////////////////////////
+					persistTranslationTable();
 					
-					$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage6"));
+					$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage7"));
 					
 					file_put_contents("../data/ontology/temp.final.concepts.final", serialize($finalConcepts));
 					
