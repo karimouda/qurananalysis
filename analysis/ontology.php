@@ -55,7 +55,9 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 								<td >
 
   				   						 
-  				   						 <?php  $finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts")); ?>
+  				   						 <?php  
+  				   						 $finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.final")); 
+  				   						 ?>
   				   						 
   				   						 <table id='ontology-concepts-table'>
   				   						 <tr>
@@ -97,6 +99,10 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 									
 										<?php 
 										 $relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+										 
+										 //preprint_r($finalConcepts);
+										 //preprint_r($relationArr);
+										 
 										 
 										 ?>
 										 <table id='ontology-concepts-table'>

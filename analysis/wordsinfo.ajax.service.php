@@ -13,6 +13,15 @@ if ( isset($_GET['lang']) )
 loadModels("core,search,qac",$lang);
 
 
+$WORDS_TRANSLATIONS_EN_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
+
+$WORDS_TRANSLATIONS_AR_EN = apc_fetch("WORDS_TRANSLATIONS_AR_EN");
+
+
+
+$WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
+
+
 
 $word = $_GET['word'];
 
@@ -40,6 +49,8 @@ $word = $_GET['word'];
 		//preprint_r($versesArr);
 		
 		
+		
+		$wordUthmani = $wordInfoArr['WORD_UTHMANI'];
 					
 ?>
 					
@@ -62,7 +73,7 @@ $word = $_GET['word'];
 							Uthmani
 						</th>
 						<td>
-							<?=$wordInfoArr['WORD_UTHMANI']?>
+							<?=$wordUthmani?>
 						</td>
 					</tr>
 		
@@ -89,10 +100,10 @@ $word = $_GET['word'];
 							<?=$wordInfoArr['BUCKWALTER']?>
 						</td>
 						<th>
-							Translation
+							Transliteration
 						</th>
 						<td>
-							<?=""?>
+							<?=$WORDS_TRANSLITERATION[$wordUthmani]?>
 						</td>
 					</tr>
 					<tr>	
@@ -100,7 +111,7 @@ $word = $_GET['word'];
 							English Translation
 						</th>
 						<td>
-							<?=""?>
+							<?=cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$wordUthmani])?>
 						</td>
 						<th>
 							Word Root
