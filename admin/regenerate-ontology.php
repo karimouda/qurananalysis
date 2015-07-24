@@ -7,6 +7,13 @@ require_once("../libs/pos.tagger.lib.php");
 require_once("../libs/ontology.lib.php");
 require_once("../libs/custom.translation.table.lib.php");
 
+require_once("../libs/owllib/OWLLib.php");
+require_once("../libs/owllib/reader/OWLReader.php");
+require_once("../libs/owllib/memory/OWLMemoryOntology.php");
+require_once("../libs/owllib/writer/OWLWriter.php");
+
+
+$ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 
 
 
@@ -111,18 +118,19 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	$GENERATE_FINAL_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  				  	
 			  	
-			  	$GENERATE_TAXONOMIC_RELATIONS = TRUE;
-			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
+			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;
 			  	
 			  	
-			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = TRUE;
+			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = FALSE;
 			  	
-			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = TRUE;
-			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = TRUE;
-			  	$ENRICH_CONCEPTS_METADATA_WORDNET = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = FALSE;
+			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = FALSE;
+			  	$ENRICH_CONCEPTS_METADATA_WORDNET = FALSE;
 			  	
-			  	$FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;;
+			  	$FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;
 			  	
+			  	$GENERATE_OWL_FILE = TRUE;
 			  	
 			
 			  	
@@ -774,6 +782,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						$quranaConceptsListArr  = $MODEL_QURANA['QURANA_CONCEPTS'];
 						
+						// "Thing" Concept
+						addNewConcept($finalConcepts, "شيء", "T-BOX", "MANUAL", 0, "Thing");
+						
+						
 						$amxConceptFreq = -99;
 						//$finalTerms
 						foreach ($commonConceptsWithQurana as $concept=>$termArr)
@@ -831,8 +843,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					
 						//preprint_r($finalConcepts);
 						
-						file_put_contents("../data/ontology/temp.final.concepts.stage1", serialize($finalConcepts));
-						file_put_contents("../data/ontology/temp.all.terms", serialize($finalTerms));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage1", serialize($finalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.all.terms", serialize($finalTerms));
 					}
 					
 						
@@ -842,10 +854,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						
 						
-					
+					/*
+					 * ONE NON-TAX IS STILL INSIDE
+					 * // TODO:TO BE MOVED or RMEOVED
+					 */
 					if ( $GENERATE_TAXONOMIC_RELATIONS )
 					{
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage1"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage1"));
 						
 						
 						////////////////////////// ADJECTIVE HYPERNYMS ////////////////////////////////
@@ -864,7 +879,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							if ( $exPhase=="ADJECTIVE")
 							{
 								$type = "TAXONOMIC";
-								addRelation($relationsArr,$type,$concept,"هى",$adjName,"ADJ","is kind of");
+								addRelation($relationsArr,$type,$concept,"هى",$adjName,"ADJ","is a");
 							}
 						}
 						
@@ -893,7 +908,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj1]) )
 								{
 										$hasAttribute = "من صفاتة";
-										$type = "TAXONOMIC";
+										$type = "NON-TAXONOMIC";
 										addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj1,"ADJ","has attribute");
 									
 								}
@@ -901,7 +916,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj2]) )
 								{
 									$hasAttribute = "من صفاتة";
-									$type = "TAXONOMIC";
+									$type = "NON-TAXONOMIC";
 									addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj2,"ADJ","has attribute");
 										
 								}
@@ -943,9 +958,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								}
 					
 						
-									$hasType = "نوع من";
+									$hasType = "هى";
 									$type = "TAXONOMIC";
-									addNewRelation($relationsArr,$type,$subclassConcept,$hasType,$parentConcept,"$pos","is kind of");
+									addRelation($relationsArr,$type,$subclassConcept,$hasType,$parentConcept,"$pos","is a");
 										
 							
 							}
@@ -957,8 +972,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 
 						///////////////////////////////////////////////////////////////////
 						
-						file_put_contents("../data/ontology/temp.final.concepts.stage2", serialize($finalConcepts));
-						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2", serialize($finalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
 						
 					}	
 						
@@ -1483,7 +1498,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 				
 						
 						/*
-						$rules = file("../data/ontology/lcs.postags.2plus.all.rules",FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
+						$rules = file("$ONTOLOGY_EXTRACTION_FOLDER/lcs.postags.2plus.all.rules",FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
 						
 						preprint_r($rules);
 						
@@ -1769,7 +1784,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationsArr));
 							
 						
-						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
 						
 					
 					}
@@ -1780,9 +1795,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					 
 					if ( $EXTRACT_NEWCONCEPTS_FROM_RELATIONS )
 					{
-						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage2"));
-						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2"));
+						$finalTerms =  unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.all.terms"));
 						
 			
 						
@@ -1870,7 +1885,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							}
 							
 							
-							file_put_contents("../data/ontology/temp.final.concepts.stage3", serialize($finalConcepts));
+							file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage3", serialize($finalConcepts));
 						}
 						
 						echoN("Concepts Added: $notInCounceptsCounter");
@@ -1887,7 +1902,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					
 					if ( $ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION)
 					{
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage3"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage3"));
 						
 			
 				
@@ -1940,7 +1955,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						echoN(count($finalConcepts));
 						//exit;
 						
-						file_put_contents("../data/ontology/temp.final.concepts.stage4", serialize($finalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage4", serialize($finalConcepts));
 
 					}
 					
@@ -1954,9 +1969,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					{
 						$newConcepts = array();
 						$dbpediaCacheArr = array();
-						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage4"));
-						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage4"));
+						$finalTerms =  unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.all.terms"));
 						
 						$dbpediaCacheArr = unserialize(file_get_contents("../data/cache/dbpedia.resources"));
 						
@@ -2192,7 +2207,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 											
 											
 												$type = "TAXONOMIC";
-												addRelation($relationsArr,$type,$concept,"هو",$parentConceptName,"is kind of");
+												addRelation($relationsArr,$type,$concept,"هو",$parentConceptName,"is a");
 												
 											//////////////////////////////////////////////////////
 											
@@ -2258,19 +2273,19 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						file_put_contents("../data/cache/dbpedia.resources", serialize($dbpediaCacheArr));
 						
 					
-						file_put_contents("../data/ontology/temp.final.concepts.stage5", serialize($enrichedFinalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage5", serialize($enrichedFinalConcepts));
 						
 			
 						
-						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
 					}
 					
 					
 					if ( $ENRICH_CONCEPTS_METADATA_WORDNET)
 					{
-						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage5"));
-						$finalTerms =  unserialize(file_get_contents("../data/ontology/temp.all.terms"));
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage5"));
+						$finalTerms =  unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.all.terms"));
 
 						
 						
@@ -2408,6 +2423,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									
 									if ( isset($handledSemanticTypes[$semanticType])) continue;
 									
+									if ( isExcludableSemanticType($semanticType)) continue;
+									
 									$handledSemanticTypes[$semanticType] = 1;
 									
 
@@ -2508,7 +2525,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									
 											
 										$relationType = "TAXONOMIC";
-										$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is kind of");
+										$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is a");
 										
 										if ( $res==true)
 										{
@@ -2649,7 +2666,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 														
 														
 													$relationType = "TAXONOMIC";
-													$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is kind of");
+													$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is a");
 													
 													if ( $res==true)
 													{
@@ -2690,17 +2707,19 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						
 							
-						file_put_contents("../data/ontology/temp.final.concepts.stage6", serialize($enrichedFinalConcepts));
-						file_put_contents("../data/ontology/temp.final.relations", serialize($relationsArr));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage6", serialize($enrichedFinalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
 						
 					}
 					
 					
 					if ($FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS)
 					{
-						$relationsArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
-						$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage6"));
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage6"));
 
+						//preprint_r($relationsArr);
+						//preprint_r($finalConcepts);
 						
 						$conceptsRemoved=0;
 						$relationsRemoved = 0;
@@ -2722,7 +2741,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
 							$conceptNameAr  = $concept;
 							
-							//echoN("$conceptNameAr|$conceptNameEn|".isset( $EXCLUDED_CONCEPTS[$conceptNameAr]));
+							echoN("$conceptNameAr|$conceptNameEn|".isset( $EXCLUDED_CONCEPTS[$conceptNameAr]));
 							
 							if (isset( $EXCLUDED_CONCEPTS[$conceptNameAr]) || isset( $EXCLUDED_CONCEPTS[$conceptNameEn]) )
 							{
@@ -2749,13 +2768,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						$filteredRelationsArr = array();
 						
-						foreach($relationsArr as $hash => $relationsArr)
+						foreach($relationsArr as $hash => $relationArr)
 						{
-							$relationsType = $relationsArr['TYPE'];
+							$relationsType = $relationArr['TYPE'];
 							
-							$subject = 	$relationsArr['SUBJECT'];
-							$object = $relationsArr['OBJECT'];
-							$verbSimple = $relationsArr['VERB'];
+							$subject = 	$relationArr['SUBJECT'];
+							$object = $relationArr['OBJECT'];
+							$verbSimple = $relationArr['VERB'];
 							
 							
 							if ( $subject==$object)
@@ -2795,7 +2814,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								continue;
 							}
 							
-							$filteredRelationsArr[$hash] = $relationsArr;
+							$filteredRelationsArr[$hash] = $relationArr;
 							
 						}
 						
@@ -2811,8 +2830,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						
 						
-						file_put_contents("../data/ontology/temp.final.concepts.stage7", serialize($filteredConcepts));
-						file_put_contents("../data/ontology/temp.final.relations", serialize($filteredRelationsArr));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7", serialize($filteredConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($filteredRelationsArr));
 						
 					}
 					
@@ -2821,14 +2840,217 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					
 					
 					
+					
+					
 					//////////// COPY/FI FILIZE FINAL CONCEPTS /////////////////////////////
-					persistTranslationTable();
+					//persistTranslationTable();
 					
-					$finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.stage7"));
+					$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7"));
 					
-					file_put_contents("../data/ontology/temp.final.concepts.final", serialize($finalConcepts));
+					file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final", serialize($finalConcepts));
 					
 					////////////////////////////////////////////////////////////////////////
+					
+					
+					if ($GENERATE_OWL_FILE)
+					{
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final"));
+			
+						preprint_r($relationsArr);
+					
+						
+						///////// ONTOLOGY MODEL INIT
+						$writer = new OWLWriter();
+						$ontology = new OWLMemoryOntology();
+						$thingClassName = "Thing";
+						//$thingClassID = "$qaOntologyNamespace#$thingClassName";
+						$ontology->setNamespace($qaOntologyNamespace);
+						////////////////////////////
+					
+					
+						///////// ADD COMMON PROPERTIES
+
+						////////////////////////////
+					
+						///////// ADD ANNOTATION PROPERTIES
+						$ontology->createAnnotationProperty("frequency");
+						$ontology->createAnnotationProperty("pos");
+						$ontology->createAnnotationProperty("weight");
+						$ontology->createAnnotationProperty("transliteration");
+						$ontology->createAnnotationProperty("meaning_wordnet_en");
+						$ontology->createAnnotationProperty("meaning_wordnet_translated_ar");
+						$ontology->createAnnotationProperty("meaning_wordnet_translated_ar");
+						
+						
+						$ontology->createAnnotationProperty("lemma");
+						$ontology->createAnnotationProperty("root");
+						$ontology->createAnnotationProperty("dbpedia_link");
+						$ontology->createAnnotationProperty("wikipedia_link");
+						$ontology->createAnnotationProperty("image_url");
+						$ontology->createAnnotationProperty("long_description_en");
+						$ontology->createAnnotationProperty("long_description_ar");
+						
+						$ontology->createAnnotationProperty("synonym_wordnet_1");
+						$ontology->createAnnotationProperty("synonym_qa_1");
+						
+						
+						/////////////////////////////
+						
+						//////////  Things class
+						$ontology->createClass($thingClassName);
+						
+						
+						$counter++;
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+							
+							
+							$conceptType  = $coneptArr['CONCEPT_TYPE'];
+							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameAr  = $concept;
+							
+							$classID = getXMLFriendlyString($conceptNameAr);
+							
+							$classOrInstanceName = $classID;
+							if ( $conceptType=="T-BOX")
+							{
+								
+									
+								$ontology->createClass($classOrInstanceName);
+							}
+							else
+							{
+								$classOrInstanceName = $classID;
+								$ontology->addInstance($classOrInstanceName, $thingClassName , $properties);
+							}
+							
+							
+							$ontology->addLabel($classOrInstanceName, "AR", $conceptNameAr);
+							$ontology->addLabel($classOrInstanceName, "EN", $conceptNameEn);
+							
+					
+							
+							$conceptType  = $coneptArr['CONCEPT_TYPE'];
+							$extractionPhase  = $coneptArr['EXTRACTION_PHASE'];
+							$frequency  = $coneptArr['FREQ'];
+							
+							$transliteration = $coneptArr['EXTRA']['TRANSLITERATION_EN'];
+							$meaningArArr  = $coneptArr['EXTRA']['MEANING_AR'];
+							$meaningEnArr  = $coneptArr['EXTRA']['MEANING_EN'];
+							$pos  = $coneptArr['EXTRA']['POS'];
+							$weight  = $coneptArr['EXTRA']['WEIGHT'];
+							
+							
+							$lemma = $coneptArr['EXTRA']['LEM'];
+							$root = $coneptArr['EXTRA']['ROOT'];
+							
+							$dbPediaLink = $coneptArr['EXTRA']['DBPEDIA_LINK'];
+							
+							$wikipediaLink = $coneptArr['EXTRA']['WIKIPEDIA_LINK'];
+							
+							$imageURL =  $coneptArr['EXTRA']['IMAGES']['DBPEDIA'];
+							$lonDescEN = $coneptArr['EXTRA']['DESC_EN']['DBPEDIA'];
+							$lonDescAR = $coneptArr['EXTRA']['DESC_AR']['DBPEDIA'];
+							
+							$alsoKnownAsENArr = $coneptArr['EXTRA']['AKA']['EN'];
+							$alsoKnownAsARArr = $coneptArr['EXTRA']['AKA']['AR'];
+							
+							
+							$ontology->addAnnotation($classOrInstanceName,"EN","frequency",$frequency);
+							$ontology->addAnnotation($classOrInstanceName,"EN","weight",$frequency);
+							$ontology->addAnnotation($classOrInstanceName,"EN","pos",$pos);
+							$ontology->addAnnotation($classOrInstanceName,"EN","transliteration",htmlspecialchars($transliteration));
+							
+							$ontology->addAnnotation($classOrInstanceName,"AR","lemma",$lemma);
+							$ontology->addAnnotation($classOrInstanceName,"AR","root",$root);
+							
+							
+							$ontology->addAnnotation($classOrInstanceName,"EN","meaning_wordnet_en",$meaningEnArr['WORDNET']);
+							$ontology->addAnnotation($classOrInstanceName,"AR","meaning_wordnet_translated_ar",$meaningArArr['WORDNET']);
+							
+							$ontology->addAnnotation($classOrInstanceName,"EN","dbpedia_link",$dbPediaLink);
+							$ontology->addAnnotation($classOrInstanceName,"EN","wikipedia_link",$wikipediaLink);
+							$ontology->addAnnotation($classOrInstanceName,"EN","image_url",$imageURL);
+							$ontology->addAnnotation($classOrInstanceName,"EN","long_description_en",$lonDescEN);
+							$ontology->addAnnotation($classOrInstanceName,"AR","long_description_ar",$lonDescAR);
+							
+							$counter = 0;
+							foreach($alsoKnownAsENArr as $source=>$synonym)
+							{
+								$counter++;
+								$ontology->addAnnotation($classOrInstanceName,"EN","synonym_$source_$counter",$synonym);
+							}
+							$counter = 0;
+							foreach($alsoKnownAsARArr as $source=>$synonym)
+							{
+								$counter++;
+								$ontology->addAnnotation($classOrInstanceName,"AR","synonym_$source_$counter",$synonym);
+							}
+							
+							
+							
+						}
+						
+					
+						foreach($relationsArr as $hash => $relationArr)
+						{
+							$relationsType = $relationArr['TYPE'];
+								
+							$subject = 	$relationArr['SUBJECT'];
+							$object = $relationArr['OBJECT'];
+							$verbSimple = $relationArr['VERB'];
+							
+							$subjectID = getXMLFriendlyString($subject);
+							$objectID = getXMLFriendlyString($object);
+							$verbID = getXMLFriendlyString($verbSimple);
+							
+							echoN("$subjectID|$verbSimple|$objectID|$relationsType");
+							
+							if ( $relationsType=="TAXONOMIC")
+							{
+								
+								
+								
+								
+								
+								$ontology->addInstance($subjectID, $objectID, null);
+							}
+							else
+							{
+								//add object and data properties
+								
+								$propertyObj = $ontology->getProperty($verbID);
+								
+								if ( $propertyObj==null)
+								{
+									$propertyObj = $ontology->createProperty($verbID, "", "", false);
+								}
+								
+								$properties = array($verbID=>array($objectID));
+	
+
+								$ontology->addProperty($subjectID,$properties);
+								
+								
+							}
+							
+							
+							
+							
+							
+							
+						}
+
+					
+						$writer->writeToFile($qaOntologyFile, $ontology, "QA Ontology - www.qurananalysis.com","1.0");
+					
+					
+						//echo htmlentities(file_get_contents($qaOntologyFile));
+						//var_dump($ontology->getAllClasses());
+					
+					
+					}
 				?>
 				
 					
