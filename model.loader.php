@@ -3,7 +3,12 @@ require_once(dirname(__FILE__)."/global.settings.php");
 require_once(dirname(__FILE__)."/libs/core.lib.php");
 require_once(dirname(__FILE__)."/libs/wordnet.lib.php");
 
+///////// ONTOLOGY 
+require_once("../libs/owllib/OWLLib.php");
+require_once("../libs/owllib/reader/OWLReader.php");
+require_once("../libs/owllib/memory/OWLMemoryOntology.php");
 
+require_once("../libs/ontology.lib.php");
 
 
 
@@ -49,7 +54,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	global $UTHMANI_TO_SIMPLE_WORD_MAP, $numberOfSuras,$pauseMarksFile;
 	global $TRANSLATION_MAP_EN_TO_AR,$TRANSLATION_MAP_AR_TO_EN,$TRANSLITERATION_WORDS_MAP,$TRANSLITERATION_VERSES_MAP;
 	global $wordByWordTranslationFile,$transliterationFile;
-	global $MODEL_WORDNET;
+	global $MODEL_WORDNET,$qaOntologyNamespace,$qaOntologyFile,$is_a_relation_name_ar,$is_a_relation_name_en;
+	global $thing_class_name_ar,$thing_class_name_en;
 	
 
 	//not working
@@ -201,6 +207,284 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 	}
 	##############################################
+	
+	
+	if ( false )
+	{
+	///  LOAD ONTOLOGY
+	
+	
+	$reader = new OWLReader();
+	$ontology = new OWLMemoryOntology();
+	$thingClassName = "$thing_class_name_ar";
+	$ontology->setNamespace($qaOntologyNamespace);
+	
+	$reader->readFromFile($qaOntologyFile, $ontology);
+	
+
+	
+	//preprint_r($ontology->{'owl_data'}['classes']);
+	
+	//preprint_r($ontology->{'owl_data'}['properties']);
+	//preprint_r($ontology->{'owl_data'}['labels']);
+	
+	//preprint_r($ontology->{'owl_data'}['annotations']);
+	//preprint_r($ontology->{'owl_data'}['instances']);
+	
+	$classes = $ontology->{'owl_data'}['classes'];
+	$instances = $ontology->{'owl_data'}['instances'];
+	
+
+	
+	$qaOntologyConceptsArr = array();
+	
+	$qaOntologyRelationsArr = array();
+	
+	$relationsCount =0;
+	
+	foreach($classes as $className => $infoArr)
+	{
+		
+		$className = stripOntologyNamespace($className);
+		
+		$qaOntologyConceptsArr[$className]=array();
+		
+		
+		
+		foreach($infoArr[0]['properties'] as $index => $propertiesArr)
+		{
+
+		
+			
+			//preprint_r($propertiesArr);
+			//echoN($instanceName);
+		
+			//echoN("$className:///");
+			//preprint_r($propertiesArr);
+			
+		
+			/** INCASE THIS INSTANCE HAS MULTIPLE PROPERTIES WITH SAME VERB **/
+			foreach($propertiesArr as $index2 => $onePropertyArr)
+			{
+				if ( empty($onePropertyArr)) continue;
+		
+				
+				$verb = key($onePropertyArr);
+				$objectClassArr = current($onePropertyArr);
+					
+				$objectConceptName = stripOntologyNamespace($objectClassArr[0]);
+					
+				echoN("CLASS:***** $verb -> $objectConceptName");
+					
+				$attributedArr = next($onePropertyArr);
+					
+				$freq = $attributedArr['frequency'];
+				$engTranslation = $attributedArr['verb_translation_en'];
+				$verbUthmani = $attributedArr['verb_uthmani'];
+					
+				$qaOntologyRelationsArr[]= array("subject"=>$className,"verb"=>$verb,
+						"object"=>$objectConceptName,"frequency"=>$freq,
+						"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
+				$relationsCount++;
+		
+			}
+		
+		
+			
+		}
+	}
+	
+
+	
+	
+	foreach($instances as $instanceName => $intancesArr)
+	{
+		
+		
+		foreach($intancesArr as $index => $infoArr)
+		{
+			
+		
+		
+			
+			$subjectConceptName = stripOntologyNamespace($instanceName);
+			
+			$parent = stripOntologyNamespace($infoArr['class']);
+			
+			$qaOntologyRelationsArr[]= array("subject"=>$subjectConceptName,"verb"=>"$is_a_relation_name_ar","object"=>$parent,"verb_tranbslation_en"=>"$is_a_relation_name_en");
+			
+			
+			if ( $parent!=$thing_class_name_ar)
+			{
+				$relationsCount++;
+			}
+			
+			$propertiesArr = $infoArr['properties'];
+			//echoN($instanceName);
+			
+			echoN("$instanceName:@@@");
+			preprint_r($propertiesArr);
+		
+			/** INCASE THIS INSTANCE HAS MULTIPLE PROPERTIES WITH SAME VERB **/
+			foreach($propertiesArr as $index2 => $onePropertyArr)
+			{
+		
+					if ( empty($onePropertyArr)) continue;
+				
+					$verb = key($onePropertyArr);
+					$objectClassArr = current($onePropertyArr);
+					
+					$objectConceptName = stripOntologyNamespace($objectClassArr[0]);
+					
+					echoN("***** $verb -> $objectConceptName");
+					
+					$attributedArr = next($onePropertyArr);
+					
+					$freq = $attributedArr['frequency'];
+					$engTranslation = $attributedArr['verb_translation_en'];
+					$verbUthmani = $attributedArr['verb_uthmani'];
+					
+					$qaOntologyRelationsArr[]= array("subject"=>$subjectConceptName,"verb"=>$verb,
+												"object"=>$objectConceptName,"frequency"=>$freq,
+												"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
+					$relationsCount++;
+				
+			}
+
+			
+			$qaOntologyConceptsArr[$subjectConceptName]=array();
+		}
+		
+		
+	}
+
+	
+	
+	
+	
+	
+
+	
+	
+	
+	foreach($qaOntologyConceptsArr as $conceptName => $infoArr)
+	{
+		$fullConceptName = $qaOntologyNamespace.$conceptName;
+		$labelsArr = $ontology->{'owl_data'}['labels'][$fullConceptName];
+		
+		foreach($labelsArr as $lang => $label)
+		{
+			$qaOntologyConceptsArr[$conceptName]['label_'.strtolower($lang)] = $label;
+		}
+		
+		// "Thing" does not have annotations
+		if ( isset($ontology->{'owl_data'}['annotations'][$fullConceptName]))
+		{
+			$annotationsArr = $ontology->{'owl_data'}['annotations'][$fullConceptName];
+			
+			foreach($annotationsArr as $index => $annotArr)
+			{
+				$key = $annotArr['KEY'];
+				$val = $annotArr['VAL'];
+				
+				$qaOntologyConceptsArr[$conceptName][$key] = $val;
+			}
+			
+		}
+		
+	}
+	
+	
+	////////// OUTPUT STATS
+	echoN("INSTANCES COUNT:".count($ontology->{'owl_data'}['instances']));
+	echoN("CLASSES COUNT:".count($ontology->{'owl_data'}['classes']));
+	echoN("PROPERTIES COUNT - DECLERATIONS ONLY:".count($ontology->{'owl_data'}['properties']));;
+	echoN("CONCEPTS COUNT:".count($qaOntologyConceptsArr));
+	echoN("RELATIONS COUNT:".$relationsCount);
+	preprint_r($qaOntologyRelationsArr);
+	//////////////////
+	
+	///////////// QUALITY CHECK CONCEPTS
+	$qaOntologyConceptsArr2 = array();
+	foreach($qaOntologyConceptsArr as $key => $val)
+	{
+		$newKey = strtr($key, "_", " ");
+		
+		$qaOntologyConceptsArr2[$newKey] = $value;
+	}
+	
+	$ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
+	$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final"));
+		
+	$diffArr = array_diff(array_keys($qaOntologyConceptsArr2),array_keys($finalConcepts));
+
+	echoN("OWL-PROPRIETARY-CONCEPTS-DIFF-COUNT:".COUNT($matchingTable));
+	preprint_r($diffArr);
+	//////////////////////////////////////////////////////////////
+	
+	
+	
+	//////// quality check relations
+	$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+	
+	$matchingTable = array();
+
+	foreach($qaOntologyRelationsArr as $index => $relArr)
+	{
+		$trippleStr =$relArr['subject']."->".$relArr['verb']."->".$relArr['object'];
+		
+		//since Thing relations are not in the list we are comparing with
+		if ( $relArr['object']==$thing_class_name_ar ) continue;
+	
+		$trippleStr = trim($trippleStr);
+		
+		$matchingTable[$trippleStr]++;
+	}
+	
+	
+	foreach($relationsArr as $index => $relArr)
+	{
+		$relArr['SUBJECT'] = strtr($relArr['SUBJECT'], " ", "_");
+		$relArr['VERB'] = strtr($relArr['VERB'], " ", "_");
+		$relArr['OBJECT'] = strtr($relArr['OBJECT'], " ", "_");
+		
+		$trippleStr =$relArr['SUBJECT']."->".$relArr['VERB']."->".$relArr['OBJECT'];
+		
+		$trippleStr = trim($trippleStr);
+	
+		$matchingTable[$trippleStr]++;
+	}
+	
+
+	
+	function filterFunc($v)
+	{
+		return	$v <=1;
+	}
+	
+	$matchingTable = array_filter($matchingTable, 'filterFunc');
+	
+	echoN("OWL-PROPRIETARY-RELATIONS-DIFF-COUNT:".count($matchingTable));
+	preprint_r($matchingTable);
+	//////////////////////////////////////////////
+	
+	//echoN( join("<br>",array_keys($qaOntologyConceptsArr)));
+	
+
+	
+	
+
+	
+	exit;
+	}
+	
+	////////////////////////////
+	
+	/// WORDNET
+	loadWordnet();
+	/////////////
+	
+
 	
 	//free resources
 	$quranMetaDataXMLObj = null;
@@ -387,9 +671,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	}
 	  
 	
-	/// WORDNET
-	loadWordnet();
-	/////////////
+
 
 	
 	

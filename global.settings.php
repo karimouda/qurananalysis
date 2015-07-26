@@ -46,7 +46,12 @@ $quranCorpusMorphologyFile = dirname(__FILE__)."/data/quranic-corpus-morphology-
 $quranaPronounResolutionConceptsFile = dirname(__FILE__)."/data/quran-pron/concepts.xml";
 $quranaPronounResolutionDataFileTemplate = dirname(__FILE__)."/data/quran-pron/pronxml-%s.xml";
 
-
+$qaOntologyFile =  dirname(__FILE__)."/data/ontology/qa.ontology.v1.owl";
+$qaOntologyNamespace = "http://qurananalysis.com/data/ontology/qa.ontology.v1.owl#";
+$is_a_relation_name_ar = "هو";
+$is_a_relation_name_en = "is a";
+$thing_class_name_ar = "شيء";
+$thing_class_name_en = "Thing";
 
 $englishResourceFile = dirname(__FILE__)."/data/resources.en";
 $arabicResourceFile = dirname(__FILE__)."/data/resources.ar";
@@ -76,6 +81,7 @@ $basmalaTextUthmani2 = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱ�
 $mandatoryStop = "ۘ";
 
 
+
 ## LOCATION SIGNIFICANT ##
 require_once($MAIN_ROOT_PATH."/libs/core.lib.php");
 require_once($MAIN_ROOT_PATH."/model.loader.php");
@@ -103,7 +109,7 @@ if ( isDevEnviroment() )
 					$isSevereError = true;
 					break;
 				default:
-					// do nothing
+					
 	
 			}
 		}
@@ -111,6 +117,7 @@ if ( isDevEnviroment() )
 		if ($isSevereError)
 		{
 			echo "SEVERE ERROR: ".$errorArr['message'];
+			preprint_r($errorArr);
 		}
 	}
 	
