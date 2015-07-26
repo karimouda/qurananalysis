@@ -23,7 +23,7 @@ class OWLTag
   	$this->current_tag = null;
   	$this->wants_more = true;
   	
-  	preprint_r($attributes);
+  	//preprint_r($attributes);
 	
 		if(array_key_exists($this->XML_BASE, $attributes))
 			$this->base = $attributes[$this->XML_BASE];
@@ -192,29 +192,29 @@ class OWLTag
   	$uri = preg_replace("/#:/", "#", $tag);
   	$namespace  = substr($tag,0, strpos($tag, "#:"));
   	
-  echoN("YY:$uri");
+  /*echoN("YY:$uri");
   echoN("TTT:$tag");
   echoN("BASE:$base");
   echoN("NS:$namespace");
-  
+  */
   	if(array_key_exists($tag, $this->tag_classes)){
-  		echoN("111:$tag");
+  		//echoN("111:$tag");
   		$obj = new $this->tag_classes[$tag]();
   	}
   	else if(array_key_exists($namespace, $this->tag_classes)){
-  		echoN("111-2:$namespace");
+  		//echoN("111-2:$namespace");
   		$obj = new $this->tag_classes[$namespace]();
   	}
   	else if($this->model->getClass($uri) != null){
-  		echoN("222");
+  		//echoN("222");
   		$obj = new OWLInstanceTag();
 		}
 		else if($this->model->getProperty($uri) != null){
-			echoN("333");
+			//echoN("333");
   		$obj = new OWLPropInstanceTag();
 		}
 		else{
-			echoN("444");
+			//echoN("444");
   		$obj = new OWLTag();
 		}
   		

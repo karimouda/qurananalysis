@@ -33,8 +33,8 @@ class OWLPropInstanceTag extends OWLTag
 		unset($attributes[$this->RDF_RESOURCE]);
 		array_push($this->resources, $attributes);
 		
-		echoN("PROCESSING $name");
-		preprint_r($this->resources);
+		//echoN("PROCESSING $name");
+		//preprint_r($this->resources);
   }
 
 
@@ -61,7 +61,7 @@ class OWLPropInstanceTag extends OWLTag
 	function processChild($child)
   {
  		$name = get_class($child);
- 		echoN("C".$name);
+ 		//echoN("C".$name);
   	if($name == "owlinstancetag"){
   		array_push($this->resources, $child->getID());
   	}

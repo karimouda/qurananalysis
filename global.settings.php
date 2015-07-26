@@ -14,7 +14,7 @@ $MAIN_JS_PATH = "/libs/js/main.js?bv=$BUILD_VERSION";
 
 $JQUERY_PATH = "/libs/js/jquery-2.1.1.min.js";
 
-$D3_PATH = "/libs/js/d3.min.js";
+$D3_PATH = "/libs/js/d3/d3.min.js";
 
 
 /*

@@ -1,6 +1,9 @@
 <?php 
 
-
+function convertConceptIDtoGraphLabel($conceptID)
+{
+	return ucfirst(str_replace("_", " ", $conceptID));;
+}
 function textToGraph($searchResultTextArr,$excludes,$capping=300)
 {
 	global $pauseMarksFile, $lang;
@@ -80,6 +83,83 @@ function textToGraph($searchResultTextArr,$excludes,$capping=300)
 	//preprint_r($graphLinks);
 	//preprint_r($graphNodes);
 	
+	return $graphObj;
+}
+
+function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq)
+{
+	global $lang;
+
+
+	$graphObj = array();
+	$graphObj["capped"]=0;
+
+	$graphNodes = array();
+	$graphLinks = array();
+
+
+	/** SHOULD BE ZERO BASED FOR D3 TO WORK - o.target.weight = NULL**/
+	$nodeSerialNumber = 0;
+
+
+
+	foreach($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptNameID => $conceptArr)
+	{
+
+			$conceptLabelAR = $conceptArr['label_ar'];
+			$conceptLabelEN = $conceptArr['label_en'];
+			$conceptFrequency = $conceptArr['frequency'];
+			$conceptWeight = $conceptArr['weight'];
+			
+			if ( $conceptFrequency< $minFreq) continue;
+				
+			if ( !isset($graphNodes[$conceptNameID]) )
+			{
+				$graphNodes[$conceptNameID]= array("id"=>$nodeSerialNumber++,"word"=>$conceptLabelAR,
+						"size"=>$conceptWeight,"x"=>rand(200,800),"y"=>rand(200,600));
+			}
+
+
+	}
+	
+	
+	
+		foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $index => $relArr)
+		{
+
+			$subject = $relArr['subject'];
+			$verbAR = $relArr['verb'];
+			$verbEN = $relArr['verb_translation_en'];
+			$verbUthmani = $relArr['verb_uthmani'];
+			$relFreq = $relArr['frequency'];
+			$object = $relArr['object'];
+			
+			if ( isset($graphNodes[$subject]) && isset($graphNodes[$object]) )
+			{
+				$graphLinks[]=array("source"=>$graphNodes[$subject]["id"],
+								    "target"=>$graphNodes[$object]["id"]);
+			}
+			
+		
+				
+		}
+
+		
+		$graphNodesArr = array();
+		
+		foreach($graphNodes as $word => $nodeArr)
+		{
+		
+			$graphNodesArr[] = $nodeArr;
+		
+		}
+
+
+
+	$graphObj["nodes"]=$graphNodesArr;
+	$graphObj["links"]=$graphLinks;
+
+
 	return $graphObj;
 }
 

@@ -20,7 +20,7 @@ class OWLInstanceTag extends OWLTag
   	OWLTag::create($model, $name, $attributes, $base);
 
   	
-  	echoN("ZZ:".$attributes[$this->RDF_ID]);
+  	//echoN("ZZ:".$attributes[$this->RDF_ID]);
 
   	
   	
@@ -34,7 +34,7 @@ class OWLInstanceTag extends OWLTag
  
   	$this->class_id = preg_replace("/#:/", "#", $name);
   	
-  	echoN("XX:".$this->class_id);
+  	//echoN("XX:".$this->class_id);
   	$this->properties = array();
   	
   }
@@ -50,8 +50,8 @@ class OWLInstanceTag extends OWLTag
   
 		if(!$this->wantsMore()){ 	
 			
-			echoN("$this->id, $this->class_id,");
-			preprint_r($this->properties);
+			//echoN("$this->id, $this->class_id,");
+			//preprint_r($this->properties);
 			
 			$this->model->addInstance($this->id, $this->class_id, $this->properties);
 		}
@@ -66,11 +66,11 @@ class OWLInstanceTag extends OWLTag
 	function processChild($child)
   {
  		$name = get_class($child); 
- 		echoN("PROCESS_CHILD:$name");
+ 		//echoN("PROCESS_CHILD:$name");
  		
   		if($name == "OWLPropInstanceTag"){
   			
-  			echoN("HERE");
+  			//echoN("HERE");
 	  	$property_id = preg_replace("/#:/", "#", $child->getName());
 	  	
 	  	$propArr = $child->getResources();

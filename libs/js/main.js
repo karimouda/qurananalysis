@@ -124,6 +124,7 @@ function drawChart(jsonDATA,width,height,xAxisMin,xAxisMax,chartDivId,xAxisLabel
 
 
 
+
 function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,capping)
 {
 
@@ -150,13 +151,13 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 	
 	
-	 
+
 	
 		var force = d3.layout.force()
 	    .size([width, height])
-	    .charge(function(d) { return d.size*-10})
-	    .linkDistance(100)
-	    .gravity(.01)
+	    .charge(function(d) { return 0.001})
+	    .gravity(-0.0005)
+	    .linkDistance(function(l) { alert(l.source.size);return 0.001})
 	    .on("tick", tick);
 	
 	
@@ -171,7 +172,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	    node = svg.selectAll(".graph-node");
 	
 	
-	
+
 	
 	  link = link.data(dataLinks)
 	    .enter().append("line")
@@ -186,18 +187,18 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	  groupElement.append("title").text(function(d) { return d.size});
 	
 	   groupElement.append("text")
-	  .attr("dx", function(d) { var xDistance = 10+(d.size*2); if (xDistance > 40) { xDistance = 40 } return xDistance;} )
-	  .attr("dy", 0)
-	  .attr("font-size", function(d) { var size = d.size*10; if (size > 42) { size = 42 } return size ;})
+	  .attr("dx", function(d) { var xDistance = Math.log(d.size)*3; if (xDistance > 40) { xDistance = 40 } return xDistance;} )
+	  .attr("dy", function(d) { var xDistance = Math.log(d.size)*3; if (xDistance > 40) { xDistance = 40 } return xDistance;} )
+	  .attr("font-size", function(d) { var size = Math.log(d.size)*3; if (size > 42) { size = 42 } return size ;})
 	  .attr("class", "graph-words")
 	  .text(function(d) { return d.word });
 	  
 	   groupElement.append("circle")
-	   .attr("r", function(d) { var size = d.size*3; if (size > 25) { size = 25 } return size;})
+	   .attr("r", function(d) { var size = Math.log(d.size)*1; if (size > 25) { size = size } return size;})
 	   .style("fill", 'red');
 	  
 	
-	  
+	   
 	
 	   force
 	   .nodes(dataNodes)
@@ -229,7 +230,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 	if (capping!=0)
 	{
-	$("<div style='text-align:center'>Graph is currently capped to "+capping+" words !</div>").insertAfter(targetGraphDiv);
+		$("<div style='text-align:center'>Graph is currently capped to "+capping+" words !</div>").insertAfter(targetGraphDiv);
 	}
 
 }

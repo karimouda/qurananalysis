@@ -39,11 +39,11 @@ class OWLClassTag extends OWLTag
    {
 	   OWLTag::endTag($parser, $tag);
 	  
-	   echoN("ENDTAG1");
+	   //echoN("ENDTAG1");
 	   
 	   if(!$this->wantsMore())
 	   {
-		   	echoN("ENDTAG2");
+		   	//echoN("ENDTAG2");
 		   $this->model->addProperty($this->id,$this->properties,"CLASS");
 	   }
    }
@@ -61,7 +61,7 @@ class OWLClassTag extends OWLTag
  	
  		if($name == "OWLPropInstanceTag"){
  			
- 			echoN("PROCESSING OWLPropInstanceTag");
+ 			//echoN("PROCESSING OWLPropInstanceTag");
  			
  			$property_id = preg_replace("/#:/", "#", $child->getName());
  		

@@ -256,7 +256,7 @@ class OWLMemoryOntology extends OWLOntology
 // 	   }
 	   if ( $classOrInstance=="CLASS")
 	   {
-	   	echoN("&&&".$id);
+	   	//echoN("&&&".$id);
 	   	$this->owl_data['classes'][$id][0]["properties"][] = $properties;
 	   }
 	   else

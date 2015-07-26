@@ -682,5 +682,10 @@ function conceptHasSubclasses($relationsArr,$concept)
 	return false;
 }
 
+function buildRelationHashID($subject,$verb,$object)
+{
+	return md5("$subject,$verb,$object");
+}
+
 
 ?>
