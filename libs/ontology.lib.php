@@ -77,8 +77,21 @@ function addNewConcept(&$finalConceptsArr,$newConceptName,$coneptType,$exPhase,$
 		return true;
 	
 	}
+	else 
+	{
+		//
+		// IT WAS MEANT TO BE T-BOX IF IT WAS NOT FOUND, SO IF IT IS FOUNJD SWITCH IT TO T-BOX SINCE IT IS A PARENT
+		if ( $coneptType=="T-BOX")
+		{
+			// SHOULD SWITCH TO T-BOX SINCE IT IS A PARENT CLASS NOW - FOR OWL SERIALIZATION BUGS
+			$finalConceptsArr[$newConceptName]['CONCEPT_TYPE']='T-BOX';
+		}
+		
+		return false;
+	}
+		
 	
-	return false;
+	
 }
 
 function printRelation($relationArrEntry)
@@ -102,7 +115,7 @@ function addNewRelation(&$relationArr,$type,$subject,$verbSimple,$object,$posPat
 	printRelation($newRelation);
 	
 		
-	$relationHash = md5(join(",",array_values($newRelation)));
+	$relationHash = md5($newRelation['SUBJECT'].$newRelation['VERB'].$newRelation['OBJECT']);
 		
 	if ( !isset($relationArr[$relationHash]))
 	{
@@ -210,8 +223,10 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 		}
 	}
 	
-	
-	$verbEngTranslation = removeBasicEnglishStopwordsNoNegation($verbEngTranslation);
+	if ( $verbEngTranslation!="is kind of" && $verbEngTranslation!="part of" && $verbEngTranslation!="is a")
+	{
+		$verbEngTranslation = removeBasicEnglishStopwordsNoNegation($verbEngTranslation);
+	}
 		
 	$verbSimple = trim($verbSimple);
 	
@@ -608,7 +623,7 @@ function getWordsByPos(&$finalTerms,$POS)
 
 function loadExcludedConceptsArr()
 {
-	$fileArr = file("../data/ontology/excluded.concepts",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+	$fileArr = file("../data/ontology/extraction/excluded.concepts",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
 	
 	$EXCLUDED_CONCEPTS = array();
 	
@@ -621,6 +636,50 @@ function loadExcludedConceptsArr()
 	
 	return $EXCLUDED_CONCEPTS;
 	
+}
+
+function getXMLFriendlyString($className)
+{
+	return strtr($className, " ", "_");
+}
+
+function stripOntologyNamespace($className)
+{
+	global $qaOntologyNamespace;
+	
+	$hashLocation = strpos($className,"#");
+	if ($hashLocation!==false)
+	{
+		$className = substr($className,$hashLocation+1);
+	}
+	else
+	{
+		$className = str_replace(substr($qaOntologyNamespace,0,-1), "", $className);
+	}
+	
+	return $className;
+}
+
+function conceptHasSubclasses($relationsArr,$concept)
+{
+	global $is_a_relation_name_ar;
+	
+	foreach($relationsArr as $hash => $relationArr)
+	{
+		$relationsType = $relationArr['TYPE'];
+	
+		$subject = 	$relationArr['SUBJECT'];
+		$object = $relationArr['OBJECT'];
+		$verbAR = $relationArr['VERB'];
+			
+		// IF IT IS AN IS-A RELATION
+		if ( $verbAR==$is_a_relation_name_ar && $concept==$object)
+		{
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 

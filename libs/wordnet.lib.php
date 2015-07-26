@@ -6,6 +6,18 @@ function cleanWordnetCollocation($str)
 	return strtr($str,"_", " ");
 }
 
+function isExcludableSemanticType($type)
+{
+	$type = trim(strtolower($type));
+	
+	//as in lexnames
+	if ( $type=="ppl" ||  $type=="all" || $type=="tops" || $type=="pert" )
+	{
+		return true;
+	}
+	
+	return false;
+}
 
 function getSymbolDescriptionFromMappingTable($symbol)
 {
@@ -436,6 +448,7 @@ function getGlossaryFirstPart($glossary)
 {
 	return trim(substr($glossary, 0,strpos($glossary, ";") ));
 }
+
 
 
 
