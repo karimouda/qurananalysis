@@ -10,13 +10,15 @@ if ( isset($_GET['lang']) )
 	$lang = $_GET['lang'];
 }
 
-loadModels("core,qac",$lang);
+//loadModels("core,qac",$lang);
 
 $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
 
 
 $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
+
+$ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 
 ?>
 <!DOCTYPE html>
@@ -56,7 +58,7 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
   				   						 
   				   						 <?php  
-  				   						 $finalConcepts = unserialize(file_get_contents("../data/ontology/temp.final.concepts.final")); 
+  				   						 $finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final")); 
   				   						 ?>
   				   						 
   				   						 <table id='ontology-concepts-table'>
@@ -98,7 +100,7 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 									
 									
 										<?php 
-										 $relationArr = unserialize(file_get_contents("../data/ontology/temp.final.relations"));
+										 $relationArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
 										 
 										 //preprint_r($finalConcepts);
 										 //preprint_r($relationArr);
