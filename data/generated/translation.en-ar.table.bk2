@@ -233,7 +233,7 @@ Body servant|CONCEPT|موظف الهيئة
 Lover|CONCEPT|عاشق
 Island|CONCEPT|الجزيرة
 Game equipment|CONCEPT|معدات لعبة
-Patriarch|CONCEPT|البطريرك
+Patriarch|CONCEPT|نبي
 Bodily property|CONCEPT|الخصائص الجسدية
 Calendar day|CONCEPT|يوم التقويم
 Work time|CONCEPT|وقت العمل
@@ -325,7 +325,7 @@ Coin|CONCEPT|العملة
 Disputant|CONCEPT|ديسبوتانت
 a person who disputes|DESC|شخص الذي يعترض
 Ballplayer|CONCEPT|اللاعب
-Priest|CONCEPT|كاهن
+Priest|CONCEPT|نبي
 a clergyman in Christian churches who has the authority to perform or administer various religious rites|DESC|قسا في الكنائس المسيحية الذي لديه السلطة لتنفيذ أو إدارة مختلف الشعائر الدينية
 Gallinaceous bird|CONCEPT|الطيور جاليناسيوس
 Meat|CONCEPT|اللحوم
@@ -574,3 +574,4 @@ a large and densely populated urban area|DESC|منطقة حضرية كبيرة �
 the state of being certain|DESC|لبعض الدولة
 a tall perennial woody plant having a main trunk and branches forming a distinct elevated crown|DESC|مصنع الخشبية معمرة طويل القامة بعد جذع الرئيسي والفروع تشكيل تاج مرتفعة متميزة
 the time after sunrise and before sunset while it is light outside|DESC|الوقت بعد شروق الشمس وقبل غروب الشمس في حين أنها خفيفة خارج
+a mode of being or form of existence of a person or thing|DESC|وضع النموذج لوجود شخص أو شيء أو يجري
