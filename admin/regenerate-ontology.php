@@ -118,17 +118,20 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	$GENERATE_FINAL_CONCEPTS = $GENERATE_CONCEPTS_SWITCH;
 			  				  	
 			  	
-			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
+			 
 			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;
-			  	
-			  	
 			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = FALSE;
+			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
+			  	
 			  	
 			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = FALSE;
 			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = FALSE;
 			  	$ENRICH_CONCEPTS_METADATA_WORDNET = FALSE;
 			  	
-			  	$FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;
+			  	$EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;
+			  	
+			  	
+			  	$FINAL_POSTPROCESSING = TRUE;
 			  	
 			  	$GENERATE_OWL_FILE = TRUE;
 			  	
@@ -783,7 +786,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$quranaConceptsListArr  = $MODEL_QURANA['QURANA_CONCEPTS'];
 						
 						// "Thing" Concept
-						addNewConcept($finalConcepts, "شيء", "T-BOX", "MANUAL", 0, "Thing");
+						addNewConcept($finalConcepts, $thing_class_name_ar, "T-BOX", "MANUAL", 0, $thing_class_name_en);
 						
 						
 						$amxConceptFreq = -99;
@@ -854,132 +857,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						
 						
-					/*
-					 * ONE NON-TAX IS STILL INSIDE
-					 * // TODO:TO BE MOVED or RMEOVED
-					 */
-					if ( $GENERATE_TAXONOMIC_RELATIONS )
-					{
-						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage1"));
-						
-						
-						////////////////////////// ADJECTIVE HYPERNYMS ////////////////////////////////
-						$adjName = "صفة";
-						
-						$finalConcepts[$adjName]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>generateEmptyConceptMetadata());
-						$finalConcepts[$adjName]['EXTRA']['ENG_TRANSLATION']='Attribute';
-						
-						
-						// ADJ PARENT + relations
-						foreach($finalConcepts as $concept => $coneptArr)
-						{
-							$exPhase = $coneptArr['EXTRACTION_PHASE'];
-							
-							
-							if ( $exPhase=="ADJECTIVE")
-							{
-								$type = "TAXONOMIC";
-								addRelation($relationsArr,$type,$concept,"هى",$adjName,"ADJ","is a");
-							}
-						}
-						
-						
-					
-						/////////////////////////////////////////////////////////////////////
 				
-						// DIDN'T DO THIS BECAUSE IT NEEDS CONTEXT قُرْءَانًا أَعْجَمِيًّا لَّ
-						//$triGrams2 = getPoSNGrams("ACC PN ADJ");
-						
-						
-						///////// PROPER NOUNS AJDECTIVES ////////////////////////
-						$triGrams4 = getPoSNGrams("PN ADJ ADJ");
-						preprint_r($triGrams4);
-						
-						// ADJ PARENT + relations
-						foreach($triGrams4 as $bigram => $freq)
-						{
-							$biGramWords = preg_split("/ /",$bigram);
-								
-							$concept = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[0]];
-							$adj1 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[1]];
-							$adj2 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[2]];
-							
-							
-								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj1]) )
-								{
-										$hasAttribute = "من صفاتة";
-										$type = "NON-TAXONOMIC";
-										addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj1,"ADJ","has attribute");
-									
-								}
-								
-								if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj2]) )
-								{
-									$hasAttribute = "من صفاتة";
-									$type = "NON-TAXONOMIC";
-									addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj2,"ADJ","has attribute");
-										
-								}
-								
-							
-							
-						}
-						
-						/////////////// PHRASE CONCEPTS HYPERNYMS (PARENT-CHILD) ///////////////
-					
-						foreach($finalConcepts as $concept => $conceptArr)
-						{
-							
-							$type = $conceptArr['EXTRACTION_PHASE'];
-							$pos = $conceptArr['EXTRA']['POS'];
-							
-							if ( $type=="PHRASE")
-							{
-								$biGramWords = preg_split("/ /",$concept);
-							
-								
-								$parentConcept = $biGramWords[0];
-								
-								$wordInfoArr = $wordsInfoArr[$parentConcept];//getWordInfo($parentConcept, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
-								
-							
-								$parentPosArr = $wordInfoArr['POS'];
-								
-								
-								
-								if ( !isset($parentPosArr['PN']) && !isset($parentPosArr['N']) && !isset($parentPosArr['ADJ']) ) continue;
-								
-								$subclassConcept = $concept;
-								
-								if (!isset($finalConcepts[$parentConcept]))
-								{
-									$finalConcepts[$parentConcept]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>generateEmptyConceptMetadata());
-									$finalConcepts[$parentConcept]['EXTRA']['ENG_TRANSLATION']=cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$parentConcept]);
-								}
-					
-						
-									$hasType = "هى";
-									$type = "TAXONOMIC";
-									addRelation($relationsArr,$type,$subclassConcept,$hasType,$parentConcept,"$pos","is a");
-										
-							
-							}
-						
-								
-								
-						}
-
-
-						///////////////////////////////////////////////////////////////////
-						
-						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2", serialize($finalConcepts));
-						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
-						
-					}	
 						
 											
 					if ( $GENERATE_NONTAXONOMIC_RELATIONS)
 					{
+						
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage1"));
 						
 						$MODEL_CORE_UTH = loadUthmaniDataModel();
 					
@@ -1790,16 +1674,19 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					}
 					
 					
+
+					
 					
 					
 					 
 					if ( $EXTRACT_NEWCONCEPTS_FROM_RELATIONS )
 					{
 						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
-						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage1"));
 						$finalTerms =  unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.all.terms"));
 						
 			
+						echoN("BA-AA:".count($finalConcepts));
 						
 						$notInCounceptsCounter = 0;
 						$handled = array();
@@ -1811,6 +1698,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							{
 								$subject = 	$relationsArr['SUBJECT'];
 								$object = $relationsArr['OBJECT'];
+								$verb = $relationsArr['VERB'];
 								
 								if ( !isset($finalConcepts[$subject]) && !isset($handled[$subject]))
 								{
@@ -1873,7 +1761,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										$engTranslation = ucfirst(cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$uthmaniWord]));
 									}
 									
-									addNewConcept($finalConcepts, $object, "A-BOX", "POPULATION_FROM_RELATIONS", $freq, $engTranslation);
+									
+									
+									addNewConcept($finalConcepts, $object, $conceptType, "POPULATION_FROM_RELATIONS", $freq, $engTranslation);
 									$finalConcepts[$object]['EXTRA']['POS']="SUBJECT";
 									$finalConcepts[$object]['EXTRA']['WEIGHT']=$termsArr['WEIGHT'];
 									
@@ -1885,7 +1775,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							}
 							
 							
-							file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage3", serialize($finalConcepts));
+							file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2", serialize($finalConcepts));
 						}
 						
 						echoN("Concepts Added: $notInCounceptsCounter");
@@ -1895,6 +1785,149 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						echoN("Final Concepts Count:". count($finalConcepts));
 						
+					}
+					
+					
+					/*
+					 * ONE NON-TAX IS STILL INSIDE
+					* // TODO:TO BE MOVED or RMEOVED
+					* // MOVED AFTER RELATION AEXTRACTION AND RELATION CONCEPT EXTRACTION SO WE CAN INFER HYPERNYMS
+					*/
+					if ( $GENERATE_TAXONOMIC_RELATIONS )
+					{
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2"));
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+							
+						$countOfRelationsBefore = 	count($relationsArr);
+							
+						echoN("BA-B:".count($finalConcepts));
+					
+						////////////////////////// ADJECTIVE HYPERNYMS ////////////////////////////////
+						$adjName = "صفة";
+							
+						$finalConcepts[$adjName]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>generateEmptyConceptMetadata());
+						$finalConcepts[$adjName]['EXTRA']['ENG_TRANSLATION']='Attribute';
+							
+							
+						// ADJ PARENT + relations
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+							$exPhase = $coneptArr['EXTRACTION_PHASE'];
+					
+					
+							if ( $exPhase=="ADJECTIVE")
+							{
+								$type = "TAXONOMIC";
+								addRelation($relationsArr,$type,$concept,"$is_a_relation_name_ar",$adjName,"ADJ","$is_a_relation_name_en");
+							}
+						}
+							
+							
+							
+						/////////////////////////////////////////////////////////////////////
+							
+						// DIDN'T DO THIS BECAUSE IT NEEDS CONTEXT قُرْءَانًا أَعْجَمِيًّا لَّ
+						//$triGrams2 = getPoSNGrams("ACC PN ADJ");
+							
+							
+						///////// PROPER NOUNS AJDECTIVES ////////////////////////
+						$triGrams4 = getPoSNGrams("PN ADJ ADJ");
+						preprint_r($triGrams4);
+							
+						// ADJ PARENT + relations
+						foreach($triGrams4 as $bigram => $freq)
+						{
+							$biGramWords = preg_split("/ /",$bigram);
+								
+							$concept = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[0]];
+							$adj1 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[1]];
+							$adj2 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[2]];
+					
+					
+							if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj1]) )
+							{
+								$hasAttribute = "من صفاتة";
+								$type = "NON-TAXONOMIC";
+								addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj1,"ADJ","has attribute");
+									
+									
+							}
+								
+							if ( isset($finalConcepts[$concept]) && isset($finalConcepts[$adj2]) )
+							{
+								$hasAttribute = "من صفاتة";
+								$type = "NON-TAXONOMIC";
+								addNewRelation($relationsArr,$type,$concept,$hasAttribute,$adj2,"ADJ","has attribute");
+									
+									
+							}
+								
+					
+					
+						}
+							
+						/////////////// PHRASE CONCEPTS HYPERNYMS (PARENT-CHILD) ///////////////
+							
+						foreach($finalConcepts as $concept => $conceptArr)
+						{
+					
+							$type = $conceptArr['EXTRACTION_PHASE'];
+							$pos = $conceptArr['EXTRA']['POS'];
+					
+							
+							//if ( $type=="PHRASE")
+							if ( preg_match_all("/ /", $concept)==1)
+							{
+								$biGramWords = preg_split("/ /",$concept);
+									
+									
+								$parentConcept = $biGramWords[0];
+									
+								$wordInfoArr = $wordsInfoArr[$parentConcept];//getWordInfo($parentConcept, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
+									
+									
+								$parentPosArr = $wordInfoArr['POS'];
+									
+									
+								//echoN("%%2:$parentConcept:".preprint_r($parentPosArr,true));
+								// if the is a quanic word it has to be PN, N or ADJ
+								if ( !empty($parentPosArr) && !isset($parentPosArr['PN']) && !isset($parentPosArr['N']) && !isset($parentPosArr['ADJ']) ) continue;
+									
+								$subclassConcept = $concept;
+									
+								if (!isset($finalConcepts[$parentConcept]))
+								{
+									$finalConcepts[$parentConcept]=array("CONCEPT_TYPE"=>"T-BOX","EXTRACTION_PHASE"=>"TAX-RELATIONS","FREQ"=>1,"EXTRA"=>generateEmptyConceptMetadata());
+									$finalConcepts[$parentConcept]['EXTRA']['ENG_TRANSLATION']=cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$parentConcept]);
+								}
+								else
+								{
+									// SHOULD SWITCH TO T-BOX SINCE IT IS A PARENT CLASS NOW - FOR OWL SERIALIZATION BUGS
+									$finalConcepts[$parentConcept]['CONCEPT_TYPE']='T-BOX';
+								}
+									
+									
+								$hasType = "$is_a_relation_name_ar";
+								$type = "TAXONOMIC";
+								addRelation($relationsArr,$type,$subclassConcept,$hasType,$parentConcept,"$pos","$is_a_relation_name_en");
+									
+									
+									
+							}
+								
+								
+								
+						}
+							
+							
+						///////////////////////////////////////////////////////////////////
+						echoN("FINAL TAXONOMIC RELATIONS :".(count($relationsArr)-$countOfRelationsBefore));
+					
+						echoN("BA-A:".count($finalConcepts));
+						//preprint_r($finalConcepts);exit;
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage3", serialize($finalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
+							
 					}
 					
 				
@@ -2203,11 +2236,20 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												$newConcepts[$parentConceptName]=1;
 												
 											}
+											else 
+											{
+												/*
+												 * WILL NOT DO IT HERE SINCE SOME RELATIONS ARE EXCLUDED LATER, SO OPERATIONS DONE HERE
+												* CAN'T BE REVERTED BACK, WILL BE MOVED AFTER EXCLUSION INSTEAD
+												*/
+												// SHOULD SWITCH TO T-BOX SINCE IT IS A PARENT CLASS NOW - FOR OWL SERIALIZATION BUGS
+												//$enrichedFinalConcepts[$parentConceptName]['CONCEPT_TYPE']='T-BOX';
+											}
 												
 											
 											
 												$type = "TAXONOMIC";
-												addRelation($relationsArr,$type,$concept,"هو",$parentConceptName,"is a");
+												addRelation($relationsArr,$type,$concept,"$is_a_relation_name_ar",$parentConceptName,"","$is_a_relation_name_en");
 												
 											//////////////////////////////////////////////////////
 											
@@ -2522,10 +2564,29 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										//////////////////////////////////////////////////////
 										
 									}
+									else 
+									{
+									
+										/*
+										 * WILL NOT DO IT HERE SINCE SOME RELATIONS ARE EXCLUDED LATER, SO OPERATIONS DONE HERE
+										* CAN'T BE REVERTED BACK, WILL BE MOVED AFTER EXCLUSION INSTEAD
+										*/
+										
+										// avoid ALLAH is a ALLAH cases
+										/*if ( $concept!=$finalConceptName)
+										{
+											echoN("##$finalConceptName|T-BOX");
+											
+											echoN("$concept,$is_a_relation_name_ar,$finalConceptName");
+											
+											$enrichedFinalConcepts[$finalConceptName]['CONCEPT_TYPE']='T-BOX';
+										}
+										*/
+									}
 									
 											
 										$relationType = "TAXONOMIC";
-										$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is a");
+										$res = addRelation($relationsArr,$relationType,$concept,"$is_a_relation_name_ar",$finalConceptName,"$is_a_relation_name_en");
 										
 										if ( $res==true)
 										{
@@ -2663,10 +2724,24 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 														}
 														
 													}
+													else
+													{
+
+														
+														//echoN("##$finalConceptName|T-BOX");
+														//echoN("$concept,$is_a_relation_name_ar,$finalConceptName");
+														/*
+														 * WILL NOT DO IT HERE SINCE SOME RELATIONS ARE EXCLUDED LATER, SO OPERATIONS DONE HERE
+														 * CAN'T BE REVERTED BACK, WILL BE MOVED AFTER EXCLUSION INSTEAD
+														 */
+														
+													
+														//$enrichedFinalConcepts[$finalConceptName]['CONCEPT_TYPE']='T-BOX';
+													}
 														
 														
 													$relationType = "TAXONOMIC";
-													$res = addRelation($relationsArr,$relationType,$concept,"هو",$finalConceptName,"is a");
+													$res = addRelation($relationsArr,$relationType,$concept,"$is_a_relation_name_ar",$finalConceptName,"$is_a_relation_name_en");
 													
 													if ( $res==true)
 													{
@@ -2713,7 +2788,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					}
 					
 					
-					if ($FILTER_AND_EXCLUDE_CONCEPTS_AND_RELATIONS)
+					if ($EXCLUDE_CONCEPTS_AND_RELATIONS)
 					{
 						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage6"));
@@ -2763,6 +2838,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$RELATIONS_EXCLUSION_RULES = array();
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"ابن","OBJECT"=>"الله");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"الله","VERB"=>"*","OBJECT"=>"الشخص");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"قال","OBJECT"=>"*");
 						
 						
 						
@@ -2783,7 +2859,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								continue;
 							}
 							
-							echoN("$subject|$object|".isset($EXCLUDED_CONCEPTS[$subject]));
+						
+							//echoN("$subject|$object|".isset($EXCLUDED_CONCEPTS[$subject]));
 							
 							// IF CONCEPTS ARE EXCLUDED, RELATIONS ARE ALSO EXSCLUDED
 							if ( isset($EXCLUDED_CONCEPTS[$subject]) || isset($EXCLUDED_CONCEPTS[$object]))
@@ -2806,6 +2883,17 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								      $ruleFlag = true;
 									  break;
 								   }
+								   
+									// NOT USED
+								   // CONJUNCTION SUBJECT IN IS-A RELATION
+								   if ( $verbSimple==$is_a_relation_name_ar &&
+										mb_strpos($subject, " و")!==false)
+								   {
+								   	
+									   	$relationsRemoved++;
+									   	$ruleFlag = true;
+									   	break;
+								   }
 							}
 							
 							if ( $ruleFlag == true)
@@ -2813,6 +2901,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								$relationsRemoved++;
 								continue;
 							}
+							
+							
 							
 							$filteredRelationsArr[$hash] = $relationArr;
 							
@@ -2836,7 +2926,52 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					}
 					
 					
-					
+					if ($FINAL_POSTPROCESSING)
+					{
+						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
+						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7"));
+							
+						
+						foreach($relationsArr as $hash => $relationArr)
+						{
+							$relationsType = $relationArr['TYPE'];
+								
+							$subject = 	$relationArr['SUBJECT'];
+							$object = $relationArr['OBJECT'];
+							$verbAR = $relationArr['VERB'];
+							
+							// IF IT IS AN IS-A RELATION
+							if ( $verbAR==$is_a_relation_name_ar)
+							{
+								// MAKE SURE THE PARENT IS A T-BOX ( CLASS NOT INSTANCE )
+								$finalConcepts[$object]['CONCEPT_TYPE']='T-BOX';
+							}
+							
+							
+							
+						}
+						
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+						
+						
+						
+							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameAr  = $concept;
+							$conceptType = $coneptArr['CONCEPT_TYPE'];
+							
+							// FIX CONCEPT TYPE FOR ANY CONCEPT WITH EXCLUDED RELATIONS
+							if ( $conceptNameAr!=$thing_class_name_ar && $conceptType=="T-BOX" && !conceptHasSubclasses($relationsArr,$conceptNameAr) )
+							{
+								$finalConcepts[$concept]['CONCEPT_TYPE']='A-BOX';
+							}
+							
+						}
+						
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage8", serialize($finalConcepts));
+						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
+							
+					}
 					
 					
 					
@@ -2845,7 +2980,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					//////////// COPY/FI FILIZE FINAL CONCEPTS /////////////////////////////
 					//persistTranslationTable();
 					
-					$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7"));
+					$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage8"));
 					
 					file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final", serialize($finalConcepts));
 					
@@ -2857,13 +2992,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final"));
 			
-						preprint_r($relationsArr);
+						preprint_r($finalConcepts);
 					
 						
 						///////// ONTOLOGY MODEL INIT
 						$writer = new OWLWriter();
 						$ontology = new OWLMemoryOntology();
-						$thingClassName = "Thing";
+						$thingClassName = $thing_class_name_ar;
 						//$thingClassID = "$qaOntologyNamespace#$thingClassName";
 						$ontology->setNamespace($qaOntologyNamespace);
 						////////////////////////////
@@ -2898,8 +3033,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						/////////////////////////////
 						
 						//////////  Things class
-						$ontology->createClass($thingClassName);
+						//$ontology->createClass($thingClassName);
 						
+						
+						//preprint_r($finalConcepts);
 						
 						$counter++;
 						foreach($finalConcepts as $concept => $coneptArr)
@@ -2922,6 +3059,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							else
 							{
 								$classOrInstanceName = $classID;
+								echoN("++$classOrInstanceName");
 								$ontology->addInstance($classOrInstanceName, $thingClassName , $properties);
 							}
 							
@@ -2992,7 +3130,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 						}
 						
-					
+						$ontologyRelationsCount= 0;
+						
+						echoN("--".count($relationsArr));
 						foreach($relationsArr as $hash => $relationArr)
 						{
 							$relationsType = $relationArr['TYPE'];
@@ -3005,7 +3145,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$objectID = getXMLFriendlyString($object);
 							$verbID = getXMLFriendlyString($verbSimple);
 							
-							echoN("$subjectID|$verbSimple|$objectID|$relationsType");
+							
 							
 							if ( $relationsType=="TAXONOMIC")
 							{
@@ -3015,9 +3155,12 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								
 								
 								$ontology->addInstance($subjectID, $objectID, null);
+								$ontologyRelationsCount++;
 							}
 							else
 							{
+								//echoN("!!! $subjectID|$verbSimple|$objectID|$relationsType");
+								
 								//add object and data properties
 								
 								$propertyObj = $ontology->getProperty($verbID);
@@ -3027,11 +3170,27 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									$propertyObj = $ontology->createProperty($verbID, "", "", false);
 								}
 								
-								$properties = array($verbID=>array($objectID));
-	
-
-								$ontology->addProperty($subjectID,$properties);
+								$relFreq = $relationArr['FREQ'];
+								$verbEnglishTranslation= $relationArr['VERB_ENG_TRANSLATION'];
+								$verbUthmani = $relationArr['VERB_UTHMANI'];
 								
+								$relationMetaData = array("frequency"=>$relFreq,"verb_translation_en"=>$verbEnglishTranslation,"verb_uthmani"=>$verbUthmani);
+								
+								
+								$properties = array($verbID=>array($objectID),"RELATION_META"=>$relationMetaData);
+	
+								if ( $finalConcepts[$subjectID]['CONCEPT_TYPE']=="T-BOX")
+								{
+									$ontology->addProperty($subjectID,$properties,"CLASS");
+								}
+								else
+								{
+									$ontology->addProperty($subjectID,$properties);
+								}
+							
+								
+								$ontologyRelationsCount++;
+							
 								
 							}
 							
@@ -3041,7 +3200,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							
 						}
+						
+						echoN("INSTANCES COUNT:".count($ontology->{'owl_data'}['instances']));
+						echoN("CLASSES COUNT:".count($ontology->{'owl_data'}['classes']));
+						echoN("PROPERTIES COUNT:".count($ontology->{'owl_data'}['properties']));;
+						
+						echoN("ONTOLOGY RELATIONS COUNT - INCLUDING INSTACE PROP-:".$ontologyRelationsCount);;
 
+				
 					
 						$writer->writeToFile($qaOntologyFile, $ontology, "QA Ontology - www.qurananalysis.com","1.0");
 					
