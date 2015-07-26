@@ -3059,7 +3059,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							else
 							{
 								$classOrInstanceName = $classID;
-								echoN("++$classOrInstanceName");
+								
 								$ontology->addInstance($classOrInstanceName, $thingClassName , $properties);
 							}
 							
@@ -3096,7 +3096,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							
 							$ontology->addAnnotation($classOrInstanceName,"EN","frequency",$frequency);
-							$ontology->addAnnotation($classOrInstanceName,"EN","weight",$frequency);
+							$ontology->addAnnotation($classOrInstanceName,"EN","weight",$weight);
 							$ontology->addAnnotation($classOrInstanceName,"EN","pos",$pos);
 							$ontology->addAnnotation($classOrInstanceName,"EN","transliteration",htmlspecialchars($transliteration));
 							
