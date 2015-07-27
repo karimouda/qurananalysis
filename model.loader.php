@@ -4,11 +4,11 @@ require_once(dirname(__FILE__)."/libs/core.lib.php");
 require_once(dirname(__FILE__)."/libs/wordnet.lib.php");
 
 ///////// ONTOLOGY 
-require_once("../libs/owllib/OWLLib.php");
-require_once("../libs/owllib/reader/OWLReader.php");
-require_once("../libs/owllib/memory/OWLMemoryOntology.php");
+require_once(dirname(__FILE__)."/libs/owllib/OWLLib.php");
+require_once(dirname(__FILE__)."/libs/owllib/reader/OWLReader.php");
+require_once(dirname(__FILE__)."/libs/owllib/memory/OWLMemoryOntology.php");
 
-require_once("../libs/ontology.lib.php");
+require_once(dirname(__FILE__)."/libs/ontology.lib.php");
 
 
 
@@ -27,6 +27,13 @@ $MODEL_QAC = array();
 $MODEL_QURANA = array();
 
 $MODEL_WORDNET = array();
+
+$MODEL_QA_ONTOLOGY = array();
+$MODEL_QA_ONTOLOGY['CONCEPTS'] =  array();;
+$MODEL_QA_ONTOLOGY['RELATIONS'] =  array();;
+$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] =  array();;
+$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] =  array();;
+
 
 
 foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $lang)
@@ -56,6 +63,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	global $wordByWordTranslationFile,$transliterationFile;
 	global $MODEL_WORDNET,$qaOntologyNamespace,$qaOntologyFile,$is_a_relation_name_ar,$is_a_relation_name_en;
 	global $thing_class_name_ar,$thing_class_name_en;
+	GLOBAL $MODEL_QA_ONTOLOGY;
 	
 
 	//not working
@@ -88,6 +96,18 @@ function loadModels($modelsToBeLoaded,$lang)
 		{
 			//echoN("$modelName $lang ".time());
 			//echoN($modelName);
+			
+			if ( $modelName=="ontology")
+			{
+			
+				
+				$MODEL_QA_ONTOLOGY = apc_fetch("MODEL_QA_ONTOLOGY");
+				
+				if ($MODEL_QA_ONTOLOGY===false )
+				{
+					echo "$MODEL_QA_ONTOLOGY NOT CACHED";exit;
+				}
+			}
 			
 			if ( $modelName=="wordnet")
 			{
@@ -209,11 +229,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	##############################################
 	
 	
-	if ( false )
-	{
-	///  LOAD ONTOLOGY
-	
-	
+
+	/////////// ONTOLOGY LOADING
 	$reader = new OWLReader();
 	$ontology = new OWLMemoryOntology();
 	$thingClassName = "$thing_class_name_ar";
@@ -253,14 +270,6 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 		foreach($infoArr[0]['properties'] as $index => $propertiesArr)
 		{
-
-		
-			
-			//preprint_r($propertiesArr);
-			//echoN($instanceName);
-		
-			//echoN("$className:///");
-			//preprint_r($propertiesArr);
 			
 		
 			/** INCASE THIS INSTANCE HAS MULTIPLE PROPERTIES WITH SAME VERB **/
@@ -274,7 +283,7 @@ function loadModels($modelsToBeLoaded,$lang)
 					
 				$objectConceptName = stripOntologyNamespace($objectClassArr[0]);
 					
-				echoN("CLASS:***** $verb -> $objectConceptName");
+				//echoN("CLASS:***** $verb -> $objectConceptName");
 					
 				$attributedArr = next($onePropertyArr);
 					
@@ -282,7 +291,8 @@ function loadModels($modelsToBeLoaded,$lang)
 				$engTranslation = $attributedArr['verb_translation_en'];
 				$verbUthmani = $attributedArr['verb_uthmani'];
 					
-				$qaOntologyRelationsArr[]= array("subject"=>$className,"verb"=>$verb,
+				$relHashID = buildRelationHashID($className,$verb,$objectConceptName);
+				$qaOntologyRelationsArr[$relHashID]= array("subject"=>$className,"verb"=>$verb,
 						"object"=>$objectConceptName,"frequency"=>$freq,
 						"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
 				$relationsCount++;
@@ -311,7 +321,9 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			$parent = stripOntologyNamespace($infoArr['class']);
 			
-			$qaOntologyRelationsArr[]= array("subject"=>$subjectConceptName,"verb"=>"$is_a_relation_name_ar","object"=>$parent,"verb_tranbslation_en"=>"$is_a_relation_name_en");
+			$relHashID = buildRelationHashID($subjectConceptName,$is_a_relation_name_ar,$parent);
+			
+			$qaOntologyRelationsArr[$relHashID]= array("subject"=>$subjectConceptName,"verb"=>"$is_a_relation_name_ar","object"=>$parent,"verb_translation_en"=>"$is_a_relation_name_en");
 			
 			
 			if ( $parent!=$thing_class_name_ar)
@@ -322,8 +334,8 @@ function loadModels($modelsToBeLoaded,$lang)
 			$propertiesArr = $infoArr['properties'];
 			//echoN($instanceName);
 			
-			echoN("$instanceName:@@@");
-			preprint_r($propertiesArr);
+			//echoN("$instanceName:@@@");
+			//preprint_r($propertiesArr);
 		
 			/** INCASE THIS INSTANCE HAS MULTIPLE PROPERTIES WITH SAME VERB **/
 			foreach($propertiesArr as $index2 => $onePropertyArr)
@@ -336,7 +348,7 @@ function loadModels($modelsToBeLoaded,$lang)
 					
 					$objectConceptName = stripOntologyNamespace($objectClassArr[0]);
 					
-					echoN("***** $verb -> $objectConceptName");
+					//echoN("***** $verb -> $objectConceptName");
 					
 					$attributedArr = next($onePropertyArr);
 					
@@ -344,7 +356,8 @@ function loadModels($modelsToBeLoaded,$lang)
 					$engTranslation = $attributedArr['verb_translation_en'];
 					$verbUthmani = $attributedArr['verb_uthmani'];
 					
-					$qaOntologyRelationsArr[]= array("subject"=>$subjectConceptName,"verb"=>$verb,
+					$relHashID = buildRelationHashID($subjectConceptName,$verb,$objectConceptName);
+					$qaOntologyRelationsArr[$relHashID]= array("subject"=>$subjectConceptName,"verb"=>$verb,
 												"object"=>$objectConceptName,"frequency"=>$freq,
 												"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
 					$relationsCount++;
@@ -396,12 +409,12 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 	////////// OUTPUT STATS
-	echoN("INSTANCES COUNT:".count($ontology->{'owl_data'}['instances']));
+	/*echoN("INSTANCES COUNT:".count($ontology->{'owl_data'}['instances']));
 	echoN("CLASSES COUNT:".count($ontology->{'owl_data'}['classes']));
 	echoN("PROPERTIES COUNT - DECLERATIONS ONLY:".count($ontology->{'owl_data'}['properties']));;
 	echoN("CONCEPTS COUNT:".count($qaOntologyConceptsArr));
 	echoN("RELATIONS COUNT:".$relationsCount);
-	preprint_r($qaOntologyRelationsArr);
+	preprint_r($qaOntologyRelationsArr);*/
 	//////////////////
 	
 	///////////// QUALITY CHECK CONCEPTS
@@ -418,8 +431,8 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 	$diffArr = array_diff(array_keys($qaOntologyConceptsArr2),array_keys($finalConcepts));
 
-	echoN("OWL-PROPRIETARY-CONCEPTS-DIFF-COUNT:".COUNT($matchingTable));
-	preprint_r($diffArr);
+	//echoN("OWL-PROPRIETARY-CONCEPTS-DIFF-COUNT:".COUNT($matchingTable));
+	//preprint_r($diffArr);
 	//////////////////////////////////////////////////////////////
 	
 	
@@ -464,19 +477,55 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	$matchingTable = array_filter($matchingTable, 'filterFunc');
 	
-	echoN("OWL-PROPRIETARY-RELATIONS-DIFF-COUNT:".count($matchingTable));
-	preprint_r($matchingTable);
+	//echoN("OWL-PROPRIETARY-RELATIONS-DIFF-COUNT:".count($matchingTable));
+	//preprint_r($matchingTable);
 	//////////////////////////////////////////////
 	
 	//echoN( join("<br>",array_keys($qaOntologyConceptsArr)));
 	
 
+	$qaOntologyGraphSourcesIndex = array();
+	$qaOntologyGraphTargetsIndex = array();
 	
+	foreach($qaOntologyRelationsArr as $index => $relArr)
+	{
+		$subject  =$relArr['subject'];
+		$verb = $relArr['verb'];
+		$object = $relArr['object'];
+		
+		$qaOntologyGraphSourcesIndex[$subject][]=array("link_verb"=>$verb,"target"=>$object);
+		$qaOntologyGraphTargetsIndex[$object][]=array("source"=>$subject,"link_verb"=>$verb);
+		
+		
+	}
+	
+	$qaOntologyConceptsENtoARMapArr = array();
+
+	foreach($qaOntologyConceptsArr as $arName => $conceptArr)
+	{
+		$enLabel = trim(strtolower($conceptArr['label_en']));
+	
+		$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
+	}
 	
 
 	
-	exit;
-	}
+	$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
+	$MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'] = $qaOntologyConceptsENtoARMapArr;
+	$MODEL_QA_ONTOLOGY['RELATIONS'] = $qaOntologyRelationsArr;
+	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] = $qaOntologyGraphSourcesIndex;
+	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
+	
+	$res = apc_store("MODEL_QA_ONTOLOGY",$MODEL_QA_ONTOLOGY);
+	
+	if ( $res===false){ throw new Exception("Can't cache MODEL_QA_ONTOLOGY"); }
+	
+	//preprint_r($MODEL_QA_ONTOLOGY);
+	//////// END ONTOLOGY LOADING
+	
+
+	
+	
 	
 	////////////////////////////
 	

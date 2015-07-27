@@ -32,7 +32,7 @@ else if ($lang=="AR" && !isDevEnviroment())
 
 
 	//echoN(time());
-	loadModels("core,search,qac",$lang);
+	loadModels("core,search,qac,ontology",$lang);
 	//echoN(time());
 	
 	
@@ -49,10 +49,27 @@ $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 //preprint_r($UTHMANI_TO_SIMPLE_LOCATION_MAP);
 
 $isPhraseSearch = false;
+$isQuestion = false;
 
 $matchesCount = preg_match("/\".*?\"/", $query);
 
 if ( $matchesCount >=1 ) $isPhraseSearch = true;
+
+
+if ( preg_match("/\?|؟/", $query)>0  )
+{
+	$isQuestion = true;
+	$query = preg_replace("/\?|؟/", "", $query);
+}
+
+if ( containsQuestionWords($query,$lang))
+{
+	$isQuestion = true;
+}
+
+
+
+//echoN("IS QUESTION:$isQuestion");
 
 
 /// CLEANING
@@ -71,10 +88,31 @@ if ($lang=="EN" )
 }
 
 
-$queryWordsArr = preg_split("/ /",$query);
+
 
 //preprint_r($queryWords);
 
+
+if ( $isQuestion )
+{
+
+	$taggedSignificantWords = posTagUserQuery($query,$lang);
+	
+	
+	
+	$taggedSignificantWords = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
+	
+	//preprint_r($taggedSignificantWords);exit;
+	$queryWordsArr = array_keys($taggedSignificantWords);
+}
+else
+{
+	$queryWordsArr = preg_split("/ /",$query);
+}
+
+
+
+$queryWordsArr = extendQueryWordsByConceptTaxRelations($queryWordsArr, $lang);
 
 
 
@@ -87,7 +125,7 @@ $extendedQueryWordsArr = array_fill_keys($queryWordsArr,1);
 
 //preprint_r($extendedQueryWordsArr);
 
-if ( $lang=="AR" && $isPhraseSearch==false)
+if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false)
 {
 	/** GET ROOT/STEM FOR EACH QUERY WORD **/
 	foreach ($queryWordsArr as $word)
@@ -526,7 +564,7 @@ $searchResultsVersesCount = count($uniqueResultVerses);
  		<th><?=$MODEL_CORE['RESOURCES']['CHAPTERS']?></th><td><?=$searchResultsChaptersCount?></td>
  		<th><?=$MODEL_CORE['RESOURCES']['VERSES']?></th><td><?=$searchResultsVersesCount?></td>
   		<th><?=$MODEL_CORE['RESOURCES']['REPETITION']?></th><td><?=$uniqueResultRepetitionCount?></td>		
- 		<th><?=$MODEL_CORE['RESOURCES']['SENTIMENT']?></th><td>SOON</td>	
+
  	</tr>
  </table>
 
@@ -553,7 +591,7 @@ rsortBy($scoringTable, 'SCORE');
 
 //preprint_r($scoringTable);exit;
 
-$searchResultText = array();
+$searchResultsTextArr = array();
 
 //preprint_r($scoringTable);
 
@@ -571,7 +609,7 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 	$PRONOUNS = $documentScoreArr['PRONOUNS'];
 
 	
-	$searchResultText[]=$TEXT;
+	$searchResultsTextArr[]=$TEXT;
 	
 	$TEXT_TRANSLATED = $MODEL_CORE_OTHER_LANG['QURAN_TEXT'][$SURA][$AYA];
 
@@ -682,24 +720,29 @@ foreach($scoringTable as $documentID => $documentScoreArr)
 }
 
 
-$graphObj = textToGraph($searchResultText,$MODEL_CORE['STOP_WORDS']);
+//$graphObj = textToGraph($searchResultsTextArr,$MODEL_CORE['STOP_WORDS']);
+$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$queryWordsArr,0,array(960,400),$lang);
 
-
-$graphNodesArr = array();
-
-foreach($graphObj["nodes"] as $word => $nodeArr)
+if ( empty($graphObj['nodes']))
 {
-	
-	$graphNodesArr[] = $nodeArr;
-	
+	$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultsTextArr,0,array(960,400),$lang);
 }
+
+// $graphNodesArr = array();
+
+// foreach($graphObj["nodes"] as $word => $nodeArr)
+// {
+	
+// 	$graphNodesArr[] = $nodeArr;
+	
+// }
 
 //preprint_r($graphNodesArr);
 
-$graphNodesJSON = json_encode($graphNodesArr);
+$graphNodesJSON = json_encode($graphObj['nodes']);
 $graphLinksJSON = json_encode($graphObj["links"]);
 
-//echoN($graphNodesJSON);
+
 //exit;
 //echoN($graphLinksJSON);
 ?>
@@ -708,7 +751,7 @@ $graphLinksJSON = json_encode($graphObj["links"]);
 
 <script>
 
-drawGraph(<?php echo "$graphNodesJSON" ?>,<?php echo "$graphLinksJSON" ?>,960,400,"#result-graph-area",<?php echo $graphObj["capped"]?>);
+drawGraph(<?php echo "$graphNodesJSON" ?>,<?php echo "$graphLinksJSON" ?>,960,400,"#result-graph-area");
 
 
 drawChart(<?=$wordDistributionChartJSON?>,800,200,1,<?=$numberOfSuras?>,'#results-chart-area',"Chapter Number","Word Repetition",function(d){return "Chapter Number:" + d[0]+ "<br/>Repetition: "+d[1]} );

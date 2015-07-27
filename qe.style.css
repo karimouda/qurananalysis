@@ -671,6 +671,13 @@ rect
   stroke-width: 1.5px;
 }
 
+.graph-link text{
+
+    stroke: #000;
+ stroke-width: 0.1px;
+  font-weight: lighter;
+  font-size: 10px;
+}
 .graph-words
 {
   fill: #2E7FBA;

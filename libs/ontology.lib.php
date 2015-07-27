@@ -1,5 +1,5 @@
 <?php
-require_once("../libs/core.lib.php");
+require_once(dirname(__FILE__)."/../libs/core.lib.php");
 
 function mapQACPoSToWordnetPoS($qacPOS)
 {

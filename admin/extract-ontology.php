@@ -125,8 +125,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	
 			  	
 			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = FALSE;
-			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = FALSE;
-			  	$ENRICH_CONCEPTS_METADATA_WORDNET = FALSE;
+			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_WORDNET = TRUE;
 			  	
 			  	$EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;
 			  	
@@ -2839,6 +2839,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"ابن","OBJECT"=>"الله");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"الله","VERB"=>"*","OBJECT"=>"الشخص");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"قال","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"إنسان","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"ناس","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
+						//DBpedia mess
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"صيد","VERB"=>"*","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"أنثى","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"مرء","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
+						
 						
 						
 						

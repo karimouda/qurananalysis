@@ -155,14 +155,23 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 		var force = d3.layout.force()
 	    .size([width, height])
-	    .charge(function(d) { return 0.001})
-	    .gravity(-0.0005)
-	    .linkDistance(function(l) { alert(l.source.size);return 0.001})
+	    .charge(function(d) { return d.size})
+	    .linkDistance(function(l) 
+		{ 
+			linkDistance = parseInt((l.source.size+l.target.size)/2);
+			if (linkDistance==undefined ||  linkDistance< 200)
+			{
+				linkDistance = 200;
+			}
+			
+			return 200;
+		})
+	    .gravity(-0.005)
 	    .on("tick", tick);
 	
 	
 	
-	
+//	/+(parseInt(l.source.size)+parseInt(l.target.size) )
 	
 	var svg = d3.select(targetGraphDiv).append("svg")
 	    .attr("width", width)
@@ -174,27 +183,44 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 
 	
-	  link = link.data(dataLinks)
-	    .enter().append("line")
-	      .attr("class", "graph-link");
+	
+	  
+	  link = link
+	    .data(dataLinks)
+	    .enter()
+	    .append("g")
+	     .attr("class", "graph-link")
+	    .append("line");
+	     
+	  
+	  linkText = svg.selectAll(".graph-link")
+	     .data(dataLinks)
+	    .append("text")
+	    .attr("text-anchor", "middle")
+	    .text(function(d) { return d.link_verb; });
+	  
+
 	
 	
 	  groupElement = node.data(dataNodes).enter().append("g")
 	  .attr("class", "graph-node")
 	  .attr("transform", function(d){return "translate("+d.x+",50)"})
 	     .call(force.drag);
+	  
+	 
 	
 	  groupElement.append("title").text(function(d) { return d.size});
 	
+	   /// NODE TEXT
 	   groupElement.append("text")
-	  .attr("dx", function(d) { var xDistance = Math.log(d.size)*3; if (xDistance > 40) { xDistance = 40 } return xDistance;} )
-	  .attr("dy", function(d) { var xDistance = Math.log(d.size)*3; if (xDistance > 40) { xDistance = 40 } return xDistance;} )
-	  .attr("font-size", function(d) { var size = Math.log(d.size)*3; if (size > 42) { size = 42 } return size ;})
+	  .attr("dx", function(d) { var xDistance = Math.log(d.size)*3; if (xDistance < 20) { xDistance = 20 } return xDistance;} )
+	  .attr("dy", function(d) {return 0} )
+	  .attr("font-size", function(d) { var size = Math.log(d.size)*3; if (size < 12) { size = 12 } return size ;})
 	  .attr("class", "graph-words")
 	  .text(function(d) { return d.word });
 	  
 	   groupElement.append("circle")
-	   .attr("r", function(d) { var size = Math.log(d.size)*1; if (size > 25) { size = size } return size;})
+	   .attr("r", function(d) { var size = Math.log(d.size)*5; if (size < 5) { size = 5 } return size;})
 	   .style("fill", 'red');
 	  
 	
@@ -215,6 +241,31 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	      .attr("x2", function(d) { return d.target.x; })
 	      .attr("y2", function(d) { return d.target.y; });
 	
+		  linkText.attr("x", function(l) 
+				  { 
+			  			var startPoint =l.source.x;
+			  			if (l.target.x < l.source.x)
+		  				{
+			  				startPoint = l.target.x;
+		  				}
+			  		
+			  			return  startPoint+( Math.abs(l.target.x-l.source.x)/2 );
+			  
+				  })
+				  .attr("y", function(l) 
+	    		  {
+	    	  
+			 	     var startPoint =l.source.y;
+			  			if (l.target.y < l.source.y)
+						{
+			  				startPoint = l.target.y;
+						}
+			  		
+	  				return  startPoint+( Math.abs(l.target.y-l.source.y)/2 );
+	  			
+	    		  });
+
+		  
 		
 		  groupElement.attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; });
@@ -228,9 +279,6 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 	force.start();
 	
-	if (capping!=0)
-	{
-		$("<div style='text-align:center'>Graph is currently capped to "+capping+" words !</div>").insertAfter(targetGraphDiv);
-	}
+
 
 }

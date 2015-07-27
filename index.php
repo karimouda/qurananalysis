@@ -1,6 +1,7 @@
 <?php 
 require("global.settings.php");
 
+
 $query = $_GET['q'];
 ?>
 <!DOCTYPE html>
