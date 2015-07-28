@@ -3051,7 +3051,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							
 							$conceptType  = $coneptArr['CONCEPT_TYPE'];
-							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameEn  = removeBasicEnglishStopwordsNoNegation($coneptArr['EXTRA']['TRANSLATION_EN']);
 							$conceptNameAr  = $concept;
 							
 							$classID = getXMLFriendlyString($conceptNameAr);

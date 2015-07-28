@@ -681,11 +681,11 @@ function loadModels($modelsToBeLoaded,$lang)
 		  	  $TRANSLATION_MAP_AR_TO_EN[$wordUthmani]=$englishTranslationForCurrentWord;
 		  	  $TRANSLITERATION_WORDS_MAP[$wordUthmani]=$wordsTransliterationArr[$index];
 		  	  
-		  	 // preprint_r($TRANSLATION_MAP_EN_TO_AR);
+		  	  //preprint_r($TRANSLATION_MAP_EN_TO_AR);
 		  	 // preprint_r($TRANSLATION_MAP_AR_TO_EN);
 		  	 // preprint_r($TRANSLITERATION_WORDS_MAP);
 		  	  	
-		  	 // 	exit;
+		     
 		  	  	
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordUthmani]=$wordSimple;
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordSimple]=$wordUthmani;
@@ -719,8 +719,9 @@ function loadModels($modelsToBeLoaded,$lang)
 		}
 	}
 	  
+	//preprint_r($TRANSLATION_MAP_EN_TO_AR);exit;
+	//preprint_r($WORD_SENSES_AR);exit;
 	
-
 
 	
 	
