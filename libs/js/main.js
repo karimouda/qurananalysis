@@ -5,19 +5,21 @@ function showTranslationFor(divID)
 	$("#"+divID+"-translation").show();
 }
 
-function switchToLang(toLang)
+function switchToSelectedLang()
 {
 	
+	var selectedLang = $("SELECT[id=language-selection] option:selected").val();
 	
+
 	
 	if ( location.href.indexOf("?") >= 0 )
 	{
-		location.href=location.href.replace(/lang\=[A-Z]{2}/,"lang="+toLang);
+		location.href=location.href.replace(/lang\=[A-Z]{2}/,"lang="+selectedLang);
 
 	}
 	else
 	{
-		location.href=location.href+"?lang="+toLang;
+		location.href=location.href+"?lang="+selectedLang;
 	}
 }
 

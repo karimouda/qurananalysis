@@ -40,38 +40,30 @@ if ( isset($_GET['lang']) )
   </head>
   <body>
 		<?php 
-			require("./analysis.header.php");
+			require("./analysis.template.start.code.php");
 	
 		?>
 			  		
   <div id='main-container'>
 			  	
-			
-			
+		<div id="analysis-main-message" >
 
-			
-					
-				
-			  	<div id="analysis-main-message" >
-			  	
-		
-				
-			   		<div style='color:#841'>
-				  		<p>
-				  			Are you a Scholar or normal user who is interested in going deep into the Quran 
-				  			to find patterns, relations and new discoveries, if so, you are in the right place ...
-				  			
-				  			
-				  		</p>
-				  		<p>
-				  			This section was created to be the swiss-knife of Quran Research, it is meant to
-				  			facilitate all kinds of Analysis work around Quran for both Arabic and English languages
-				  		</p>
-				  		
-				  		 <p style="color:#0357AA">
+			<div style='color:#841'>
+			  		<p>
+			  			Are you a Scholar or normal user who is interested in going deep into the Quran 
+			  			to find patterns, relations and new discoveries, if so, you are in the right place ...
+			  			
+			  			
+			  		</p>
+			  		<p>
+			  			This section was created to be the swiss-knife of Quran Research, it is meant to
+			  			facilitate all kinds of Analysis work around Quran for both Arabic and English languages
+			  		</p>
+			  		
+			  		 <p style="color:#0357AA">
 				  			Click on one of the links above to start
 				  		</p>
-			  		</div>
+			</div>
 			  		
 			  		<ul>
 			  			<li><b>Basic Statistics</b>: Statistics about the total number of Chapters, Verses, Words, Characters and more </li>
@@ -86,12 +78,15 @@ if ( isset($_GET['lang']) )
 			  			<li><b>Repeated Verses</b>: Listing of full repeated verses or common substring using LCS algorithms  </li>
 			  			
 			  		</ul>
-			  		
-			  
-			  	
-			  	</div>	
+			</div>
+	
+	 
+	 
    </div>
-   
+  		<?php 
+			require("./analysis.template.end.code.php");
+	
+		?>
 
 	<script type="text/javascript">
 

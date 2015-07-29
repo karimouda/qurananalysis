@@ -2147,5 +2147,10 @@
 		return (string)$obj;
 		
 	}
+	
+	function isCurrentPage($page)
+	{
+		return (strpos($_SERVER["PHP_SELF"],$page)!==false);
+	}
 
 ?>

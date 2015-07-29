@@ -41,15 +41,16 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
   </head>
   <body>
 
-	<?php 
-		require_once("./analysis.header.php");
-	?>
+		<?php 
+				require("./analysis.template.start.code.php");
+		
+		?>	
 				
   <div id='main-container'>
 			  	
 
 			  
-			  	<h1 id='ontology-title'>Quran Ontology</h1>
+			  	
 			  	<div id='ontology-main-area'>
 			  	
 						<table id="ontology-container-table">
@@ -161,7 +162,10 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 			
    </div>
    
-
+		<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>	
 	<script type="text/javascript">
 
 

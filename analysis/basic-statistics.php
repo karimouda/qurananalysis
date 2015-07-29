@@ -40,7 +40,7 @@ loadModels("core",$lang);
   </head>
   <body>
 		<?php 
-				require("./analysis.header.php");
+				require("./analysis.template.start.code.php");
 		
 		?>		
   		
@@ -218,7 +218,11 @@ loadModels("core",$lang);
 			  	</div>	
    </div>
    
-
+		<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>		
+		
 	<script type="text/javascript">
 
 				

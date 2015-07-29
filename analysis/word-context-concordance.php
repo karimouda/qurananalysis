@@ -35,22 +35,46 @@ loadModels("core",$lang);
   </head>
   <body>
 
-	<?php 
-		require_once("./analysis.header.php");
-	?>
-				
+		<?php 
+				require("./analysis.template.start.code.php");
+		
+		?>			
   <div id='main-container'>
 			  	
- 				<h1 class='analysis-title-header'>Concordance</h1>
+ 				 <!-- <h1 class='analysis-title-header'>Concordance</h1>-->
 			  	
 			  	
 			  	<div id='words-context-options'>
-					Word or PoS Tag:
-					<input type="text" id="word" autofocus="true" />
-					<br>
-					Number of words around
-					<input type="text" id="level" style="width:20px" maxlength="1" placeholder="3" />
-					<input type="button" id='words-context-submit' value='Concordance'  />
+			  	<table>
+				  	<tr>
+						<td >
+							Word or PoS Tag
+						</td>
+						<td align="left">
+						
+								<input type="text" id="word" autofocus="true" />
+						</td>
+					</tr>
+				  	<tr>
+						<td >
+							# of words around
+						</td>
+						<td align="left">
+							<input type="text" id="level" style="width:20px" maxlength="1" placeholder="3" />
+						</td>
+					</tr>
+				  	<tr>
+						<td >
+							
+						</td>
+						<td align="left">
+							<input type="button" id='words-context-submit' value='Concordance'  />
+						</td>
+					</tr>
+				</table>
+				
+
+					
 				</div>
 				
 				<div id='words-context-area'>
@@ -90,7 +114,10 @@ loadModels("core",$lang);
 			
    </div>
  
-
+		<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>	
 
 	<script type="text/javascript">
 

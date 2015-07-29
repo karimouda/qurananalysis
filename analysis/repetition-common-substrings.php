@@ -34,9 +34,11 @@ $LOAD_FROM_CACHE = TRUE;
        
   </head>
   <body>
-	<?php 
-			require_once("./analysis.header.php");
-	?>
+
+  		<?php 
+				require("./analysis.template.start.code.php");
+		
+		?>	
 				
   <div id='main-container'>
 
@@ -47,7 +49,7 @@ $LOAD_FROM_CACHE = TRUE;
 			  
 			  	
 			  	<div id='repetition-area'>
-			  	<h1 class='analysis-title-header'>Common Phrases in the Quran</h1>
+		
 					<?php 
 					
 					$repeatedSubStrings = array();
@@ -198,7 +200,7 @@ $LOAD_FROM_CACHE = TRUE;
 					  		
 			  				?>
 					
-					<table id='ngrams-results-table'>
+					<table id='repeated-results-table'>
 					<thead>
 					<tr>
 						<td colspan='2'>
@@ -244,7 +246,10 @@ $LOAD_FROM_CACHE = TRUE;
 			
    </div>
    
-
+		<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>	
 	<script type="text/javascript">
 
 

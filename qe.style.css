@@ -89,15 +89,15 @@ TEXTAREA
 #main-container
 {
 	width:90%;
-	margin: 10px 5%;
+	margin: 10px 0px 0px 20px;
 	min-height: 400px;
 }
 
 #options-area
 {
 	background-color: #f8f8f8;
-	margin: 60px 20% 20px 20%;
-	padding:20px;
+	margin: 30px 20% 10px 20%;
+	padding:10px;
 	border-radius:5px;
 	vertical-align: top;
 	position: relative;
@@ -265,45 +265,6 @@ TEXTAREA
 	color:#0D5E9B;
 }
 
-A.analysis-links
-{
-	color:#fff;
-	font-size: 14px;
-	font-weight:bold;
-	padding:10px 4px;
-	text-decoration: none;
-	display: inline-block;
-}
-A.analysis-links:BEFORE
-{
-	content:"۞ ";
-}
-
-A.analysis-links:ACTIVE
-{
-	color:#000;
-	outline-width:2px;
-	outline-color: #fff;
-	outline-style: dotted;
-}
-
-A.analysis-links:HOVER
-{
-
-	color:#fff;
-	font-size:15px;
-}
-
-A.analysis-links:FOCUS
-{
-
-	color:#fff;
-	font-size:15px;
-		outline-width:2px;
-	outline-color: #000;
-	outline-style: dotted;
-}
-
 .analysis-table
 {
 	background-color: #FAFAFA;
@@ -336,6 +297,7 @@ fieldset
 	width:44%;
 	min-height: 300px;
 	margin-bottom: 100px;
+	  border: 1px solid #eee;
 }
 fieldset legend
 {
@@ -346,8 +308,9 @@ fieldset legend
 #word-frequency-fs
 {
 	width:80%;
-	margin:10px 15%;
+	margin:10px 0px;
 	float:none;
+	
 }
 
 #quran-full-text-fs
@@ -375,8 +338,8 @@ fieldset legend
 
 #fqt-search-area
 {
-		margin:10px 20%;
-		width:60%;
+		margin:10px 0px;
+		width:100%;
 }
 marked
 {
@@ -620,15 +583,16 @@ marked_for_concordance_right_left
 #analysis-main-message
 {
 	margin:auto;
-	width:60%;
+	width:100%;
 	color:#202930;
-	padding-left: 60px;
-	margin-top:20px;
+	padding-left: 20px;
+	margin-top:0px;
 }
 
 #analysis-main-message P
 {
 	font-size:22px;
+	margin-top:10px;
 }
 
 #analysis-switch-lang-button:HOVER
@@ -802,6 +766,10 @@ width: 50%;
 margin: 0px auto;
 text-align: center;
 
+}
+#pos-options-table
+{
+	text-align: right;
 }
 
 #pos-selection
@@ -1164,6 +1132,37 @@ text-align: center;
 	vertical-align: middle;
 }
 
+
+
+#repeated-results-table
+{
+	margin:auto;
+	width:80%
+	margin-top:20px;
+}
+
+
+
+
+#repeated-results-table TD
+{
+	vertical-align: top;
+	background-color: #fafafa;
+}
+
+#repeated-results-table TH
+{
+
+	background-color: #C0DE22;
+	color:#000;
+	padding:2px;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-align: left;
+}
+
+
+
 #words-info-options
 {
 	margin:auto;
@@ -1175,14 +1174,14 @@ text-align: center;
 {
 
 	margin: 0px auto;
-	width: 80%;
+	width: 100%;
 }
 
 
 #words-info-table
 {
 	margin:auto;
-	width:80%;
+	width:100%;
 	margin-top:20px;
 }
 
@@ -1280,7 +1279,7 @@ text-align: center;
 {
 
 	margin: 0px auto;
-	width: 80%;
+	width: 100%;
 }
 
 
@@ -1354,4 +1353,71 @@ text-align: center;
 	list-style-type: none;
 	color:#aaa;
 }
+
+#analysis-main-table
+{
+	width: 100%;
+}
+#left-menu-area
+{
+	display: block;
+	  margin-left: 10px;
+}
+#analysis-component-cell
+{
+	text-align: left;
+	vertical-align: top;
+}
+#analysis-left-menu-cell
+{
+	border-right:1px  dotted #eee;
+	vertical-align: top;
+	width: 200px;
+}
+
+
+A.analysis-links
+{
+	color:#000;
+	font-size: 14px;
+	font-weight:bold;
+	text-decoration: none;
+	display: block;
+	
+}
+A.analysis-links:BEFORE
+{
+	content:"۞ ";
+}
+
+A.analysis-links:ACTIVE
+{
+	color:#000;
+	outline-width:2px;
+	outline-color: #fff;
+	outline-style: dotted;
+}
+
+A.analysis-links:HOVER
+{
+
+	background-color:#0074bc;
+	color:#fff;
+
+}
+
+A.analysis-links[selected="1"]
+{
+	background-color:#0074bc;
+	color:#fff;
+}
+
+
+.analysis-sub-title
+{
+
+	color:#aaa;
+	font-size: 14px;
+}
+
 

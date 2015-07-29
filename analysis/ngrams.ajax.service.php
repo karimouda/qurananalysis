@@ -18,7 +18,7 @@ loadModels("core,qac",$lang);
 $parameter = $_GET['parameter'];
 
 
-echoN($parameter);
+
 		
 					$grams = $parameter;
 					

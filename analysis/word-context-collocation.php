@@ -35,13 +35,14 @@ loadModels("core",$lang);
   </head>
   <body>
 
-	<?php 
-		require_once("./analysis.header.php");
-	?>
+		<?php 
+				require("./analysis.template.start.code.php");
+		
+		?>	
 				
   <div id='main-container'>
 			  	
-			  	<h1 class='analysis-title-header'>Collocation</h1>
+			  <!--  <h1 class='analysis-title-header'>Collocation</h1>-->	
 			  
 			  	
 			  	<div id='words-context-options'>
@@ -60,7 +61,10 @@ loadModels("core",$lang);
 			
    </div>
  
-
+		<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>	
 
 	<script type="text/javascript">
 

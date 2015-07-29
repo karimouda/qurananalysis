@@ -36,9 +36,10 @@ $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
   </head>
   <body>
 
-	<?php 
-		require_once("./analysis.header.php");
-	?>
+		<?php 
+				require("./analysis.template.start.code.php");
+		
+		?>	
 				
   <div id='main-container'>
 			  	
@@ -107,7 +108,10 @@ $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 			
    </div>
    
-
+		<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>	
 	<script type="text/javascript">
 
 

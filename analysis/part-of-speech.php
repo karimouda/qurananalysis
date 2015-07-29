@@ -34,10 +34,10 @@ loadModels("core,qac",$lang);
        
   </head>
   <body>
-	<?php 
-		require_once("./analysis.header.php");
-	?>
-				
+		<?php 
+				require("./analysis.template.start.code.php");
+		
+		?>			
   <div id='main-container'>
 			  	
 		
@@ -56,8 +56,13 @@ loadModels("core,qac",$lang);
 					//preprint_r($MODEL['QURANA_PRONOUNS']);
 					?>
 				
-				Select PoS Tag: 
-				<select id='pos-selection'>
+				<table id='pos-options-table'>
+				<tr>
+					<td>
+							Select PoS Tag
+					</td>
+					<td>
+							<select id='pos-selection'>
 					 <option value="" selected="true">&nbsp;</option>
 						<?php 
 							foreach ($MODEL_QAC['QAC_POS'] as $posTypeName => $posArr )
@@ -73,17 +78,33 @@ loadModels("core,qac",$lang);
 							}
 					  ?>
 					</select>
-					<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Features
+					</td>
+					<td>
+						<input  type="text" name="features" id="features" style='width:100%'></input>
+					</td>
+				</tr>
+				<tr>
+					<td >
+					</td>
+					<td align="left">
 					
-					Features: <input  type="text" name="features" id="features" ></input>
-					<br>
-					<input  type="button" name="submit" id="submit" value="Find" ></input>
+						<input  type="button" name="submit" id="submit" value="Find" ></input>
+					</td>
+				</tr>
+				</table>
+
+					
 					<div id="loading-layer">
 			  		Loading ...
 					</div>
 					
 				</div>
-	<br>
+			<br>
 		  		
      				<div id='pos-data-area'>
 							
@@ -94,7 +115,10 @@ loadModels("core,qac",$lang);
 			
    </div>
 
-			  	
+			<?php 
+				require("./analysis.template.end.code.php");
+		
+		?>			  	
 
 	<script type="text/javascript">
 
