@@ -10,8 +10,7 @@ require_once "$OWLLIB_ROOT/reader/OWLLabelTag.php";
 require_once "$OWLLIB_ROOT/reader/OWLIntersectionOfTag.php";
 require_once "$OWLLIB_ROOT/reader/OWLInverseOfTag.php";
 
-//ADDED BY KARIM
-require_once "$OWLLIB_ROOT/reader/OWLAnnotationPropertyTag.php";
+
 
 
 
@@ -62,6 +61,7 @@ class OWLReader
 		$this->root_tag->create($ontology, "", array(), $owl_file);
 		$ontology->setNamespace($owl_file);
 		while ($data = fread($filehandler, 4096)) {
+			
     	xml_parse($this->parser, $data, feof($filehandler));
 		}
 

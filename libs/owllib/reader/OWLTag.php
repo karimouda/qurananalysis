@@ -22,6 +22,7 @@ class OWLTag
   	$this->base = $base;
   	$this->current_tag = null;
   	$this->wants_more = true;
+  	$this->label = "";;
   	
   	//preprint_r($attributes);
 	
@@ -99,6 +100,8 @@ class OWLTag
 	 */
 	function startTag($parser, $tag, $attributes)
   {
+  	$this->parsingTagContent = false;
+
   	if($this->current_tag == null){
   		$this->current_tag = $this->createTag($tag, $attributes, $this->base);
   	}
@@ -114,8 +117,23 @@ class OWLTag
 	 */
 	function characters($parser, $cdata)
   {
-  	//ADDED BY KARIM
-  	$this->label = $cdata;
+  	
+
+  	
+  	echoN($cdata);
+  	
+  	if ( $this->parsingTagContent)
+  	{
+	  	//ADDED BY KARIM
+	  	$this->label .= $cdata;
+  	}
+  	else 
+  	{
+	  	//ADDED BY KARIM
+	  	$this->label = $cdata;
+  	}
+  
+  	$this->parsingTagContent = true;
   	
   	if($this->current_tag != null){
 	 		$this->current_tag->characters($parser, $cdata);
@@ -129,6 +147,9 @@ class OWLTag
 	 */
 	function endTag($parser, $tag)
   {
+  	
+  	$this->parsingTagContent = false;
+  	
  	 	if($this->current_tag != null){
  			$this->current_tag->endTag($parser, $tag);
  			if(!$this->current_tag->wantsMore()){
