@@ -2152,5 +2152,37 @@
 	{
 		return (strpos($_SERVER["PHP_SELF"],$page)!==false);
 	}
+	
+	function getArrayHash($arr)
+	{
+		return md5(print_r($arr,true));
+	}
+	
+	function getArrayHashForFields($arr,$fieldsArr)
+	{
+		$tobeHashedStr = "";
+		foreach($fieldsArr as $fieldName)
+		{
+			$tobeHashedStr .= $arr[$fieldName]."|";
+		}
+		return md5($tobeHashedStr);
+	}
+	
+	function search2DArrayForValue($arr,$sentVal)
+	{
+		foreach($arr as $index=>$subArr) 
+		{
+			
+			$key = array_search($sentVal, $subArr);
+			
+			if( $key!==false)
+			{
+				return $index;
+			}
+		
+		}
+		return false;
+	}
+	
 
 ?>

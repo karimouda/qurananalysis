@@ -43,8 +43,11 @@ $query = $_GET['q'];
 			 			<div id='section-item-search' class='section-item' >
 			  				<a href='/'>Search</a>
 			  			</div>
+			  			<div id='section-item-explore' class='section-item'>
+			  				<a href='/explore/'>Explore</a>
+			  			</div>
 			  			<div id='section-item-analysis' class='section-item'>
-			  				<a href='/analysis/'>Analysis</a>
+			  				<a href='/analysis/'>Analyze</a>
 			  			</div>
 			  		</div>
 					
@@ -153,6 +156,9 @@ $query = $_GET['q'];
 				$("#loading-layer").show();
 
 				$("#content-area").html("");
+
+				destroyGraph();
+				
 				
 				
 				$.ajaxSetup({

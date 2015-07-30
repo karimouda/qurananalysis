@@ -725,7 +725,7 @@ $graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$queryWordsArr,0,array(960,
 
 if ( empty($graphObj['nodes']))
 {
-	$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultsTextArr,0,array(960,400),$lang);
+	$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultsTextArr,300,array(960,400),$lang);
 }
 
 // $graphNodesArr = array();
@@ -737,7 +737,7 @@ if ( empty($graphObj['nodes']))
 	
 // }
 
-//preprint_r($graphNodesArr);
+//preprint_r($graphObj["links"]);exit;
 
 $graphNodesJSON = json_encode($graphObj['nodes']);
 $graphLinksJSON = json_encode($graphObj["links"]);

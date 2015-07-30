@@ -120,8 +120,9 @@ class OWLTag
   	
 
   	
-  	echoN($cdata);
+  	//echoN($cdata);
   	
+  	// only accumilate if we are inside tag data ( second round)
   	if ( $this->parsingTagContent)
   	{
 	  	//ADDED BY KARIM

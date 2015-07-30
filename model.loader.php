@@ -401,6 +401,8 @@ function loadModels($modelsToBeLoaded,$lang)
 				$val = $annotArr['VAL'];
 				
 				$qaOntologyConceptsArr[$conceptName][$key] = $val;
+				
+				//echoN("[$conceptName][$key] = $val");
 			}
 			
 		}

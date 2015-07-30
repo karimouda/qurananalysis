@@ -11,7 +11,7 @@ if ( isset($_GET['lang']) )
 	$lang = $_GET['lang'];
 }
 
-loadModels("core",$lang);
+loadModels("core,ontology",$lang);
 
 $SURA = $_GET['s'];
 $AYA = $_GET['a'];
@@ -82,22 +82,14 @@ if ( (($isAllSURA=="") && ($SURA=="") ) ||  (($SURA=="") && ($AYA=="") ) )
 					
 					
 					
-					$graphObj = textToGraph($arrOfTextToGraph,$MODEL_CORE['STOP_WORDS'],600);
+					$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$arrOfTextToGraph,0,array(960,400),$lang);
 					
 					
-					
-					$graphNodesArr = array();
-					
-					foreach($graphObj["nodes"] as $word => $nodeArr)
-					{
-					
-						$graphNodesArr[] = $nodeArr;
-					
-					}
+
 					
 					//preprint_r($graphNodesArr);
 					
-					$graphNodesJSON = json_encode($graphNodesArr);
+					$graphNodesJSON = json_encode($graphObj["nodes"]);
 					$graphLinksJSON = json_encode($graphObj["links"]);
 					
 					
@@ -119,7 +111,7 @@ if ( (($isAllSURA=="") && ($SURA=="") ) ||  (($SURA=="") && ($AYA=="") ) )
 		$(document).ready(function()
 		{
 
-			drawGraph(<?php echo "$graphNodesJSON" ?>,<?php echo "$graphLinksJSON" ?>,960,400,"#graph-maingraph-area",<?php echo $graphObj["capped"]?>);
+			drawGraph(<?php echo "$graphNodesJSON" ?>,<?php echo "$graphLinksJSON" ?>,960,400,"#graph-maingraph-area");
 			
 		
 		});

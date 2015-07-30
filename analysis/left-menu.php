@@ -38,9 +38,6 @@
    				<a href="./charts.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("charts.php")) echo "selected='1'"?> 
    				>Charts</a>	
-   				<a href="./graph.php<?=$langParameter?>" class='analysis-links'  
-   				<?php if ( isCurrentPage("graph.php")) echo "selected='1'"?> 
-   				>Graphs</a>
    				<a href="./ngrams.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("ngrams.php")) echo "selected='1'"?> 
    				>N-Grams</a>
@@ -61,7 +58,10 @@
    				 >Repeated Phrases <br><span class='analysis-sub-title'>&nbsp;&nbsp;&nbsp;&nbsp;(Common Substrings)</span></a>	
    				<a href="./ontology.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("ontology.php")) echo "selected='1'"?> 
-   				 >Ontology</a>		
+   				 >Ontology Data</a>		
+   				<a href="./ontology-graph.php<?=$langParameter?>" class='analysis-links'  
+   				<?php if ( isCurrentPage("ontology-graph.php")) echo "selected='1'"?> 
+   				>Ontology Graphs</a>
    				<a href="./uthmani-to-simple.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("uthmani-to-simple.php")) echo "selected='1'"?> 
    				 >Uthmani-to-Simple</a>

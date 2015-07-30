@@ -125,6 +125,10 @@ function drawChart(jsonDATA,width,height,xAxisMin,xAxisMax,chartDivId,xAxisLabel
 }
 
 
+function destroyGraph()
+{
+	$(".graph-tooltip").hide();
+}
 
 
 function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,capping)
@@ -142,6 +146,8 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 	
 	    var dataNodes = jsonNodesData;
+	    
+	    
 	
 	    // The `links` array contains objects with a `source` and a `target`
 	    // property. The values of those properties are the indices in
@@ -150,23 +156,32 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	    // into the second graph.
 	
 	    var dataLinks = jsonLinksData;
+	    
 	
 	
+	    var linksLength = dataLinks.length;
 	
 
+	  
 	
 		var force = d3.layout.force()
 	    .size([width, height])
 	    .charge(function(d) { return d.size})
 	    .linkDistance(function(l) 
 		{ 
-			linkDistance = parseInt((l.source.size+l.target.size)/2);
-			if (linkDistance==undefined ||  linkDistance< 200)
+			linkDistance = linksLength*10;//parseInt((l.source.size+l.target.size)/2);
+			
+			if (linkDistance==undefined ||  linkDistance> 300)
 			{
-				linkDistance = 200;
+				linkDistance = 300;
 			}
 			
-			return 200;
+			if ( linkDistance< 100)
+			{
+				linkDistance = 100;
+			}
+			
+			return linkDistance;
 		})
 	    .gravity(-0.005)
 	    .on("tick", tick);
@@ -184,7 +199,14 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 	
 
-	
+    var tooltip = d3.select("body").append("div")
+    .attr("class", "graph-tooltip")
+    .style("opacity", 0);
+    
+    
+  
+    tooltip.style("left", (svg.node().offsetLeft) + "px")
+    .style("top", (svg.node().offsetLeft) + "px");
 	
 	  
 	  link = link
@@ -196,16 +218,92 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	     
 	  
 	  linkText = svg.selectAll(".graph-link")
-	     .data(dataLinks)
-	    .append("text")
-	    .attr("text-anchor", "middle")
-	    .text(function(d) { return d.link_verb; });
-	  
+	    .data(dataLinks)
+	    .append("g");
 
-	
+	    // add link text, handle multiple verbs
+	  	svg.selectAll(".graph-link g").each(function(d,i)
+	  			{
+	  					var linkStr = d.link_verb;
+	  					y=10;
+	  					if ( linkStr!='' && linkStr.indexOf(",")!=-1)
+	    				{
+	  						verbArr =  linkStr.split(",");
+	  						
+	  						
+	  						for(var v=0;v<verbArr.length;v++)
+  							{
+	  							oneVerbItem = verbArr[v];
+	  							
+	  							d3.select(this).append("text").text((v+1)+" - "+oneVerbItem).attr("relY",y);
+	  							
+	  							
+	  							y+=19;
+  							}
+	    				}
+	  					else
+  						{
+	  						d3.select(this).append("text").text(linkStr).attr("relY",y);
+  						}
+	  					
+	  			});
+
+
 	
 	  groupElement = node.data(dataNodes).enter().append("g")
 	  .attr("class", "graph-node")
+	            .on("mouseover", function(d) {
+	            	   tooltip.style("display","block");
+              tooltip.transition()
+                   .duration(100)
+                   .style("opacity", .8);
+              
+              var tooltipContent = "<b>"+d.word +"</b><br>";
+              	  if (d.short_desc!="")
+              	  {
+              		  tooltipContent += ""+d.short_desc+"><br>";
+              	  }
+              	  if (d.long_desc!="")
+              	  {
+              		  var descStr = d.long_desc;
+              		  if ( descStr.length > 400)
+              			  {
+              			descStr = descStr.substr(0,400)+"...";
+              			  }
+              		  tooltipContent += descStr+"<br>";
+              	  }
+              	  if (d.image_url!="")
+              	  {
+              		 
+              		  tooltip.style("background-image","url('"+d.image_url+"')");
+              	
+              	  }
+              	  else
+              	  {
+              		 tooltip.style("background-image","none");
+              	  }
+              		  
+              		  
+              	  if (d.external_link!="")
+              	  {
+              		  tooltipContent += "<a href='"+d.external_link+"' target='_new'>"+d.external_link+"</a><br>";
+              	  }
+              	  
+              	 tooltip.html(tooltipContent);
+              	  
+        
+          })
+          .on("mouseout", function(d) {
+        	  
+        	  //tooltipRight = tooltip.node().offsetLeft+tooltip.node().offsetWidth;
+        	  
+      
+             /*tooltip.transition()
+                   .duration(500)
+                   .style("opacity", 0);
+              
+              tooltip.style("display","none");*/
+          })
 	  .attr("transform", function(d){return "translate("+d.x+",50)"})
 	     .call(force.drag);
 	  
@@ -215,7 +313,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	
 	   /// NODE TEXT
 	   groupElement.append("text")
-	  .attr("dx", function(d) { var xDistance = Math.log(d.size)*3; if (xDistance < 20) { xDistance = 20 } return xDistance;} )
+	  .attr("dx", function(d) { var xDistance = (Math.log(d.size)*5)+20; if (xDistance < 20) { xDistance = 20 } return xDistance;} )
 	  .attr("dy", function(d) {return 0} )
 	  .attr("font-size", function(d) { var size = Math.log(d.size)*3; if (size < 12) { size = 12 } return size ;})
 	  .attr("class", "graph-words")
@@ -268,6 +366,26 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	    		  });
 
 		  
+			svg.selectAll(".graph-link g text").attr("y", function(l) 
+		    { 
+	  			var startPoint =l.source.y;
+	  			if (l.target.y < l.source.y)
+  				{
+	  				startPoint = l.target.y;
+  				}
+	  		
+	  			return  (startPoint+parseInt(d3.select(this).attr("relY")));
+	  
+		     });
+			
+			svg.selectAll(".graph-link g text").attr("x", function(l) 
+		    { 
+
+	  			return  parseInt(d3.select(this.parentNode).attr("x"));
+	  
+		     });
+			
+
 		
 		  groupElement.attr("cx", function(d) { return d.x; })
 	      .attr("cy", function(d) { return d.y; });

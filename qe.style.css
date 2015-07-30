@@ -130,30 +130,45 @@ TEXTAREA
 	border-right: 1px dotted #999;
 	cursor: pointer;
 	font-size:16px;
+
 }
+#section-item-search
+{
+	background-color: #eee;
+	border-top-left-radius:5px;
+}
+#section-item-explore
+{
+	background-color: #FFD11A;
 
-
+}
 
 #section-item-analysis
 {
 	background-color: #4CA5FF;
+	border-top-right-radius:5px;
 
 }
 
-#section-item-search A
+.section-item A
 {
 	color:#222;
 	text-decoration: none;
 	padding:10px;
 	display: inline-block;
 	font-size: 20px;
+		
 }
 
-#section-item-analysis:HOVER
+.section-item:HOVER
 {
-
-	opacity: 0.95;
-	filter: alpha(opacity =     95);
+	filter: brightness(1.1);
+	-webkit-filter: brightness(1.1);
+	-moz-filter: brightness(1.1);
+	
+	filter: drop-shadow(0px 0px 3px #000);
+	-webkit-filter: drop-shadow(0px 0px 3px #000);
+	-moz-filter: drop-shadow(0px 0px 3px #000);
 
 }
 #section-item-analysis A
@@ -642,6 +657,13 @@ rect
   font-weight: lighter;
   font-size: 10px;
 }
+
+.graph-link text tspan{
+
+    display: block;
+}
+
+
 .graph-words
 {
   fill: #2E7FBA;
@@ -717,6 +739,28 @@ rect
   pointer-events: none;
   font-size: 11px;
 }
+
+.graph-tooltip
+{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  font-size: 11px;
+  border:1px;
+  background-color: #000;
+  color:#fff;
+  border-radius:10px;
+  border-top-left-radius:0px;
+  border-bottom-left-radius:0px;
+   border-top-right-radius:0px;
+   
+  padding:10px;
+  x-index:100;
+
+  
+  
+}
+
 
 
 #graph-maingraph-area
@@ -1420,4 +1464,26 @@ A.analysis-links[selected="1"]
 	font-size: 14px;
 }
 
+.treemap-node {
+  border: solid 1px white;
+  font: 14px sans-serif;
+  line-height: 20px;
+  overflow: hidden;
+  position: absolute;
+  text-indent: 10px;
+  color:#fff;
+  cursor: pointer;
+ 
+ 
+}
 
+
+.treemap-node:HOVER
+{
+	filter: brightness(1.1);
+	-webkit-filter: brightness(1.1);
+	-moz-filter: brightness(1.1);
+	font-weight: bold;
+	
+
+}
