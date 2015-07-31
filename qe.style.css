@@ -744,18 +744,18 @@ rect
 {
   position: absolute;
   width: 200px;
-  height: 200px;
+  height: 384px;
   font-size: 11px;
   border:1px;
   background-color: #000;
   color:#fff;
-  border-radius:10px;
+  border-radius:0px;
   border-top-left-radius:0px;
   border-bottom-left-radius:0px;
    border-top-right-radius:0px;
    
   padding:10px;
-  x-index:100;
+  z-index:100;
 
   
   
@@ -1427,6 +1427,8 @@ A.analysis-links
 	font-weight:bold;
 	text-decoration: none;
 	display: block;
+	  border-bottom: 1px solid #eee;
+  padding: 2px;
 	
 }
 A.analysis-links:BEFORE
@@ -1445,14 +1447,14 @@ A.analysis-links:ACTIVE
 A.analysis-links:HOVER
 {
 
-	background-color:#0074bc;
+	background-color:#4CA5FF;
 	color:#fff;
 
 }
 
 A.analysis-links[selected="1"]
 {
-	background-color:#0074bc;
+	background-color:#4CA5FF;
 	color:#fff;
 }
 

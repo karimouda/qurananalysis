@@ -270,7 +270,8 @@ class OWLWriter
    
    				foreach($relationMetaData as $attKey => $attVal)
    				{
-   					$attributeStr  = $attributeStr." $attKey='$attVal'";
+   					$attVal = htmlspecialchars($attVal);
+   					$attributeStr  = $attributeStr." $attKey=\"$attVal\"";
    				}
    
    

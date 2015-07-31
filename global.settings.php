@@ -81,10 +81,10 @@ $basmalaTextUthmani2 = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱ�
 $mandatoryStop = "ۘ";
 
 
-
 ## LOCATION SIGNIFICANT ##
 require_once($MAIN_ROOT_PATH."/libs/core.lib.php");
 require_once($MAIN_ROOT_PATH."/model.loader.php");
+
 
 
 if ( isDevEnviroment() )

@@ -102,7 +102,7 @@ class HTTPTranslator {
 	}
 }
 
-function translateText($text)
+function translateText($text,$translateFrom="en",$translateTo="ar")
 {
 	if ( empty($text)) return false;
 	
@@ -138,8 +138,8 @@ function translateText($text)
 		$translatorObj = new HTTPTranslator ();
 		
 		 //Set the params.//
-	    $fromLanguage = "en";
-	    $toLanguage   = "ar";
+	    $fromLanguage = $translateFrom;
+	    $toLanguage   = $translateTo;
 	  
 	    $contentType  = 'text/plain';
 	    $category     = 'general';

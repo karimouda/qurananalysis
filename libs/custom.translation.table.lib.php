@@ -1,5 +1,7 @@
 <?php
-require_once("../global.settings.php");
+require_once(dirname(__FILE__)."/../global.settings.php");
+require_once(dirname(__FILE__)."/core.lib.php");
+
 
 
 $CUSTOM_TRANSLATION_TABLE_EN_AR = array();
@@ -41,6 +43,22 @@ function isFoundInTranslationTable($enStr)
 	return  isset($CUSTOM_TRANSLATION_TABLE_EN_AR[$enStr]) ;
 }
 
+function isFoundInTranslationTableArabicKeyword($arStr)
+{
+	global $CUSTOM_TRANSLATION_TABLE_EN_AR;
+
+	$translationKey = search2DArrayForValue($CUSTOM_TRANSLATION_TABLE_EN_AR, $arStr);
+	
+	
+	if ($translationKey!==false)
+	{
+		return true;
+	}
+	
+	return false;
+}
+
+
 function getTranlationEntryByEntryKeyword($enStr)
 {
 	global $CUSTOM_TRANSLATION_TABLE_EN_AR,$TABLE_LOADED;
@@ -52,6 +70,21 @@ function getTranlationEntryByEntryKeyword($enStr)
 	
 	return $CUSTOM_TRANSLATION_TABLE_EN_AR[$enStr];
 }
+function getTranlationEntryByArabicEntryKeyword($arStr)
+{
+	global $CUSTOM_TRANSLATION_TABLE_EN_AR,$TABLE_LOADED;
+
+	if ( !$TABLE_LOADED)
+	{
+		return false;
+	}
+	
+	$translationKey = search2DArrayForValue($CUSTOM_TRANSLATION_TABLE_EN_AR, $arStr);
+	
+
+	return $CUSTOM_TRANSLATION_TABLE_EN_AR[$translationKey];
+}
+
 function addTranslationEntry($enStr, $entryType, $arStr)
 {
 	global $CUSTOM_TRANSLATION_TABLE_EN_AR,$TABLE_LOADED;
@@ -103,7 +136,7 @@ function persistTranslationTable($CUSTOM_TRANSLATION_TABLE_EN_AR=null)
 	if (!$TABLE_LOADED || empty($CUSTOM_TRANSLATION_TABLE_EN_AR)) return false;
 	
 
-	preprint_r($CUSTOM_TRANSLATION_TABLE_EN_AR);
+	//preprint_r($CUSTOM_TRANSLATION_TABLE_EN_AR);
 	
 	//clear file
 	file_put_contents($customTranslationTableFile,"");

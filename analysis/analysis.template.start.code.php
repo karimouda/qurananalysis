@@ -17,14 +17,9 @@
   </div>
  
   	<div id='options-area' class='oa-analysis'>
-		  		<div id='main-sections'>
-					 <div id='section-item-search' class='section-item' >
-		  				<a href='/'>Search</a>
-		  			</div>
-		  			<div id='section-item-analysis' class='section-item'>
-		  				<a href='/analysis/'>Analysis</a>
-		  			</div>
-		  		</div>
+			  	<?php 
+			  		include_once("../header.menu.php");
+			  	?>
 
 		  
    		

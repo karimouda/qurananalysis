@@ -122,7 +122,7 @@ function createNewConceptObj(&$nodeSerialNumber,$lang,$finalNodeLabel,$ontologyC
 	{
 		$conceptLongDesc = htmlentities($ontologyConceptArr['long_description_en']);
 		
-		preprint_r($ontologyConceptArr);
+		//preprint_r($ontologyConceptArr);
 	}
 	else
 	{
@@ -160,7 +160,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 	$startLocationYMax = ($height/2)+100;;
 	
 
-
+	
 	
 	////////////////////////////
 
@@ -264,7 +264,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 			$verb  = $relArr["link_verb"];
 			$object = $relArr["target"];
 			
-			echoN("$verb==$is_a_relation_name_ar && $object==$thing_class_name_ar");
+			//echoN("$verb==$is_a_relation_name_ar && $object==$thing_class_name_ar");
 			// ignore is-a thing relations
 			if ( $verb==$is_a_relation_name_ar && $object==$thing_class_name_ar) continue;
 			
@@ -275,18 +275,18 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 			
 			$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
 		
+			$finalNodeLabel = $conceptArr['label_ar'];
+				
+			if ( $lang == "EN")
+			{
+				$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);
+				$verb = $fullRelationArr['verb_translation_en'];
+			
+			}
+			
 			if ( !isset($graphNodes[$object]))
 			{
-				$finalNodeLabel = $conceptArr['label_ar'];
-				if ( $lang == "EN")
-				{
-					$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);
-					$verb = $fullRelationArr['verb_translation_en'];
-				
-				}
-				
 
-				
 				$graphNodes[$object]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $conceptArr,$randomXLocation,$randomYLocation);
 			}
 		
@@ -327,15 +327,18 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 		
 			
 			$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
-		
+	
+			$finalNodeLabel = $conceptArr['label_ar'];
+			
+			if ( $lang == "EN")
+			{
+				$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);;
+				$verb = $fullRelationArr['verb_translation_en'];
+			}
+			
 			if ( !isset($graphNodes[$subject]))
 			{
-				$finalNodeLabel = $conceptArr['label_ar'];
-				if ( $lang == "EN")
-				{
-					$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);;
-					$verb = $fullRelationArr['verb_translation_en'];
-				}
+			
 				
 
 				

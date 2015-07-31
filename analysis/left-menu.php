@@ -39,7 +39,7 @@
    				 <?php if ( isCurrentPage("charts.php")) echo "selected='1'"?> 
    				>Charts</a>	
    				<a href="./ngrams.php<?=$langParameter?>" class='analysis-links' 
-   				 <?php if ( isCurrentPage("ngrams.php")) echo "selected='1'"?> 
+   				 <?php if ( isCurrentPage("/ngrams.php")) echo "selected='1'"?> 
    				>N-Grams</a>
    				<a href="./pos-ngrams.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("pos-ngrams.php")) echo "selected='1'"?> 

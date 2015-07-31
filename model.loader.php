@@ -3,14 +3,14 @@ require_once(dirname(__FILE__)."/global.settings.php");
 require_once(dirname(__FILE__)."/libs/core.lib.php");
 require_once(dirname(__FILE__)."/libs/wordnet.lib.php");
 
+
+
 ///////// ONTOLOGY 
 require_once(dirname(__FILE__)."/libs/owllib/OWLLib.php");
 require_once(dirname(__FILE__)."/libs/owllib/reader/OWLReader.php");
 require_once(dirname(__FILE__)."/libs/owllib/memory/OWLMemoryOntology.php");
 
 require_once(dirname(__FILE__)."/libs/ontology.lib.php");
-
-
 
 
 
@@ -73,7 +73,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	{
 		throw new Exception("APC not found!");
 	}
-		
+
+
 
 	
 	//echoN("MODEL EXISTS IN CACHE?:".apc_exists("MODEL_CORE[EN]"));

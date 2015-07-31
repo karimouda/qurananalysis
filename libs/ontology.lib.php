@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__)."/../libs/core.lib.php");
+require_once(dirname(__FILE__)."/custom.translation.table.lib.php");
 
 function mapQACPoSToWordnetPoS($qacPOS)
 {
@@ -134,14 +135,17 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 {
 	global  $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
 	global $WORDS_TRANSLATIONS_AR_EN;
+	global $is_a_relation_name_en;
 	
 		
 	
 	// make shallow last resort, since it spoils words and lead to duplicate oncepts
 	if ( !isSimpleQuranWord($subject) )
 	{
+		//CONVERT UTHMANI TO SIMPLE
 		$subjectSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$subject];
 			
+		// IF NOT CORRESPONDING SIMPLE WORD, CONVERT USING SHALLOW CONVERSION ALGORITHM
 		if ( empty($subjectSimple))
 		{
 			$subjectSimple = shallowUthmaniToSimpleConversion($subject);
@@ -152,6 +156,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 		$subjectSimple = $subject;
 	}
 
+	// SAME AS ABOVE BUT FOR OBJECT
 	if ( !isSimpleQuranWord($object) )
 	{
 		$objectSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$object];
@@ -167,36 +172,64 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 		$objectSimple = $object;
 	}
 		
+	
 	$verbUthmani = $verb;
 	$verbSimple = "";
+	
+	///////// VERN TRANSLATION
 	if ( empty($verbEngTranslation))
 	{
 		$verbEngTranslation ="";
 	
+		// SINGLE WORD VERB
 		if ( !isMultiWordStr($verb))
 		{
 			$verb = trim($verb);
 			
 			$translatableVerb = $verb;
+			
+			// VERB IS SIMPLE
 			if ( isSimpleQuranWord($verb) )
 			{
 				$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verb];
-				
-				
-				
-				
+
 			}
 			else
 			{
-				
-				
+
 				$verbSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verb];;
 			}
+			
 			$verbEngTranslation = cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$translatableVerb]);
+			
+			//IF NOT IN TRANSLATION TABLE - EX: ONE OF THE SEGMENTS TRIMMED
+			if ( empty($verbEngTranslation))
+			{
+				// CHECK IF IS ALSO NOTO IN TRANSLATION ENTRY
+				if (!isFoundInTranslationTable($translatableVerb))
+				{
+					
+					// TRANSLATE USING MICROSOFT API
+					$verbEngTranslation = translateText($translatableVerb,"ar","en");
+					
+					// ADD TO QA CUSTOM TRANSLATION TABLE
+					addTranslationEntry($verbEngTranslation, "VERB", $translatableVerb);
+					
+					persistTranslationTable();
+				}
+				else
+				{
+					$customTranslationEntryArr =getTranlationEntryByEntryKeyword($translatableVerb);
+					
+					$verbEngTranslation = $customTranslationEntryArr['AR_TEXT'];
+				}
+			}
 		}
-		// such as negated verb
+		// MUTIWORD VERB (PHRASE) such as negated verbs
 		else
 		{
+			
+			//SPLIT PHRASE
 			$verbPhraseArr = preg_split("/ /", $verb);
 				
 			foreach($verbPhraseArr as $verbPart)
@@ -204,26 +237,62 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 				
 				$translatableVerb = $verbPart;
 				
+				// IF SIMPLE
 				if ( isSimpleQuranWord($verbPart) )
 				{
+					//GET UTHMANI WORD TO BE ABEL TO TRANSLATE
 					$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verbPart];
 				}
 				else
 				{
+					// GET SIMPLE WORD TO BE ADDED IN RELATION META
 					$simplePart = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verbPart];
+					
+					//if not in translation table, use shalow conversion
+					if ( empty($simplePart))
+					{
+						$simplePart = shallowUthmaniToSimpleConversion($verbPart);
+					}
+					
 					$verbSimple = $verbSimple." ".$simplePart;
+					
+					// THIS VARIABLE NEEDED FOR TRANSLATION
+					$translatableVerb = $simplePart;
 				}
 				
+				// TRANSLATE
 				$verbPartTranslated = cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$translatableVerb]);
 				
+				//IF NOT IN TRANSLATION TABLE - EX: ONE OF THE SEGMENTS TRIMMED
+				if ( empty($verbPartTranslated))
+				{
+					// CHECK IF IS ALSO NOTO IN TRANSLATION ENTRY
+					if (!isFoundInTranslationTable($translatableVerb))
+					{
+							
+						// TRANSLATE USING MICROSOFT API
+						$verbPartTranslated = translateText($translatableVerb,"ar","en");
+							
+						// ADD TO QA CUSTOM TRANSLATION TABLE
+						addTranslationEntry($verbPartTranslated, "VERB", $translatableVerb);
+							
+						persistTranslationTable();
+					}
+					else
+					{
+						$customTranslationEntryArr =getTranlationEntryByEntryKeyword($translatableVerb);
+							
+						$verbPartTranslated = $customTranslationEntryArr['AR_TEXT'];
+					}
+				}
 				
-				
+				// TRANSLATION ACCUMILATION
 				$verbEngTranslation = $verbEngTranslation . " " .$verbPartTranslated;
 			}
 		}
 	}
 	
-	if ( $verbEngTranslation!="is kind of" && $verbEngTranslation!="part of" && $verbEngTranslation!="is a")
+	if ( $verbEngTranslation!="is kind of" && $verbEngTranslation!="part of" && $verbEngTranslation!=$is_a_relation_name_en)
 	{
 		$verbEngTranslation = removeBasicEnglishStopwordsNoNegation($verbEngTranslation);
 	}

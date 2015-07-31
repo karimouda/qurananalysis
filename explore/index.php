@@ -61,18 +61,11 @@ loadModels("core,ontology",$lang);
 
   <div id='main-container'>
 			 <div id='options-area'>
-			  		<div id='main-sections'>
-			 			<div id='section-item-search' class='section-item' >
-			  				<a href='/'>Search</a>
-			  			</div>
-			  			<div id='section-item-explore' class='section-item'>
-			  				<a href='/explore/'>Explore</a>
-			  			</div>
-			  			<div id='section-item-analysis' class='section-item'>
-			  				<a href='/analysis/'>Analyze</a>
-			  			</div>
+			 			  	<?php 
+						  		include_once("../header.menu.php");
+						  	?>
 			  		</div>
-			  		</div>
+			  		
 		  		
 		  <div id='exploration-area'>
 <?php 

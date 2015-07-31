@@ -111,7 +111,7 @@ function drawChart(jsonDATA,width,height,xAxisMin,xAxisMax,chartDivId,xAxisLabel
           .on("mouseover", function(d) {
               tooltip.transition()
                    .duration(100)
-                   .style("opacity", .9);
+                   .style("opacity", .95);
               tooltip.html(tooltipFormatFunction(d))
                    .style("left", (d3.event.pageX + 5) + "px")
                    .style("top", (d3.event.pageY - 28) + "px");
@@ -224,20 +224,23 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,cappi
 	    // add link text, handle multiple verbs
 	  	svg.selectAll(".graph-link g").each(function(d,i)
 	  			{
+	  					// VERB RENDERING
 	  					var linkStr = d.link_verb;
 	  					y=10;
 	  					if ( linkStr!='' && linkStr.indexOf(",")!=-1)
 	    				{
 	  						verbArr =  linkStr.split(",");
 	  						
-	  						
+	  						var renderedVerbIndex = 1;
 	  						for(var v=0;v<verbArr.length;v++)
   							{
 	  							oneVerbItem = verbArr[v];
 	  							
-	  							d3.select(this).append("text").text((v+1)+" - "+oneVerbItem).attr("relY",y);
+	  							if ( oneVerbItem=='') continue;
 	  							
+	  							d3.select(this).append("text").text((renderedVerbIndex)+" - "+oneVerbItem).attr("relY",y);
 	  							
+	  							renderedVerbIndex++;
 	  							y+=19;
   							}
 	    				}
