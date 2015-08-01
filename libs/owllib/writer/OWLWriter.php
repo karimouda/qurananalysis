@@ -86,6 +86,23 @@ class OWLWriter
 
   }
 
+  /*
+   * Helper function
+   * @author Karim
+   */
+  function getAttributesStr($relationMetaData)
+  {
+  	$attributeStr = "";
+  	foreach($relationMetaData as $attKey => $attVal)
+  	{
+  		
+   					$attVal = htmlspecialchars($attVal,ENT_QUOTES);
+   				
+   					$attributeStr  = $attributeStr." $attKey=\"$attVal\"";
+  	}
+  	
+  	return $attributeStr;
+  }
 
 	//---------------------------------------------------------------------------
 	/**
@@ -128,12 +145,9 @@ class OWLWriter
 			
 				 
 				 
-				$attributeStr = "";
+				$attributeStr =  getAttributesStr($relationMetaData);
 				 
-				foreach($relationMetaData as $attKey => $attVal)
-				{
-					$attributeStr  = $attributeStr." $attKey='$attVal'";
-				}
+				
 				 
 				 
 				$parentClassName = $parentClassData[0];//$this->removeBase($data[0]->getID(), false);
@@ -263,16 +277,11 @@ class OWLWriter
    				$relationMetaData = current($propertyArr);
    
    
-   					
-   
-   
-   				$attributeStr = "";
-   
-   				foreach($relationMetaData as $attKey => $attVal)
-   				{
-   					$attVal = htmlspecialchars($attVal);
-   					$attributeStr  = $attributeStr." $attKey=\"$attVal\"";
-   				}
+
+   				
+   				$attributeStr = getAttributesStr($relationMetaData);
+   				
+
    
    
    				$parentClassName = $parentClassData[0];//$this->removeBase($data[0]->getID(), false);
