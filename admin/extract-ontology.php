@@ -897,6 +897,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									  $versePrevPatterns = array();
 									  
 									  $triplePatternArr = array();
+									  // WORDS LOOP
 									  foreach($uthmaniWordsArr as $index => $uthmaniWord)
 									  {
 							
@@ -915,6 +916,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 $pos="";
 										 	 $allSegments = "";
 									
+										 	 // GET POS TAGS, LEMMAS AND SEGMENTS FOR THIS CONTEXT, PUT IN ARRAY
 										 	 foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
 										 	 {
 											 	 $lemma = $qacWordSegmentsArr[$segmentIndex]['FEATURES']['LEM'];
@@ -936,7 +938,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								
 										 	// echoN("$pos|$simpleWord|$lemma|$qacLocation|$uthmaniWord");
 										 	 
-										 	 
+										 	 // ASSUNME A WORD IS A CONCEPTS AND ADD ITS POS
 										 	 $triplePatternArr['CONCEPTS'][]=$simpleWord;
 										 	 $triplePatternArr['PATTERN'][]=trim($pos);
 										 	 
@@ -953,6 +955,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 	$verb = $triplePatternArr['CONCEPTS'][1];
 										 	 
 										 	 	
+										 	 	// IF THE UNIT PATTERN MATCHES 
 										 	 	if (  
 													( 
 														//الله -> يحب -> المتقين
@@ -1013,31 +1016,40 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 			echoN($joinedPattern);
 										 	 		}
 										 	 		
+										 	 		// RESET TRIGRAMS UNIT ARRAY
 										 	 		$triplePatternArr = array();
 										 	 		
 										 	 	}
+										 	 	// PATTERN DIDN'T MATCH
 										 	 	else 
 										 	 	{
+										 	 
 										 	 	
+										 	 		// REMOVE THE FIRST CONCEPT AND POS TO GIVE SPACE FOR a new word in the trigram concept
 										 	 		if ( count($triplePatternArr['CONCEPTS'])==3  )
 										 	 		{
 										 	 			
-										 	 			$droppedConcept = array_slice($triplePatternArr['CONCEPTS'], 1,2);;
-										 	 			$droppedPattern = array_slice($triplePatternArr['PATTERN'], 1,2);;
-										 	 			$versePrevWords[$droppedConcept]=1;
-										 	 			$versePrevPatterns[$droppedPattern]=1;
+										 	 			// GET ONLY SECOND AND THIRD ENTRIES
+										 	 			$bigramFromTrigramArr = array_slice($triplePatternArr['CONCEPTS'], 1,2);;
+										 	 			$bigramPatternFromTrigramArr = array_slice($triplePatternArr['PATTERN'], 1,2);;
 										 	 			
-										 	 			$triplePatternArr['CONCEPTS'] = $droppedConcept;
-												 	 	$triplePatternArr['PATTERN'] = $droppedPattern;
+										 	 			$versePrevWords[$triplePatternArr['CONCEPTS'][0]]=1;
+										 	 			$versePrevPatterns[$triplePatternArr['PATTERN']]=1;
+										 	 			
+										 	 			// GET ONLY SECOND AND THIRD ENTRIES
+										 	 			$triplePatternArr['CONCEPTS'] = $bigramFromTrigramArr;
+												 	 	$triplePatternArr['PATTERN'] = $bigramPatternFromTrigramArr;
 										 	 		 }
 										 	 	}
 										 	 	
 										 	
 										 	 	
-										 	 	
+										 	 	echoN("$$$".count($triplePatternArr['CONCEPTS']));
 										 	 	
 										 	 
 									  	//}
+									  	
+										 	 	
 									 	 
 									 }
 									 
@@ -1052,6 +1064,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					}
 					
 					//echoN("NONTAX SYNTATIC PATTERNS RELATIONS COUNT:".count($relationsArr));
+					//preprint_r($relationsArr);
 					//exit;
 					$poTaggedSubsentences = getPoSTaggedSubsentences();
 					

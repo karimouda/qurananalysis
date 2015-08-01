@@ -49,6 +49,7 @@ function isFoundInTranslationTableArabicKeyword($arStr)
 
 	$translationKey = search2DArrayForValue($CUSTOM_TRANSLATION_TABLE_EN_AR, $arStr);
 	
+
 	
 	if ($translationKey!==false)
 	{

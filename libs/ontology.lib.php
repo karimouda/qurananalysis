@@ -176,7 +176,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 	$verbUthmani = $verb;
 	$verbSimple = "";
 	
-	///////// VERN TRANSLATION
+	///////// VERB TRANSLATION
 	if ( empty($verbEngTranslation))
 	{
 		$verbEngTranslation ="";
@@ -206,7 +206,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 			if ( empty($verbEngTranslation))
 			{
 				// CHECK IF IS ALSO NOTO IN TRANSLATION ENTRY
-				if (!isFoundInTranslationTable($translatableVerb))
+				if (!isFoundInTranslationTableArabicKeyword($translatableVerb))
 				{
 					
 					// TRANSLATE USING MICROSOFT API
@@ -219,7 +219,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 				}
 				else
 				{
-					$customTranslationEntryArr =getTranlationEntryByEntryKeyword($translatableVerb);
+					$customTranslationEntryArr =getTranlationEntryByArabicEntryKeyword($translatableVerb);
 					
 					$verbEngTranslation = $customTranslationEntryArr['AR_TEXT'];
 				}
@@ -267,7 +267,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 				if ( empty($verbPartTranslated))
 				{
 					// CHECK IF IS ALSO NOTO IN TRANSLATION ENTRY
-					if (!isFoundInTranslationTable($translatableVerb))
+					if (!isFoundInTranslationTableArabicKeyword($translatableVerb))
 					{
 							
 						// TRANSLATE USING MICROSOFT API
@@ -280,7 +280,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 					}
 					else
 					{
-						$customTranslationEntryArr =getTranlationEntryByEntryKeyword($translatableVerb);
+						$customTranslationEntryArr =getTranlationEntryByArabicEntryKeyword($translatableVerb);
 							
 						$verbPartTranslated = $customTranslationEntryArr['AR_TEXT'];
 					}

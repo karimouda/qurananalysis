@@ -34,7 +34,7 @@ if (  $_SERVER['REMOTE_ADDR']!="127.0.0.1" )
 					<a href="/info/index.php?page=resources" >Resources</a>
 			</td>	
 			<td>
-					<a href="/info/index.php?page=contribute" >Contribute</a>
+					<a href="/info/index.php?page=contribute" style="color:red" >Contribute</a>
 			</td>
 			<td>
 					<a href="/info/index.php?page=feedback" style="color:red" >Feedback</a>

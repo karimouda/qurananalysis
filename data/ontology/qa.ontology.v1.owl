@@ -137,10 +137,10 @@
   <annot:image_url xml:lang="EN"></annot:image_url>
   <annot:long_description_en xml:lang="EN"></annot:long_description_en>
   <annot:long_description_ar xml:lang="AR"></annot:long_description_ar>
-  <objpro:رأينه rdf:resource="يوسف"  frequency='1' verb_translation_en='saw' verb_uthmani='رَأَيْنَهُۥٓ' />
-  <objpro:لمتنني rdf:resource="امرأة_عزيز_مصر"  frequency='1' verb_translation_en='blamed me' verb_uthmani='لُمْتُنَّنِى' />
-  <objpro:يدعونني rdf:resource="يوسف"  frequency='1' verb_translation_en='invite me' verb_uthmani='يَدْعُونَنِىٓ' />
-  <objpro:قطع rdf:resource="يد"  frequency='2' verb_translation_en='' verb_uthmani='قَطَّعْ' />
+  <objpro:رأينه rdf:resource="يوسف"  frequency="1" verb_translation_en="saw" verb_uthmani="رَأَيْنَهُۥٓ" />
+  <objpro:لمتنني rdf:resource="امرأة_عزيز_مصر"  frequency="1" verb_translation_en="blamed me" verb_uthmani="لُمْتُنَّنِى" />
+  <objpro:يدعونني rdf:resource="يوسف"  frequency="1" verb_translation_en="invite me" verb_uthmani="يَدْعُونَنِىٓ" />
+  <objpro:قطع rdf:resource="يد"  frequency="2" verb_translation_en="" verb_uthmani="قَطَّعْ" />
 </owl:Class>
 <owl:Class rdf:ID="أنثى">
   <rdfs:label xml:lang="AR">أنثى</rdfs:label>
@@ -283,7 +283,7 @@
   <annot:image_url xml:lang="EN"></annot:image_url>
   <annot:long_description_en xml:lang="EN"></annot:long_description_en>
   <annot:long_description_ar xml:lang="AR"></annot:long_description_ar>
-  <objpro:يدع_إلى rdf:resource="نار_جهنم"  frequency='1' verb_translation_en='let' verb_uthmani='يَدُعُّ إِلَىٰ' />
+  <objpro:يدع_إلى rdf:resource="نار_جهنم"  frequency="1" verb_translation_en="let" verb_uthmani="يَدُعُّ إِلَىٰ" />
 </owl:Class>
 <owl:Class rdf:ID="الزوج">
   <rdfs:label xml:lang="AR">الزوج</rdfs:label>
@@ -301,20 +301,20 @@
   <annot:image_url xml:lang="EN"></annot:image_url>
   <annot:long_description_en xml:lang="EN"></annot:long_description_en>
   <annot:long_description_ar xml:lang="AR"></annot:long_description_ar>
-  <objpro:تباشروهن rdf:resource="الزوجة"  frequency='1' verb_translation_en='relations' verb_uthmani='تُبَٰشِرُوهُنَّ' />
-  <objpro:تقربوهن rdf:resource="الزوجة"  frequency='1' verb_translation_en='approach' verb_uthmani='تَقْرَبُوهُنَّ' />
-  <objpro:آتيتموهن rdf:resource="الزوجة"  frequency='1' verb_translation_en='given' verb_uthmani='ءَاتَيْتُمُوهُنَّ' />
-  <objpro:تمسكوهن rdf:resource="الزوجة"  frequency='1' verb_translation_en='retain' verb_uthmani='تُمْسِكُوهُنَّ' />
-  <objpro:تعضلوهن rdf:resource="المرأة_المطلقة"  frequency='1' verb_translation_en='constraint' verb_uthmani='تَعْضُلُوهُنَّ' />
-  <objpro:تعضلوهن rdf:resource="الزوجة"  frequency='1' verb_translation_en='constraint' verb_uthmani='تَعْضُلُوهُنَّ' />
-  <objpro:أتأخذونه rdf:resource="المهر"  frequency='1' verb_translation_en='would take' verb_uthmani='أَتَأْخُذُونَهُۥ' />
-  <objpro:تأخذونه rdf:resource="المهر"  frequency='1' verb_translation_en='could take' verb_uthmani='تَأْخُذُونَهُۥ' />
-  <objpro:لا_تؤتونهن rdf:resource="الزوجة"  frequency='1' verb_translation_en='' verb_uthmani='لَا تُؤْتُونَهُنَّ' />
-  <objpro:فتذروها rdf:resource="الزوجة"  frequency='1' verb_translation_en='leave her other' verb_uthmani='فَتَذَرُوهَا' />
-  <objpro:طلق rdf:resource="النساء"  frequency='1' verb_translation_en='' verb_uthmani='طَلَّقْ' />
-  <objpro:تنس rdf:resource="الفضل"  frequency='1' verb_translation_en='forget' verb_uthmani='تَنسَ' />
-  <objpro:تختان rdf:resource="نفس"  frequency='1' verb_translation_en='' verb_uthmani='تَخْتَانُ' />
-  <objpro:يرم rdf:resource="زوج"  frequency='1' verb_translation_en='' verb_uthmani='يَرْمُ' />
+  <objpro:تباشروهن rdf:resource="الزوجة"  frequency="1" verb_translation_en="relations" verb_uthmani="تُبَٰشِرُوهُنَّ" />
+  <objpro:تقربوهن rdf:resource="الزوجة"  frequency="1" verb_translation_en="approach" verb_uthmani="تَقْرَبُوهُنَّ" />
+  <objpro:آتيتموهن rdf:resource="الزوجة"  frequency="1" verb_translation_en="given" verb_uthmani="ءَاتَيْتُمُوهُنَّ" />
+  <objpro:تمسكوهن rdf:resource="الزوجة"  frequency="1" verb_translation_en="retain" verb_uthmani="تُمْسِكُوهُنَّ" />
+  <objpro:تعضلوهن rdf:resource="المرأة_المطلقة"  frequency="1" verb_translation_en="constraint" verb_uthmani="تَعْضُلُوهُنَّ" />
+  <objpro:تعضلوهن rdf:resource="الزوجة"  frequency="1" verb_translation_en="constraint" verb_uthmani="تَعْضُلُوهُنَّ" />
+  <objpro:أتأخذونه rdf:resource="المهر"  frequency="1" verb_translation_en="would take" verb_uthmani="أَتَأْخُذُونَهُۥ" />
+  <objpro:تأخذونه rdf:resource="المهر"  frequency="1" verb_translation_en="could take" verb_uthmani="تَأْخُذُونَهُۥ" />
+  <objpro:لا_تؤتونهن rdf:resource="الزوجة"  frequency="1" verb_translation_en="" verb_uthmani="لَا تُؤْتُونَهُنَّ" />
+  <objpro:فتذروها rdf:resource="الزوجة"  frequency="1" verb_translation_en="leave her other" verb_uthmani="فَتَذَرُوهَا" />
+  <objpro:طلق rdf:resource="النساء"  frequency="1" verb_translation_en="" verb_uthmani="طَلَّقْ" />
+  <objpro:تنس rdf:resource="الفضل"  frequency="1" verb_translation_en="forget" verb_uthmani="تَنسَ" />
+  <objpro:تختان rdf:resource="نفس"  frequency="1" verb_translation_en="" verb_uthmani="تَخْتَانُ" />
+  <objpro:يرم rdf:resource="زوج"  frequency="1" verb_translation_en="" verb_uthmani="يَرْمُ" />
 </owl:Class>
 <owl:Class rdf:ID="الزوجة">
   <rdfs:label xml:lang="AR">الزوجة</rdfs:label>
@@ -332,7 +332,7 @@
   <annot:image_url xml:lang="EN"></annot:image_url>
   <annot:long_description_en xml:lang="EN"></annot:long_description_en>
   <annot:long_description_ar xml:lang="AR"></annot:long_description_ar>
-  <objpro:بلغ rdf:resource="أجل"  frequency='1' verb_translation_en='' verb_uthmani='بَلَغْ' />
+  <objpro:بلغ rdf:resource="أجل"  frequency="1" verb_translation_en="" verb_uthmani="بَلَغْ" />
 </owl:Class>
 <owl:Class rdf:ID="السماء">
   <rdfs:label xml:lang="AR">السماء</rdfs:label>
@@ -384,8 +384,8 @@
   <annot:image_url xml:lang="EN"></annot:image_url>
   <annot:long_description_en xml:lang="EN"></annot:long_description_en>
   <annot:long_description_ar xml:lang="AR"></annot:long_description_ar>
-  <objpro:ولدنهم rdf:resource="الزوج_المظاهر"  frequency='1' verb_translation_en='gave' verb_uthmani='وَلَدْنَهُمْ' />
-  <objpro:يرضع rdf:resource="ولد"  frequency='1' verb_translation_en='' verb_uthmani='يُرْضِعْ' />
+  <objpro:ولدنهم rdf:resource="الزوج_المظاهر"  frequency="1" verb_translation_en="gave" verb_uthmani="وَلَدْنَهُمْ" />
+  <objpro:يرضع rdf:resource="ولد"  frequency="1" verb_translation_en="" verb_uthmani="يُرْضِعْ" />
 </owl:Class>
 <owl:Class rdf:ID="الجحيم">
   <rdfs:label xml:lang="AR">الجحيم</rdfs:label>
@@ -10952,7 +10952,7 @@
   <annot:image_url xml:lang="EN">http://commons.wikimedia.org/wiki/Special:FilePath/StJohnsAshfield_StainedGlass_GoodShepherd-frame_crop.jpg?width=300</annot:image_url>
   <annot:long_description_en xml:lang="EN">Jesus (/?d?i?z?s/; Greek: ?????? Iesous; 6–4 BC to 30–33 AD), also referred to as Jesus of Nazareth, is the central figure of Christianity, whom the teachings of most Christian denominations hold to be the Son of God. Christianity regards Jesus as the awaited Messiah of the Old Testament and refers to him as Jesus Christ, a name that is also used in non-Christian contexts.Virtually all modern scholars of antiquity agree that Jesus existed historically, although the quest for the historical Jesus has produced little agreement on the historical reliability of the Gospels and on how closely the biblical Jesus reflects the historical Jesus. Most scholars agree that Jesus was a Jewish rabbi from Galilee who preached his message orally, was baptized by John the Baptist, and was crucified in Jerusalem on the orders of the Roman prefect, Pontius Pilate. Scholars have constructed various portraits of the historical Jesus, which often depict him as having one or more of the following roles: the leader of an apocalyptic movement, Messiah, a charismatic healer, a sage and philosopher, or an egalitarian social reformer. Scholars have correlated the New Testament accounts with non-Christian historical records to arrive at an estimated chronology of Jesus' life. The most widely used calendar era in the world (abbreviated as "AD", alternatively referred to as "CE"), counts from a medieval estimate of the birth year of Jesus.Christians believe that Jesus has a "unique significance" in the world. Christian doctrines include the beliefs that Jesus was conceived by the Holy Spirit, was born of a virgin, performed miracles, founded the Church, died by crucifixion as a sacrifice to achieve atonement, rose from the dead, and ascended into heaven, whence he will return. The great majority of Christians worship Jesus as the incarnation of God the Son, the second of three persons of a Divine Trinity. A few Christian groups reject Trinitarianism, wholly or partly, as non-scriptural.In Islam, Jesus (commonly transliterated as Isa) is considered one of God's important prophets and the Messiah. To Muslims, Jesus is a bringer of scripture and was born of a virgin, but neither the Son of God nor the victim of crucifixion. According to the Quran, Jesus was not crucified but was physically raised into the heavens by God. Judaism rejects the Christian and Islamic belief that Jesus was the awaited Messiah, arguing that he did not fulfill the Messianic prophecies in the Tanakh.</annot:long_description_en>
   <annot:long_description_ar xml:lang="AR"></annot:long_description_ar>
-  <objpro:ابن rdf:resource="مريم"  frequency="9" verb_translation_en="build" verb_uthmani="ابن" />
+  <objpro:ابن rdf:resource="مريم"  frequency="8" verb_translation_en="build" verb_uthmani="ابن" />
   <objpro:جئتكم rdf:resource="بني_إسرائيل"  frequency="2" verb_translation_en="come" verb_uthmani="جِئْتُكُم" />
   <objpro:وجئتكم rdf:resource="بني_إسرائيل"  frequency="1" verb_translation_en="come" verb_uthmani="وَجِئْتُكُم" />
   <objpro:جئتهم rdf:resource="بني_إسرائيل"  frequency="1" verb_translation_en="bring" verb_uthmani="جِئْتَهُم" />

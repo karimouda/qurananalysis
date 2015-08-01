@@ -145,7 +145,7 @@ class OWLWriter
 			
 				 
 				 
-				$attributeStr =  getAttributesStr($relationMetaData);
+				$attributeStr =  $this->getAttributesStr($relationMetaData);
 				 
 				
 				 
@@ -279,7 +279,7 @@ class OWLWriter
    
 
    				
-   				$attributeStr = getAttributesStr($relationMetaData);
+   				$attributeStr = $this->getAttributesStr($relationMetaData);
    				
 
    
