@@ -109,11 +109,57 @@ $ssPoSAggregationCorrespondingSent = array();
 				{
 					$posOrWordsArr = $posArr;
 					$wordsOrPoSStr = join(" ",$ssArray['POS_TAGS']);
+					
+					// FLATTEN POS ARRAY FROM TO GET BETTER CONTEXT - EX: GET PRON PRON AFTER V FOR "V PRON PRON" WORDS
+					$posOrWordsArr = explode(" ", $wordsOrPoSStr);
+					
+					/*
+					 * FLATTENING POS ARRAY FROM:
+					* Array
+					(
+							[0] => REL
+							[1] => V PRON
+							[2] => P DET N
+							[3] => CONJ V PRON
+							[4] => DET N
+							[5] => REM P REL
+							[6] => V PRON PRON
+							[7] => V PRON
+					)
+					* TO:
+					* 					
+					* Array
+					(
+							[0] => REL
+							[1] => V 
+							[2] => PRON
+							[3] => P 
+							[4] => DET 
+							[5] => N
+							[6] => CONJ 
+							[7] => V 
+							[8] => PRON
+							[9] => DET 
+							[10] => N
+							[11] => REM 
+							[12] => P 
+							[13] => REL
+							[14] => V 
+							[15] => PRON 
+							[16] => PRON
+							[17] => V 
+							[18] => PRON
+					)
+					*/
+					
+					
 				}
 				else
 				{
 					$posOrWordsArr = $wordsArr;
 					$wordsOrPoSStr = join(" ",$ssArray['WORDS']);
+					
+			
 				}
 				
 		
@@ -122,8 +168,10 @@ $ssPoSAggregationCorrespondingSent = array();
 				$posOrWordEntryKey = false;
 				$posOrWordsIndexesArr = array();
 				
+			
+				
 					// didn't use array_search because of "multple tags phrases" 
-					// example searching fro PN while the word tag is "P PN" which will not match
+					// example searching for PN while the word tag is "P PN" which will not match
 					foreach($posOrWordsArr as $index => $posTagOrPhrase)
 					{
 						
@@ -142,8 +190,8 @@ $ssPoSAggregationCorrespondingSent = array();
 				if ( !empty($posOrWordsIndexesArr) )
 				{
 		
-				
-					
+					//preprint_r($posOrWordsArr);
+					//echoN($wordsOrPoSStr);
 		
 					foreach($posOrWordsIndexesArr as $sequenctialIndex => $wordIndexInArray )
 					{
@@ -303,7 +351,7 @@ $ssPoSAggregationCorrespondingSent = array();
 							<td id='target-pos-level-zero-cell'>
 							<?=$targetPOSorWord?>
 							<br>
-							[<?=$targetWordCounter?>]
+							[<?=$targetWordCounter?><span class='starnote'>*</span>]
 							</td>
 							<?php 
 								for($i=1;$i<=$contextMaxLevel;$i++):
@@ -325,6 +373,11 @@ $ssPoSAggregationCorrespondingSent = array();
 								endfor;
 							?>
 						</tr>
+						<tfoot>
+						<tr>
+							<td colspan='<?=($contextMaxLevel*2)+1?>' >* Numbers can be less or more than the actuals depending on the chosen context range </td>
+						</tr>
+						</tfoot>
 					</table>
 
 <?php 

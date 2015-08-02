@@ -170,6 +170,48 @@ $ssPoSAggregationCorrespondingSent = array();
 				{
 					$posOrWordsArr = $posArr;
 					$wordsOrPoSStr = join(" ",$ssArray['POS_TAGS']);
+					
+					// FLATTEN POS ARRAY FROM TO GET BETTER CONTEXT - EX: GET PRON PRON AFTER V FOR "V PRON PRON" WORDS
+					$posOrWordsArr = explode(" ", $wordsOrPoSStr);
+						
+					/*
+					 * FLATTENING POS ARRAY FROM:
+					* Array
+					(
+							[0] => REL
+							[1] => V PRON
+							[2] => P DET N
+							[3] => CONJ V PRON
+							[4] => DET N
+							[5] => REM P REL
+							[6] => V PRON PRON
+							[7] => V PRON
+					)
+					* TO:
+					*
+					* Array
+					(
+							[0] => REL
+							[1] => V
+							[2] => PRON
+							[3] => P
+							[4] => DET
+							[5] => N
+							[6] => CONJ
+							[7] => V
+							[8] => PRON
+							[9] => DET
+							[10] => N
+							[11] => REM
+							[12] => P
+							[13] => REL
+							[14] => V
+							[15] => PRON
+							[16] => PRON
+							[17] => V
+							[18] => PRON
+					)
+					*/
 				}
 				else
 				{
