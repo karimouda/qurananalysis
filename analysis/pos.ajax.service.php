@@ -24,6 +24,8 @@ $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 $POS = $_GET['pos'];
 $features = $_GET['features'];
 
+$features = strtoupper($features);
+
 $MODEL_CORE_UTH = loadUthmaniDataModel();
 
 
