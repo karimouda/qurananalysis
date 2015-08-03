@@ -95,8 +95,9 @@ function addTranslationEntry($enStr, $entryType, $arStr)
 		loadTranslationTable();
 	}
 	
-	if ( !isFoundInTranslationTable($enStr) )
-	{
+	// ALLOW DUPOLICATE ENGLISH KEYS
+	//if ( !isFoundInTranslationTable($enStr) )
+	//{
 		if ( empty($entryType))
 		{
 			$entryType="NONE";
@@ -109,11 +110,11 @@ function addTranslationEntry($enStr, $entryType, $arStr)
 		
 		$CUSTOM_TRANSLATION_TABLE_EN_AR[$enStr]=array("EN_TEXT"=>$enStr,"TYPE"=>$entryType,"AR_TEXT"=>$arStr);
 		return true;
-	}
-	else
-	{
-		return false;
-	}
+	//}
+	//else
+	//{
+	//	return false;
+	//}
 	
 	
 	
