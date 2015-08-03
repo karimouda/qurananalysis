@@ -169,18 +169,18 @@ Blessing|CONCEPT|نعمة
 the formal act of approving|DESC|القانون الرسمي للموافقة على
 Offer|CONCEPT|العرض
 something offered (as a proposal or bid)|DESC|شيء ما (كمقترح أو محاولة)
-Benefit|VERB|ينفع
+Benefit|CONCEPT|فائدة
 something that aids or promotes well-being|DESC|الأمر الذي يساعد أو يشجع الرفاه
 Quantity|CONCEPT|الكمية
 Language unit|CONCEPT|وحدة اللغات
 Statement|CONCEPT|بيان
 a message that is stated or declared|DESC|رسالة ذكر أو أعلن
 Information|CONCEPT|معلومات
-Order|VERB|أَمَرْ
+Order|CONCEPT|ترتيب
 (often plural) a command given by a superior (e.g., a military or law enforcement officer) that must be obeyed|DESC|(صيغة الجمع غالباً) أمر قدمها متفوقة (مثلاً، عسكري أو ضابط إنفاذ القانون) التي يجب أن تطاع
 Speech|CONCEPT|الكلام
 (language) communication by word of mouth|DESC|الاتصالات (اللغة) بكلمة في الفم
-Promise|VERB|أخلف
+Promise|CONCEPT|وعد
 Computer memory unit|CONCEPT|وحدة ذاكرة الكمبيوتر
 Hypostasis|CONCEPT|هيبوستاسيس
 Positive identification|CONCEPT|الهوية الإيجابية
@@ -223,7 +223,7 @@ Part|CONCEPT|جزء
 a portion of a natural object|DESC|جزء من كائن طبيعي
 Concern|CONCEPT|قلق
 something that interests you because it is important or affects you|DESC|شيء ما يهمك لأنه مهم أو يؤثر عليك
-Male|VERB|ذَكَرْ
+Male|CONCEPT|أنثى
 Adult|CONCEPT|الكبار
 Skilled worker|CONCEPT|العمال المهرة
 Hominid|CONCEPT|أسلاف الإنسان
@@ -237,7 +237,7 @@ Patriarch|CONCEPT|نبي
 Bodily property|CONCEPT|الخصائص الجسدية
 Calendar day|CONCEPT|يوم التقويم
 Work time|CONCEPT|وقت العمل
-Era|VERB|عَصَ
+Era|CONCEPT|عصر
 Sidereal time|CONCEPT|الوقت فلكي
 Opportunity|CONCEPT|الفرصة
 a possibility due to a favorable combination of circumstances|DESC|احتمال بسبب مجموعة من الظروف المواتية
@@ -337,7 +337,7 @@ Quality|CONCEPT|جودة
 an essential and distinguishing attribute of something or someone|DESC|إحدى السمات الأساسية والمميزة لشيء ما أو شخص ما
 Transgression|CONCEPT|مخالفة
 the act of transgressing|DESC|قانون يحز
-King|VERB|مَلَكْ
+King|CONCEPT|الملك
 a male sovereign|DESC|ذات سيادة الذكور
 Biochemist|CONCEPT|الكيمياء الحيوية
 Good nature|CONCEPT|حسن الطبيعة
@@ -467,7 +467,7 @@ a boy or man|DESC|صبي أو رجل
 Villain|CONCEPT|الشرير
 a wicked or evil person|DESC|شخص شرير أو الشر
 Sausage|CONCEPT|السجق
-Catch|VERB|تَخْطَفُ
+Catch|CONCEPT|الصيد
 a restraint that checks the motion of something|DESC|ضبط النفس الذي يتحقق من الاقتراح بشيء
 Support|CONCEPT|الدعم
 any device that bears the weight of another thing|DESC|أي جهاز أن يتحمل وزن شيء آخر
@@ -575,32 +575,32 @@ the state of being certain|DESC|لبعض الدولة
 a tall perennial woody plant having a main trunk and branches forming a distinct elevated crown|DESC|مصنع الخشبية معمرة طويل القامة بعد جذع الرئيسي والفروع تشكيل تاج مرتفعة متميزة
 the time after sunrise and before sunset while it is light outside|DESC|الوقت بعد شروق الشمس وقبل غروب الشمس في حين أنها خفيفة خارج
 a mode of being or form of existence of a person or thing|DESC|وضع النموذج لوجود شخص أو شيء أو يجري
-No|VERB|لم
+No|VERB|لا
 Migrate|VERB|يهاجروا
 Disbelieved|VERB|كفروا
 Asthavzwa|VERB|استحفظوا
 Where|VERB|أين
 Fighting|VERB|يقاتلون
-You|VERB|كنتم
-Call|VERB|دَعَوْ
-Be afraid|VERB|تَخْشَ
+You|VERB|استطعتم
+Call|VERB|يدعون
+Be afraid|VERB|تخف
 We sent|VERB|أرسلنا
 Took|VERB|اتخذوا
 And others|VERB|وآخرون
 And not|VERB|ولا
 And what|VERB|وما
-They|VERB|آتيناهم
+They|VERB|فإنهم
 So long|VERB|سلام
 What|VERB|ما
 It does not|VERB|فلا
-Flag|VERB|عَلِمْ
-That|VERB|إن
-ٱتخذ|VERB|ٱتَّخَذُ
+Flag|VERB|علم
+That|VERB|أن
+ٱتخذ|VERB|ٱتَّخَذْ
 Learning|VERB|يُعَلِّمُ
 PHP|VERB|بَيَّ
 Lev|VERB|مَّسَّتْ
 He divorced|VERB|طَلَّقْ
-ٱتبع|VERB|ٱتَّبَعُ
+ٱتبع|VERB|ٱتَّبَعْ
 Learn|VERB|تُعَلِّمُ
 Take|VERB|تَتَّخِذُ
 Batman|VERB|تَمَنَّ
@@ -609,13 +609,13 @@ Led|VERB|تُؤَدُّ
 توفيٰ|VERB|تَوَفَّىٰ
 Dissemble|VERB|يُرَآءُ
 Contract|VERB|عَقَّد
-Prejudice|VERB|يمس
+Prejudice|VERB|يَمَسُّ
 Great|VERB|غَرَّتْ
 Chapter|VERB|فَصَّلْ
-Tracking|VERB|تَتْبَعُ
+Tracking|VERB|تَتَّبِعُ
 Blurred|VERB|يُغَشِّي
 Snatch|VERB|يَتَخَطَّفَ
-Affect|VERB|تُؤْثِرُ
+Affect|VERB|تَمَسَّ
 It is desirable|VERB|يَسْتَحِبُّ
 Hostels|VERB|نَزَّلْ
 MES|VERB|مَّسَّ
@@ -624,7 +624,7 @@ Not|VERB|يَسْتَ
 ٱستحب|VERB|ٱسْتَحَبُّ
 Journals|VERB|أَجَآءَ
 Families|VERB|أَسَرُّ
-Astray|VERB|ضل
+Astray|VERB|ضَلُّ
 Lied|VERB|كَذَّبُ
 Destroyed|VERB|دَمَّرْ
 Guardian|VERB|وَصَّيْ
@@ -642,7 +642,7 @@ Juul|VERB|يُوَلُّ
 News|VERB|نَبَّأَ
 But|VERB|بل
 Love|VERB|تُحِبُّ
-Avoid|VERB|يُجَنَّبُ
+Avoid|VERB|يَتَجَنَّبُ
 Receipt|VERB|تَسْـَٔلُ
 Tulle|VERB|تُوَلُّ
 Thanks|VERB|فَضَّلْ
@@ -661,14 +661,14 @@ Broken|VERB|نَّكَثُ
 Who|VERB|الذين
 Tawakkul|VERB|تَوَكَّلْ
 Came|VERB|جَآءُ
-Cut|VERB|تَقَطَّعُ
+Cut|VERB|قَطَّعْ
 I feel|VERB|أَحَسُّ
 Saves|VERB|يَحْفَظْ
 Puts|VERB|يَضَعْ
-I|VERB|إنا
+I|VERB|أَضْلَلْ
 Do|VERB|فَعَلْ
 ٱستيقنت|VERB|ٱسْتَيْقَنَتْ
-Injustice|VERB|ظَلَمُ
+Injustice|VERB|ظَلَمْ
 Let|VERB|دَعَ
 URTH|VERB|أَوْرَثَ
 We come|VERB|نُّؤْتِ
@@ -696,7 +696,7 @@ Blind eye|VERB|يَغُضُّ
 Point|VERB|تُزَكُّ
 Club|VERB|نَادَ
 Blur|VERB|طَمَسْ
-Established|VERB|أَقَامُ
+Established|VERB|أَنشَأْ
 Make|VERB|تَجْعَلُ
 Mesmerize|VERB|فَتَن
 The saboteur|VERB|يُخْرِبُ
@@ -726,7 +726,7 @@ On|VERB|على
 Asthavz|VERB|استحفظ
 From|VERB|من
 Abdul-|VERB|عبد
-Hamlet|VERB|كَفَرُ
+Hamlet|VERB|كفر
 They promise|VERB|توعدون
 Their money|VERB|أموالهم
 And migrated|VERB|وهاجروا
@@ -737,21 +737,21 @@ Could|VERB|استطاع
 Sent|VERB|أرسل
 Argued|VERB|جادل
 Angie|VERB|أنجى
-Spent|VERB|قَضَيْ
+Spent|VERB|قضى
 Inspired|VERB|أوحى
 Broadcast|VERB|لبث
 Alleged|VERB|زعم
 Hoda|VERB|هدى
-Kill|VERB|تَقْتُلُ
+Kill|VERB|قتل
 Only|VERB|ألا
 And Messenger|VERB|ورسوله
 Desires|VERB|ابتغى
-Income|VERB|دَخَلْ
+Income|VERB|دخل
 Wilaya|VERB|ظلمونا
 And will not|VERB|ولن
 They wish him|VERB|يتمنوه
 Will not|VERB|لن
-They harm you|VERB|يضرونك
+They harm you|VERB|يضروكم
 They hide him|VERB|تكتمونه
 Give them|VERB|تؤتونهن
 Killed him|VERB|قتلوه
@@ -763,7 +763,7 @@ It did not|VERB|فلم
 They kill them|VERB|تقتلوهم
 They teach them|VERB|تعلمونهم
 They decrease you|VERB|ينقصوكم
-Spend|VERB|يَقْضُ
+Spend|VERB|ينفقونها
 They harm him|VERB|تضرونه
 They increase me|VERB|تزيدونني
 We wronged them|VERB|ظلمناهم
@@ -784,7 +784,7 @@ They followed us|VERB|تتبعونا
 Atghith|VERB|أطغيته
 In a hurry|VERB|يستعجلون
 Altnahm|VERB|ألتناهم
-Fight you|VERB|يقاتلوكم
+Fight you|VERB|يقاتلونكم
 Carry|VERB|يحملوها
 They expect|VERB|يتمنونه
 They count him|VERB|تحصوه
@@ -800,13 +800,13 @@ Complement|VERB|تُكْمِلُ
 TAT|VERB|تَأْتُ
 I took|VERB|أَخَذَتْ
 She has been married to|VERB|تَنكِحُ
-Comes|VERB|يَأْتِي
+Comes|VERB|يَأْتِيَ
 Tayammum|VERB|تَيَمَّمُ
 Discreetly|VERB|تَكْتُمُ
 Advocated|VERB|نَادَتْ
 Receive|VERB|تنال
 Switching|VERB|تَتَبَدَّلُ
-Bear|VERB|يُؤْتِي
+Bear|VERB|تُؤْتُ
 Buy|VERB|يَشْتَرُ
 Bare|VERB|يؤت
 Envied|VERB|يَحْسُدُ
@@ -817,7 +817,7 @@ The work of the|VERB|عَمِلُ
 Aware|VERB|تدرك
 Win|VERB|يَكْسِبُ
 Bring|VERB|تَقْرَبُ
-Savor|VERB|ذَاقُ
+Savor|VERB|ذَاقَ
 Said|VERB|قَالُ
 Chisels|VERB|تَنْحِتُ
 My backyard|VERB|عَقَرُ
@@ -837,7 +837,7 @@ Realize|VERB|أَدْرَكَ
 Undervalued|VERB|تَبْخَسُ
 Ord|VERB|أَوْرَدَ
 ٱستبق|VERB|ٱسْتَبَقَ
-Invalidate|VERB|يَنقُضُ
+Invalidate|VERB|ينقض
 Starry night|VERB|يُلْهِ
 Create|VERB|خَلَقْ
 Acces|VERB|أَلْقَ
@@ -847,12 +847,12 @@ Reverse|VERB|تَنقُضُ
 Tasting|VERB|تَذُوقُ
 Enter|VERB|يَدْخُلُ
 Tzero|VERB|تَذْرُو
-Forgotten|VERB|نَسِيَ
+Forgotten|VERB|نَسِي
 Slipper|VERB|خِفْ
 ءاتيٰ|VERB|ءَاتَىٰ
 Missed|VERB|أَضَاعُ
 Owns|VERB|يملك
-Received|VERB|يُلْقُ
+Received|VERB|يُلْقِ
 Eats|VERB|يأكل
 Has|VERB|أفلم
 Firm|VERB|يَرْمُ
@@ -863,7 +863,7 @@ Witness|VERB|يشهد
 Immersing|VERB|أَغْرَقْ
 Ooty|VERB|أُوتِي
 ٱستجر|VERB|ٱسْتَـْٔجَرْ
-Heard|VERB|سَمِعْ
+Heard|VERB|سَمِعُ
 Answer|VERB|أَجَبْ
 The effects of|VERB|أَثَارُ
 View|VERB|عَرَضْ
@@ -875,7 +875,7 @@ View|VERB|عَرَضْ
 Wanzl|VERB|أَنزَلْ
 Touch|VERB|لَمَسْ
 Afraid|VERB|يخاف
-Follow|VERB|أَتْبَعْ
+Follow|VERB|نُتْبِعُ
 Pour|VERB|صَبَبْ
 Apartments|VERB|شَقَقْ
 Jaap|VERB|جَابُ
@@ -884,7 +884,7 @@ Honors|VERB|تكرم
 Button|VERB|زُرْ
 Was|VERB|كَانُ
 Taking|VERB|أَخَذْ
-Known|VERB|يعرف
+Known|VERB|يَعْرِفُ
 Beds|VERB|تَخْتَانُ
 Flying|VERB|تَحْلِقُ
 Reached|VERB|بَلَغْ
@@ -902,7 +902,7 @@ Can|VERB|يستطيع
 S.o.s|VERB|تَسْتَغِيثُ
 I was impressed|VERB|أَعْجَبَتْ
 Please|VERB|يرج
-Guide|VERB|يَهْدِيَ
+Guide|VERB|يَهْدِي
 Share with|VERB|أَشْرَكُ
 Since|VERB|ولما
 Seconded|VERB|يَثْنُ
@@ -938,7 +938,7 @@ Show|VERB|يُبْدِي
 For what|VERB|لما
 Talmiz|VERB|تَلْمِزُ
 Mission subsistence allowance|VERB|بَدَّلْ
-Email|VERB|أَرْسَلْ
+Email|VERB|أرسل
 To'tonhn|VERB|تؤتونهن
 Anam|VERB|أنعم
 Rizk|VERB|رزق

@@ -222,11 +222,14 @@
 		//does not work with مُّوسَى
 		$str =  preg_replace("/ى$/um","ي",$str);
 		
+		// superscript alef at end of word
 		$str=  preg_replace("/[\x{0670}]$/um","",$str);
-		
+		$str=  preg_replace("/([\x{0670}][ ])/um"," ",$str);
+				
 		$str=  preg_replace("/[\x{0670}]/um","ا",$str);
 		
 		$str=  preg_replace("/[\x{0671}]/um","ا",$str);
+
 		
 		return $str;
 		
@@ -1678,7 +1681,11 @@
 
  	
  	
-
+	/*
+	 * Generate Subsentenses list by splitting verses on pause marks
+	 * 
+	 * @param $coreModelUsed whether to ise Uthmani or Simple data model
+	 */
  	function getPoSTaggedSubsentences($coreModelUsed = "UTH")
  	{
  		global $MODEL_CORE,$MODEL_QAC,$numberOfSuras;
@@ -1724,6 +1731,7 @@
 	 		  
 	 		  	$verseLocation = ($s+1).":".($a+1)."-".$subsentenceIndex;
 	 		  	
+	 		  	// ARRAY INIT FOR THIS LOCATION
 	 		  	if (!isset($posTaggedSubSentencesArr[$verseLocation]))
 	 		  	{
 	 		  		$posTaggedSubSentencesArr[$verseLocation] = array("WORDS"=>array(),"POS_TAGS"=>array(),"QAC_WORD_INDEXES"=>array());
@@ -1734,17 +1742,24 @@
  		  				
  		  			$wordsInSubSentence = 0;
  		  			$verseNonPauseWordsIndex = 1;
+ 		  			
+ 		  			// LOOP ON WORDS
  		  			foreach($uthmaniWordsArr as $index => $uthmaniWord)
  		  			{
  		  				
  		  				//echoN("$index|$uthmaniWord");
  		  				
+ 		  				// WORD IS A PUASE MARK
  		  				if ( isPauseMark($uthmaniWord, $MODEL_CORE['TOTALS']['PAUSEMARKS'], $saktaLatifaMark, $sajdahMark) )
  		  				{
  		  					
+ 		  					// INCREASE SUBSENTENCE INDEX
  		  					$subsentenceIndex++;
- 		  					//echoN("-----".$subsentenceIndex);
+ 		  					
+ 		  					// RESET WORD COUNTER ( IN SS)
  		  					$wordsInSubSentence=0;
+ 		  					
+ 		  					// REGENERATE VERSE LOCATION
  		  					$verseLocation = ($s+1).":".($a+1)."-".$subsentenceIndex;
  		  					continue;
  		  				}
@@ -1754,6 +1769,8 @@
  		  				//$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$uthmaniWord];
  		
  		
+ 		  				// GET CORRESPONDING QAC LOCATION FOR CURRENT WORD
+ 		  				// $verseNonPauseWordsIndex = QAC WORD INDEX EXCLUDING PAUSE MAKRS
  		  				$qacLocation = ($s+1).":".($a+1).":".($verseNonPauseWordsIndex);
  		
  		  				$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
@@ -1772,16 +1789,19 @@
  		  				}*/
  		  				
  		  
+ 		  				// INIT NEW LOCATION ARRAYS
  		  				if (!isset($posTaggedSubSentencesArr[$verseLocation]))
  		  				{
  		  					$posTaggedSubSentencesArr[$verseLocation] = array("WORDS"=>array(),"POS_TAGS"=>array(),"QAC_WORD_INDEXES"=>array());
  		  				}
  		  				
  		  				
+ 		  				// FILL SUBSENTCE WORDS ARRAY
  		  				$posTaggedSubSentencesArr[$verseLocation]['WORDS'][$wordsInSubSentence]=($uthmaniWord);
  		  					
  		  				//echoN(print_r($qacWordSegmentsArr,true));
  		  				
+ 		  				// GENERATE TAGS LIST STRING
  		  				$currentWordTags = "";
  		  				foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
  		  				{
@@ -1796,6 +1816,7 @@
 
  		  				}
  		  				
+ 		  				// FILL SUBSENTCENCE TAGS AND CORRESPONDING QAC WORD INDEX
  		  				$posTaggedSubSentencesArr[$verseLocation]['POS_TAGS'][$wordsInSubSentence]=trim($currentWordTags);
  		  				$posTaggedSubSentencesArr[$verseLocation]['QAC_WORD_INDEXES'][$wordsInSubSentence]=$verseNonPauseWordsIndex;
  		  				
@@ -1813,7 +1834,7 @@
  		  					
  	
  
- 	return $posTaggedSubSentencesArr;
+ 			return $posTaggedSubSentencesArr;
  	
  	}
  	

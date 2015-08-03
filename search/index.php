@@ -77,7 +77,11 @@ $query = cleanAndTrim($query);
 
 
 
-$query = removeTashkeel($query);
+//$query = removeTashkeel($query);
+
+//  remove tashkeel - convert from uthmani to simple
+// didn't use remove tashkeel since it leaves "hamzet el wasl" which is not in the simple text
+$query = shallowUthmaniToSimpleConversion($query);
 
 
 
@@ -114,7 +118,7 @@ else
 
 $queryWordsArr = extendQueryWordsByConceptTaxRelations($queryWordsArr, $lang);
 
-
+//echoN($query);preprint_r($queryWordsArr);exit;
 
 //////////////
 $scoringTable = array();

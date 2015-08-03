@@ -901,6 +901,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									  foreach($uthmaniWordsArr as $index => $uthmaniWord)
 									  {
 							
+									  	// USINF SIMPLE  WORDS FOR SIMPLER LEXICAL CONDISTIONS
 									  	$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$uthmaniWord];
 									  	
 									  	
@@ -955,14 +956,15 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 	$verb = $triplePatternArr['CONCEPTS'][1];
 										 	 
 										 	 	
+										 	 	//removed  || ($joinedPattern=="PN NEG V DET N" )
+										 	 	
 										 	 	// IF THE UNIT PATTERN MATCHES 
 										 	 	if (  
 													( 
 														//الله -> يحب -> المتقين
  													     ($joinedPattern=="PN V DET N" && $triplePatternArr['CONCEPTS'][1]!="قال")
-													  || ($joinedPattern=="PN NEG V DET N" )
 														//الله -> مع -> المتقين
-									  				  || $joinedPattern=="PN LOC DET N" 
+									  				  || ($joinedPattern=="PN LOC DET N" && $triplePatternArr['CONCEPTS'][1]=="مع")
 													    //ٱللَّهَ ٱصْطَفَىٰٓ ءَادَمَ
 									  				  || $joinedPattern=="PN V PN"
 													    //مُّحَمَّدٌ رَّسُولُ ٱللَّهِ
@@ -978,14 +980,15 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 		
 										 	 		//preprint_r($triplePatternArr);
 										 	 		
-										 	 		if ( $joinedPattern=="V PN N PRON")
+										 	 		if ( $joinedPattern=="PN NEG V DET N")
 										 	 		{
-										 	 			$concept1Temp = $concept1;
-										 	 			$concept1 = $triplePatternArr['CONCEPTS'][1];
-										 	 			$concept2 = $triplePatternArr['CONCEPTS'][2];
-										 	 			$verb = $concept1Temp;
+										 	 			
+										 	 			$concept1 = $triplePatternArr['CONCEPTS'][0];
+										 	 			$concept2 = $triplePatternArr['CONCEPTS'][3];
+										 	 			$verb = $triplePatternArr['CONCEPTS'][1]." ".$triplePatternArr['CONCEPTS'][2];
 										 	 			
 										 	 		}
+								
 										 
 										 	 		$concept1Segment = $verseSegments[$concept1];
 										 	 		$concept2Segment = $verseSegments[$concept2];
@@ -998,7 +1001,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 														&& (isset($finalConcepts[$concept2]) || ($concept2=getConceptByLemma($finalConcepts,$concept2Lemma)) )
 									  				 )
 										 	 		{
-										 	 			echoN("####");
+										 	 				//echoN("####");
 										 	 			
 										 	 				$type = "NON-TAXONOMIC";
 										 					addRelation($relationsArr,$type,$concept1,$verb,$concept2,$joinedPattern);
@@ -1025,13 +1028,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 	{
 										 	 
 										 	 	
+										 	 		$numberOWordsInUnit = 3;
 										 	 		// REMOVE THE FIRST CONCEPT AND POS TO GIVE SPACE FOR a new word in the trigram concept
-										 	 		if ( count($triplePatternArr['CONCEPTS'])==3  )
+										 	 		if ( count($triplePatternArr['CONCEPTS'])==$numberOWordsInUnit )
 										 	 		{
 										 	 			
 										 	 			// GET ONLY SECOND AND THIRD ENTRIES
-										 	 			$bigramFromTrigramArr = array_slice($triplePatternArr['CONCEPTS'], 1,2);;
-										 	 			$bigramPatternFromTrigramArr = array_slice($triplePatternArr['PATTERN'], 1,2);;
+										 	 			$bigramFromTrigramArr = array_slice($triplePatternArr['CONCEPTS'], 1,($numberOWordsInUnit-1) ) ;;
+										 	 			$bigramPatternFromTrigramArr = array_slice($triplePatternArr['PATTERN'], 1, ($numberOWordsInUnit-1));;
 										 	 			
 										 	 			$versePrevWords[$triplePatternArr['CONCEPTS'][0]]=1;
 										 	 			$versePrevPatterns[$triplePatternArr['PATTERN']]=1;
@@ -1044,7 +1048,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 	
 										 	
 										 	 	
-										 	 	echoN("$$$".count($triplePatternArr['CONCEPTS']));
+										 	 
 										 	 	
 										 	 
 									  	//}
@@ -1063,7 +1067,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					
 					}
 					
-					//echoN("NONTAX SYNTATIC PATTERNS RELATIONS COUNT:".count($relationsArr));
+					//echoN("NON-TAX SYNTATIC PATTERNS RELATIONS COUNT:".count($relationsArr));
 					//preprint_r($relationsArr);
 					//exit;
 					$poTaggedSubsentences = getPoSTaggedSubsentences();
@@ -1154,6 +1158,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							}
 							
 							*/
+						
+							// CONVERT POS SUBSENTENCES FROM ARRAYS TO STRINGS
 							foreach($poTaggedSubsentences as $location => $dataArr)
 							{
 								$wordsArr = $poTaggedSubsentences[$location]['WORDS'];
@@ -1178,6 +1184,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							 $lastVerseId = null;
 							 
+							 // LOOP ON SUBSENTCES
 							 foreach ($ssPoSAggregationCorrespondingSent as $ssLocation => $ssArray)
 							 {
 		
@@ -1191,6 +1198,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								
 								$verseId = substr($ssLocation, 0, strlen($ssLocation)-2);
 								
+								// RETUSN STRINGS ARRAY AGAIN ! CHANGE THIS
 								$patternArr = preg_split("/,/",$ssPoSPattern);
 								$WordsArr = preg_split("/ /",$subSentenceStr);
 								
@@ -1207,11 +1215,12 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								
 								$lastWord = null;
 								
+								// LOOP ON PATTERNS IN CURRENT SUBSENTCE
 								foreach($patternArr as $index => $posPattern)
 								{
 									$posPattern = trim($posPattern);
 									
-									//echoN($posPattern);
+									echoN($posPattern);
 									
 									$currentWord = current($WordsArr);
 									
@@ -1230,12 +1239,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										$featuresArr = array_merge($featuresArr,$features);
 									}
 		
-									//preprint_r($featuresArr);
+									preprint_r($featuresArr);
 									
 									
 									
 										//echoN($featuresArr['ROOT']);
 										
+										// RESET CONTEXT WHEN WE FIND CONJ THE FOLLOWING POS TAGS - SUCH AS CONJUCTIONS
 										if ( $index > 0 && strpos($posPattern,"ACC")!==false ||
 											 strpos($posPattern,"REM")!==false ||
 											strpos($posPattern,"SUB")!==false ||
@@ -1247,8 +1257,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										{
 											
 											
+											// ADD ANY PENDING RELATIONS
 											flushProperRelations($relationsArr,$conceptsArr,$verb,$lastSubject,$ssPoSPattern,$filledConcepts);
 											
+											// SKIP ANY VERSE WHICH INCLUIDES CONVERSATION OR CONDITION
 											if ( $featuresArr['ROOT']=="قول" || strpos($posPattern,"COND")!==false)
 											{
 												$qacVerseIndex += (count($patternArr)-($index+1))+1;
@@ -1385,7 +1397,13 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								
 								
 							 }
+							 
+							 echoN("GENERAL RULES COUNT:".count($relationsArr));
+							 preprint_r($relationsArr);
+							// exit;
+							 
 					}
+					// USING STATISTICALLY SIGNIFICANT RULES ( SUCH AS RULES EXTRACTED FROM LONGEST COMMON SUBSTRINGS ALGORITHM )
 					else
 					if ( $METHOD=="LCS_RULES")
 					{
@@ -1425,13 +1443,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$filteredRules["V PRON, DET N"]=1;
 						$filteredRules["V PRON, N PRON"]=1;
 						
-						
+						// LOOP ON EACH RULE OF THE ABOVE
 						foreach( $filteredRules as $rulePattern=>$strippedRulePattern)
 						{
 							//$rule = "V PRON, P, N, PN";
 							//$rule = "V PRON PRON";
 							$rule = $rulePattern;
 							
+							// LOOP ON SUB-VERSES
 							foreach($poTaggedSubsentences as $location => $dataArr)
 							{
 									$wordsArr = $poTaggedSubsentences[$location]['WORDS'];
@@ -1443,14 +1462,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									preprint_r($qacIndexes);
 									*/
 									
-									$ssPoSPattern = join(", ",$posArr);
-									//echoN("---$ssPoSPattern");
 									
+									// GET PATTERN/WORD STRINGS FROM ARRAYS
+									$ssPoSPattern = join(", ",$posArr);
 									$subSentenceStr = join(" ",$wordsArr);
 									
 									
 										
-					
+									// RULE IS FOUND IN SUB-VERSE  PATTERN
 									if ( strstr($ssPoSPattern, $rule)!==false)
 									{
 										echoN($subSentenceStr);
@@ -1459,7 +1478,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										echoN($rule);
 										$startOfRule= strpos($ssPoSPattern, $rule);
 										//echoN("SP:".$startOfRule);
+										
+										// GET ALL POS WHICH IS FOUND BEFORE THE PATTERN IN THE PATTERN STRING
 										$prePatternStr = substr($ssPoSPattern, 0,$startOfRule);
+										
+										// SOME STATISTICS
 										$numberOfWordsPrePattern = preg_match_all("/,/", $prePatternStr);
 										$numberOfWordsInRule = (preg_match_all("/,/", $rule)+1);
 										//echoN("# of words prepattern:".$numberOfWordsPrePattern);	
@@ -1472,14 +1495,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										
 					
 	
-										
+										// QAC INDEX OF FIRST CORRSPONDING WORD IN THE PATTERN
 										$qacStartWordIndexInVerse = $qacIndexes[$startArrayIndexOfPattern];
 										$qacBaseLocation = $verseId;
 										//echoN($qacLocation);
 										
 										
-										// preventive TAGS
-										if ( preg_match("/VOC|COND/",$prePatternStr) )
+										// IF THE SUBVERSE CONTAIN CONDITIONS OR VOCATIVES, IGNORE THE WHOLE SUBVERSE
+										if ( preg_match("/VOC|COND|INTG/",$prePatternStr) )
 										{
 											continue;
 										}
@@ -1498,17 +1521,18 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										{
 											case "V PRON PRON":
 												
+												// RESOLVE PRONOUNS
 												$qacWordLocation = $qacBaseLocation .":".($qacStartWordIndexInVerse);
 													
 												$pronounConceptArr = resolvePronouns($qacWordLocation);
 												$subject = $pronounConceptArr[0];
 												$object = $pronounConceptArr[1];
 												
-												//qurana bug
+												//qurana bug OR NULL CONCEPTS
 												if ( empty($pronounConceptArr)) continue;
 												if ( $subject=="null" || $object=="null") continue;
 												
-												
+												/// VERB LEMMA
 												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
 													
 												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
@@ -1582,27 +1606,45 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 											case "V PRON, DET N":
 											case "V PRON, N PRON":
 												$qacWordLocation = $qacBaseLocation .":".($qacStartWordIndexInVerse);
-													
+												$qacWordLocation2 = $qacBaseLocation .":".($qacStartWordIndexInVerse+1);
+												
+												// FIRST PRONOUN
 												$pronounConceptArr = resolvePronouns($qacWordLocation);
+												//SECOND PRONOUN
+												$pronounConceptArr2 = resolvePronouns($qacWordLocation2);
+												
 												$subject = $pronounConceptArr[0];
 							
 											
 												if ( $rule=="V PRON, N PRON")
 												{
+													preprint_r($pronounConceptArr);
+													preprint_r($pronounConceptArr2);
+												
 													// remove PRON chars from word
 													$qacWordLocationForSecondWord = $qacBaseLocation .":".($qacStartWordIndexInVerse+1);
 													$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocationForSecondWord];
 													$nounSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"N");
 													$nounSegment = $nounSegmentArr['FEATURES']['LEM'];
 													
+													preprint_r($nounSegmentArr['FEATURES']);
 													/*echoN($qacWordLocationForSecondWord);
 													preprint_r($qacWordSegmentsArr);
 													preprint_r($nounSegmentArr);
 													echoN($nounSegment);
 													*/
 													
-													/////
-													$object = $nounSegment;
+													if ( isset($nounSegmentArr['FEATURES']['NOM']) )
+													{
+														$object = $pronounConceptArr[0];
+														$subject = $nounSegment;
+													}
+													// NOUN SEGMENT FEATURE HAS ACC OR OTHER
+													else 
+													{
+														/////
+														$object = $nounSegment;
+													}
 												}
 												else
 												{
@@ -1680,6 +1722,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						echoN("FINAL NONTAXONOMIC RELATIONS :".count($relationsArr));
 							
+						exit;
 						
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
 						
