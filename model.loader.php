@@ -523,7 +523,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	if ( $res===false){ throw new Exception("Can't cache MODEL_QA_ONTOLOGY"); }
 	
-	//preprint_r($MODEL_QA_ONTOLOGY);
+	preprint_r($MODEL_QA_ONTOLOGY);exit;
 	//////// END ONTOLOGY LOADING
 	
 

@@ -305,7 +305,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 	}
 
 		
-	addNewRelation($relationsArr,$type,$subjectSimple,$verbSimple,$objectSimple,$joinedPattern,$verbEngTranslation,$verbUthmani);
+	return addNewRelation($relationsArr,$type,$subjectSimple,$verbSimple,$objectSimple,$joinedPattern,$verbEngTranslation,$verbUthmani);
 }
 
 function resolvePronouns($qacLocation)
