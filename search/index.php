@@ -5,759 +5,144 @@ require_once("../libs/search.lib.php");
 require_once("../libs/graph.lib.php");
 
 
-$lang = "EN";
-$direction = "ltr";
+require_once("query.handling.common.php");
 
 
-
-$query = $_GET['q'];
-
-///DETEDCT LANGUAGE //LOCATION SIGNIFICANT
-if (isArabicString($query))
+// IF NOT PHRASE OF QUESTION SEARCH, EXTEND QUERY BY ADDING DERVIATION OF THE QUERY WORDS
+if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSearch)
 {
-	$lang = "AR";
-	$direction = "rtl";
+	//
+	$extendedQueryWordsArr = extendQueryByExtractingWordDerviations($extendedQueryWordsArr);
 }
 
 
 
-if ($lang=="EN" && !isDevEnviroment() )
-{
-	file_put_contents( dirname(__FILE__)."/../data/query.log.en", time().",".$query."\n",FILE_APPEND);
-}
-else if ($lang=="AR" && !isDevEnviroment())
-{
-	file_put_contents( dirname(__FILE__)."/../data/query.log.ar",  time().",".$query."\n",FILE_APPEND);
-}
-
-
-	//echoN(time());
-	loadModels("core,search,qac,ontology",$lang);
-	//echoN(time());
-	
-	
-//preprint_r($MODEL_CORE);
-
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
-
-$MODEL_CORE_OTHER_LANG = apc_fetch("MODEL_CORE[".toggleLanguage($lang)."]");
-
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
-
-
-
-//preprint_r($UTHMANI_TO_SIMPLE_LOCATION_MAP);
-
-$isPhraseSearch = false;
-$isQuestion = false;
-
-$matchesCount = preg_match("/\".*?\"/", $query);
-
-if ( $matchesCount >=1 ) $isPhraseSearch = true;
-
-
-if ( preg_match("/\?|؟/", $query)>0  )
-{
-	$isQuestion = true;
-	$query = preg_replace("/\?|؟/", "", $query);
-}
-
-if ( containsQuestionWords($query,$lang))
-{
-	$isQuestion = true;
-}
-
-
-
-//echoN("IS QUESTION:$isQuestion");
-
-
-/// CLEANING
-$query = cleanAndTrim($query);
-
-
-
-//$query = removeTashkeel($query);
-
-//  remove tashkeel - convert from uthmani to simple
-// didn't use remove tashkeel since it leaves "hamzet el wasl" which is not in the simple text
-$query = shallowUthmaniToSimpleConversion($query);
-
-
-
-// CASE HANDLING
-if ($lang=="EN" )
-{
-	$query = strtolower($query);
-}
+// SEARCH INVERTED INDEX FOR DOCUMENTS
+$scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams);
 
 
 
 
-//preprint_r($queryWords);
+// NOT RESULTS FOUND
+handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query);
 
 
-if ( $isQuestion )
-{
+///// GET STATS BYT SCORING TABLE
 
-	$taggedSignificantWords = posTagUserQuery($query,$lang);
-	
-	
-	
-	$taggedSignificantWords = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
-	
-	//preprint_r($taggedSignificantWords);exit;
-	$queryWordsArr = array_keys($taggedSignificantWords);
-}
-else
-{
-	$queryWordsArr = preg_split("/ /",$query);
-}
-
-
-
-$queryWordsArr = extendQueryWordsByConceptTaxRelations($queryWordsArr, $lang);
-
-//echoN($query);preprint_r($queryWordsArr);exit;
-
-//////////////
-$scoringTable = array();
-
-$lastWord = null;
-
-$extendedQueryWordsArr = array_fill_keys($queryWordsArr,1);
-
-//preprint_r($extendedQueryWordsArr);
-
-if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false)
-{
-	/** GET ROOT/STEM FOR EACH QUERY WORD **/
-	foreach ($queryWordsArr as $word)
-	{
-	
-		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
-		
-		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
-		{
-			
-	
-	
-			$SURA = $documentArrInIndex['SURA'];
-			$AYA = $documentArrInIndex['AYA'];
-			$INDEX_IN_AYA_EMLA2Y = $documentArrInIndex['INDEX_IN_AYA_EMLA2Y'];
-			$INDEX_IN_AYA_UTHMANI= $documentArrInIndex['INDEX_IN_AYA_UTHMANI'];
-			$WORD_TYPE = $documentArrInIndex['WORD_TYPE'];
-			$EXTRA_WORD_TYPE_INFO = $documentArrInIndex['EXTRA_INFO'];
-		
-			//echoN("|$INDEX_IN_AYA_EMLA2Y|");
-			//$INDEX_IN_AYA_EMLA2Y = getImla2yWordIndexByUthmaniLocation(getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_EMLA2Y),$UTHMANI_TO_SIMPLE_LOCATION_MAP);
-			//echoN("|$INDEX_IN_AYA_UTHMANI|");
-		
-			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
-			
-			
-			
-			//echoN($word);
-			//echoN($WORD_TYPE);
-			//preprint_r($documentArrInIndex);
-			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
-			
-			// search QAC for roots and LEMMAS for this word
-			foreach ( $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation] as $segmentIndex => $segmentDataArr)
-			{
-				$segmentFormAR = $segmentDataArr['FORM_AR'];
-				$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentFormAR];
-				
-				
-				//preprint_r($segmentDataArr);
-				//echoN($segmentFormAR);
-				//echoN($segmentFormARimla2y);
-				//echoN($qacLocation);
-				
-			
-				// the current query word has a ROOT in the current QAC segment
-				if ($WORD_TYPE=="NORMAL_WORD" &&  isset($segmentDataArr['FEATURES']['STEM'])  )
-				{
-					// get QAC root and LEM for the current query word
-					$rootOfQueryQord = $segmentDataArr['FEATURES']['ROOT'];
-					$stemOfQueryWord = $segmentDataArr['FEATURES']['LEM'];
-					
-					
-					/*
-					if ( empty($stemOfQueryWord) || empty($rootOfQueryQord))
-					{
-						preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
-						echoN($rootOfQueryQord);
-						echoN($stemOfQueryWord);
-						exit;
-					}*/
-					
-									
-					
-					// add the STEMS to out extended query words
-					if ( !empty($rootOfQueryQord) && !isset($extendedQueryWordsArr[$rootOfQueryQord])) { $extendedQueryWordsArr[$rootOfQueryQord]=1;}
-					if ( !isset($extendedQueryWordsArr[$stemOfQueryWord])) { $extendedQueryWordsArr[$stemOfQueryWord]=1;}
-					
-					
-				}
-				
-			}
-					
-			
-	
-			
-		}
-	}
-	
-
-	
-	/** GET EMLA2Y (SIMPLE) WORDS CORRESPONSING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX 
-	 *  ADD TO EXTENDED QUERY WORDS
-	 * **/
-	foreach ($extendedQueryWordsArr as $word => $dummy)
-	{
-	
-		
-		
-	
-		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
-		{
-			$SURA = $documentArrInIndex['SURA'];
-			$AYA = $documentArrInIndex['AYA'];
-			$INDEX_IN_AYA_EMLA2Y = $documentArrInIndex['INDEX_IN_AYA_EMLA2Y'];
-			$INDEX_IN_AYA_UTHMANI= $documentArrInIndex['INDEX_IN_AYA_UTHMANI'];
-			$WORD_TYPE = $documentArrInIndex['WORD_TYPE'];
-			$EXTRA_WORD_TYPE_INFO = $documentArrInIndex['EXTRA_INFO'];
-
-			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
-			
-			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
-			
-			$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);
-			
-			$wordFromVerse = getWordFromVerseByIndex($MODEL_CORE,$verseText,$INDEX_IN_AYA_EMLA2Y);
-			
- 	
-			
-			
-			if ( $WORD_TYPE=="PRONOUN_ANTECEDENT")
-			{
-				//echoN($wordFromVerse);
-				
-				// PRONOUNS SHOULD NOT BE ADDED TO THE QUERY BECAUSE THEY CAN REFER TO MANY THINGS
-				// OTHER THAN THE ORIGINAL QUERY
-				continue;
-			}
-			
-			if ( !isset($extendedQueryWordsArr[$wordFromVerse])) 
-			{ 
-				
-					$extendedQueryWordsArr[$wordFromVerse]=$qacLocation;
-				
-			}
-		}
-					
-	
-	}
-}
-
-
-
-/**
- * GET ALL RESULT FORM INDEX USING EXTENDED QUERY WORD (WHICH INCLUDES ALL VARIATIONS AND PRONOUNS)
- */
-foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
-{	
-
-	foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
-	{	
-		
-		//echoN("$word ");
-		//preprint_r($documentArrInIndex);exit;
-		$SURA = $documentArrInIndex['SURA'];
-		$AYA = $documentArrInIndex['AYA'];
-		$INDEX_IN_AYA_EMLA2Y = $documentArrInIndex['INDEX_IN_AYA_EMLA2Y'];
-		$INDEX_IN_AYA_UTHMANI= $documentArrInIndex['INDEX_IN_AYA_UTHMANI'];
-		$WORD_TYPE = $documentArrInIndex['WORD_TYPE'];
-		$EXTRA_INFO = $documentArrInIndex['EXTRA_INFO'];
-		
-		
-		
-		
-		//echo getQACLocationStr($SURA,$AYA,$INDEX_IN_AYA_EMLA2Y);
-		$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
-		
-		$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
-		
-		if ( $isPhraseSearch )
-		{
-			
-			/*
-			 *
-			* NOTE: A DECISION SHOULD BE TAKEN TO SERACH AROUND AND REMOVE PAUSE MARKS OR NOT
-			*/
-			$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
-			//echoN("|$query|$verseText");
-			$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/um", $verseTextWithoutPauseMarks);
-			
-			if ( $numberOfOccurencesForWord ==0)
-			{
-				continue;
-			}
-			
-			
-			
-		}
-		else
-		{
-			$numberOfOccurencesForWord = preg_match_all("/$word/um", $verseText);
-		}
-		
-		//echoN($numberOfOccurencesForWord);
-		//echoN("$qacLocation|$targetQACLocation|$word|$EXTRA_INFO|$WORD_TYPE");
-		
-
-		// incase of non normal word ( QAC/QURANA) .. transslate WordIndex from Uthmani script to Imla2y script
-		/*if ( $WORD_TYPE!="NORMAL_WORD"   )
-		{	
-			//echoN("OLD:$INDEX_IN_AYA_EMLA2Y");
-			$INDEX_IN_AYA_EMLA2Y = getImla2yWordIndexByUthmaniLocation($qacLocation,$UTHMANI_TO_SIMPLE_LOCATION_MAP);
-			//echoN("NEW:$INDEX_IN_AYA_EMLA2Y");
-		}*/
-		
-		//echoN($word);
-		//preprint_r($documentArrInIndex);
-		//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
-		
-		if (!isset($scoringTable[$SURA.":".$AYA])) 
-		{
-			$scoringTable[$SURA.":".$AYA]=array();
-			
-			$scoringTable[$SURA.":".$AYA]['SCORE']=0;
-			$scoringTable[$SURA.":".$AYA]['FREQ']=0;
-			$scoringTable[$SURA.":".$AYA]['DISTANCE']=0;
-			$scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES']=0;
-			$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
-			$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
-			$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']=array();
-			$scoringTable[$SURA.":".$AYA]['WORD_TYPE']=$WORD_TYPE;
-			$scoringTable[$SURA.":".$AYA]['EXTRA_INFO']=$EXTRA_INFO;
-			$scoringTable[$SURA.":".$AYA]['INDEX_IN_AYA_EMLA2Y']=$INDEX_IN_AYA_EMLA2Y;
-			$scoringTable[$SURA.":".$AYA]['INDEX_IN_AYA_UTHMANI']=$INDEX_IN_AYA_UTHMANI;
-			$scoringTable[$SURA.":".$AYA]['PRONOUNS']=array();
-			
-		}
-		
-	
-		
-		
-		$scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES'] = $numberOfOccurencesForWord;
-		
-		//echoN($numberOfOccurencesForWord);
-		
-		if ( !isset($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]) &&  
-			$numberOfOccurencesForWord > 0 &&
-			$scoringTable[$SURA.":".$AYA]['FREQ']>0 )
-		{
-			// Raise the frequency (score) of ayas containing more than one of the query items
-			$scoringTable[$SURA.":".$AYA]['FREQ']=$numberOfOccurencesForWord*10;
-		}
-		else
-		{
-			$scoringTable[$SURA.":".$AYA]['FREQ']++;
-		}
-		
-		
-
-		/*$verseArr = preg_split("/ /",$MODEL_CORE['QURAN_TEXT'][$SURA][$AYA]);
-			
-		$verseArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'],$verseArr);
-			
-	
-		$simpleWordFromText = $verseArr[$INDEX_IN_AYA_EMLA2Y-1];
-		*/
-		
-		/*
-		if ( empty($simpleWordFromText))
-		{
-			echoN($INDEX_IN_AYA_EMLA2Y);
-			preprint_r($verseArr);
-		}
-	
-		echoN($qacLocation);
-		echoN($word);
-		echoN($INDEX_IN_AYA_EMLA2Y);
-		echoN($MODEL_CORE['QURAN_TEXT'][$SURA][$AYA]);
-		echoN($simpleWordFromText);
-		preprint_r($verseArr);
-		*/
-		
-		
-
-
-		
-		// STEM or PRONOUN
-		if ( $WORD_TYPE=="PRONOUN_ANTECEDENT"    )
-		{
-			$scoringTable[$SURA.":".$AYA]['PRONOUNS'][$EXTRA_INFO]=$INDEX_IN_AYA_EMLA2Y;
-		}
-		else if ( $WORD_TYPE=="ROOT" || $WORD_TYPE=="LEM"   )
-		{
-		
-			// for non-normal words this will get the whole  segment
-			$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]=$WORD_TYPE;
-		
-			// needed to fix root that are sometimes converted by uthmani/simple map below
-			$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][removeTashkeel($EXTRA_INFO)]=$WORD_TYPE;
-			
-			// try to convert QAC uthmani word to simpleimla2y using the MAP table with and withou tashkeel
-			$wordInAya = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$EXTRA_INFO];
-			
-			if ( empty($wordInAya ) ) { $wordInAya = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[removeTashkeel($EXTRA_INFO)]; }
-			
-			if ( empty($wordInAya ) ) { $wordInAya = removeTashkeel($EXTRA_INFO); }
-				
-			/*if ( empty($wordInAya ) )
-			{
-				preprint_r($documentArrInIndex);
-				echoN($EXTRA_INFO);
-				echo"HERE";
-				preprint_r($scoringTable[$SURA.":".$AYA]);exit;
-			}*/
-			
-				
-		
-			//echoN("$word-$wordInAya-$EXTRA_INFO");
-			$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$wordInAya]=$WORD_TYPE;
-		}
-		// NORMAL WORD
-		else
-		{
-			// word was in original user query, not in our extended one
-			///if ( in_array($word,$queryWordsArr))
-			//{
-
-			
-				$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]=$WORD_TYPE;
-			//}
-		}
-
-
-		
-		
-	}
-}
-
-
-//preprint_r($scoringTable);exit;
-
-if ( empty($scoringTable))
-{
-
-	//preprint_r(array_keys($extendedQueryWordsArr));
-	$suggestionsArr = getSimilarWords(array_keys($extendedQueryWordsArr));
-	//preprint_r($suggestionsArr);
-	
-	?>
-	
-		<div class='search-error-message'>
-			No results found !
-		</div>
-		<div class='search-word-suggestion'>
-		<?php 
-		
-		if (!empty($suggestionsArr)) 
-		{
-			?>
-			Do you Mean:
-			<br>
-			<?php 
-			
-				$index =0;
-				 foreach($suggestionsArr  as $suggestedWord => $dummyFlag)
-				 {
-				 	if ( $index++>10) break;
-				 	
-				 	?>
-				 	<a href='?q=<?=urlencode($suggestedWord)?>'><?=$suggestedWord?></a>&nbsp;<br>
-				 	<?php
-				 	
-				 }
-				 
-			?>
-		 
-		</div>	
-	<?php 
-	  }
-	exit;
-	
-	
-
-}
-
-
+$resultStatsArr = getStatsByScoringTable($scoringTable);
 
 ?>
-<div id="result-graph-area">
+<div id='search-results-options'>
+	Sort by
+	<select  id='qa-sort-select' onchange="clientSortResults('result-aya-container')">
+		<option value='relevance' selected sortorder='desc'>Relevance</option>
+		<option value='order' sortorder='asc'>Order</option>
+	</select>
+	Script
+	<select  id='qa-script-select' onchange="changeDefaultQuranScript()">
+		<option value='simple' selected>Simple</option>
+		<option value='uthmani'>Uthmani</option>
+	</select>
 
 </div>
-
-<div  id="result-stats-chart-area">
-
-
-<div id="results-stats-table" style="direction:<?php echo ($lang=="AR")? "rtl":"ltr";?>">
 
 <?php 
-
-
-//// GENERATING DATA FOR CHART AND STATISTICS TABLE
-$uniqueResultSuras = array();
-$uniqueResultVerses = array();
-$uniqueResultRepetitionCount = 0;
-
-$frequencyPerSuraArr = array();
-
-//preprint_r($scoringTable);exit;
-
-foreach ($scoringTable as $verseID => $scoringArr)
+if ($isQuestion && !empty($conceptsFromTaxRelations))
 {
-	/*
-	 * SURA and AYA IDS are 0 based instrad of 1  
-	 */
-	$suraID = $scoringArr['SURA']+1;
-	$ayaID = $scoringArr['AYA'];
-	$freq = $scoringArr['FREQ'];
-	$wordOccurences = $scoringArr['WORD_OCCURENCES'];
-	
-	$uniqueResultSuras[$suraID]=1;
-	
-
-	$uniqueResultVerses[$verseID]=1;
-	$uniqueResultRepetitionCount += $wordOccurences;
-	
-	if ( !isset($frequencyPerSuraArr[$suraID]) ) $frequencyPerSuraArr[$suraID]=0;
-	$frequencyPerSuraArr[$suraID]+=1;
-
-	
-}
-
-
-
-//preprint_r($frequencyPerSuraArr);
-
-$chartJSONArr = array();
-foreach ($frequencyPerSuraArr as $suraID=>$repetition)
-{
-	$chartJSONArr[] = array($suraID,$repetition);
-}
-
-//preprint_r($chartJSONArr);
-
-$wordDistributionChartJSON = json_encode($chartJSONArr);
-
-//echoN($wordDistributionChartJSON);
-
-$searchResultsChaptersCount = count($uniqueResultSuras);
-$searchResultsVersesCount = count($uniqueResultVerses);
-
-///////////////////////////////////////////////////////
-
 ?>
- <table>
- 	<tr>
- 		<th><?=$MODEL_CORE['RESOURCES']['CHAPTERS']?></th><td><?=$searchResultsChaptersCount?></td>
- 		<th><?=$MODEL_CORE['RESOURCES']['VERSES']?></th><td><?=$searchResultsVersesCount?></td>
-  		<th><?=$MODEL_CORE['RESOURCES']['REPETITION']?></th><td><?=$uniqueResultRepetitionCount?></td>		
-
- 	</tr>
- </table>
-
+<div id='question-answering-area'>
+	<span id='question-answering-area-anser-title'>Answer:</span> <span><?php echo join(", ",$conceptsFromTaxRelations);?></span>
 </div>
-<div id="results-chart-area" >
+<?php 
+}
+?>
+<div id="visualization-area" >
 
-</div>
+<table id='visualization-table'>
+<tr>
+	<td>
+		<!-- ONTOLOGY GRAPH AREA -->
+		<div id="result-graph-area">
+		
+		</div>
+	</td>
+</tr>
+<tr>
+	<td>
+		<!-- ONTOLOGY GRAPH AREA -->
+		<div  id="result-stats-chart-area">
 
-</div>
+			<div id="results-stats-table" style="direction:<?php echo ($lang=="AR")? "rtl":"ltr";?>">
+					
+
+				
+					 <table>
+					 	<tr>
+					 		<th><?=$MODEL_CORE['RESOURCES']['CHAPTERS']?></th><td><?=$resultStatsArr['CHAPTERS_COUNT']?></td>
+					 		<th><?=$MODEL_CORE['RESOURCES']['VERSES']?></th><td><?=$resultStatsArr['VERSES_COUNT']?></td>
+					  		<th><?=$MODEL_CORE['RESOURCES']['REPETITION']?></th><td><?=$resultStatsArr['UNIQUE_REP']?></td>		
+					
+					 	</tr>
+					 </table>
+					
+				</div>
+				<div id="results-chart-area" >
+					
+				</div>
+			</div>
+		<tr>
+	<td>
+
+</table>
 <!-- END CHART/STAT table -->
+</div>
 
-<div id="result-verses-area" style="direction:<?php echo ($lang=="AR")? "rtl":"ltr";?>">
+<div id="result-verses-area" >
 
-<h1><?=$MODEL_CORE['RESOURCES']['RESULTS']?></h1>
-
+<!-- <h1><?=$MODEL_CORE['RESOURCES']['RESULTS']?></h1> -->
+<div id='search-results-summary'>
+<span> Searched for <?php echo join(" ",$queryWordsArr)?> </span>, 
+<span>  <?php echo $resultStatsArr['VERSES_COUNT']?> verses found </span>
+</div>
 <?php 
 
-foreach($scoringTable as $documentID => $documentScoreArr)
-{
-	$scoringTable[$documentID]['SCORE'] = $documentScoreArr['FREQ']+$documentScoreArr['DISTANCE'];
-}
-
-rsortBy($scoringTable, 'SCORE');
-
-//preprint_r($scoringTable);exit;
-
-$searchResultsTextArr = array();
-
-//preprint_r($scoringTable);
-
-foreach($scoringTable as $documentID => $documentScoreArr)
-{
-	//preprint_r($documentScoreArr);
-	
-	$SURA = $documentScoreArr['SURA'];
-	$AYA = $documentScoreArr['AYA'];
-	$TEXT = $MODEL_CORE['QURAN_TEXT'][$SURA][$AYA];
-	$WORD_TYPE = $documentScoreArr['WORD_TYPE'];
-	$EXTRA_INFO = ($documentScoreArr['EXTRA_INFO']);
-	$INDEX_IN_AYA_EMLA2Y = $documentScoreArr['INDEX_IN_AYA_EMLA2Y'];
-	$WORDS_IN_AYA = $documentScoreArr['POSSIBLE_HIGHLIGHTABLE_WORDS'];
-	$PRONOUNS = $documentScoreArr['PRONOUNS'];
-
-	
-	$searchResultsTextArr[]=$TEXT;
-	
-	$TEXT_TRANSLATED = $MODEL_CORE_OTHER_LANG['QURAN_TEXT'][$SURA][$AYA];
-
-	$SURA_NAME = $MODEL_CORE['META_DATA']['SURAS'][$SURA]['name_'.strtolower($lang)];
-
-	$SURA_NAME_LATIN = $MODEL_CORE['META_DATA']['SURAS'][$SURA]['name_trans'];
-	
-	
-	// وكذلك جلناكم امة وسطا 143/256 
-	$TOTAL_VERSES_OF_SURA = $MODEL_CORE['TOTALS']['TOTAL_PER_SURA'][$SURA]['VERSES'];
-
-	
-	//preprint_r($MODEL['QURAN_TEXT']);
-	
-	$MATCH_TYPE="";
-	
-	if ( $WORD_TYPE=="PRONOUN_ANTECEDENT")
-	{
-	
-		$MATCH_TYPE = "ضمير";
-	
-	}
-	else if ( $WORD_TYPE=="ROOT" || $WORD_TYPE=="LEM")
-	{
-	
-		$MATCH_TYPE = "تصريف / إشتقاق";
-	
-	}
-	
-	
-	// empty in case of only pronouns
-	if ( !empty($WORDS_IN_AYA))
-	{
-		if ( $isPhraseSearch )
-		{
-			// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
-			$TEXT = preg_replace("/(".$query.")/mui", "<marked>\\1</marked>", $TEXT);
-				
-		}
-		else 
-		{
-			// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
-			$TEXT = preg_replace("/(".join("|",array_keys($WORDS_IN_AYA)).")/mui", "<marked>\\1</marked>", $TEXT);
-				
-		}
-	}
-	
-	
-	// mark PRONOUNS
-	if ( $WORD_TYPE=="PRONOUN_ANTECEDENT")
-	{
-		foreach( $PRONOUNS as $pronounText => $PRONOUN_INDEX_IN_AYA_EMLA2Y)
-		{
-			$pronounText = removeTashkeel($pronounText);
-		
-	
-			$TEXT = markSpecificWordInText($TEXT,($PRONOUN_INDEX_IN_AYA_EMLA2Y-1),$pronounText,"marked");
-		
-			//$TEXT = preg_replace("/(".$EXTRA_INFO.")/mui", "<marked>\\1</marked>", $TEXT);
-		
-		}
-	}
-
-	
-	
-	$documentID = preg_replace("/\:/", "-", $documentID);
-	
-	//preprint_r($documentScoreArr);
-	
+$searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script);
 ?>
+</div>
 
-	<div class='result-aya' style="direction:<?=$direction?>" id="<?=$documentID?>">
-		<?=$TEXT?>
-		
-		<div id="<?=$documentID?>-translation" class='result-translated-text'>
-			
-			<?=$TEXT_TRANSLATED?>
-		</div>
-	</div>
-	<div class='result-aya-info'>
-	
-		<span class='result-sura-info' style="direction:<?=$direction?>">
-				<?=$SURA_NAME ?>
-				<?php if ( $lang=="EN") { echo " ($SURA_NAME_LATIN)"; } ?> 
-			[<?=($SURA+1).":".($AYA+1)?>]
-				 <?php/*$TOTAL_VERSES_OF_SURA*/?> 
-		</span>
-
-		<span class='result-aya-showtranslation' >
-		<?php 
-			$showTransText = "Show Translation";
-			
-			if ( $lang=="EN")
-			{
-				$showTransText = "Show Origninal";
-			}
-		?>
-			<a href="javascript:showTranslationFor('<?=$documentID?>')"><?=$showTransText?></a>
-		</span>
-	
-		
-		<span>
-			<?php echo $MATCH_TYPE?>
-		</span>
-	</div>
-
-<?php 
-}
+<?php
 
 
-//$graphObj = textToGraph($searchResultsTextArr,$MODEL_CORE['STOP_WORDS']);
-$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$queryWordsArr,0,array(960,400),$lang);
+$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$queryWordsArr,0,array(600),$lang,false,$isPhraseSearch,$isQuestion,$query);
+
+
 
 if ( empty($graphObj['nodes']))
 {
-	$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultsTextArr,300,array(960,400),$lang);
+	$graphObj = ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultsTextArr,0,array(600,400),$lang,true,$isPhraseSearch,$isQuestion,$query);
 }
 
-// $graphNodesArr = array();
 
-// foreach($graphObj["nodes"] as $word => $nodeArr)
-// {
-	
-// 	$graphNodesArr[] = $nodeArr;
-	
-// }
 
-//preprint_r($graphObj["links"]);exit;
 
 $graphNodesJSON = json_encode($graphObj['nodes']);
 $graphLinksJSON = json_encode($graphObj["links"]);
 
 
-//exit;
-//echoN($graphLinksJSON);
+
+$wordDistributionChartJSON = getDistributionChartData($scoringTable);
+
+
 ?>
-</div>
-<!-- END verses section -->
+
+
 
 <script>
 
-drawGraph(<?php echo "$graphNodesJSON" ?>,<?php echo "$graphLinksJSON" ?>,960,400,"#result-graph-area");
+
+drawGraph(<?="$graphNodesJSON" ?>,<?="$graphLinksJSON"?>,600,400,"#result-graph-area",<?="'$lang'"?>,"result-verses-area");
 
 
-drawChart(<?=$wordDistributionChartJSON?>,800,200,1,<?=$numberOfSuras?>,'#results-chart-area',"Chapter Number","Word Repetition",function(d){return "Chapter Number:" + d[0]+ "<br/>Repetition: "+d[1]} );
+drawChart(<?=$wordDistributionChartJSON?>,600,400,0,<?=$numberOfSuras?>,'#results-chart-area',"Chapter Number","Word Repetition",function(d){return "Chapter Number:" + d[0]+ "<br/>Repetition: "+d[1]} );
 
 </script>
