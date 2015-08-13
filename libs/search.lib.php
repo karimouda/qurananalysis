@@ -190,7 +190,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
 {
 	global $MODEL_QA_ONTOLOGY, $is_a_relation_name_ar,$thing_class_name_en;
 	
-	
+	$conceptsFromTaxRelations = array();
 	
 	foreach($extendedQueryArr as $index => $word)
 	{
@@ -229,7 +229,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
 					// عذاب + عذاب الله
 					if ( strpos($subject,$word)===false)
 					{
-						$extendedQueryArr[]=$subject;
+						$conceptsFromTaxRelations[]=$subject;
 					}
 				}
 				
@@ -240,7 +240,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
 			
 	}
 	
-	return $extendedQueryArr;
+	return $conceptsFromTaxRelations;
 }
 
 function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
@@ -384,12 +384,41 @@ function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
 	return $extendedQueryWordsArr;
 }
 
-function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion)
+function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams)
 {
 	global $MODEL_CORE,$MODEL_SEARCH;
+	
+	
+	if ( $isColumnSearch)
+	{
+		
+		$SURA = $columnSearchKeyValParams['KEY']-1;
+		$AYA = $columnSearchKeyValParams['VAL']-1;
+		
+		// VERSE VALIDITY CHECK
+		$qacLocation = getQACLocationStr($SURA+1,$AYA+1,0);
+		
+		$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
+		
+		if ( empty($verseText)) 
+		{
+			return array();
+		}
+		//////////////////////
+				
+		$scoringTable[$SURA.":".$AYA]=array();
+			
+		$scoringTable[$SURA.":".$AYA]['SCORE']=1;
+		$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
+		$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
+		
+		return $scoringTable;
+	}
 
 	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
 	$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+	
+
 	
 	/**
 	 * GET ALL RESULT FORM INDEX USING EXTENDED QUERY WORD (WHICH INCLUDES ALL VARIATIONS AND PRONOUNS)
@@ -581,13 +610,13 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			}
 	
 	
-			$scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']=count($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'])
-				+ count($scoringTable[$SURA.":".$AYA]['PRONOUNS']);
+			$scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']=count($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']);
 	
-			$scoringTable[$SURA.":".$AYA]['SCORE'] = $scoringTable[$SURA.":".$AYA]['FREQ']+
-													 $scoringTable[$SURA.":".$AYA]['DISTANCE']+
-													 $scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']+
-													 $scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT'];
+			$scoringTable[$SURA.":".$AYA]['SCORE'] = ($scoringTable[$SURA.":".$AYA]['FREQ']/2)+
+													 ($scoringTable[$SURA.":".$AYA]['DISTANCE']*1)+
+													 ($scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']*10)+
+													 (count($scoringTable[$SURA.":".$AYA]['PRONOUNS'])*1)+
+													 ($scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT']*1);
 	
 		}
 	}
@@ -598,7 +627,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	rsortBy($scoringTable, 'SCORE');
 	
 	
-	//preprint_r($scoringTable);
+	//preprint_r($scoringTable);exit;
 	
 	return $scoringTable;
 }
@@ -891,7 +920,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 	return $searchResultsTextArr;
 }
 
-function handleEmptyResults($scoringTable,$extendedQueryWordsArr)
+function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
 {
 	// NOT RESULTS FOUND
 	if ( empty($scoringTable))
@@ -904,7 +933,7 @@ function handleEmptyResults($scoringTable,$extendedQueryWordsArr)
 		?>
 		
 			<div class='search-error-message'>
-				No results found for <?php echo join(" ",$extendedQueryWordsArr)?>
+				No results found for <?php echo $query;?>
 			</div>
 			<div class='search-word-suggestion'>
 			<?php 
