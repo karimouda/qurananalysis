@@ -440,13 +440,13 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			{
 				$numberOfOccurencesForWord = preg_match_all("/$word/um", $verseText);
 				
-				if ( $numberOfOccurencesForWord> 100)
+				/*if ( $numberOfOccurencesForWord> 100)
 				{
 					echoN($word);
 					echoN($verseText);
 					preprint_r($extendedQueryWordsArr);
 					exit;
-				}
+				}*/
 			}
 	
 			//echoN($numberOfOccurencesForWord);
@@ -598,7 +598,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	rsortBy($scoringTable, 'SCORE');
 	
 	
-	preprint_r($scoringTable);
+	//preprint_r($scoringTable);
 	
 	return $scoringTable;
 }
@@ -792,9 +792,12 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 		}
 	
 	
+
+		
+		
 		// mark PRONOUNS
-		if ( $WORD_TYPE=="PRONOUN_ANTECEDENT")
-		{
+		//if ( $WORD_TYPE=="PRONOUN_ANTECEDENT") {} // COMMENTED SINCE WORD MAY HAVE BOTH PRON AND NORMAKL WORDS
+		
 			foreach( $PRONOUNS as $pronounText => $PRONOUN_INDEX_IN_AYA_EMLA2Y)
 			{
 				$pronounText = removeTashkeel($pronounText);
@@ -803,9 +806,12 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 				$TEXT = markSpecificWordInText($TEXT,($PRONOUN_INDEX_IN_AYA_EMLA2Y-1),$pronounText,"marked");
 	
 				//$TEXT = preg_replace("/(".$EXTRA_INFO.")/mui", "<marked>\\1</marked>", $TEXT);
-	
+				//echoN("|".$TEXT);
+			
 			}
-		}
+		
+		
+	
 	
 	
 	
