@@ -163,4 +163,29 @@ $scoringTable = array();
 $lastWord = null;
 
 $extendedQueryWordsArr = array_fill_keys($queryWordsArr,1);
+
+
+// IF NOT PHRASE OF QUESTION SEARCH, EXTEND QUERY BY ADDING DERVIATION OF THE QUERY WORDS
+if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSearch)
+{
+
+	$extendedQueryWordsArr = extendQueryByExtractingWordDerviations($extendedQueryWordsArr);
+}
+
+
+
+// SEARCH INVERTED INDEX FOR DOCUMENTS
+$scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams);
+
+
+// NOT RESULTS FOUND
+handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query);
+
+
+///// GET STATS BYT SCORING TABLE
+
+$resultStatsArr = getStatsByScoringTable($scoringTable);
+
+
+
 ?>

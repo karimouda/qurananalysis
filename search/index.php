@@ -8,28 +8,10 @@ require_once("../libs/graph.lib.php");
 require_once("query.handling.common.php");
 
 
-// IF NOT PHRASE OF QUESTION SEARCH, EXTEND QUERY BY ADDING DERVIATION OF THE QUERY WORDS
-if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSearch)
-{
-	//
-	$extendedQueryWordsArr = extendQueryByExtractingWordDerviations($extendedQueryWordsArr);
-}
-
-
-
-// SEARCH INVERTED INDEX FOR DOCUMENTS
-$scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams);
 
 
 
 
-// NOT RESULTS FOUND
-handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query);
-
-
-///// GET STATS BYT SCORING TABLE
-
-$resultStatsArr = getStatsByScoringTable($scoringTable);
 
 ?>
 <div id='search-results-options'>
@@ -51,7 +33,20 @@ if ($isQuestion && !empty($conceptsFromTaxRelations))
 {
 ?>
 <div id='question-answering-area'>
-	<span id='question-answering-area-anser-title'>Answer:</span> <span><?php echo join(", ",$conceptsFromTaxRelations);?></span>
+	<span id='question-answering-area-answer-title'>Answer:</span> 
+	<span>
+	<?php 
+
+	
+		array_walk($conceptsFromTaxRelations, function(&$val)
+		{
+			$val = ucfirst($val);
+		});
+		echo join(", ",$conceptsFromTaxRelations);
+		
+		
+	?>
+	</span>
 </div>
 <?php 
 }
@@ -138,6 +133,7 @@ $wordDistributionChartJSON = getDistributionChartData($scoringTable);
 
 
 <script>
+
 
 
 drawGraph(<?="$graphNodesJSON" ?>,<?="$graphLinksJSON"?>,600,400,"#result-graph-area",<?="'$lang'"?>,"result-verses-area");
