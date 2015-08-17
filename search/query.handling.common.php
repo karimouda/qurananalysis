@@ -44,11 +44,13 @@ else if ($lang=="AR" && !isDevEnviroment())
 	
 //preprint_r($MODEL_CORE);
 
-
+//echoN($query);exit;
 
 $MODEL_CORE_UTH = loadUthmaniDataModel();
 
-//preprint_r($UTHMANI_TO_SIMPLE_LOCATION_MAP);
+//$TRANSLATION_MAP_EN_TO_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
+
+//preprint_r($TRANSLATION_MAP_EN_TO_AR);
 
 $isPhraseSearch = false;
 $isQuestion = false;
@@ -59,6 +61,8 @@ $columnSearchKeyValParams = null;
 $matchesCount = preg_match("/\".*?\"/", $query);
 
 if ( $matchesCount >=1 ) $isPhraseSearch = true;
+
+
 
 
 if ( !$isPhraseSearch && preg_match("/\?|؟/", $query)>0  )
@@ -119,14 +123,11 @@ if ($lang=="EN" )
 
 
 
-
 if ( $isQuestion && !$isPhraseSearch)
 {
 
 	$taggedSignificantWords = posTagUserQuery($query,$lang);
-	
-	
-	
+
 	$taggedSignificantWords = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
 	
 	//preprint_r($taggedSignificantWords);exit;
@@ -135,6 +136,12 @@ if ( $isQuestion && !$isPhraseSearch)
 else
 {
 	$queryWordsArr = preg_split("/ /",$query);
+
+	//consider the full query as oen word, needed for Qurana pronouns
+	if ($isPhraseSearch)
+	{
+		$queryWordsArr[]=$query;
+	}
 	
 	
 }
@@ -143,6 +150,8 @@ else
 if ( !$isColumnSearch  )
 {
 	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations($queryWordsArr, $lang);
+	
+	
 	$queryWordsArr  = array_merge($queryWordsArr,$conceptsFromTaxRelations);
 }
 
