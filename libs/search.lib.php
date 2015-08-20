@@ -170,6 +170,9 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 	
 	foreach($taggedSignificantWords as $word => $posTag)
 	{
+		// avoid small words, will lead to too many iirelevant derivations
+		if (mb_strlen($word) <=2 ) continue;
+		
 		if ( $lang=="EN")
 		{
 	
@@ -230,14 +233,24 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 			{
 				$diff = mb_strlen($conceptWord)-mb_strlen($word);
 				
+				$absDiffSize = abs($diff);
+				
+				
 				// $word is bigger
 				if ( $diff < 0)
 				{
+					$absDiffSize = abs($diff);
+					
+					$diffStr = getStringDiff($conceptWord, $word);
+					//echoN($diffStr);
+					
 					//حيوان => الحيوانات
 					// the bigger word should not contain space الله => سبيل الله
-					if (mb_strpos($word, $conceptWord)!==false && strpos($word," ")===false)
+					if ($absDiffSize <=2 && mb_strpos($word, $conceptWord)!==false && strpos($word," ")===false && ($diffStr=="ات" || $diffStr=="ال") )
 					{
-						//echoN("$word, $conceptWord");
+						echoN("$word, $conceptWord");
+						
+						
 						
 						/// convert word to noun plular
 						$taggedSignificantWords[$word] = "NNS";
@@ -265,10 +278,12 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 				// $word is smaller
 				else
 				{
+					$diffStr = getStringDiff($conceptWord, $word);
+					
 					
 					//  الحيوانات => حيوان
 					// the bigger word should not contain space الله => سبيل الله
-					if ($diff!=0 && mb_strpos($conceptWord,$word)!==false && strpos($conceptWord," ")===false)
+					if ($absDiffSize <=2 && $diff!=0 && mb_strpos($conceptWord,$word)!==false && strpos($conceptWord," ")===false && ($diffStr=="ات" || $diffStr=="ال") )
 					{
 					
 						//echoN("$word,$conceptWord");
@@ -293,6 +308,9 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 				
 			
 			}
+			
+			// limit the number of derivations+original terms to 15
+			$taggedSignificantWords = array_slice($taggedSignificantWords, 0,10);
 			
 			//arsort($simmlarWords);
 			//preprint_r($taggedSignificantWords);
@@ -470,6 +488,7 @@ function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
 	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
 	$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 	
+
 		/** GET ROOT/STEM FOR EACH QUERY WORD **/
 		foreach ($extendedQueryWordsArr as $word)
 		{
@@ -601,7 +620,7 @@ function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
 	
 		}
 		
-		
+	
 	
 	return $extendedQueryWordsArr;
 }
