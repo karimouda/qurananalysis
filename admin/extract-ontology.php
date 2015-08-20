@@ -1016,7 +1016,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 				//echoN("####");
 										 	 			
 										 	 				$type = "NON-TAXONOMIC";
-										 					addRelation($relationsArr,$type,$concept1,$verb,$concept2,$joinedPattern);
+										 					addRelation($relationsArr,$type,$concept1,$verb,$concept2,$joinedPattern,"",$verb);
 										 				
 										 					
 										 	 			
@@ -1068,6 +1068,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										 	 	
 									 	 
 									 }
+									 
 									 
 									
 									 
@@ -1569,7 +1570,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												}
 													
 												$type = "NON-TAXONOMIC";
-												addRelation($relationsArr,$type, $subject, $verb, $object, $rule);
+												addRelation($relationsArr,$type, $subject, $verb, $object, $rule,"",$verb);
 												
 											break;
 											
@@ -1611,7 +1612,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												
 												$type = "NON-TAXONOMIC";
 												
-												addRelation($relationsArr, $type,$subject, $verb, $object, $rule);
+												addRelation($relationsArr, $type,$subject, $verb, $object, $rule,"",$wordsArr[$startArrayIndexOfPattern]);
 											break;
 											//
 											//يَغْفِرْ لَ كُمْ ذُنُوبَ كُمْ
@@ -1639,7 +1640,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 													$nounSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"N");
 													$nounSegment = $nounSegmentArr['FEATURES']['LEM'];
 													
-													preprint_r($nounSegmentArr['FEATURES']);
+													//preprint_r($nounSegmentArr['FEATURES']);
 													/*echoN($qacWordLocationForSecondWord);
 													preprint_r($qacWordSegmentsArr);
 													preprint_r($nounSegmentArr);
@@ -1697,7 +1698,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 											
 												
 												$type = "NON-TAXONOMIC";
-												addRelation($relationsArr,$type, $subject, $verb, $object, $rule);
+												addRelation($relationsArr,$type, $subject, $verb, $object, $rule,"",$wordsArr[$startArrayIndexOfPattern]);
 											break;
 											
 										}
@@ -1822,72 +1823,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								$object = $relationsArr['OBJECT'];
 								$verb = $relationsArr['VERB'];
 								
-								$subjectOrObject = null;
-								$subjectOrObjectFlag =  null;
-									
-								// SUBJECT NOT IN MASTER CONCEPTS LIST
-								if ( !isset($finalConcepts[$subject]) )
-								{
-									echoN("NOT IN CONCEPTS:S:$subject");
-									$notInCounceptsCounter++;
-									
-									$statsUniqueSubjects[$subject]=1;
-													
-									$subjectOrObject = $subject;
-									$subjectOrObjectFlag = "SUBJECT";
-										
-								}
+								handleNewConceptFromRelation($finalConcepts,$subject,"SUBJECT",$notInCounceptsCounter,$statsUniqueSubjects);
 								
-								// OBJECT NOT IN MASTER CONCEPTS LIST
-								if ( !isset($finalConcepts[$object]) )
-								{
-									echoN("NOT IN CONCEPTS:O:$object");
-									$notInCounceptsCounter++;
-									
-									$statsUniqueObjects[$object]=1;
-									
-									$subjectOrObject = $object;
-									
-									$subjectOrObjectFlag = "OBJECT";
-
-								}
+								handleNewConceptFromRelation($finalConcepts,$object,"OBJECT",$notInCounceptsCounter,$statsUniqueSubjects);
 								
-								$termsArr = getTermArrBySimpleWord($finalTerms,$subjectOrObject);
-									
-								$freq = $termsArr['FREQ'];
-									
-								
-									
-								$isQuranaPhraseConcept = false;
-								
-								if( isMultiWordStr($subjectOrObject))
-								{
-									$quranaConceptArr = getQuranaConceptEntryByARWord($subjectOrObject);
-										
-										
-									$engTranslation = ucfirst($quranaConceptArr['EN']);
-									
-									echoN("^^$subjectOrObject");
-									$isQuranaPhraseConcept = true;
-								}
-								else
-								{
-									$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$subjectOrObject];
-									$engTranslation = ucfirst(cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$uthmaniWord]));
-								}
-									
-									
-									
-								addNewConcept($finalConcepts, $subjectOrObject, "A-BOX", "POPULATION_FROM_RELATIONS", $freq, $engTranslation);
-								
-								$finalConcepts[$subjectOrObject]['EXTRA']['POS']=$subjectOrObjectFlag;
-								$finalConcepts[$subjectOrObject]['EXTRA']['WEIGHT']=$termsArr['WEIGHT'];
-								
-								if ( $isQuranaPhraseConcept)
-								{
-									echoN($isQuranaPhraseConcept."||||$subjectOrObject");
-									$finalConcepts[$subjectOrObject]['EXTRA']['IS_QURANA_NGRAM_CONCEPT']=true;
-								}
 								
 							}
 							
@@ -2045,17 +1984,20 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$currentEnglishTranslation = $coneptArr['EXTRA']['TRANSLATION_EN'];
 							$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$concept];
 							
+							//echoN("/$concept/");
 							if ( empty($currentEnglishTranslation))
 							{
-							
+								$finalTranslation = null;
 								
 								
-								echoN($uthmaniWord);
+								//echoN($uthmaniWord);
 								
-								$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWord];
+								$finalTranslation = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWord];
+								
+								//echoN($finalTranslation);
 								
 								// WORD TRANSLATION NOT FOUND - TRY AGAIN WITH DETERMINDER 'ALEF+LAM'
-								if ( empty($engTranslationB4Cleaning))
+								if ( empty($finalTranslation))
 								{
 								   /*
 									* REMOVED TRANSLATION BY NEAREST DERIVATION BECAUSE IT CHANGES THE MEANING
@@ -2082,14 +2024,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									
 									$engTranslationB4Cleaning = $WORDS_TRANSLATIONS_AR_EN[$uthmaniWordForTranslation];
 									echoN($engTranslationB4Cleaning);
-									
-									if ( $concept=="الزوج")
-									{
-										preprint_r($WORDS_TRANSLATIONS_AR_EN);
-										exit;
-									}
 									*/
-									$finalTranslation = null;
+									
+									
 									if (!isFoundInTranslationTable($concept))
 									{
 										//echoN("|$parentConceptEN|");
@@ -2097,7 +2034,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									
 									
 									
-										addTranslationEntry($concept, "CONCEPT",$tentitaveTranslation,"AR" );
+										addTranslationEntry($tentitaveTranslation, "CONCEPT",$concept,"AR" );
 									
 										$finalTranslation = $tentitaveTranslation;
 									}
@@ -2109,7 +2046,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										$finalTranslation  = $customTranslationEntry['EN_TEXT'];
 									}
 								}
-								//echoN($engTranslationB4Cleaning);
+								
+								//echoN($finalTranslation);
 							
 								
 								// REPLACE BRACKETS AND SPECIAL CHARS WITH SPACES
@@ -2118,6 +2056,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								//SET IT IN CONCEPT METADATA
 								$finalConcepts[$concept]['EXTRA']['TRANSLATION_EN'] = $englishTranslation;
 								//echoN("$uthmaniWord|$englishTranslation|$engTranslationB4Cleaning");
+								
+								preprint_r($finalConcepts[$concept]);
 							}
 							
 							
@@ -2135,7 +2075,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						//preprint_r($finalConcepts);exit;
 						echoN(count($finalConcepts));
-						
+						exit;
 						
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage4", serialize($finalConcepts));
 
@@ -2627,6 +2567,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								{
 									
 									
+									if ( empty($semanticType) ) continue;
+									
 									if ( isset($handledSemanticTypes[$semanticType])) continue;
 									
 									// EXCLUDED SEMANTIC TYPE
@@ -2651,7 +2593,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										
 										
 										
-										addTranslationEntry($englishConceptName, "CONCEPT",$tentitaveTranslation );
+										addTranslationEntry($englishConceptName, "CONCEPT",$tentitaveTranslation);
 										
 										$finalConceptName = $tentitaveTranslation;
 									}
@@ -2802,9 +2744,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 											
 											$hypernym = key($wordsArr);
 											
+							
 											
-											
-												if ( !isset($handledSemanticTypes[$hypernym]))
+												if ( !empty($hypernym) && !isset($handledSemanticTypes[$hypernym]))
 												{
 													
 													echoN("==|$hypernym|");
@@ -2988,10 +2930,12 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage6"));
 
 						//preprint_r($relationsArr);
-						preprint_r($finalConcepts);exit;
+						//preprint_r($finalConcepts);exit;
 						
 						$imagesToBeRemoved = array();
-						$descriptionsToBeRemoved = array();
+						$englishLongDescriptionsToBeRemoved = array();
+						$arabicLongDescriptionsToBeRemoved = array();
+						
 						$synonymsToBeRemoved = array();
 						
 						
@@ -3021,9 +2965,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						
 						
-						$descriptionsToBeRemoved["نوح"]=null;
+						$englishLongDescriptionsToBeRemoved["نوح"]=true;
+						$arabicShortMeaningToBeRemoved["نوح"]=true;
 						
 						$synonymsToBeRemoved = loadExcludedSynonymssArr();
+						
 						
 				
 						
@@ -3061,6 +3007,60 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							
 							////////// ATTRIBUTE CLEANING
+							
+							//echoN("::".isset($englishLongDescriptionsToBeRemoved[$concept])." ".$concept);
+							//showHiddenChars($concept,"AR",false);
+							if ( isset($englishLongDescriptionsToBeRemoved[$concept]) )
+							{
+								$descArr = $conceptArr['EXTRA']['DESC_EN'];
+								
+								//echoN("Removing EN Translation:$concept");
+								
+								foreach($descArr as $source => $desc)
+								{
+									//echoN("$source");
+									
+									$conceptArr['EXTRA']['DESC_EN'][$source]="";
+								}
+								
+							}
+							
+							if ( isset($arabicLongDescriptionsToBeRemoved[$concept]) )
+							{
+								$descArr = $conceptArr['EXTRA']['DESC_AR'];
+							
+								foreach($descArr as $source => $desc)
+								{
+									$conceptArr['EXTRA']['DESC_AR'][$source]="";
+								}
+							
+							}
+							
+
+							if ( isset($englishShortMeaningToBeRemoved[$concept]) )
+							{
+								$descArr = $conceptArr['EXTRA']['MEANING_EN'];
+									
+								foreach($descArr as $source => $desc)
+								{
+									$conceptArr['EXTRA']['MEANING_EN'][$source]="";
+								}
+									
+							}
+								
+							if ( isset($arabicShortMeaningToBeRemoved[$concept]) )
+							{
+								$descArr = $conceptArr['EXTRA']['MEANING_AR'];
+									
+								foreach($descArr as $source => $desc)
+								{
+									$conceptArr['EXTRA']['MEANING_AR'][$source]="";
+								}
+									
+							}						
+							
+							
+							
 							$imageURLsArr   = $conceptArr['EXTRA']['IMAGES'];
 							
 							foreach($imageURLsArr as $source => $url)
@@ -3089,23 +3089,20 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								{
 									$synonym = trim($synonym);
 									
-									if ( $conceptNameAr==$synonym || $conceptNameEn==$synonym)
-									{
-									
-										continue;
-									}
+								
 									
 									if (!isset($isAddedBeforeArr[$synonym]))
 									{
 										$isAddedBeforeArr[$synonym]=1;
 									}
 									
-									echoN($synonym);
+									//echoN($synonym);
 									
 									
-									if ( !empty($synonym) && isset($synonymsToBeRemoved[$synonym]) )
+									if ( !empty($synonym) && 
+									( isset($synonymsToBeRemoved[$synonym]) || $conceptNameAr==$synonym || $conceptNameEn==$synonym ) )
 									{
-										echoN("removed:$synonym");
+										//echoN("removed:$synonym");
 											
 										//using $conceptArr since it is assigned after the loop
 										$conceptArr['EXTRA']['AKA'][$lang][$source]="";
@@ -3129,7 +3126,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						}
 						
 						echoN("Unique Synonyms:".count($isAddedBeforeArr));
-						preprint_r($isAddedBeforeArr);
+						//preprint_r($isAddedBeforeArr);
 						
 						/// RELATIONS FILTER
 						
@@ -3227,6 +3224,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						//preprint_r($filteredConcepts);
 						
+						
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7", serialize($filteredConcepts));
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($filteredRelationsArr));
 						
@@ -3267,6 +3265,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
 							$conceptNameAr  = $concept;
 							$conceptType = $coneptArr['CONCEPT_TYPE'];
+							
+							//ECHOn("___ $conceptNameAr | $conceptNameEn");
 							
 							// FIX CONCEPT TYPE FOR ANY CONCEPT WITH EXCLUDED RELATIONS
 							if ( $conceptNameAr!=$thing_class_name_ar && $conceptType=="T-BOX" && !conceptHasSubclasses($relationsArr,$conceptNameAr) )
@@ -3363,11 +3363,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							// Qurana concept should be left as is to match concepts in inverted index
 							if ( $coneptArr['EXTRA']['IS_QURANA_NGRAM_CONCEPT']!==true )
 							{
-								echoN($coneptArr['EXTRA']['IS_QURANA_NGRAM_CONCEPT']);
-								echoN($conceptNameEn);
+							//	echoN($coneptArr['EXTRA']['IS_QURANA_NGRAM_CONCEPT']);
+								//echoN($conceptNameEn);
 								$conceptNameEn = removeBasicEnglishStopwordsNoNegation($conceptNameEn);
 								
-								echoN($conceptNameEn);
+								//echoN($conceptNameEn);
 							}
 							else
 							{
