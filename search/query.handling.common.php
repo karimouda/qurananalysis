@@ -44,6 +44,8 @@ else if ($lang=="AR" && !isDevEnviroment())
 	
 //preprint_r($MODEL_CORE);
 
+$significantWords = array();
+
 //echoN($query);exit;
 
 $MODEL_CORE_UTH = loadUthmaniDataModel();
@@ -57,11 +59,12 @@ $isQuestion = false;
 $isColumnSearch = false;
 $columnSearchType = null;
 $columnSearchKeyValParams = null;
+$noDerivationsConstraint = false;
+$noOntologyExtentionConstraint = false;
 
 $matchesCount = preg_match("/\".*?\"/", $query);
 
 if ( $matchesCount >=1 ) $isPhraseSearch = true;
-
 
 
 
@@ -79,25 +82,61 @@ if ( !$isPhraseSearch && containsQuestionWords($query,$lang))
 
 if ( !$isPhraseSearch && !$isQuestion && strpos($query,":")!==false)
 {
-	$isColumnSearch = true;
-	
-	$columnSearchArr = explode(":",$query);
 
 	
-	if (is_numeric ($columnSearchArr[0]) && is_numeric ($columnSearchArr[1]))
+	$columnFeaturesArr = explode(" ",$query);
+	
+	foreach($columnFeaturesArr as $index => $queryPartStr)
 	{
-		$columnSearchType = "VERSE";
+		if (  strpos($queryPartStr,":")!==false )
+		{ 
+			$columnSearchArr = explode(":",$queryPartStr);
 		
-		//CHAPTER
-		$columnSearchKeyValParams['KEY'] = $columnSearchArr[0];
-		//VERSE
-		$columnSearchKeyValParams['VAL'] = $columnSearchArr[1];
+			
+			
+			if (is_numeric ($columnSearchArr[0]) && is_numeric ($columnSearchArr[1]))
+			{
+				$columnSearchType = "VERSE";
+				
+				//CHAPTER
+				$columnSearchKeyValParams['KEY'] = $columnSearchArr[0];
+				//VERSE
+				$columnSearchKeyValParams['VAL'] = $columnSearchArr[1];
+				
+				$isColumnSearch = true;
+			}
+			
+			if ($columnSearchArr[0]=="CONSTRAINT" )
+			{
+				$columnSearchType = "CONSTRAINT";
+				
+				if ( $columnSearchArr[1]=="NODERIVATION")
+				{
+					
+					$query = str_replace("CONSTRAINT:NODERIVATION", "", $query);
+					
+					$noDerivationsConstraint = true;
+					
+				}
+				
+				if ( $columnSearchArr[1]=="NOEXTENTIONFROMONTOLOGY")
+				{
+						
+					$query = str_replace("CONSTRAINT:NOEXTENTIONFROMONTOLOGY", "", $query);
+						
+					$noOntologyExtentionConstraint = true;
+						
+				}
+			}
+		}
+		
 	}
 }
 
-//preprint_r($columnSearchKeyValParams);
+//preprint_r($columnSearchKeyValParams);exit;
 //echoN("IS QUESTION:$isQuestion");
-
+//echoN("noOntologyExtentionConstraint:$noOntologyExtentionConstraint");
+//echoN("noDerivationsConstraint:$noDerivationsConstraint");
 
 /// CLEANING
 $query = cleanAndTrim($query);
@@ -121,9 +160,9 @@ if ($lang=="EN" )
 
 
 
+//removed is question from here
 
-
-if ( $isQuestion && !$isPhraseSearch)
+if ( !$isPhraseSearch && !$noDerivationsConstraint)
 {
 
 	$taggedSignificantWords = posTagUserQuery($query,$lang);
@@ -146,16 +185,25 @@ else
 	
 }
 
-
-if ( !$isColumnSearch  )
+//!$isQuestion && 
+if (  !$isColumnSearch && !$noOntologyExtentionConstraint )
 {
-	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations($queryWordsArr, $lang);
+	echoN("D");
+	
+	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations(swapAssocArrayKeyValues($queryWordsArr), $lang);
 	
 	
 	$queryWordsArr  = array_merge($queryWordsArr,$conceptsFromTaxRelations);
 }
 
-//echoN($query);preprint_r($queryWordsArr);exit;
+if ($isQuestion)
+{
+	$userQuestionAnswerConceptsArr = answerUserQuestion($queryWordsArr,$taggedSignificantWords, $lang);
+	
+	$queryWordsArr  = array_merge($queryWordsArr,$userQuestionAnswerConceptsArr);
+}
+
+//echoN($query);preprint_r($userQuestionAnswerConceptsArr);exit;
 
 //////////////
 $scoringTable = array();
@@ -163,6 +211,8 @@ $scoringTable = array();
 $lastWord = null;
 
 $extendedQueryWordsArr = array_fill_keys($queryWordsArr,1);
+
+
 
 
 // IF NOT PHRASE OF QUESTION SEARCH, EXTEND QUERY BY ADDING DERVIATION OF THE QUERY WORDS
@@ -173,7 +223,23 @@ if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSe
 }
 
 
+$extendedQueryBeforeRemovingStopWords = $extendedQueryWordsArr;
+$extendedQueryWordsArr = removeBasicStopwordsFromArr($extendedQueryWordsArr,$lang);
 
+// if the query is all stop words
+if ( empty($extendedQueryWordsArr))
+{
+	$extendedQueryWordsArr = $extendedQueryBeforeRemovingStopWords;
+}
+
+if ( count($extendedQueryWordsArr) > 25 )
+{
+
+	$extendedQueryWordsArr = array_slice($extendedQueryWordsArr, 0,25);
+}
+
+
+preprint_r($extendedQueryWordsArr);
 // SEARCH INVERTED INDEX FOR DOCUMENTS
 $scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams);
 
@@ -182,9 +248,15 @@ $scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$quer
 handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query);
 
 
+if ($isQuestion)
+{
+	$significantCollocationWords = getStatisticallySginificantWords($extendedQueryWordsArr,$scoringTable);
+}
+
 ///// GET STATS BYT SCORING TABLE
 
 $resultStatsArr = getStatsByScoringTable($scoringTable);
+
 
 
 
