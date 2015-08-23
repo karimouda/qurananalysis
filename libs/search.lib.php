@@ -109,7 +109,7 @@ function  containsQuestionWords($query,$lang)
 	{
 		foreach($arabicQuestionWords as  $word=>$dummy)
 		{
-				if ( strpos($query, "$word ")===0)
+				if ( mb_strpos($query, "$word ")===0)
 			{
 				return $word;
 			}
@@ -163,7 +163,7 @@ function posTagUserQuery($query, $lang)
 	
 		return $taggedSignificantWords;
 }
-
+//TODO: ADD SYNONYMS ENRICHMENT
 function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 {
 	global $MODEL_QA_ONTOLOGY;
@@ -246,9 +246,10 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 					
 					//حيوان => الحيوانات
 					// the bigger word should not contain space الله => سبيل الله
-					if ($absDiffSize <=2 && mb_strpos($word, $conceptWord)!==false && strpos($word," ")===false && ($diffStr=="ات" || $diffStr=="ال") )
+					// $diffStr=="الات" for حيوان = الحياوانات
+					if ( mb_strpos($word, $conceptWord)!==false && strpos($word," ")===false && ($diffStr=="ات" || $diffStr=="ال" || $diffStr=="الات" ) )
 					{
-						echoN("$word, $conceptWord");
+						//echoN("$word, $conceptWord");
 						
 						
 						
@@ -283,7 +284,7 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 					
 					//  الحيوانات => حيوان
 					// the bigger word should not contain space الله => سبيل الله
-					if ($absDiffSize <=2 && $diff!=0 && mb_strpos($conceptWord,$word)!==false && strpos($conceptWord," ")===false && ($diffStr=="ات" || $diffStr=="ال") )
+					if ( $diff!=0 && mb_strpos($conceptWord,$word)!==false && strpos($conceptWord," ")===false && ($diffStr=="ات" || $diffStr=="ال" ||  $diffStr=="الات") )
 					{
 					
 						//echoN("$word,$conceptWord");
@@ -326,7 +327,7 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 	return $taggedSignificantWords;
 }
 
-function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
+function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuestion = false)
 {
 	global $MODEL_QA_ONTOLOGY, $is_a_relation_name_ar,$thing_class_name_en,$thing_class_name_ar,$TRANSLATION_MAP_EN_TO_AR;
 	
@@ -342,11 +343,18 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
 		$thing_class_name = $thing_class_name_ar;
 	}
 	
+	
+	$questionIncludesVerb =  doesQuestionIncludesVerb($extendedQueryArr);
 
 	
-	foreach($extendedQueryArr as $index => $word)
+	foreach($extendedQueryArr as  $word=> $pos)
 	{
 	
+		// ignore any tern which is not nound or verb
+		// [0-9]+ to allow normal non pos tagged queries - incase of pharase search
+		if ( !preg_match("/NN|VB|[0-9]+/", $pos)) continue;
+		
+		
 		/*
 		 * Differentiate between word and concept ID, in English 'word' is needed unmapped for 'verb' search
 		 */
@@ -362,8 +370,8 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
 		}
 	
 		
-	
-		if ( isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$conceptIDStr]) )
+		//!$questionIncludesVerb since if the question includes a verb then the user is not looking ofr is-a relation
+		if ( !$questionIncludesVerb && isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$conceptIDStr]) )
 		{
 			$inboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptIDStr];
 			$outboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptIDStr];
@@ -401,72 +409,85 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang)
 		
 				
 			}
+			
+			
 		
-			// FOR OUTBOUND IS-A RELATIONS EX: X($word) IS AN PERSON			
-			foreach($outboundRelationsArr as $index => $relationArr)
+			if ( $isQuestion )
 			{
-				
-				$verbAR = $relationArr['link_verb'];
-				$object = $relationArr['target'];
-			
-				if ( $lang=="EN")
-				{
-					$object = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en'])));
-				}
-			
-				/// CLEAN AND REPLACE CONCEPT
-				$object = cleanWordnetCollocation($object);
-				///////////////////////////
-				
-			
-				if ( $verbAR==$is_a_relation_name_ar && $object!=$thing_class_name)
+				// FOR OUTBOUND IS-A RELATIONS EX: X($word) IS AN PERSON			
+				foreach($outboundRelationsArr as $index => $relationArr)
 				{
 					
-						
-					// ignore phrase parent concepts
-					// عذاب + عذاب الله
-					if ( strpos($object,$conceptIDStr)===false)
-					{
-						$conceptsFromTaxRelations[]=$object;
-					}
-				}
+					$verbAR = $relationArr['link_verb'];
+					$object = $relationArr['target'];
 				
-			
-			
+					if ( $lang=="EN")
+					{
+						$object = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en'])));
+					}
+				
+					/// CLEAN AND REPLACE CONCEPT
+					$object = cleanWordnetCollocation($object);
+					///////////////////////////
+					
+				
+					if ( $verbAR==$is_a_relation_name_ar && $object!=$thing_class_name)
+					{
+						
+						
+						// ignore phrase parent concepts
+						// عذاب + عذاب الله
+						if ( strpos($object,$conceptIDStr)===false)
+						{
+							$conceptsFromTaxRelations[]=$object;
+						}
+					}
+					
+				
+				
+				}
 			}
 		}
 		
 
-		
-		if ( (($verbArr=$MODEL_QA_ONTOLOGY['VERB_INDEX'][$word])!=null) || ($verbArr = isWordPartOfAVerbInVerbIndex($word) ) )
+		//$lang=="AR" check since AR wprds are not PoS tagged yet
+		if ( $isQuestion && ($lang=="AR" ||posIsVerb($pos)) )
 		{
-			
-			
-			foreach($verbArr as $index => $verbSTArr)
+			if (  (($verbArr=$MODEL_QA_ONTOLOGY['VERB_INDEX'][$word])!=null) || ($verbArr = isWordPartOfAVerbInVerbIndex($word,$lang) ) )
 			{
-				$subject = $verbSTArr['SUBJECT'];
-				$object = $verbSTArr['OBJECT'];
 				
-				if ( $lang=="EN")
+		
+				foreach($verbArr as $index => $verbSTArr)
 				{
-					$object = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en'])));
-					$subject = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$subject]['label_en'])));
-				}
-
+					$subject = $verbSTArr['SUBJECT'];
+					$object = $verbSTArr['OBJECT'];
+					
+					if ( $lang=="EN")
+					{
+						$object = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en'])));
+						$subject = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$subject]['label_en'])));
+					}
+					
+					//echoN("$subject>$word>$object");
 	
 				
-				if ( in_array($subject,$extendedQueryArr))
-				{
-					
-					$conceptsFromTaxRelations[]=$object;
-					
-				}
-				else 
-				if ( in_array($object,$extendedQueryArr))
-				{
+					if ( isset($extendedQueryArr[$subject]))
+					{
 						
-					$conceptsFromTaxRelations[]=$subject;
+						$conceptsFromTaxRelations[]=$object;
 						
+						
+						
+					}
+					else 
+					if ( isset($extendedQueryArr[$object]))
+					{
+							
+						$conceptsFromTaxRelations[]=$subject;
+						
+			
+							
+					}
 				}
 			}
 		}
@@ -700,8 +721,10 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 				*/
 				$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
 				//echoN("|$query|$verseText");
-				$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/um", $verseTextWithoutPauseMarks);
+				$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/umi", $verseTextWithoutPauseMarks);
 					
+				
+				
 				if ( $numberOfOccurencesForWord ==0)
 				{
 					continue;
@@ -964,9 +987,9 @@ function getDistributionChartData($scoringTable)
 	return $wordDistributionChartJSON;
 }
 
-function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script)
+function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script,$significantCollocationWords=null)
 {
-	global $MODEL_CORE, $MODEL_CORE_UTH;
+	global $MODEL_CORE, $MODEL_CORE_UTH,$script;
 	
 
 	if ( $lang=="EN")
@@ -1038,6 +1061,11 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 		{
 	
 			$MATCH_TYPE = "ضمير";
+			
+			if ( $lang=="EN")
+			{
+				$MATCH_TYPE = "pronoun";
+			}
 	
 		}
 		else if ( $WORD_TYPE=="ROOT" || $WORD_TYPE=="LEM")
@@ -1085,6 +1113,23 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 			}
 		
 		
+			if ( $isQuestion )
+			{
+				//preprint_r($significantCollocationWords);
+				foreach( $significantCollocationWords as $word => $freq )
+				{
+						
+						
+			
+					$TEXT = markWordWithoutWordIndex($TEXT,$word,"marked_prospect_answer");
+			
+					//$TEXT = preg_replace("/(".$EXTRA_INFO.")/mui", "<marked>\\1</marked>", $TEXT);
+					//echoN("|".$TEXT);
+			
+				}
+			
+			
+			}
 	
 	
 	
@@ -1213,4 +1258,131 @@ function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
 	}
 }
 
+
+function answerUserQuestion($queryWordsArr,$taggedSignificantWords, $lang)
+{
+	
+	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations($taggedSignificantWords, $lang, true);
+	
+	
+	return $conceptsFromTaxRelations;
+	
+
+}
+
+
+
+function searchResultsToWordcloud($searchResultTextArr,$lang,$maxItems)
+{
+
+	global $MODEL_CORE;
+
+	$wordCloudArr = array();
+
+
+
+
+	foreach($searchResultTextArr as $index => $text)
+	{
+
+
+		if ( $lang=="AR")
+		{
+			$text = removePauseMarkFromVerse($text);
+		}
+		$textWordsArr = preg_split("/ /",$text);
+
+		foreach($textWordsArr as $word)
+		{
+				
+				
+			if ( $lang == "EN")
+			{
+				$word = cleanAndTrim($word);
+				$word = strtolower($word);
+
+			}
+			
+			if ( empty($word) ) continue;
+			if ( isset($MODEL_CORE['STOP_WORDS'][$word]) ) continue;
+			
+			$wordCloudArr[$word]++;
+		}
+	}
+	
+	
+	arsort($wordCloudArr);
+	
+	$wordCloudArr = array_slice($wordCloudArr,0, $maxItems);
+	
+	return $wordCloudArr;
+}
+
+function getStatisticallySginificantWords($extendedQueryWordsArr,$scoringTable)
+{
+	global $MODEL_CORE, $MODEL_CORE_UTH,$script;
+	
+	
+	
+	
+	//preprint_r($extendedQueryWordsArr);exit;
+	
+	$queryTermsCollocation = array();
+	
+
+	
+	$relevanceReverseOrderIndex = count($documentScoreArr);
+	foreach($scoringTable as $documentID => $documentScoreArr)
+	{
+
+		$SURA = $documentScoreArr['SURA'];
+		$AYA = $documentScoreArr['AYA'];
+		$TEXT = $MODEL_CORE['QURAN_TEXT'][$SURA][$AYA];
+		$TEXT_UTH = $MODEL_CORE_UTH['QURAN_TEXT'][$SURA][$AYA];
+
+		
+		$wordsArr = explode(" ",$TEXT);
+		$lastWord = null;
+		
+		
+		
+		foreach($wordsArr as $word)
+		{
+			$word = cleanAndTrim($word);
+			
+			if ( empty($word)  ) continue;
+			
+			$word = strtolower($word);
+			
+			if ( isset($MODEL_CORE['STOP_WORDS'][$word])) continue;
+			
+			if (!empty($lastWord) &&  isset($extendedQueryWordsArr[$word]) && !isset($extendedQueryWordsArr[$lastWord]) )
+			{
+
+				$queryTermsCollocation[$lastWord]++;
+			}
+			
+	
+			if (!empty($lastWord) && isset($extendedQueryWordsArr[$lastWord]) && !isset($extendedQueryWordsArr[$word]) )
+			{
+		
+				
+				$queryTermsCollocation[$word]++;
+			}
+			
+			$lastWord = $word;
+			
+		}
+		
+		
+	}
+	
+	arsort($queryTermsCollocation);
+
+	//preprint_r($queryTermsCollocation);exit;
+	
+	$queryTermsCollocation  = array_slice($queryTermsCollocation,0,10);
+	
+	return $queryTermsCollocation;
+}
 ?>
