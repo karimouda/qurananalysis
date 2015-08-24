@@ -50,14 +50,18 @@ class OWLWriter
 		
 		$this->write("\n");
 
-		$this->writeClasses();
-		$this->write("\n");
 		$this->writeProperties();
 		$this->write("\n");
 		
 		//ADDED BY KARIM
 		$this->writeAnnotationProperties();
 		$this->write("\n");
+		
+		$this->writeClasses();
+		$this->write("\n");
+
+		
+
 		
 		$this->writeInstances();
 		$this->write("\n");
@@ -171,6 +175,7 @@ class OWLWriter
   	$properties = $this->ontology->getAllProperties();
   	foreach($properties as $property){
   		
+ 
   		$id = $this->removeNamespace($property->getID());
 			if($property->isDatatype())
 				$this->write("<owl:DatatypeProperty rdf:ID=\"$id\">\n");
@@ -196,6 +201,8 @@ class OWLWriter
 	  			$this->write("</owl:DatatypeProperty>\n");
 	  		else
 	  			$this->write("</owl:ObjectProperty>\n");
+	  		
+	  		
   	}
   }
 
