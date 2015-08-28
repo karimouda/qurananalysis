@@ -124,6 +124,8 @@ function  containsQuestionWords($query,$lang)
 
 function posTagUserQuery($query, $lang)
 {
+	global $MODEL_CORE;
+	
 	$taggedSignificantWords = array();
 	
 	if ( $lang=="EN")
@@ -150,13 +152,22 @@ function posTagUserQuery($query, $lang)
 	}
 	else 
 	{
-		$query = removeStopwordsAndTrim($query,$lang);
+	
+		//$query = removeStopwordsAndTrim($query,$lang);
 		
 		$tempArr =  explode(" ", $query);
 		
 		foreach($tempArr as $index=>$word)
 		{
-			$taggedSignificantWords[$word] = "NN";
+			if ( isset($MODEL_CORE['STOP_WORDS'][$word]) )
+			{
+				///STOPWORD
+				$taggedSignificantWords[$word] = "STW";
+			}
+			else 
+			{
+				$taggedSignificantWords[$word] = "NN";
+			}
 		}
 		
 	}
@@ -344,7 +355,9 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 	}
 	
 	
-	$questionIncludesVerb =  doesQuestionIncludesVerb($extendedQueryArr);
+	
+	$questionIncludesVerb =  ($isQuestion && doesQuestionIncludesVerb($extendedQueryArr));
+
 
 	
 	foreach($extendedQueryArr as  $word=> $pos)
@@ -369,12 +382,14 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 			$conceptIDStr = $word;
 		}
 	
+	
 		
 		//!$questionIncludesVerb since if the question includes a verb then the user is not looking ofr is-a relation
 		if ( !$questionIncludesVerb && isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$conceptIDStr]) )
 		{
 			$inboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptIDStr];
 			$outboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptIDStr];
+			
 			
 		
 			// FOR INBOUND IS-A RELATIONS EX: X IS AN ANIMAL($word)
@@ -711,18 +726,20 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	
 			$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
 	
+			
+			/*
+			 *
+			* NOTE: A DECISION SHOULD BE TAKEN TO SERACH AROUND AND REMOVE PAUSE MARKS OR NOT
+			*/
+			$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
+			//echoN("|$query|$verseText");
+			$fullQueryIsFoundInVerseCount = preg_match_all("/(^|[ ])$query([ ]|\$)/umi", $verseTextWithoutPauseMarks);
+			
 		
 			if ( $isPhraseSearch && $WORD_TYPE!="PRONOUN_ANTECEDENT")
 			{
 					
-				/*
-				 *
-				* NOTE: A DECISION SHOULD BE TAKEN TO SERACH AROUND AND REMOVE PAUSE MARKS OR NOT
-				*/
-				$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
-				//echoN("|$query|$verseText");
-				$numberOfOccurencesForWord = preg_match_all("/(^|[ ])$query([ ]|\$)/umi", $verseTextWithoutPauseMarks);
-					
+				$numberOfOccurencesForWord = $fullQueryIsFoundInVerseCount;
 				
 				
 				if ( $numberOfOccurencesForWord ==0)
@@ -771,6 +788,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 				$scoringTable[$SURA.":".$AYA]['DISTANCE']=0;
 				$scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT']=0;
 				$scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']=0;
+				$scoringTable[$SURA.":".$AYA]['IS_FILL_QUERY_IN_VERSE']=0;
 				$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
 				$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
 				$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']=array();
@@ -877,6 +895,10 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 				//}
 			}
 	
+			
+			
+			$scoringTable[$SURA.":".$AYA]['IS_FILL_QUERY_IN_VERSE'] = $fullQueryIsFoundInVerseCount;
+			
 	
 			$scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']=count($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']);
 	
@@ -884,7 +906,8 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 													 ($scoringTable[$SURA.":".$AYA]['DISTANCE']*1)+
 													 ($scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']*10)+
 													 (count($scoringTable[$SURA.":".$AYA]['PRONOUNS'])*1)+
-													 ($scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT']*1);
+													 ($scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT']*1)+
+													 ($scoringTable[$SURA.":".$AYA]['IS_FILL_QUERY_IN_VERSE']*20);
 	
 		}
 	}
