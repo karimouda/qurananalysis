@@ -519,10 +519,9 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 
 function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
 {
-	global $MODEL_SEARCH;
+	global $MODEL_SEARCH,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
 
-	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
-	$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+
 	
 
 		/** GET ROOT/STEM FOR EACH QUERY WORD **/
@@ -664,7 +663,9 @@ function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
 function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams)
 {
 	global $MODEL_CORE,$MODEL_SEARCH;
+	global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
 	
+
 	
 	if ( $isColumnSearch)
 	{
@@ -692,8 +693,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 		return $scoringTable;
 	}
 
-	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
-	$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+
 	
 
 //	$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
@@ -1233,6 +1233,61 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 	return $searchResultsTextArr;
 }
 
+function postResultSuggestions($queryWordsWithoutDerivation)
+{
+	global $MODEL_SEARCH,$MODEL_QA_ONTOLOGY;
+	
+	$wordsNotInTheQuran = array();
+	
+	preprint_r($queryWordsWithoutDerivation);
+	foreach($queryWordsWithoutDerivation as $word => $dummy)
+	{
+		if (!isset($MODEL_SEARCH['INVERTED_INDEX'][$word]) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
+		{
+			$wordsNotInTheQuran[$word]=1;
+		}
+	}
+	
+	preprint_r($wordsNotInTheQuran);
+
+		// GET SIMILAR WORDS BY MIN-EDIT-DISTANCE
+		return getSimilarWords(array_keys($wordsNotInTheQuran));
+
+		
+	
+}
+
+function showSuggestions($suggestionsArr)
+{
+	?>
+
+	<?php
+		
+	if (!empty($suggestionsArr))
+	{
+		?>
+				<div class='search-word-suggestion'>
+					Do you mean ...
+					<br>
+					<?php 
+					
+						$index =0;
+						 foreach($suggestionsArr  as $suggestedWord => $dummyFlag)
+						 {
+						 	if ( $index++>10) break;
+						 	
+						 	?>
+						 	<a href='?q=<?=urlencode($suggestedWord)?>'><?=$suggestedWord?></a>&nbsp;
+						 	<?php
+						 	
+						 }
+						 
+					?>
+				 
+				</div>	
+			<?php 
+	}
+}
 function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
 {
 	// NOT RESULTS FOUND
@@ -1248,32 +1303,10 @@ function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
 			<div class='search-error-message'>
 				No results found for "<?php echo $query;?>"
 			</div>
-			<div class='search-word-suggestion'>
-			<?php 
 			
-			if (!empty($suggestionsArr)) 
-			{
-				?>
-				Suggestions
-				<br>
-				<?php 
-				
-					$index =0;
-					 foreach($suggestionsArr  as $suggestedWord => $dummyFlag)
-					 {
-					 	if ( $index++>10) break;
-					 	
-					 	?>
-					 	<a href='?q=<?=urlencode($suggestedWord)?>'><?=$suggestedWord?></a>&nbsp;
-					 	<?php
-					 	
-					 }
-					 
-				?>
-			 
-			</div>	
 		<?php 
-		  }
+		showSuggestions($suggestionsArr);
+		
 		exit;
 		
 		
@@ -1408,4 +1441,35 @@ function getStatisticallySginificantWords($extendedQueryWordsArr,$scoringTable)
 	
 	return $queryTermsCollocation;
 }
+
+function convertUthamniQueryToSimple($query)
+{
+	
+     global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
+	
+	
+	$queryWords = explode(" ",$query);
+	$newQueryArr = array();
+	
+	
+	foreach($queryWords as $index => $word)
+	{
+	
+		if ( empty($word)) continue;
+		
+		$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$word];
+		
+		if ( empty($simpleWord))
+		{
+			$simpleWord = shallowUthmaniToSimpleConversion($word);
+		}
+		
+		$newQueryArr[] = $simpleWord;
+		
+	
+	}
+	
+	return implode(" ",$newQueryArr);
+}
+
 ?>
