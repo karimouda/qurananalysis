@@ -2,10 +2,18 @@
 
 
 	
-	function preprint_r($arr)
+	function preprint_r($arr,$absPos=false)
 	{
-		echo "<pre>".print_r($arr,true)."</pre>";
+		if ( $absPos)
+		{
+			echo "<pre ><div style='background-color:#fff;position: absolute;'>".print_r($arr,true)."</div></pre>";
+		}
+		else
+		{
+			echo "<pre >".print_r($arr,true)."</pre>";
+		}
 	}
+	
 	
 	function echoN($str)
 	{
@@ -52,7 +60,7 @@
 	    return $charDecValArr[1];
 	}
 	
-	function showHiddenChars($text,$lang="AR")
+	function showHiddenChars($text,$lang="AR",$exit=true)
 	{
 		 
 		if ( $lang=="AR")
@@ -71,7 +79,8 @@
 					echoN($chr."|".urlencode($chr));
 				}
 		}
-			exit;
+		
+		if ($exit) exit;
 	
 				
 	}
@@ -564,7 +573,7 @@
 			// stop if char not a buckwalter char or space
 			if ( !isset($BUCKWATER_EXTENDED_MAP[$ordinal]) && $char!=" " && $char!="2" )
 			{
-				throw new Exception("Strign contains invalid chars [$char]");
+				throw new Exception("String contains invalid chars [$char]");
 			}
 			
 			$buckwalterStr = $buckwalterStr . $BUCKWATER_EXTENDED_MAP[$ordinal];
@@ -811,6 +820,7 @@
 	{
 		
 		
+		
 		if ( strpos($qac3PartLocationStr,":")===false)
 		{
 			throw new Exception("Invalid QAC location");
@@ -831,6 +841,14 @@
 			
 		
 		
+	}
+	
+	function getVerseTextBySuraAndAya($sura, $aya)
+	{
+		global $MODEL_CORE;
+		
+		return $MODEL_CORE['QURAN_TEXT'][($sura-1)][($aya-1)];
+	
 	}
 	
 	function  getWordIndexFromQACLocation($qac3PartLocationStr)
@@ -1534,6 +1552,9 @@
 		}
 		
 		
+		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple]);
+		
+		
 		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple] as $documentArrInIndex)
 		{
 
@@ -1552,7 +1573,7 @@
 		
 			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
 				
-			
+			//echoN($qacLocation);exit;;
 		
 			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 			//exit;
@@ -1562,6 +1583,9 @@
 			{
 				$tag = $segmentDataArr['TAG'];
 				$segmentWord = $segmentDataArr['FORM_AR'];
+				
+				//echoN($segmentWord);
+				//preprint_r($segmentDataArr);
 				
 				$segmentWordSimple="";
 				if ( isset($UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord] ))
@@ -2074,18 +2098,19 @@
 			$str = strtolower($str);
 		}
 		
+	
+		
 		$stopWordsArr = getStopWordsArrByFile($stopWordsFile);
 		
 		$strArr  = preg_split("/ /", $str);
 		
-		//preprint_r($strArr);
-	
+
 		
 		$newStr = array();
 		foreach ($strArr as $index => $word)
 		{
 		
-			
+			//echoN("$stopWordsArr[$word] $word");
 			if ( empty($word) || isset($stopWordsArr[$word])) continue;
 			
 			$newStr[] = $word;
@@ -2132,15 +2157,38 @@
 	
 	function isMultiWordStr($str)
 	{
-		return (preg_match("/ /", $str)>0);
+		return (strpos($str," ")!==false);
+	}
+	
+	function getBasicStopWords($lang="EN")
+	{
+		if ($lang=="EN" )
+		{
+			//extracted partially from http://www.ranks.nl/stopwords/stopwords
+			return array("o"=>1,"she"=>1,"he"=>1,"i"=>1,"a"=>1,"an"=>1,"and"=>1,"are"=>1,"as"=>1,"us"=>1,"at"=>1,"be"=>1,"but"=>1,"by"=>1,"for"=>1,"if"=>1,"in"=>1,"into"=>1,"is"=>1,"it"=>1,"no"=>1,"of"=>1,"on"=>1,"we"=>1,"them"=>1,"or"=>1,"such"=>1,"that"=>1,"the"=>1,"their"=>1,"then"=>1,"there"=>1,"these"=>1,"they"=>1,"this"=>1,"him"=>1,"so"=>1,"to"=>1,"was"=>1,"were"=>1,"will"=>1,"with"=>1,"you"=>1,"have"=>1);
+		}
+		else
+		{
+			//extracted partially from http://www.ranks.nl/stopwords/arabic
+			return array("فى"=>true,"في"=>true,"كل"=>true,"لم"=>true,"لن"=>true,"له"=>true,"من"=>true,"هو"=>true,
+			"هي"=>true,"كما"=>true,"لها"=>true,"منذ"=>true,"وقد"=>true,"ولا"=>true,"هناك"=>true,"وقال"=>true,"وكان"=>true,
+			"وقالت"=>true,"وكانت"=>true,"فيه"=>true,"لكن"=>true,"وفي"=>true,"ولم"=>true,"ومن"=>true,"وهو"=>true,"وهي"=>true,
+			"يوم"=>true,"فيها"=>true,"منها"=>true,"حيث"=>true,"اما"=>true,"التي"=>true,"اكثر"=>true,"الذى"=>true,"الذي"=>true,
+			"الان"=>true,"الذين"=>true,"ابين"=>true,"ذلك"=>true,"دون"=>true,"حول"=>true,"حين"=>true,"الى"=>true,"انه"=>true,
+			"انها"=>true,"ف"=>true,"و"=>true,"قد"=>true,"لا"=>true,"ما"=>true,"مع"=>true,"هذا"=>true,"قبل"=>true,"قال"=>true,
+			"كان"=>true,"لدى"=>true,"نحو"=>true,"هذه"=>true,"وان"=>true,"واكد"=>true,"كانت"=>true,"عند"=>true,"عندما"=>true,
+			"على"=>true,"عليه"=>true,"عليها"=>true,"تم"=>true,"ضد"=>true,"بعد"=>true,"بعض"=>true,"حتى"=>true,"اذا"=>true,
+			"احد"=>true,"بان"=>true,"اجل"=>true,"غير"=>true,"بن"=>true,"به"=>true,"ثم"=>true,"اف"=>true,"ان"=>true,"او"=>true,
+			"اي"=>true,"بها"=>true);
+		}
 	}
 	
 	function removeBasicEnglishStopwordsNoNegation($str)
 	{
 		
 		
-		
-		$basicStopWordsArr = array("she"=>1,"he"=>1,"i"=>1,"a"=>1,"an"=>1,"and"=>1,"are"=>1,"as"=>1,"us"=>1,"at"=>1,"be"=>1,"but"=>1,"by"=>1,"for"=>1,"if"=>1,"in"=>1,"into"=>1,"is"=>1,"it"=>1,"no"=>1,"of"=>1,"on"=>1,"we"=>1,"them"=>1,"or"=>1,"such"=>1,"that"=>1,"the"=>1,"their"=>1,"then"=>1,"there"=>1,"these"=>1,"they"=>1,"this"=>1,"him"=>1,"so"=>1,"to"=>1,"was"=>1,"were"=>1,"will"=>1,"with"=>1,"you"=>1,"have"=>1);
+		//o for o prophet
+		$basicStopWordsArr =getBasicStopWords();
 		
 		$str = strtolower($str);
 		
@@ -2189,21 +2237,181 @@
 		return md5($tobeHashedStr);
 	}
 	
-	function search2DArrayForValue($arr,$sentVal)
+	function search2DArrayForValue($arr,$sentVal,$constraintArr=array())
 	{
-		foreach($arr as $index=>$subArr) 
+		foreach($arr as $index=>$subArr)
 		{
-			
+				
 			$key = array_search($sentVal, $subArr);
-			
+				
 			if( $key!==false)
 			{
-				return $index;
+				if ( empty($constraintArr))
+				{
+					return $index;
+				}
+				else 
+				{
+					$constKey = $constraintArr['KEY'];
+					$constVal = $constraintArr['VAL'];
+					
+					if ( $arr[$index][$constKey] == $constVal )
+					{
+						return $index;
+					}
+				}
 			}
-		
+	
 		}
 		return false;
 	}
 	
+	function removeStopwordsFromArr($stopWordsArr,$targetArr,$lang="AR")
+	{
+		
+	
+	
+		$newTargetArr = array();
+		foreach ($targetArr as $word =>$index)
+		{
+	
+			//echoN("$stopWordsArr[$word] $word");
+			if ( empty($word) || isset($stopWordsArr[$word])) continue;
+				
+			$newTargetArr[$word]=$index;
+		}
+	
+		return $newTargetArr;
+	}
+	
+	function removeBasicStopwordsFromArr($targetArr,$lang="AR")
+	{
+	
+	
+		$basicStopWordsArr = getBasicStopWords($lang);
+		
+		$newTargetArr = array();
+		foreach ($targetArr as $word =>$index)
+		{
+	
+			//echoN("$basicStopWordsArr[$word] $word");
+			if ( empty($word) || isset($basicStopWordsArr[$word])) continue;
+	
+			$newTargetArr[$word]=$index;
+		}
+	
+		return $newTargetArr;
+	}
+	
+	function startsWithAL($str)
+	{
+		$AL = "ال";
+		
+		if ( mb_strpos($str, $AL)===0)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function getStringDiff($conceptWord, $word)
+	{
+		$diff = mb_strlen($conceptWord)-mb_strlen($word);
+		
+		if ( $diff< 0)
+		{
+			$diffStr = str_replace($conceptWord, "", $word);
+		}
+		else
+		{
+			$diffStr = str_replace($word, "", $conceptWord);
+		}
+		
+		return $diffStr;
+	}
+	
+	function returnDirectionStyle($lang)
+	{
+		$dir = "ltr";
+		
+		if ( ($lang=="AR") )
+		{
+			$dir = "rtl";
+		}
+		return "style='direction:$dir'";
+	}
+	
+	
+	function swapAssocArrayKeyValues($arr)
+	{
+		$newArr = array();
+		foreach($arr as $key => $val)
+		{
+			$newArr[$val]=$key;
+		}
+		
+		return $newArr;
+	}
+	
+	function posIsVerb($pos)
+	{
+	
+		return (strpos($pos,"V")!==false);
+	}
+	
+	function removeNonArabicAndSpaceChars($str)
+	{
+
+		$arabicChars = "ء|آ|أ|ؤ|إ|ئ|ا|ب|ة|ت|ث|ج|ح|خ|د|ذ|ر|ز|س|ش|ص|ض|ط|ظ|ع|غ|ف|ق|ك|ل|م|ن|ه|و|ى|ي|٫|ٮ|ٯ";
+		$arabicCharsPresentationForms = "ﺇ|ﺆ|ﺅ|ﺄ|ﺃ|ﺂ|ﺁ|ﺀ|ﺟ|ﺞ|ﺝ|ﺜ|ﺛ|ﺚ|ﺙ|ﺘ|ﺗ|ﺖ|ﺕ|ﺔ|ﺓ|ﺒ|ﺑ|ﺐ|ﺏ|ﺎ|ﺍ|ﺌ|ﺋ|ﺊ|ﺉ|ﺈ|ﺷ|ﺶ|ﺵ|ﺴ|ﺳ|ﺲ|ﺱ|ﺰ|ﺯ|ﺮ|ﺭ|ﺬ|ﺫ|ﺪ|ﺩ|ﺨ|ﺧ|ﺦ|ﺥ|ﺤ|ﺣ|ﺢ|ﺡ|ﺠ|ﻏ|ﻎ|ﻍ|ﻌ|ﻋ|ﻊ|ﻉ|ﻈ|ﻇ|ﻆ|ﻅ|ﻄ|ﻃ|ﻂ|ﻁ|ﺿ|ﺾ|ﺽ|ﺼ|ﺻ|ﺺ|ﺹ|ﺸ|ﻧ|ﻦ|ﻥ|ﻤ|ﻣ|ﻢ|ﻡ|ﻠ|ﻟ|ﻞ|ﻝ|ﻜ|ﻛ|ﻚ|ﻙ|ﻘ|ﻗ|ﻖ|ﻕ|ﻔ|ﻓ|ﻒ|ﻑ|ﻐ|ﻼ|ﻻ|ﻺ|ﻹ|ﻷ|ﻸ|ﻶ|ﻵ|ﻴ|ﻳ|ﻲ|ﻱ|ﻰ|ﻯ|ﻮ|ﻭ|ﻬ|ﻫ|ﻪ|ﻩ|ﻨ";
+		return mb_ereg_replace("[^$arabicChars|$arabicCharsPresentationForms| ]+", "",$str);
+		
+		
+	
+	}
+	
+	function removeSpecialCharactersFromMidQuery($str)
+	{
+		return preg_replace("/«|»|\~|\!|\$|%|\&|;|\:|\^|\*|\(|\)|\+|=|\-|<|>|\?|\"|,|\\\\|\.|\r|\n|\t|”|“/u","", $str);
+	}
+	
+	function wordIsSubstringOfWordsInArray($word,$wordsInVerseTextArr)
+	{
+		foreach($wordsInVerseTextArr as $index => $wordInArray)
+		{
+			
+			if ( strpos($wordInArray, $word) !==false )
+			{
+				return true;
+			}
+		}
+	}
+	
+	//TODO:NEEDS OPTIMIZATION, NO NEED FOR ALL THAT
+	function getRootOfSimpleWord($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$wordSimple,$expectedPosTagsArr)
+	{
+		global $MODEL_SEARCH,$MODEL_QAC;
+		
+		
+		$wordUthmani = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$wordSimple];
+		
+		
+		
+		//echoN($MODEL_QAC['QAC_ROOTS_LOOKUP'][$wordUthmani]);
+	
+		return $MODEL_QAC['QAC_ROOTS_LOOKUP'][$wordUthmani];
+		
+	
+	}
+	
+	function getIntersectionCountOfTwoArrays($arr1, $arr2)
+	{
+		
+		$intersetionArr = array_intersect($arr1,$arr2);
+		
+		return count($intersetionArr);
+		
+	}
 
 ?>

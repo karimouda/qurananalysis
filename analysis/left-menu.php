@@ -43,7 +43,7 @@
    				>N-Grams</a>
    				<a href="./pos-ngrams.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("pos-ngrams.php")) echo "selected='1'"?> 
-   				>PoS Patterns <br><span class='analysis-sub-title'>&nbsp;&nbsp;&nbsp;&nbsp;(PoS-NGrams)</span></a>
+   				>PoS Patterns <br></a>
    				<a href="./part-of-speech.php<?=$langParameter?>" class='analysis-links' 
    				 <?php if ( isCurrentPage("part-of-speech.php")) echo "selected='1'"?> 
    				 >PoS Query</a>
@@ -74,6 +74,22 @@
    				<a href="./word-context-concordance.php<?=$langParameter?>" class='analysis-links'
    				 <?php if ( isCurrentPage("word-context-concordance.php")) echo "selected='1'"?> 
    				 >Concordance</a>
+   				
+     		    <a href="./pause-marks.php<?=$langParameter?>" class='analysis-links'
+   				 <?php if ( isCurrentPage("pause-marks.php")) echo "selected='1'"?> 
+   				 >Pause Marks</a> 		
+   			    <a href="./buckwalter-transliteration.php<?=$langParameter?>" class='analysis-links'
+   				 <?php if ( isCurrentPage("buckwalter-transliteration.php")) echo "selected='1'"?> 
+   				 >Arabic to Buckwalter Transliteration </a>
+   				
+   				 <a href="./simmilar-words.php<?=$langParameter?>" class='analysis-links'
+   				 <?php if ( isCurrentPage("simmilar-words.php")) echo "selected='1'"?> 
+   				 >Word Similarity</a> 	
+   				 
+    				 <a href="./quran-initials.php<?=$langParameter?>" class='analysis-links'
+   				 <?php if ( isCurrentPage("quran-initials.php")) echo "selected='1'"?> 
+   				 >Quran Initials</a> 	  				 
+   				 
    				
    				
    				

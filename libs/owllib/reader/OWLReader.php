@@ -11,7 +11,7 @@ require_once "$OWLLIB_ROOT/reader/OWLIntersectionOfTag.php";
 require_once "$OWLLIB_ROOT/reader/OWLInverseOfTag.php";
 
 
-
+mb_internal_encoding("UTF-8");
 
 
 /**
@@ -58,14 +58,22 @@ class OWLReader
 		if($filehandler == false)
 			return '';
 
+	
 		$this->root_tag->create($ontology, "", array(), $owl_file);
 		$ontology->setNamespace($owl_file);
 		while ($data = fread($filehandler, 4096)) {
 			
-    	xml_parse($this->parser, $data, feof($filehandler));
+		
+    		xml_parse($this->parser, $data, feof($filehandler));
 		}
 
-		//xml_error_string(xml_get_error_code($this->parser));
+		$parseError = xml_error_string(xml_get_error_code($this->parser));
+		
+		if (!empty($parseError) && $parseError!="No error" )
+		{
+			echo $parseError;
+			//exit;
+		}
 		// close file
 		fclose($filehandler);
 

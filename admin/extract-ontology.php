@@ -109,7 +109,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	//exit;
 			  	
 			  	
-			  	$GENERATE_CONCEPTS_SWITCH = FALSE;
+			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
@@ -119,14 +119,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  				  	
 			  	
 			 
-			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;
-			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = TRUE;
-			  	$GENERATE_TAXONOMIC_RELATIONS = TRUE;
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;
+			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = FALSE;
+			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
 			  	
 			  	
-			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = TRUE;
-			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = TRUE;
-			  	$ENRICH_CONCEPTS_METADATA_WORDNET = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = FALSE;
+			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = FALSE;
+			  	$ENRICH_CONCEPTS_METADATA_WORDNET = FALSE;
 			  	
 			  	$EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;
 			  	
@@ -256,18 +256,18 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							if ( isset($MODEL_CORE['STOP_WORDS'][$simpleWord] ) )
 							{
-								//echoN("$term");
+								echoN("$term");
 								unset($finalTerms[$term]);
 							}
 						}
 						
-						
+
 						
 						echoN("Terms Count After SW Exclusion:<b>".count($finalTerms)."</b>");
 						
 						
-				
 						
+						//exit;
 						
 						
 						echoN("<hr>");
@@ -676,7 +676,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 											$termArr['AKA']['AR']['QURANA'] = $quranaArWord;
 										}
 										
-										$termArr['TRANSLATION_EN']=$conceptArr['EN'];
+										// NO qURANA TRANSLATIONS FOR 1 WORD CONCEPTS //EX: "PROPHEt MUHAMMAD INSTEAD OF MUHAMAD"
+										//$termArr['TRANSLATION_EN']=$conceptArr['EN'];
 										
 										
 										
@@ -740,10 +741,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								{
 										
 					
-										
+									// try to get translation from uthmani translation table
+									$engTranslation = $WORDS_TRANSLATIONS_AR_EN[$lemaUthmani];
+									
 					
-					
-									addNewConcept($finalConcepts, $mergedWord, "A-BOX", "ADJECTIVE", $termArr['FREQ'], "");
+									addNewConcept($finalConcepts, $mergedWord, "A-BOX", "ADJECTIVE", $termArr['FREQ'], $engTranslation);
 									$finalConcepts[$mergedWord]['EXTRA']=$termArr;
 										
 										
@@ -835,7 +837,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							$quranaConceptArr = getQuranaConceptEntryByARWord($biGramConcept);
 				
-						
+							// ADD QURANA TRANSLATION FOR QURANA BIGRAMS
 							$engTranslation = ucfirst($quranaConceptArr['EN']);
 							
 							addNewConcept($finalConcepts, $biGramConcept, "A-BOX", "PHRASE", $freq, $engTranslation);
@@ -1515,7 +1517,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										
 										
 										// IF THE SUBVERSE CONTAIN CONDITIONS OR VOCATIVES, IGNORE THE WHOLE SUBVERSE
-										if ( preg_match("/VOC|COND|INTG/",$prePatternStr) )
+										if ( preg_match("/VOC|COND|INTG/",$prePatternStr) 
+												|| mb_strpos(removeTashkeel($subSentenceStr), "قال") !==false
+												 )
 										{
 											continue;
 										}
@@ -2074,8 +2078,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 				
 						
 						//preprint_r($finalConcepts);exit;
-						echoN(count($finalConcepts));
-						exit;
+						//echoN(count($finalConcepts));
+						//exit;
 						
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage4", serialize($finalConcepts));
 
@@ -2931,7 +2935,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 
 						//preprint_r($relationsArr);
 						//preprint_r($finalConcepts);exit;
-						
+
 						$imagesToBeRemoved = array();
 						$englishLongDescriptionsToBeRemoved = array();
 						$arabicLongDescriptionsToBeRemoved = array();
@@ -3237,6 +3241,86 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7"));
 							
 						
+						echoN("Concepts b4 PP:".count($finalConcepts));
+						
+						echoN("DUPLICATES:");
+						$duplicateCounter = 0;
+						$filteredFinalConcepts = $finalConcepts;
+						foreach($finalConcepts as $concept => $coneptArr)
+						{
+						
+						
+						
+						
+							$conceptNameEn  = $coneptArr['EXTRA']['TRANSLATION_EN'];
+							$conceptNameAr  = $concept;
+							$conceptType = $coneptArr['CONCEPT_TYPE'];
+							
+							
+							//thing shouldnot be altered or removed
+							if ( $conceptNameAr==$thing_class_name_ar)
+							{
+								//echoN("$conceptNameAr $thing_class_name_ar");
+								continue;
+							}
+								
+							
+							if ( startsWithAL($conceptNameAr)  )
+							{
+								$conceptNameArNoAl = mb_substr($conceptNameAr, 2);
+								
+								//thing shouldnot be altered or removed
+								if ( $conceptNameArNoAl==$thing_class_name_ar)
+								{
+									//echoN("$conceptNameAr $thing_class_name_ar");
+									continue;
+								}
+								
+								if (isset($finalConcepts[$conceptNameArNoAl]))
+								{
+									$duplicateConceptArr = $finalConcepts[$conceptNameArNoAl];
+									
+									
+									
+									$duplicateCounter++;
+									
+									$concept1RichnessScore = getConceptRichnessScore($coneptArr);
+									$duplicateConceptRichnessScore = getConceptRichnessScore($duplicateConceptArr);
+									
+									
+									//echoN("ORIGINAL :[$conceptNameAr][$concept1RichnessScore]");
+									//echoN("DUPLICATE:[$conceptNameArNoAl][$duplicateConceptRichnessScore]");
+									
+									$toBeRemovedConcept = null;
+									if ($duplicateConceptRichnessScore < $concept1RichnessScore )
+									{
+										$toBeRemovedConcept = $conceptNameArNoAl;
+										updateNameInAllRelations($relationsArr,$conceptNameArNoAl,$conceptNameAr);
+										
+									}
+									else
+									{
+										$toBeRemovedConcept = $conceptNameAr;
+										updateNameInAllRelations($relationsArr,$conceptNameAr,$conceptNameArNoAl);
+									}
+									
+									echoN("$toBeRemovedConcept REMOVED");
+									
+									unset($filteredFinalConcepts[$toBeRemovedConcept]);
+									
+									
+									
+									
+									//preprint_r($relationsArr);exit;
+
+									
+								}
+							}
+						}
+						
+						$finalConcepts = $filteredFinalConcepts;
+						
+						echoN("Duplicates:".$duplicateCounter);
 						
 						foreach($relationsArr as $hash => $relationArr)
 						{
@@ -3276,6 +3360,12 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 						}
 						
+						
+						echoN("Concepts after PP:".count($finalConcepts));
+						
+						//exit;
+						//preprint_r($relationsArr);exit;
+						
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage8", serialize($finalConcepts));
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations", serialize($relationsArr));
 							
@@ -3294,14 +3384,15 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					
 					////////////////////////////////////////////////////////////////////////
 					
-					preprint_r($finalConcepts);
+				
 					if ($GENERATE_OWL_FILE)
 					{
 						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final"));
 			
 						//preprint_r($finalConcepts);
-					
+						//exit;
+						preprint_r($relationsArr);
 						
 						///////// ONTOLOGY MODEL INIT
 						$writer = new OWLWriter();
@@ -3347,8 +3438,22 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						//////////  Things class
 						//$ontology->createClass($thingClassName);
 						
+						//////// PUT THING AS THE FIRST CLASS SINCE OTHERS DEPEND ON, SO IT SHOULD BE 
+						//////// READ FIRST IN DESERIALIZATION
 						
-						//preprint_r($finalConcepts);
+						$updatedFinalConcept = array();
+						$thingArr = $finalConcepts[$thing_class_name_ar];
+						
+						$updatedFinalConcept[$thing_class_name_ar]=$thingArr;
+						unset($finalConcepts[$thing_class_name_ar]);
+						$updatedFinalConcept = array_merge($updatedFinalConcept,$finalConcepts);
+						
+						$finalConcepts = $updatedFinalConcept;
+						
+						//////////////////////////////////////////
+						
+						
+						//preprint_r($finalConcepts);exit;
 						
 						$counter++;
 						foreach($finalConcepts as $concept => $coneptArr)

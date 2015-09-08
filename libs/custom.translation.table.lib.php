@@ -22,13 +22,19 @@ function loadTranslationTable()
 	{
 		$lineArr = preg_split("/\|/", $line);
 		
-		$enWord = trim(removeUnacceptedChars($lineArr[0]));
-		$wordType = trim(removeUnacceptedChars($lineArr[1]));
-		$arTranslation = trim(removeUnacceptedChars($lineArr[2]));
+		$keyLang = trim(removeUnacceptedChars($lineArr[0]));
+		$mainWord = trim(removeUnacceptedChars($lineArr[1]));
+		$wordType = trim(removeUnacceptedChars($lineArr[2]));
+		$translatedWord= trim(removeUnacceptedChars($lineArr[3]));
 
-				
-		$CUSTOM_TRANSLATION_TABLE_EN_AR[$enWord]=array("EN_TEXT"=>$enWord,"TYPE"=>$wordType,"AR_TEXT"=>$arTranslation);
-		
+		if ( $keyLang=="EN")
+		{
+			$CUSTOM_TRANSLATION_TABLE_EN_AR[$mainWord]=array("EN_TEXT"=>$mainWord,"TYPE"=>$wordType,"AR_TEXT"=>$translatedWord,"KEY_LANG"=>$keyLang);
+		}
+		else 
+		{
+			$CUSTOM_TRANSLATION_TABLE_EN_AR[$mainWord]=array("EN_TEXT"=>$translatedWord,"TYPE"=>$wordType,"AR_TEXT"=>$mainWord,"KEY_LANG"=>$keyLang);
+		}
 	}
 	
 	$TABLE_LOADED = true;
@@ -36,20 +42,39 @@ function loadTranslationTable()
 	return $CUSTOM_TRANSLATION_TABLE_EN_AR;
 }
 
-function isFoundInTranslationTable($enStr)
+function isFoundInTranslationTable($enArStr,$wordType="CONCEPT")
 {
 	global $CUSTOM_TRANSLATION_TABLE_EN_AR;
 	
-	return  isset($CUSTOM_TRANSLATION_TABLE_EN_AR[$enStr]) ;
+	$enArStr = tranlstationCleanAndTrim(removeUnacceptedChars(($enArStr)));
+	//preprint_r($CUSTOM_TRANSLATION_TABLE_EN_AR);exit;
+		 	
+	return  (isset($CUSTOM_TRANSLATION_TABLE_EN_AR[$enArStr]) 
+			&& ($CUSTOM_TRANSLATION_TABLE_EN_AR[$enArStr]['TYPE']==$wordType) &&
+		 	 !empty($CUSTOM_TRANSLATION_TABLE_EN_AR[$enArStr]['AR_TEXT']) && !empty($CUSTOM_TRANSLATION_TABLE_EN_AR[$enArStr]['EN_TEXT']) );
 }
 
-function isFoundInTranslationTableArabicKeyword($arStr)
+function tranlstationCleanAndTrim($str)
+{
+	//« spoils arabic words = 0xab
+	$tobeReplacedStr = "\t\n\r\0\x0B ";
+	return trim(trim(trim($str),$tobeReplacedStr));
+}
+
+
+function isFoundInTranslationTableArabicKeyword($arStr,$wordType="CONCEPT")
 {
 	global $CUSTOM_TRANSLATION_TABLE_EN_AR;
 
-	$translationKey = search2DArrayForValue($CUSTOM_TRANSLATION_TABLE_EN_AR, $arStr);
+	$translationKey = search2DArrayForValue($CUSTOM_TRANSLATION_TABLE_EN_AR, $arStr, array("KEY"=>"TYPE","VAL"=>$wordType) );
 	
-
+	/*
+	echoN(count($CUSTOM_TRANSLATION_TABLE_EN_AR));
+	echoN($arStr);
+	preprint_r($translationKey);
+	echoN($wordType);
+	preprint_r($CUSTOM_TRANSLATION_TABLE_EN_AR[$translationKey]);
+	*/
 	
 	if ($translationKey!==false)
 	{
@@ -63,6 +88,8 @@ function isFoundInTranslationTableArabicKeyword($arStr)
 function getTranlationEntryByEntryKeyword($enStr)
 {
 	global $CUSTOM_TRANSLATION_TABLE_EN_AR,$TABLE_LOADED;
+	
+	$enStr = trim($enStr);
 	
 	if ( !$TABLE_LOADED)
 	{
@@ -86,41 +113,56 @@ function getTranlationEntryByArabicEntryKeyword($arStr)
 	return $CUSTOM_TRANSLATION_TABLE_EN_AR[$translationKey];
 }
 
-function addTranslationEntry($enStr, $entryType, $arStr)
+
+
+function addTranslationEntry($enStr, $entryType, $arStr,$keyLang="EN")
 {
 	global $CUSTOM_TRANSLATION_TABLE_EN_AR,$TABLE_LOADED;
-	
+
 	if ( !$TABLE_LOADED)
 	{
 		loadTranslationTable();
 	}
-	
+
 	// ALLOW DUPOLICATE ENGLISH KEYS
 	//if ( !isFoundInTranslationTable($enStr) )
 	//{
-		if ( empty($entryType))
-		{
-			$entryType="NONE";
-		}
-		else
-		{
-			$entryType = strtoupper($entryType);
+	if ( empty($entryType))
+	{
+		$entryType="NONE";
+	}
+	else
+	{
+		$entryType = strtoupper($entryType);
 			
-		}
-		
-		$CUSTOM_TRANSLATION_TABLE_EN_AR[$enStr]=array("EN_TEXT"=>$enStr,"TYPE"=>$entryType,"AR_TEXT"=>$arStr);
-		return true;
+	}
+	
+	if ( $keyLang=="EN")
+	{
+
+		$CUSTOM_TRANSLATION_TABLE_EN_AR[$enStr]=array("EN_TEXT"=>$enStr,"TYPE"=>$entryType,"AR_TEXT"=>$arStr,"KEY_LANG"=>$keyLang);
+	}
+	else
+	{
+		$CUSTOM_TRANSLATION_TABLE_EN_AR[$arStr]=array("EN_TEXT"=>$enStr,"TYPE"=>$entryType,"AR_TEXT"=>$arStr,"KEY_LANG"=>$keyLang);
+	}
+	
+	return true;
 	//}
 	//else
 	//{
 	//	return false;
 	//}
-	
-	
-	
+
+
+
 }
+
 function removeUnacceptedChars($text)
 {
+	$text = strtr($text, "(", "[");
+	$text = strtr($text, ")", "]");
+	
 	return preg_replace("/\||\\r|\\n/", "", $text);
 }
 
@@ -138,7 +180,7 @@ function persistTranslationTable($CUSTOM_TRANSLATION_TABLE_EN_AR=null)
 	if (!$TABLE_LOADED || empty($CUSTOM_TRANSLATION_TABLE_EN_AR)) return false;
 	
 
-	//preprint_r($CUSTOM_TRANSLATION_TABLE_EN_AR);
+	//preprint_r($CUSTOM_TRANSLATION_TABLE_EN_AR);exit;
 	
 	//clear file
 	file_put_contents($customTranslationTableFile,"");
@@ -147,14 +189,19 @@ function persistTranslationTable($CUSTOM_TRANSLATION_TABLE_EN_AR=null)
 	{
 		if ( empty($enWord) ) continue;
 	
-		$enWord = trim(removeUnacceptedChars($entryArr['EN_TEXT']));
-		$wordType = trim(removeUnacceptedChars($entryArr['TYPE']));
-		$arTranslation = trim(removeUnacceptedChars($entryArr['AR_TEXT']));
+		$keyLang = tranlstationCleanAndTrim(removeUnacceptedChars($entryArr['KEY_LANG']));
+		$enWord = tranlstationCleanAndTrim(removeUnacceptedChars($entryArr['EN_TEXT']));
+		$wordType = tranlstationCleanAndTrim(removeUnacceptedChars($entryArr['TYPE']));
+		$arTranslation = tranlstationCleanAndTrim(removeUnacceptedChars($entryArr['AR_TEXT']));
 		
-		
-	
-		$line = "$enWord|$wordType|$arTranslation\n";
-	
+		if ( $keyLang=="EN")
+		{
+			$line = "$keyLang|$enWord|$wordType|$arTranslation\n";
+		}
+		else
+		{
+			$line = "$keyLang|$arTranslation|$wordType|$enWord\n";
+		}
 		
 		
 		file_put_contents($customTranslationTableFile, $line,FILE_APPEND);
@@ -178,11 +225,12 @@ function printTranslationTable()
 	
 	foreach ($CUSTOM_TRANSLATION_TABLE_EN_AR as $enWord => $entryArr)
 	{
+		$keyLang = trim(removeUnacceptedChars($entryArr['KEY_LANG']));
 		$enWord = trim(removeUnacceptedChars($entryArr['EN_TEXT']));
 		$wordType = trim(removeUnacceptedChars($entryArr['TYPE']));
 		$arTranslation = trim(removeUnacceptedChars($entryArr['AR_TEXT']));
 
-		$line = "$enWord|$wordType|$arTranslation\n";
+		$line = "$keyLang|$enWord|$wordType|$arTranslation\n";
 		
 		echoN($line);
 

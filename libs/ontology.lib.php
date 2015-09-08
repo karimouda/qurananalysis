@@ -4,8 +4,14 @@ require_once(dirname(__FILE__)."/custom.translation.table.lib.php");
 
 function mapQACPoSToWordnetPoS($qacPOS)
 {
-
+	
 	$trans = array("PN" => "noun", "N" => "noun", "V" => "verb", "ADJ" => "adj", "LOC" => "adv", "T" => "adv");
+	
+	// since concept extracted from relations may have "SUBJECT" or "OBJECT" POS
+	if ( !isset($trans[$qacPOS]) )
+	{
+		return "noun";
+	}
 	return  strtr($qacPOS,$trans);
 }
 function trimVerb($verb)
@@ -131,13 +137,19 @@ function addNewRelation(&$relationArr,$type,$subject,$verbSimple,$object,$posPat
 	}
 }
 
-function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern,$verbEngTranslation="")
+function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern,$verbEngTranslation="",$fullVerbQuranWord="")
 {
 	global  $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
 	global $WORDS_TRANSLATIONS_AR_EN;
 	global $is_a_relation_name_en;
 	
 		
+	
+	if ( empty($subject) || empty($object) )
+	{
+		return false;
+	}
+	
 	
 	// make shallow last resort, since it spoils words and lead to duplicate oncepts
 	if ( !isSimpleQuranWord($subject) )
@@ -186,12 +198,12 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 		{
 			$verb = trim($verb);
 			
-			$translatableVerb = $verb;
+			$translatableVerb = $fullVerbQuranWord;
 			
 			// VERB IS SIMPLE
 			if ( isSimpleQuranWord($verb) )
 			{
-				$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verb];
+				$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$fullVerbQuranWord];
 
 			}
 			else
@@ -206,22 +218,24 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 			if ( empty($verbEngTranslation))
 			{
 				// CHECK IF IS ALSO NOTO IN TRANSLATION ENTRY
-				if (!isFoundInTranslationTableArabicKeyword($translatableVerb))
+				if (!isFoundInTranslationTable($translatableVerb,"VERB"))
 				{
 					
+
 					// TRANSLATE USING MICROSOFT API
 					$verbEngTranslation = translateText($translatableVerb,"ar","en");
 					
 					// ADD TO QA CUSTOM TRANSLATION TABLE
-					addTranslationEntry($verbEngTranslation, "VERB", $translatableVerb);
+					addTranslationEntry($verbEngTranslation, "VERB", $translatableVerb,"AR");
 					
-					persistTranslationTable();
+					//no need
+					//persistTranslationTable();
 				}
 				else
 				{
-					$customTranslationEntryArr =getTranlationEntryByArabicEntryKeyword($translatableVerb);
+					$customTranslationEntryArr =getTranlationEntryByEntryKeyword($translatableVerb);
 					
-					$verbEngTranslation = $customTranslationEntryArr['AR_TEXT'];
+					$verbEngTranslation = $customTranslationEntryArr['EN_TEXT'];
 				}
 			}
 		}
@@ -267,22 +281,25 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 				if ( empty($verbPartTranslated))
 				{
 					// CHECK IF IS ALSO NOTO IN TRANSLATION ENTRY
-					if (!isFoundInTranslationTableArabicKeyword($translatableVerb))
+					if (!isFoundInTranslationTable($verbPart,"VERB"))
 					{
 							
+
+						
 						// TRANSLATE USING MICROSOFT API
-						$verbPartTranslated = translateText($translatableVerb,"ar","en");
+						$verbPartTranslated = translateText($verbPart,"ar","en");
 							
 						// ADD TO QA CUSTOM TRANSLATION TABLE
-						addTranslationEntry($verbPartTranslated, "VERB", $translatableVerb);
+						addTranslationEntry($verbPartTranslated, "VERB", $verbPart,"AR");
 							
-						persistTranslationTable();
+						
+						//persistTranslationTable();
 					}
 					else
 					{
-						$customTranslationEntryArr =getTranlationEntryByArabicEntryKeyword($translatableVerb);
+						$customTranslationEntryArr =getTranlationEntryByEntryKeyword($verbPart);
 							
-						$verbPartTranslated = $customTranslationEntryArr['AR_TEXT'];
+						$verbPartTranslated = $customTranslationEntryArr['EN_TEXT'];
 					}
 				}
 				
@@ -294,7 +311,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 	
 	if ( $verbEngTranslation!="is kind of" && $verbEngTranslation!="part of" && $verbEngTranslation!=$is_a_relation_name_en)
 	{
-		$verbEngTranslation = removeBasicEnglishStopwordsNoNegation($verbEngTranslation);
+		//$verbEngTranslation = removeBasicEnglishStopwordsNoNegation($verbEngTranslation);
 	}
 		
 	$verbSimple = trim($verbSimple);
@@ -707,6 +724,23 @@ function loadExcludedConceptsArr()
 	
 }
 
+function loadExcludedSynonymssArr()
+{
+	$fileArr = file("../data/ontology/extraction/excluded.synonyms",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+
+	$EXCLUDED_SYN = array();
+
+	foreach($fileArr as  $synonym)
+	{
+		$synonym = trim($synonym);
+		$EXCLUDED_SYN[$synonym]=1;
+
+	}
+
+	return $EXCLUDED_SYN;
+
+}
+
 function getXMLFriendlyString($className)
 {
 	return strtr($className, " ", "_");
@@ -756,5 +790,215 @@ function buildRelationHashID($subject,$verb,$object)
 	return md5("$subject,$verb,$object");
 }
 
+function isWordPartOfAVerbInVerbIndex($word,$lang)
+{
+	global $MODEL_QA_ONTOLOGY;
+	
+
+	
+	foreach( $MODEL_QA_ONTOLOGY['VERB_INDEX'] as $verbWord => $verbArr)
+	{
+		if ( $lang=="EN")
+		{
+			$verbWord = strtolower($verbWord);
+			
+		}
+		//echoN("|$verbWord| |$word|".( mb_strpos($verbWord, $word)!==false));
+		if ( mb_strpos($verbWord, $word)!==false) 
+		{
+			return $verbArr;
+		}
+	}
+	
+	return false;
+}
+
+function handleNewConceptFromRelation(&$finalConcepts,$subjectOrObject,$conceptLocationInRelation,&$notInCounceptsCounter,&$statsUniqueSubjects)
+{
+	global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS, $WORDS_TRANSLATIONS_AR_EN;
+	
+	$subjectOrObjectFlag =  null;
+		
+	// SUBJECT NOT IN MASTER CONCEPTS LIST
+	if ( !isset($finalConcepts[$subject]) )
+	{
+		
+		if ( $conceptLocationInRelation=="SUBJECT")
+		{
+			echoN("NOT IN CONCEPTS:S:$subjectOrObject");
+		}
+		else
+		{
+			echoN("NOT IN CONCEPTS:O:$subjectOrObject");
+		}
+		$notInCounceptsCounter++;
+			
+		$statsUniqueSubjects[$subjectOrObject]=1;
+
+	
+	}
+	
+
+	
+	$termsArr = getTermArrBySimpleWord($finalTerms,$subjectOrObject);
+		
+	$freq = $termsArr['FREQ'];
+		
+	
+		
+	$isQuranaPhraseConcept = false;
+	
+	//echoN("^&&*:".(strpos($subjectOrObject," ")!==false));
+	
+	if( isMultiWordStr($subjectOrObject))
+	{
+		$quranaConceptArr = getQuranaConceptEntryByARWord($subjectOrObject);
+	
+	
+		$engTranslation = ucfirst($quranaConceptArr['EN']);
+			
+		echoN("^^$subjectOrObject");
+		$isQuranaPhraseConcept = true;
+	}
+	else
+	{
+		$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$subjectOrObject];
+		$engTranslation = ucfirst(cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$uthmaniWord]));
+	}
+		
+		
+		
+	addNewConcept($finalConcepts, $subjectOrObject, "A-BOX", "POPULATION_FROM_RELATIONS", $freq, $engTranslation);
+	
+	$finalConcepts[$subjectOrObject]['EXTRA']['POS']=$subjectOrObjectFlag;
+	$finalConcepts[$subjectOrObject]['EXTRA']['WEIGHT']=$termsArr['WEIGHT'];
+	
+	if ( $isQuranaPhraseConcept)
+	{
+		echoN($isQuranaPhraseConcept."||||$subjectOrObject");
+		$finalConcepts[$subjectOrObject]['EXTRA']['IS_QURANA_NGRAM_CONCEPT']=true;
+	}
+}
+
+
+function doesQuestionIncludesVerb($extendedQueryArr)
+{
+	foreach($extendedQueryArr as $word => $pos)
+	{
+		if ( posIsVerb($pos))
+		{
+			if ( $word!="is" && $word!="are")
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+function getConceptRichnessScore($coneptArr)
+{
+	return strlen(print_r($coneptArr,true));
+}
+
+function updateNameInAllRelations(&$relationsArr, $nameFrom, $nameTo)
+{
+	foreach($relationsArr as $hash => $relationArr)
+	{
+		$relationsType = $relationArr['TYPE'];
+	
+		$subject = 	$relationArr['SUBJECT'];
+		$object = $relationArr['OBJECT'];
+		$verbAR = $relationArr['VERB'];
+		
+			
+		if ( $subject=="$nameFrom")
+		{
+			$relationsArr[$hash]['SUBJECT']=$nameTo;
+		}
+		if ( $object=="$nameFrom")
+		{
+			$relationsArr[$hash]['OBJECT']=$nameTo;
+		}
+			
+			
+			
+	}
+}
+
+function getConceptsFoundInText($text,$lang)
+{
+	
+
+	global $thing_class_name_ar, $is_a_relation_name_ar;
+
+	global $MODEL_QA_ONTOLOGY;
+	
+	$conceptsInTextArr = array();
+
+
+
+		
+		$textWordsArr = preg_split("/ /",$text);
+	
+		foreach($textWordsArr as $index=>$word)
+		{
+				
+				
+			if ( $lang == "EN")
+			{
+				$word = cleanAndTrim($word);
+				$word = strtolower($word);
+				
+				
+
+				// translate English name to arabic concept name/id
+				$wordConveretedToConceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+			}
+			else
+			{
+					
+				$wordConveretedToConceptID = convertWordToConceptID($word);
+			}
+				
+			//echoN($wordConveretedToConceptID);
+				
+			if ( isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]) )
+			{
+				//preprint_r($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]);exit;
+				//echoN($wordConveretedToConceptID);
+
+				$mainConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID];
+
+				$conceptLabelAR = $mainConceptArr['label_ar'];
+				$conceptLabelEN = $mainConceptArr['label_en'];
+				$conceptFrequency = $mainConceptArr['frequency'];
+				$conceptWeight = $mainConceptArr['weight'];
+
+				$finalNodeLabel = $conceptLabelAR;
+
+				if ( $lang == "EN")
+				{
+					$finalNodeLabel = $conceptLabelEN;
+				}
+
+
+				if (  $wordConveretedToConceptID==$thing_class_name_ar) continue;
+
+					
+	
+
+				$conceptsInTextArr[$wordConveretedToConceptID]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $mainConceptArr,$randomXLocation,$randomYLocation,1);
+	
+					
+
+			}
+				
+		}
+	
+
+	return $conceptsInTextArr;
+
+}
 
 ?>

@@ -55,11 +55,11 @@ loadModels("core",$lang);
 				
 			  	<div >
 			  	<?php 
-			  		$buttonString = "↺ Reload + Stopwords Excluded";
+			  		$buttonString = "↺ Exclude Stopwords";
 			  		
 			  		if ( $withStopWordsExcluded==1)
 			  		{
-			  			$buttonString = "↺ Reload + NO Exclusion";
+			  			$buttonString = "↺ Show All Words ";
 			  		}
 			  	?>
 	
@@ -104,7 +104,7 @@ loadModels("core",$lang);
 			  			<tbody>
 							<?php 
 						
-								//preprint_r($MODEL_CORE['STOP_WORDS']);
+								//preprint_r($MODEL_CORE['STOP_WORDS_STRICT_L2']);
 							
 								$i=0;
 								foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
@@ -112,7 +112,8 @@ loadModels("core",$lang);
 									
 									if ( $withStopWordsExcluded ==1 )
 									{
-										if ( isset($MODEL_CORE['STOP_WORDS'][$wordLabel]) ) continue;
+										//if ( isset($MODEL_CORE['STOP_WORDS'][$wordLabel]) ) continue;
+										if ( isset($MODEL_CORE['STOP_WORDS_STRICT_L2'][$wordLabel]) ) continue;
 									}
 									
 									$i++;

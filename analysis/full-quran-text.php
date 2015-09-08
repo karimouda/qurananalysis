@@ -67,7 +67,7 @@ loadModels("core",$lang);
 				  					Chapter Name
 				  				</th>
 				  				<th>
-				  					Verse In Chapter
+				  					Verse #
 				  				</th>
 				  				<th>
 				  					Text

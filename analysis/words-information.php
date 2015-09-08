@@ -46,9 +46,19 @@ loadModels("core",$lang);
 			  
 			  	
 			  	<div id='words-info-options'>
+					<table>
+					<tr>
+					<td>Enter Arabic word:</td>
+					<td><input type="text" id="word"  autofocus="true"/></td>
+					</tr>
+					<tr>
+					<td></td>
+					<td><input type="button" id='words-info-submit' value='Get Information' /></td>
+					</tr>
+					</table>
 					
-					<input type="text" id="word"  autofocus="true"/>
-					<input type="button" id='words-info-submit' value='Get Information' />
+					
+					
 				</div>
 				
 				<div id='words-info-area'>

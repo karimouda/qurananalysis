@@ -25,6 +25,8 @@ class OWLTag
   	$this->label = "";;
   	
   	//preprint_r($attributes);
+  	
+  	//echoN($name);
 	
 		if(array_key_exists($this->XML_BASE, $attributes))
 			$this->base = $attributes[$this->XML_BASE];
@@ -40,10 +42,11 @@ class OWLTag
 	 */
 	function getName()
   {
-  	
+  
   	
   	if ( strpos($this->name,"#:")!==false)
   	{
+  		
   		return substr($this->name, strrpos($this->name, ":")+1);
   	}
   	
@@ -101,7 +104,13 @@ class OWLTag
 	function startTag($parser, $tag, $attributes)
   {
   	$this->parsingTagContent = false;
-
+  	
+  	
+  	$conceptName = $attributes['http://www.w3.org/1999/02/22-rdf-syntax-ns#:ID'];
+  	
+	
+  	
+  	
   	if($this->current_tag == null){
   		$this->current_tag = $this->createTag($tag, $attributes, $this->base);
   	}
@@ -151,9 +160,15 @@ class OWLTag
   	
   	$this->parsingTagContent = false;
   	
+  		//echoN("OWLTAG_ENDTAG");
  	 	if($this->current_tag != null){
+ 	 		
+ 	 		//echoN("OWLTAG_ENDTAG2");
+ 	 		
  			$this->current_tag->endTag($parser, $tag);
  			if(!$this->current_tag->wantsMore()){
+ 				
+ 				//echoN("OWLTAG_ENDTAG3");
  				$this->processChild($this->current_tag);
  				$this->current_tag = null;
  			}
@@ -209,16 +224,28 @@ class OWLTag
   {
   	$obj = null;
   	
-  
-  	
   	$uri = preg_replace("/#:/", "#", $tag);
   	$namespace  = substr($tag,0, strpos($tag, "#:"));
   	
-  /*echoN("YY:$uri");
-  echoN("TTT:$tag");
-  echoN("BASE:$base");
-  echoN("NS:$namespace");
-  */
+  	$conceptName = $attributes['http://www.w3.org/1999/02/22-rdf-syntax-ns#:ID'];
+  	
+  /*	if ( mb_strpos($conceptName, "عيسى")!==false)
+  	{
+
+  		echoN("####".$conceptName);
+  		
+  		
+  	}
+  	echoN("YY:$uri");
+  	echoN("TTT:$tag");
+  	echoN("BASE:$base");
+  	echoN("NS:$namespace");
+  	//preprint_r($attributes);
+  	 * 
+  	 */
+  	
+
+ 
   	if(array_key_exists($tag, $this->tag_classes)){
   		//echoN("111:$tag");
   		$obj = new $this->tag_classes[$tag]();

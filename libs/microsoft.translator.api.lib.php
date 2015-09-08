@@ -1,5 +1,40 @@
 <?php
-class AccessTokenAuthentication {
+
+
+
+
+
+$accessToken = null;
+$authHeader = null;
+
+function refreshAccessToken()
+{
+	
+	// Client ID of the application.
+	$clientID = "cfd0743c-e873-46e2-ba91-e876c096b1e6";
+	// Client Secret key of the application.
+	$clientSecret = "u+EYp3A8tc1YeN+NxbGa60NYnHITTH0yl8jlmTQ5W5I";
+	// OAuth Url.
+	$authUrl = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
+	// Application Scope Url
+	$scopeUrl = "http://api.microsofttranslator.com";
+	// Application grant type
+	$grantType = "client_credentials";
+	
+	// Create the AccessTokenAuthentication object.
+	$authObj = new AccessTokenAuthentication ();
+	
+	// Get the Access token.
+	$accessToken = $authObj->getTokens ( $grantType, $scopeUrl, $clientID, $clientSecret, $authUrl );
+	// Create the authorization Header string.
+	$authHeader = "Authorization: Bearer " . $accessToken;
+	
+	return $authHeader;
+}
+
+
+class AccessTokenAuthentication 
+{
 	/*
 	 * Get the access token. @param string $grantType Grant type. @param string $scopeUrl Application Scope URL. @param string $clientID Application client ID. @param string $clientSecret Application client ID. @param string $authUrl Oauth Url. @return string.
 	 */
@@ -104,29 +139,25 @@ class HTTPTranslator {
 
 function translateText($text,$translateFrom="en",$translateTo="ar")
 {
+	global $authHeader;
+	
+	$text = trim($text);
+	
 	if ( empty($text)) return false;
 	
 	echoN("*** translating ... [$text]");
 
 
+	//return $text;
+
 	try {
-		// Client ID of the application.
-		$clientID = "cfd0743c-e873-46e2-ba91-e876c096b1e6";
-		// Client Secret key of the application.
-		$clientSecret = "u+EYp3A8tc1YeN+NxbGa60NYnHITTH0yl8jlmTQ5W5I";
-		// OAuth Url.
-		$authUrl = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
-		// Application Scope Url
-		$scopeUrl = "http://api.microsofttranslator.com";
-		// Application grant type
-		$grantType = "client_credentials";
-		// Create the AccessTokenAuthentication object.
-		$authObj = new AccessTokenAuthentication ();
-		// Get the Access token.
-		$accessToken = $authObj->getTokens ( $grantType, $scopeUrl, $clientID, $clientSecret, $authUrl );
-		// Create the authorization Header string.
-		$authHeader = "Authorization: Bearer " . $accessToken;
+
 		
+		if ( $authHeader == null)
+		{
+			$authHeader = refreshAccessToken();
+		}
+			
 		
 		//echon($authHeader);
 		/*
@@ -158,9 +189,11 @@ function translateText($text,$translateFrom="en",$translateTo="ar")
 		if ( empty($xmlObj[0])) return null;
 		
 
+		$translation = trim((string)$xmlObj[0]);
+		echoN($translation);
 		//(string) casting to avoid SimpleXMLElement serialization problem
 		// trim for endlines
-		return trim((string)$xmlObj[0]);
+		return $translation;
 
 	} catch ( Exception $e ) {
 		echo "Exception: " . $e->getMessage () . PHP_EOL;

@@ -153,7 +153,7 @@ function createNewConceptObj(&$nodeSerialNumber,$lang,$finalNodeLabel,$ontologyC
 			"x"=>$randomXLocation,"y"=>$randomYLocation);
 }
 
-function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=0,$widthHeigthArr,$lang,$mainConceptsOnly=false)
+function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextArr,$minFreq=0,$widthHeigthArr,$lang,$mainConceptsOnly=false,$isPhraseSearch=false,$isQuestion=false,$query="")
 {
 	
 	global $thing_class_name_ar, $is_a_relation_name_ar;
@@ -186,14 +186,34 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 	
 	$lastWord = null;
 	
-	
+
 	
 	foreach($searchResultTextArr as $index => $text)
 	{
 	
-		$textWordsArr = preg_split("/ /",$text);
+		if ( $inputType=="SEARCH_RESULTS_TEXT_ARRAY")
+		{
+			$textWordsArr = preg_split("/ /",$text);
+		}
+		// QUERY_TERMS TYPE
+		else 
+		{
+			if ( !$isPhraseSearch)
+			{
+			
+				// extendedQueryParam
+				$textWordsArr = array_keys($searchResultTextArr);
+			}
+			// IS PHRASE SEARCH
+			else
+			{
+				// phrase should be checked as is
+				$textWordsArr[0]=$query;
+			}
+		}
 		
 		
+
 		
 		foreach($textWordsArr as $word)
 		{
@@ -213,11 +233,12 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 				$wordConveretedToConceptID = convertWordToConceptID($word);
 			}
 			
-			
+		
 			
 			if ( isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]) )
 			{
 				//preprint_r($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]);exit;
+				//echoN($wordConveretedToConceptID);
 				
 				$mainConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID];
 				
@@ -232,6 +253,12 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 				{
 					$finalNodeLabel = $conceptLabelEN;
 				}
+				
+				/*if ( empty($finalNodeLabel))
+				{
+					echoN($conceptLabelAR);
+					exit;
+				}*/
 		
 					
 				if ( $conceptFrequency< $minFreq) continue;
@@ -266,11 +293,16 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 	}
 
 	
+
+
+	$tooManyConcepts = (count($graphNodes) > 200);
+	
+
 	//preprint_r($graphNodes,1);exit;
 	
 	$linksHashLookupTable = array();
 	
-	
+	//preprint_r($graphNodes,true);exit;
 
 	foreach($graphNodes as $concept => $conceptArr)
 	{
@@ -294,9 +326,12 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 			// ignore is-a thing relations
 			if ( $verb==$is_a_relation_name_ar && $object==$thing_class_name_ar) continue;
 			
+			if ( $tooManyConcepts && $verb==$is_a_relation_name_ar) continue;
+			
 			// IF SHOWING MAIN CONCEPTS ONLY, IGNORE CONCEPTS NOT IN MAIN CONCEPTS LIST 
 			if ($mainConceptsOnly &&  !isset($graphNodes[$object])) continue;
 			
+			//preprint_r($relArr,true);
 
 			$randomXLocation = rand($startLocationXMin,$startLocationXMax);
 			$randomYLocation = rand($startLocationYMin,$startLocationYMax);
@@ -324,15 +359,21 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 			}
 		
 			$linkArr=array("source"=>$graphNodes[$concept]["id"],
-					"target"=>$graphNodes[$object]["id"],"link_verb"=>$verb);
+					"target"=>$graphNodes[$object]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
 			
 			//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
 			$arrHash = getArrayHashForFields($linkArr,array('source','target'));
+			
+			/*preprint_r($graphNodes);
+			echoN($finalNodeLabel);
+			preprint_r($linkArr);*/
 			
 				
 			if ( !isset($linksHashLookupTable[$arrHash]))
 			{
 				$graphLinks[]=$linkArr;
+				
+				$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
 			}
 			else
 			{
@@ -355,7 +396,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 				
 			}*/
 			
-			$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
+			
 			/////////////////////////////////////////////////////////////
 		
 		}
@@ -363,11 +404,16 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 		foreach( $relationsOfConceptAsTarget as $index => $relArr)
 		{
 				
-			$verb  = $relArr["link_verb"];
+			$verb    = $relArr["link_verb"];
 			$subject = $relArr["source"];
+			$relationIndex = $relArr['relation_index'];
 		
 			// IF SHOWING MAIN CONCEPTS ONLY, IGNORE CONCEPTS NOT IN MAIN CONCEPTS LIST
 			if ($mainConceptsOnly &&  !isset($graphNodes[$subject])) continue;
+			
+			if ( $tooManyConcepts && $verb==$is_a_relation_name_ar) continue;
+			
+	
 			
 			$relHashID = buildRelationHashID($subject,$verb,$concept);
 			$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
@@ -394,9 +440,12 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 				$graphNodes[$subject]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $conceptArr,$randomXLocation,$randomYLocation,2);
 				
 			}
+			
+			
+		
 		
 			$linkArr = array("source"=>$graphNodes[$subject]["id"],
-					"target"=>$graphNodes[$concept]["id"],"link_verb"=>$verb);
+					"target"=>$graphNodes[$concept]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
 			
 
 			//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
@@ -406,6 +455,8 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 			if ( !isset($linksHashLookupTable[$arrHash]))
 			{
 				$graphLinks[]=$linkArr;
+				
+				$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
 			}
 			else
 			{
@@ -417,7 +468,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 				}					
 			}
 			
-			$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
+			
 			//////////////////////////////////////////////////////////////
 				
 		}
@@ -425,7 +476,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$searchResultTextArr,$minFreq=
 	}
 
 	
-	
+	//preprint_r($graphLinks);exit;
 	
 
 	
@@ -469,6 +520,20 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 	$nodeSerialNumber = 0;
 
 
+	if ( count($MODEL_QA_ONTOLOGY['CONCEPTS']) < 100)
+	{
+		$startLocationXMin = 100;
+		$startLocationXMax = 200;
+		$startLocationYMin = 100;
+		$startLocationYMax = 200;
+	}
+	else
+	{
+		$startLocationXMin = 100;
+		$startLocationXMax = 200;
+		$startLocationYMin = 200;
+		$startLocationYMax = 300;
+	}
 
 	foreach($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptNameID => $conceptArr)
 	{
@@ -482,23 +547,22 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 				
 			if ( !isset($graphNodes[$conceptNameID]) )
 			{
-				if ( $conceptFrequency < 100)
+			
+				if ( $lang == "EN")
 				{
-					$startLocationXMin = 500;
-					$startLocationXMax = 800;
-					$startLocationYMin = 100;
-					$startLocationYMax = 800;
+				
+					$conceptNameClean = convertConceptIDtoGraphLabel($conceptLabelEN);
+				
 				}
 				else
 				{
-					$startLocationXMin = 100;
-					$startLocationXMax = 200;
-					$startLocationYMin = 100;
-					$startLocationYMax = 200;
+						
+					$conceptNameClean = convertConceptIDtoGraphLabel($conceptLabelAR);
 				}
 				
-				$graphNodes[$conceptNameID]= array("id"=>$nodeSerialNumber++,"word"=>$conceptLabelAR,
-						"size"=>$conceptWeight,"x"=>rand($startLocationXMin,$startLocationXMax),
+				
+				$graphNodes[$conceptNameID]= array("id"=>$nodeSerialNumber++,"word"=>$conceptNameClean,
+						"size"=>$conceptFrequency,"x"=>rand($startLocationXMin,$startLocationXMax),
 						"y"=>rand($startLocationYMin,$startLocationYMax));
 			}
 
@@ -520,7 +584,8 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 			if ( isset($graphNodes[$subject]) && isset($graphNodes[$object]) )
 			{
 				$graphLinks[]=array("source"=>$graphNodes[$subject]["id"],
-								    "target"=>$graphNodes[$object]["id"]);
+								    "target"=>$graphNodes[$object]["id"],
+									"link_frequency"=>$relFreq);
 			}
 			
 		
@@ -549,7 +614,7 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 
 
 
-function ontologyToD3Treemap($MODEL_QA_ONTOLOGY,$minFreq=0)
+function ontologyToD3TreemapFlat($MODEL_QA_ONTOLOGY,$minFreq=0)
 {
 	global $lang;
 
@@ -564,6 +629,7 @@ function ontologyToD3Treemap($MODEL_QA_ONTOLOGY,$minFreq=0)
 
 	/** SHOULD BE ZERO BASED FOR D3 TO WORK - o.target.weight = NULL**/
 	$nodeSerialNumber = 0;
+
 
 
 
@@ -622,6 +688,204 @@ function ontologyToD3Treemap($MODEL_QA_ONTOLOGY,$minFreq=0)
 
 
 
+
+	return $treeRootObj;
+}
+
+
+function getTreeNodeChildren($MODEL_QA_ONTOLOGY,$conceptNameID,$minFreq,$lang,$level,$alreadyInLevel1)
+{
+	global $thing_class_name_ar,$is_a_relation_name_ar;
+	
+	$childrenArr = array();
+	
+	if ( $level++ > 5 ) return;
+	
+	
+	
+	$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptNameID];
+	
+		
+
+
+	foreach( $relationsOfConceptAsSource as $index => $relArr)
+	{
+	
+		$verb  = $relArr["link_verb"];
+		$subject = $relArr["source"];
+
+		
+		if ( $verb!=$is_a_relation_name_ar ) continue;
+			
+		//echoN("==".$subject);
+		
+		$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
+	
+		$conceptLabelAR = $conceptArr['label_ar'];
+		$conceptLabelEN = $conceptArr['label_en'];
+		$conceptFrequency = $conceptArr['frequency'];
+		$conceptWeight = $conceptArr['weight'];
+	
+	
+		$type = $conceptArr['type'];
+	
+			
+		if ( $conceptFrequency< $minFreq) continue;
+	
+	
+		if ( $lang == "EN")
+		{
+		
+			$conceptNameClean = convertConceptIDtoGraphLabel($conceptLabelEN);
+		
+		}
+		else
+		{
+				
+			$conceptNameClean = convertConceptIDtoGraphLabel($conceptLabelAR);
+		}
+		
+	
+		$children= array();
+		
+		if ( !isset($alreadyInLevel1[$subject]))
+		{
+			$children = getTreeNodeChildren($MODEL_QA_ONTOLOGY,$subject,$minFreq,$lang,$level,$alreadyInLevel1);
+		}
+		//else
+		//{
+		//	preprint_r($conceptArr);
+		//	exit;
+		//}
+
+
+	
+		
+		$childrenArr[] = array("name"=>$conceptNameClean,"size"=>$conceptFrequency,
+				"children"=>$children);
+		
+	
+	
+	
+	}
+	
+
+	
+	return $childrenArr;
+}
+function ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,$minFreq=0,$lang)
+{
+	global $lang;
+
+	$alreadyInLevel1 = array();
+	
+
+	$treeRootObj = array();
+
+	
+	$treeRootObj["name"]="قرآن";
+	if ( $lang=="EN")
+	{
+		$treeRootObj["name"]="Quran";
+	}
+		
+	$treeRootObj["children"]=array();
+
+
+
+	/** SHOULD BE ZERO BASED FOR D3 TO WORK - o.target.weight = NULL**/
+	$nodeSerialNumber = 0;
+
+
+	//echoN(count($MODEL_QA_ONTOLOGY['CONCEPTS']));
+	
+	foreach($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptNameID => $conceptArr)
+	{
+
+		$conceptLabelAR = $conceptArr['label_ar'];
+		$conceptLabelEN = $conceptArr['label_en'];
+		$conceptFrequency = $conceptArr['frequency'];
+		$conceptWeight = $conceptArr['weight'];
+		
+		
+		
+		
+		$type = $conceptArr['type'];
+	
+			
+		if ( $conceptFrequency< $minFreq) continue;
+
+		
+		//ONLY CLASSES (CLUSTERS)
+		if ( $type=="class")
+		{
+			$alreadyInLevel1[$conceptNameID]=1;
+			
+			//echoN($conceptNameID);
+			
+			if ( $lang == "EN")
+			{
+
+				$conceptNameClean = convertConceptIDtoGraphLabel($conceptLabelEN);
+
+			}
+			else
+			{
+					
+				$conceptNameClean = convertConceptIDtoGraphLabel($conceptLabelAR);
+			}
+			
+			
+				
+			
+			/*= array("id"=>$nodeSerialNumber++,"word"=>$conceptLabelAR,
+			 "size"=>$conceptWeight,"x"=>rand($startLocationXMin,$startLocationXMax),
+					"y"=>rand($startLocationYMin,$startLocationYMax));*/
+			$treeRootObj["children"][] = array("name"=>$conceptNameClean,"size"=>$conceptFrequency,
+					"children"=>getTreeNodeChildren($MODEL_QA_ONTOLOGY,$conceptNameID,$minFreq,$lang,1,$alreadyInLevel1));
+
+			
+			
+		}
+
+
+
+	}
+
+	
+	
+	/*
+	foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $index => $relArr)
+	{
+
+		$subject = $relArr['subject'];
+		$verbAR = $relArr['verb'];
+		$verbEN = $relArr['verb_translation_en'];
+		$verbUthmani = $relArr['verb_uthmani'];
+		$relFreq = $relArr['frequency'];
+		$object = $relArr['object'];
+			
+
+		//$treeRootObj[$subject]["children"][]["name"]=$object;
+
+		$objectConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
+
+			
+		$index = search2DArrayForValue($currentArr,$subject);
+
+
+		$isObjectIncludedBefore = search2DArrayForValue($currentArr[$index]["children"],$object);
+
+		if ( $isObjectIncludedBefore===false)
+		{
+			//$currentArr[$index]["children"][] = array("name"=>$object,"size"=>$objectConceptArr['frequency'],"children"=>array());
+		}
+
+	}*/
+
+
+
+	//echoN(count($treeRootObj["children"]));
 
 	return $treeRootObj;
 }

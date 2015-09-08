@@ -50,7 +50,7 @@ class OWLOntology
 	 * @param $id instance id
 	 * @return OWLInstance class
 	 */ 
-	function getInstance($id){
+	function getInstance($id,$index){
 	}
 
 	//----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ class OWLOntology
 	/**
 	 * create new property
 	 */
-	function createProperty($id){
+	function createProperty($id, $domain, $range, $is_datatype){
   }
 
 	//---------------------------------------------------------------------------

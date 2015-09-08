@@ -74,32 +74,52 @@ function getSimilarWords($queryWords)
 	
 }
 
+function getSupportedArabicQuestionTypes()
+{
+	$arabicQuestionWords = array();
+	$arabicQuestionWords['من هو']="Person";
+	$arabicQuestionWords['من هم']="Person";
+	$arabicQuestionWords['من هى']="Person";
+	$arabicQuestionWords['من الذى']="Person";
+	$arabicQuestionWords['من الذين']="Person";
+	$arabicQuestionWords['ما هى']="General";
+	$arabicQuestionWords['ما هو']="General";
+	$arabicQuestionWords['ماذا']="General";
+	
+	return $arabicQuestionWords;
+}
+
+function getSupportedEnglishQuestionTypes()
+{
+	$englishQuestionWords = array();
+	$englishQuestionWords['who']="Person";
+	$englishQuestionWords['what']="General";
+	$englishQuestionWords['how long']="Time";
+	$englishQuestionWords['how many']="Quantity";
+	$englishQuestionWords['how much']="Quantity";
+	
+	return $englishQuestionWords;
+}
+
 function  containsQuestionWords($query,$lang)
 {
 	
 	$query = strtolower($query);
 
-	$arabicQuestionWords = array();
-	$arabicQuestionWords['من هو']=null;
-	$arabicQuestionWords['من هم']=null;
-	$arabicQuestionWords['من هى']=null;
-	$arabicQuestionWords['من الذى']=null;
-	$arabicQuestionWords['من الذين']=null;
-	$arabicQuestionWords['ما هى']=null;
-	$arabicQuestionWords['ما هو']=null;
-	$arabicQuestionWords['ماذا']=null;
-				
-	$englishQuestionWords = array();
-	$englishQuestionWords['who']=null;
-	$englishQuestionWords['what']=null;
 	
+				
+
+	
+			
 	if ( $lang=="EN")
 	{
-		foreach($englishQuestionWords as  $word=>$dummy)
+		$englishQuestionWords = getSupportedEnglishQuestionTypes();
+		
+		foreach($englishQuestionWords as  $word=>$questionType)
 		{
 			if ( strpos($query, "$word ")===0)
 			{
-				return $word;
+				return $questionType;
 			}
 				
 			
@@ -107,11 +127,13 @@ function  containsQuestionWords($query,$lang)
 	}
 	else
 	{
-		foreach($arabicQuestionWords as  $word=>$dummy)
+		$arabicQuestionWords = getSupportedArabicQuestionTypes();
+		
+		foreach($arabicQuestionWords as  $word=>$questionType)
 		{
 				if ( mb_strpos($query, "$word ")===0)
 			{
-				return $word;
+				return $questionType;
 			}
 		
 				
@@ -359,6 +381,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 	$questionIncludesVerb =  ($isQuestion && doesQuestionIncludesVerb($extendedQueryArr));
 
 
+
 	
 	foreach($extendedQueryArr as  $word=> $pos)
 	{
@@ -366,6 +389,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		// ignore any tern which is not nound or verb
 		// [0-9]+ to allow normal non pos tagged queries - incase of pharase search
 		if ( !preg_match("/NN|VB|[0-9]+/", $pos)) continue;
+		
 		
 		
 		/*
@@ -392,6 +416,8 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 			
 			
 		
+			
+			
 			// FOR INBOUND IS-A RELATIONS EX: X IS AN ANIMAL($word)
 			foreach($inboundRelationsArr as $index => $relationArr)
 			{
@@ -407,6 +433,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 				$subject = cleanWordnetCollocation($subject);
 				///////////////////////////
 				
+				//TODO: check if this is needed $subject!=$thing_class_name
 				if ( $verbAR==$is_a_relation_name_ar && $subject!=$thing_class_name)
 				{
 					
@@ -429,12 +456,16 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		
 			if ( $isQuestion )
 			{
+				
+				
 				// FOR OUTBOUND IS-A RELATIONS EX: X($word) IS AN PERSON			
 				foreach($outboundRelationsArr as $index => $relationArr)
 				{
 					
 					$verbAR = $relationArr['link_verb'];
 					$object = $relationArr['target'];
+					
+					
 				
 					if ( $lang=="EN")
 					{
@@ -517,7 +548,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 	return $conceptsFromTaxRelations;
 }
 
-function extendQueryByExtractingWordDerviations($extendedQueryWordsArr)
+function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 {
 	global $MODEL_SEARCH,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
 
@@ -731,10 +762,18 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			 *
 			* NOTE: A DECISION SHOULD BE TAKEN TO SERACH AROUND AND REMOVE PAUSE MARKS OR NOT
 			*/
-			$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
-			//echoN("|$query|$verseText");
-			$fullQueryIsFoundInVerseCount = preg_match_all("/(^|[ ])$query([ ]|\$)/umi", $verseTextWithoutPauseMarks);
+			if ($lang=="AR")
+			{
+				$verseTextWithoutPauseMarks = removePauseMarkFromVerse($verseText);
+			}
+			else
+			{
+				$verseTextWithoutPauseMarks = removeSpecialCharactersFromMidQuery($verseText);
+			}
 			
+			//echoN("|$query|$verseTextWithoutPauseMarks");
+			$fullQueryIsFoundInVerseCount = preg_match_all("/(^|[ ])$query([ ]|\$)/umi", $verseTextWithoutPauseMarks);
+
 		
 			if ( $isPhraseSearch && $WORD_TYPE!="PRONOUN_ANTECEDENT")
 			{
@@ -788,7 +827,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 				$scoringTable[$SURA.":".$AYA]['DISTANCE']=0;
 				$scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT']=0;
 				$scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']=0;
-				$scoringTable[$SURA.":".$AYA]['IS_FILL_QUERY_IN_VERSE']=0;
+				$scoringTable[$SURA.":".$AYA]['IS_FULL_QUERY_IN_VERSE']=0;
 				$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
 				$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
 				$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']=array();
@@ -811,6 +850,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			$numberOfOccurencesForWord > 0 &&
 			$scoringTable[$SURA.":".$AYA]['FREQ']>0 )
 			{
+				//TODO: seems duplicate of WORD_OCCURENCES_COUNT
 				// Raise the frequency (score) of ayas containing more than one of the query items
 				$scoringTable[$SURA.":".$AYA]['FREQ']++;//=$numberOfOccurencesForWord;
 			}
@@ -897,7 +937,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	
 			
 			
-			$scoringTable[$SURA.":".$AYA]['IS_FILL_QUERY_IN_VERSE'] = $fullQueryIsFoundInVerseCount;
+			$scoringTable[$SURA.":".$AYA]['IS_FULL_QUERY_IN_VERSE'] = $fullQueryIsFoundInVerseCount;
 			
 	
 			$scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']=count($scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS']);
@@ -907,7 +947,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 													 ($scoringTable[$SURA.":".$AYA]['QUERY_WORDS_IN_VERSE']*10)+
 													 (count($scoringTable[$SURA.":".$AYA]['PRONOUNS'])*1)+
 													 ($scoringTable[$SURA.":".$AYA]['WORD_OCCURENCES_COUNT']*1)+
-													 ($scoringTable[$SURA.":".$AYA]['IS_FILL_QUERY_IN_VERSE']*20);
+													 ($scoringTable[$SURA.":".$AYA]['IS_FULL_QUERY_IN_VERSE']*20);
 	
 		}
 	}
@@ -1102,10 +1142,12 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 		// empty in case of only pronouns
 		if ( !empty($WORDS_IN_AYA))
 		{
+
 			if ( $isPhraseSearch )
 			{
 				// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
 				$TEXT = preg_replace("/(".$query.")/mui", "<marked>\\1</marked>", $TEXT);
+	
 	
 			}
 			else
@@ -1239,7 +1281,7 @@ function postResultSuggestions($queryWordsWithoutDerivation)
 	
 	$wordsNotInTheQuran = array();
 	
-	preprint_r($queryWordsWithoutDerivation);
+
 	foreach($queryWordsWithoutDerivation as $word => $dummy)
 	{
 		if (!isset($MODEL_SEARCH['INVERTED_INDEX'][$word]) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
@@ -1248,7 +1290,7 @@ function postResultSuggestions($queryWordsWithoutDerivation)
 		}
 	}
 	
-	preprint_r($wordsNotInTheQuran);
+
 
 		// GET SIMILAR WORDS BY MIN-EDIT-DISTANCE
 		return getSimilarWords(array_keys($wordsNotInTheQuran));
@@ -1315,16 +1357,6 @@ function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
 }
 
 
-function answerUserQuestion($queryWordsArr,$taggedSignificantWords, $lang)
-{
-	
-	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations($taggedSignificantWords, $lang, true);
-	
-	
-	return $conceptsFromTaxRelations;
-	
-
-}
 
 
 

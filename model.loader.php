@@ -33,6 +33,7 @@ $MODEL_QA_ONTOLOGY['CONCEPTS'] =  array();;
 $MODEL_QA_ONTOLOGY['RELATIONS'] =  array();;
 $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] =  array();;
 $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] =  array();;
+$MODEL_QA_ONTOLOGY['VERB_INDEX'] =  array();;
 
 
 
@@ -63,7 +64,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	global $wordByWordTranslationFile,$transliterationFile;
 	global $MODEL_WORDNET,$qaOntologyNamespace,$qaOntologyFile,$is_a_relation_name_ar,$is_a_relation_name_en;
 	global $thing_class_name_ar,$thing_class_name_en;
-	GLOBAL $MODEL_QA_ONTOLOGY;
+	GLOBAL $MODEL_QA_ONTOLOGY,$arabicStopWordsFileL2;
 	
 
 	//not working
@@ -231,7 +232,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 
-	/////////// ONTOLOGY LOADING
+	/////////// LOAD ONTOLOGY
 	$reader = new OWLReader();
 	$ontology = new OWLMemoryOntology();
 	$thingClassName = "$thing_class_name_ar";
@@ -239,7 +240,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	$reader->readFromFile($qaOntologyFile, $ontology);
 	
-
+	
 	
 	//preprint_r($ontology->{'owl_data'}['classes']);
 	
@@ -265,9 +266,11 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 		$className = stripOntologyNamespace($className);
 		
-		$qaOntologyConceptsArr[$className]=array();
+		$qaOntologyConceptsArr[$className]=array("type"=>"class");
 		
 		
+		//echoN($className);
+		//preprint_r($infoArr);
 		
 		foreach($infoArr[0]['properties'] as $index => $propertiesArr)
 		{
@@ -284,7 +287,7 @@ function loadModels($modelsToBeLoaded,$lang)
 					
 				$objectConceptName = stripOntologyNamespace($objectClassArr[0]);
 					
-				//echoN("CLASS:***** $verb -> $objectConceptName");
+				//echoN("CLASS:***** $className => $verb -> $objectConceptName");
 					
 				$attributedArr = next($onePropertyArr);
 					
@@ -296,6 +299,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				$qaOntologyRelationsArr[$relHashID]= array("subject"=>$className,"verb"=>$verb,
 						"object"=>$objectConceptName,"frequency"=>$freq,
 						"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
+				//preprint_r($qaOntologyRelationsArr[$relHashID]);
 				$relationsCount++;
 		
 			}
@@ -366,7 +370,8 @@ function loadModels($modelsToBeLoaded,$lang)
 			}
 
 			
-			$qaOntologyConceptsArr[$subjectConceptName]=array();
+			$qaOntologyConceptsArr[$subjectConceptName]=array("type"=>"instance");
+	
 		}
 		
 		
@@ -434,7 +439,10 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 	$diffArr = array_diff(array_keys($qaOntologyConceptsArr2),array_keys($finalConcepts));
 
-	//echoN("OWL-PROPRIETARY-CONCEPTS-DIFF-COUNT:".COUNT($matchingTable));
+	$conceptsDiffCount = count($matchingTable);
+	
+	if ( $relationsDiffCount> 0)
+	echoN("<b>### OWL-PROPRIETARY-CONCEPTS-DIFF-COUNT:</b>".$conceptsDiffCount);
 	//preprint_r($diffArr);
 	//////////////////////////////////////////////////////////////
 	
@@ -451,6 +459,7 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 		//since Thing relations are not in the list we are comparing with
 		if ( $relArr['object']==$thing_class_name_ar ) continue;
+		//echoN($trippleStr);
 	
 		$trippleStr = trim($trippleStr);
 		
@@ -480,13 +489,19 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	$matchingTable = array_filter($matchingTable, 'filterFunc');
 	
-	//echoN("OWL-PROPRIETARY-RELATIONS-DIFF-COUNT:".count($matchingTable));
-	//preprint_r($matchingTable);
+	$relationsDiffCount = count($matchingTable);
+	
+	if ( $relationsDiffCount> 0)
+	{
+		echoN("<b>### OWL-PROPRIETARY-RELATIONS-DIFF-COUNT:</b>".$relationsDiffCount);
+		preprint_r($matchingTable);
+	}
 	//////////////////////////////////////////////
 	
 	//echoN( join("<br>",array_keys($qaOntologyConceptsArr)));
 	
 
+	$qaOntologyVerbIndex = array();
 	$qaOntologyGraphSourcesIndex = array();
 	$qaOntologyGraphTargetsIndex = array();
 	
@@ -494,13 +509,23 @@ function loadModels($modelsToBeLoaded,$lang)
 	{
 		$subject  =$relArr['subject'];
 		$verb = $relArr['verb'];
+		$verb_translation_en = $relArr['verb_translation_en'];
 		$object = $relArr['object'];
 		
-		$qaOntologyGraphSourcesIndex[$subject][]=array("link_verb"=>$verb,"target"=>$object);
-		$qaOntologyGraphTargetsIndex[$object][]=array("source"=>$subject,"link_verb"=>$verb);
+	
+		
+		$qaOntologyVerbIndex[$verb][]=array("SUBJECT"=>$subject,"OBJECT"=>$object);
+		$qaOntologyVerbIndex[$verb_translation_en][]=array("SUBJECT"=>$subject,"OBJECT"=>$object);
+		
+		$qaOntologyGraphSourcesIndex[$subject][]=array("link_verb"=>$verb,"target"=>$object,"relation_index"=>$index);
+		$qaOntologyGraphTargetsIndex[$object][]=array("source"=>$subject,"link_verb"=>$verb,"relation_index"=>$index);
+		
+		
 		
 		
 	}
+	
+	
 	
 	$qaOntologyConceptsENtoARMapArr = array();
 
@@ -509,6 +534,7 @@ function loadModels($modelsToBeLoaded,$lang)
 		$enLabel = trim(strtolower($conceptArr['label_en']));
 	
 		$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
+		//$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
 	}
 	
 
@@ -519,11 +545,13 @@ function loadModels($modelsToBeLoaded,$lang)
 	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] = $qaOntologyGraphSourcesIndex;
 	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
 	
+	$MODEL_QA_ONTOLOGY['VERB_INDEX']  = $qaOntologyVerbIndex;
+	
 	$res = apc_store("MODEL_QA_ONTOLOGY",$MODEL_QA_ONTOLOGY);
 	
 	if ( $res===false){ throw new Exception("Can't cache MODEL_QA_ONTOLOGY"); }
 	
-	preprint_r($MODEL_QA_ONTOLOGY);exit;
+	//preprint_r($MODEL_QA_ONTOLOGY);exit;
 	//////// END ONTOLOGY LOADING
 	
 
@@ -840,7 +868,7 @@ function loadModel($lang,$type,$file)
 		global $META_DATA,$basmalaText,$englishResourceFile,$arabicResourceFile,$quranCorpusMorphologyFile;
 		global $quranaPronounResolutionConceptsFile,$quranaPronounResolutionDataFileTemplate,$quranFileUthmaniAR;
 		global $TRANSLATION_MAP_EN_TO_AR,$TRANSLATION_MAP_AR_TO_EN,$TRANSLITERATION_WORDS_MAP,$TRANSLITERATION_VERSES_MAP;
-		global $basmalaTextUthmani2;
+		global $basmalaTextUthmani2,$arabicStopWordsFileL2;
 				
 		$QURAN_TEXT = array();
 
@@ -1006,6 +1034,8 @@ function loadModel($lang,$type,$file)
 			//dont skip new lines here (FILE_SKIP_EMPTY_LINES) for the skipping "57" condition below to work
 			$qacFileLinesArr = file($quranCorpusMorphologyFile,FILE_IGNORE_NEW_LINES);
 			
+			$rootsLookupArray = array();
+			
 			$headerIndex=0;
 			$segmentIndex=1;
 			foreach ($qacFileLinesArr as $line)
@@ -1095,6 +1125,11 @@ function loadModel($lang,$type,$file)
 					if ( $featureName=="LEM" || $featureName=="ROOT")
 					{
 						addToInvertedIndex($INVERTED_INDEX,trim($featureValue),($suraID-1),($verseID-1),$wordIndex,trim($featureName),$formOrSegmentReverseTransliterated);
+						
+						if ( $featureName=="ROOT")
+						{
+							$rootsLookupArray[$formOrSegmentReverseTransliterated]=$featureValue;
+						}
 					}
 					
 					
@@ -1138,6 +1173,9 @@ function loadModel($lang,$type,$file)
 			$qacFileLinesArr = null;
 			unset($qacFileLinesArr);
 			
+			
+		}
+		
 			######### Qurana Pronomial Anaphone Corpus ###################	
 			
 			
@@ -1243,7 +1281,15 @@ function loadModel($lang,$type,$file)
 																		"ANTECEDENT_SEGMENTS"=>preg_split("/ /", $pronounAntecedent));
 							
 							
-							 addToInvertedIndex($INVERTED_INDEX,$quranaConcecpts[$conceptID]['AR'],($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
+							if ( $lang=="EN")
+							{
+								addToInvertedIndex($INVERTED_INDEX,strtolower($quranaConcecpts[$conceptID]['EN']),($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
+							}
+							else
+							{
+								addToInvertedIndex($INVERTED_INDEX,$quranaConcecpts[$conceptID]['AR'],($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
+							}
+							 
 							
 						}
 					}
@@ -1273,7 +1319,7 @@ function loadModel($lang,$type,$file)
 			
 			//echo preprint_r($QURAN_TEXT);;
 			
-		}
+		
 		
 		
 
@@ -1281,6 +1327,7 @@ function loadModel($lang,$type,$file)
 	  	if ( strpos($lang,"AR")!==false)
 	  	{
 			$stopWordsArr = getStopWordsArrByFile($arabicStopWordsFile);
+			$stopWordsStrictL2Arr = getStopWordsArrByFile($arabicStopWordsFileL2);
 			$pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 	  	}
 	  	else
@@ -1710,15 +1757,10 @@ function loadModel($lang,$type,$file)
 				  		$MODEL_CORE[$lang]['QURAN_TEXT'] = $QURAN_TEXT;
 
 				  		$MODEL_CORE[$lang]['RESOURCES']=$RESOURCES;
-				  		
-			
-				  	
-				  		
-				  		
-				  		
-				  		
-				  		
+
 				  		$MODEL_CORE[$lang]['STOP_WORDS']= $stopWordsArr;
+				  		
+				  		$MODEL_CORE[$lang]['STOP_WORDS_STRICT_L2']= $stopWordsStrictL2Arr;
 				  		
 				  		//file_put_contents("$serializedModelFile.core", (json_encode($MODEL_CORE)));
 				  		
@@ -1746,6 +1788,8 @@ function loadModel($lang,$type,$file)
 					  		$MODEL_QAC['QAC_MASTERTABLE'] = $qacMasterSegmentTable;
 					  		$MODEL_QAC['QAC_POS'] = $qacPOSTable;
 					  		$MODEL_QAC['QAC_FEATURES'] = $qacFeaturesTable;
+					  		$MODEL_QAC['QAC_ROOTS_LOOKUP'] = $rootsLookupArray;
+					  		
 					  		
 					  		
 					  		

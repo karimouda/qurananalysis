@@ -14,10 +14,7 @@ require_once("query.handling.common.php");
 
 ?>
 
-<div id='search-results-summary'>
-<span> Searched for <?php echo join(" ",$queryWordsArr)?> </span>, 
-<span>  <?php echo $resultStatsArr['VERSES_COUNT']?> verses found </span>
-</div>
+<?php require_once('search.result.statement.inc.php')?>
 
 <?php 
 //// PRINT RESULT VERSES

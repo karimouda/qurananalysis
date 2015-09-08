@@ -19,7 +19,7 @@
 	    
    	</ul>
 	
-	<a target="_blank" href="https://github.com/karimouda/qurananalysis">hhttps://github.com/karimouda/qurananalysis</a> (will be accessible in October 2015)
+	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a> (will be accessible in October 2015)
 
 </p>
 <p class='info-page-text'>

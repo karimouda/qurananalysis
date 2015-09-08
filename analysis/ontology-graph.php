@@ -47,12 +47,15 @@ loadModels("core",$lang);
 			  
 			  	
 			  	<div >
-			  	<div id="graph-verse-or-text-selection" style="direction:<?php echo ($lang=="AR")? "rtl":"ltr";?>">
-			  	<!-- 
-			  		<input type="radio" name="source-selection" value="quran" checked="true">From Quran
-					<input type="radio" name="source-selection" value="owntext">Own Text
-					 -->
-					<br>
+			  	<div id="graph-verse-or-text-selection" >
+			  
+			 		 
+			  	
+			  		<a href='javascript:openFullGraph()'>Open Full Quran Graph</a>
+			  		<br/>
+						<br/>
+					
+					<div style="direction:<?php echo ($lang=="AR")? "rtl":"ltr";?>">
 					<?php echo $MODEL_CORE['RESOURCES']['CHOOSE_CHAPTER_OR_VERSE']?>			
 					<select id='graph-verse-selection'>
 					 <option suraIndex="" value="" selected="true">&nbsp;</option>
@@ -62,24 +65,17 @@ loadModels("core",$lang);
 								
 								$totalVerses = $perSuraArr['VERSES'];
 						?>
-								<optgroup  label="<?=$perSuraArr['NAME']?>">
-								 <option suraIndex="<?=$suraIndex?>" value="ALL_SURA"><b><?=$perSuraArr['NAME']?> - <?php echo $MODEL_CORE['RESOURCES']['THE_WHOLE_CHAPTER']?></b></option>
-								<?php 
-									for($a=0;$a<$totalVerses;$a++)
-									{
-										$verseText = $MODEL_CORE['QURAN_TEXT'][$suraIndex][$a];
-								?>
-							 		 <option suraIndex="<?=$suraIndex?>" value="<?=$a?>"><?=mb_substr($verseText, 0,100)."..."?></option>
-							 		 
-							 		 <?php 
-									}
-							 		 ?>
-							    </optgroup>
+							
+								 <option suraIndex="<?=$suraIndex?>" value=<?=$perSuraArr['NAME']?>><b><?=$perSuraArr['NAME']?></option>
+							
+							 		
+							
 					  
 					  <?php 
 							}
 					  ?>
 					</select>
+					</div>
 					
 			
 
@@ -102,7 +98,12 @@ loadModels("core",$lang);
 		?>	
 	<script type="text/javascript">
 
+	function openFullGraph()
+	{
 
+		openPopupWindow("/analysis/ontology-full-quran-graph.php",1200,900);
+			
+	}
 				
 
 

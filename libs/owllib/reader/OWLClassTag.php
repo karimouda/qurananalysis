@@ -19,9 +19,11 @@ class OWLClassTag extends OWLTag
   {
   	OWLTag::create($model, $name, $attributes, $base);
 
+  	
   	if(array_key_exists($this->RDF_ID, $attributes)){
 			$this->id = $model->getNamespace() . $attributes[$this->RDF_ID];
 			$this->cls = $model->createClass($this->id);
+			
 			
   	}
   	else if(array_key_exists($this->RDF_ABOUT, $attributes)){
@@ -39,11 +41,11 @@ class OWLClassTag extends OWLTag
    {
 	   OWLTag::endTag($parser, $tag);
 	  
-	   //echoN("ENDTAG1");
+	  //echoN("ENDTAG1:$tag");
 	   
-	   if(!$this->wantsMore())
-	   {
-		   	//echoN("ENDTAG2");
+	  if(!$this->wantsMore())
+	  {
+		   //echoN("ENDTAG2");
 		   $this->model->addProperty($this->id,$this->properties,"CLASS");
 	   }
    }
@@ -58,10 +60,13 @@ class OWLClassTag extends OWLTag
   {
   	
  		$name = get_class($child); 
+ 		
+ 		//echoN("HERE4:$name");
  	
  		if($name == "OWLPropInstanceTag"){
  			
- 			//echoN("PROCESSING OWLPropInstanceTag");
+ 		
+ 			//echoN("PROCESSING CLASS OWLPropInstanceTag");
  			
  			$property_id = preg_replace("/#:/", "#", $child->getName());
  		
@@ -71,9 +76,19 @@ class OWLClassTag extends OWLTag
  			$relationMetaData  = $propArr[1];
  		
  			$properties = array($property_id=>array($objectID),"RELATION_META"=>$relationMetaData);
+ 			
+ 			
  		
  			$this->properties[] = $properties;
  		
+ 			//echoN("HERE5:");
+ 			
+ 			
+ 			
+ 			//echoN($child->getName());
+ 			
+ 		
+ 			//preprint_r($this->properties);
  			
  		
  		

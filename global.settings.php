@@ -12,10 +12,15 @@ $BUILD_VERSION = "0.1.0";
 $MAIN_JS_PATH = "/libs/js/main.js?bv=$BUILD_VERSION";
 
 
-$JQUERY_PATH = "/libs/js/jquery-2.1.1.min.js";
+$JQUERY_PATH = "/libs/js/jquery/jquery-2.1.1.min.js";
 
-$D3_PATH = "/libs/js/d3/d3.min.js";
+$D3_PATH = "/libs/js/d3/d3.js";
 
+$JQUERY_TAGCLOUD_PATH ="/libs/js/jquery.tagcloud.js";
+
+
+$TINYSORT_PATH = "/libs/js/tinysort/tinysort.min.js";
+$TINYSORT_JQ_PATH = "/libs/js/tinysort/jquery.tinysort.min.js";
 
 /*
 $HIGHCHARTS_PATH = "/libs/js/highcharts-4-0-1/js/highcharts.js";
@@ -38,7 +43,7 @@ $wordByWordTranslationFile = dirname(__FILE__)."/data/translations/word-by-word-
 $transliterationFile = dirname(__FILE__)."/data/transliteration/en.transliteration.txt";
 $wordnetDir = dirname(__FILE__)."/data/wordnet/dict/";
 
-$customTranslationTableFile = dirname(__FILE__)."/data/generated/translation.en-ar.table";
+$customTranslationTableFile = dirname(__FILE__)."/data/generated/translation.table";
 
 
 $quranFileAR_XML = dirname(__FILE__)."/data/quran-simple-clean.xml";
@@ -68,7 +73,8 @@ $modelSources['EN']= array("type"=>"TXT","file"=>$quranFileEN);
 $serializedModelFile = dirname(__FILE__)."/data/model.ser";
 
 $pauseMarksFile = dirname(__FILE__)."/data/pause.marks";
-$arabicStopWordsFile = dirname(__FILE__)."/data/quran-stop-words.ar";
+$arabicStopWordsFile = dirname(__FILE__)."/data/quran-stop-words.strict.l1.ar";
+$arabicStopWordsFileL2 = dirname(__FILE__)."/data/quran-stop-words.strict.l2.ar";
 $englishStopWordsFile = dirname(__FILE__)."/data/english-stop-words.en";
 
 $sajdahMark = "۩";

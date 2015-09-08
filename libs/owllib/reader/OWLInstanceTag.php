@@ -53,6 +53,10 @@ class OWLInstanceTag extends OWLTag
 			//echoN("$this->id, $this->class_id,");
 			//preprint_r($this->properties);
 			
+			//echoN("INSTANCE_END_TAG");
+			
+			//preprint_r($this->properties);
+			
 			$this->model->addInstance($this->id, $this->class_id, $this->properties);
 		}
   }
@@ -71,6 +75,7 @@ class OWLInstanceTag extends OWLTag
   		if($name == "OWLPropInstanceTag"){
   			
   			//echoN("HERE");
+  		//echoN("INSTANCE_processChild_OWLPropInstanceTag");
 	  	$property_id = preg_replace("/#:/", "#", $child->getName());
 	  	
 	  	$propArr = $child->getResources();

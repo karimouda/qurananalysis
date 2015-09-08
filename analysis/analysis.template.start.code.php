@@ -8,13 +8,13 @@
  }
 
  ?>
-   <div id='header'>
+
 			  	
      <?php 
 		require("../header.php");
 	 ?>
   		
-  </div>
+
  
   	<div id='options-area' class='oa-analysis'>
 			  	<?php 

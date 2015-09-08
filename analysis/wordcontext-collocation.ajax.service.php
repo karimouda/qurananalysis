@@ -1,14 +1,20 @@
 <?php 
 require_once("../global.settings.php");
 
-$lang = "AR";
 
 
 
-if ( isset($_GET['lang']) )
+
+
+$lang = $_GET['lang'];
+
+
+if ($lang=="EN")
 {
-	$lang = $_GET['lang'];
+	showTechnicalError("Only Arabic is supported here, you chose English !");
 }
+
+$lang = "AR";
 
 loadModels("core,search,qac",$lang);
 

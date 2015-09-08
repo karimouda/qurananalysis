@@ -13,7 +13,7 @@ if ( isset($_GET['lang']) )
 
 if ( $lang=="EN")
 {
-	echoN("Pause Marks are supported only for Arabic.");
+	echoN("Pause Marks are supported only for Arabic, you chose English !");
 	exit;
 }
 

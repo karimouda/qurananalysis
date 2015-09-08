@@ -1,6 +1,10 @@
 <?php 
 require_once(dirname(__FILE__)."/../global.settings.php");
 
+/**
+ * 
+ * Replace undrscore with space for multi-word concepts
+ */
 function cleanWordnetCollocation($str)
 {
 	return strtr($str,"_", " ");
@@ -446,7 +450,16 @@ function getWordnetEntryByWordString($wordToSearchFor, $includeOnlyRelationsOfTy
 
 function getGlossaryFirstPart($glossary)
 {
-	return trim(substr($glossary, 0,strpos($glossary, ";") ));
+
+	$semiColumnLoc = strpos($glossary, ";");
+	
+	if ( $semiColumnLoc!==false)
+	{
+		return trim(substr($glossary, 0, $semiColumnLoc));
+	}
+
+		return $glossary;
+	
 }
 
 

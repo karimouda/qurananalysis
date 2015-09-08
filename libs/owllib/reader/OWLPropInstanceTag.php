@@ -25,6 +25,7 @@ class OWLPropInstanceTag extends OWLTag
 	
 		if(array_key_exists($this->RDF_RESOURCE, $attributes)){
 			$id = $this->addBaseToURI($attributes[$this->RDF_RESOURCE]);
+			//echoN("HERE:$id");
 			array_push($this->resources, $id);
 		}
 		
@@ -32,6 +33,7 @@ class OWLPropInstanceTag extends OWLTag
 		/// ADDED BY KARIM
 		unset($attributes[$this->RDF_RESOURCE]);
 		array_push($this->resources, $attributes);
+		//echoN("HERE2:".print_r($attributes,true));
 		
 		//echoN("PROCESSING $name");
 		//preprint_r($this->resources);
@@ -64,6 +66,7 @@ class OWLPropInstanceTag extends OWLTag
  		//echoN("C".$name);
   	if($name == "owlinstancetag"){
   		array_push($this->resources, $child->getID());
+  		//echoN("HERE3:".$child->getID());
   	}
   }
 

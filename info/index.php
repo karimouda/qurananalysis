@@ -72,6 +72,11 @@ $page = $_GET['page'];
 							{
 								include("$page.php");
 							}
+							else
+							if ( $page=="faq")
+							{
+								include("$page.php");
+							}
 							
 						?>
 			  	</td>

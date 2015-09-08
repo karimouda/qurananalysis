@@ -51,6 +51,13 @@ $LOAD_FROM_CACHE = TRUE;
 			  	<div id='repetition-area'>
 		
 					<?php 
+					if ( $lang=="EN")
+					{
+							
+						showTechnicalError("Only Arabic is supported here, you chose English !");
+					
+					
+					}
 					
 					$repeatedSubStrings = array();
 
@@ -66,9 +73,6 @@ $LOAD_FROM_CACHE = TRUE;
 					
 						
 					
-					?>
-					
-						<?php 
 							$quranVersesArr = array();
 							
 							$i=0;
@@ -213,7 +217,7 @@ $LOAD_FROM_CACHE = TRUE;
 					</thead>
 					<tr>
 					<th>
-						Words
+						Phrase
 					</th>
 					<th>
 						Frequency

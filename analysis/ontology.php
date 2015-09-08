@@ -60,6 +60,8 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
   				   						 
   				   						 <?php  
   				   						 $finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final")); 
+  				   						 
+  				   						 	//preprint_r($finalConcepts);exit;
   				   						 ?>
   				   						 
   				   						 <table id='ontology-concepts-table'>
@@ -83,6 +85,11 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
   				   								 <td style="background-color: #dddddd;">
   				   						 			
   				   						 					<?php echo  $concept?> 
+  				   						 			
+  				   						 		 </td>
+  				   						 		  <td >
+  				   						 			
+  				   						 					<?php /*echo  $conceptArr['EXTRACTION_PHASE']*/?> 
   				   						 			
   				   						 		 </td>
   				   						 		</tr>
@@ -139,7 +146,7 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
   				   						 			
   				   						 		 </td>
   				   						 		 <td style='color:#eee'>
-  				   						 		 		<?php echo  $type?> 
+  				   						 		 		<?php /*echo  $type*/?> 
   				   						 		 </td>
   				   						 		 <!--  <td style='color:#eee'>
   				   						 		 		<?php echo  "";//$posPattern?> 

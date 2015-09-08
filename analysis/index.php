@@ -49,9 +49,10 @@ if ( isset($_GET['lang']) )
 		<div id="analysis-main-message" >
 
 			<div style='color:#841'>
+			<h1 id='analyze-title'>Are you a Scholar ?</h1>
 			  		<p>
-			  			Are you a Scholar or normal user who is interested in going deep into the Quran 
-			  			to find patterns, relations and new discoveries, if so, you are in the right place ...
+			  			If you are a Scholar or normal user who is interested in going deep into the Quran 
+			  			to find patterns, relations and new discoveries, you are in the right place ...
 			  			
 			  			
 			  		</p>
@@ -61,7 +62,7 @@ if ( isset($_GET['lang']) )
 			  		</p>
 			  		
 			  		 <p style="color:#0357AA">
-				  			Click on one of the links above to start
+				  			Click on one of the links on the left to start
 				  		</p>
 			</div>
 			  		
@@ -73,10 +74,22 @@ if ( isset($_GET['lang']) )
 			  			<li><b>Charts</b>: A collection of charts such as "Chapter/Verse distribution" </li>
 			  			<li><b>Graphs</b>: Convert a verse or a Chapter to a Graph, each node is a word which can be connected to other words preceding or succeeding it (after excluding stopwords)  </li>
 			  			<li><b>N-Grames</b>: Choose "N" to produce an N-grame of words from the Quran</li>
-			  			<li><b>PoS</b>: PoS tagging of the Quran using Quranic Arabic Corpus, you can list verses containing any specific PoS Tag</li>
-			  			<li><b>Chronology</b>: Verse analysis taking into consideration the Chronological Order of the Quran  </li>
-			  			<li><b>Repeated Verses</b>: Listing of full repeated verses or common substring using LCS algorithms  </li>
+			  			<li><b>PoS Patterns</b>: Get verses from the Quran which matches a specific PoS Pattern</li>
+			  			<li><b>PoS Query</b>: List verses containing any specific PoS Tag from the Quran using Quranic Arabic Corpus</li>
+			  			<li><b>Repeated Verses</b>: Listing of "full repeated verses" in the Quran  </li>
+			  			<li><b>Repeated Phrases</b>: Listing of all repeated “phrases” ( sub-verses or substring of verses ) from the Quran using LCS algorithm </li>
 			  			
+			  			<li><b>Ontology Data</b>: Listing of all concepts and relations found in QA ontology </li>
+			  			<li><b>Ontology Graph</b>: Visualization of the Full QA Ontology in addition to the subset ontology of any selected chapter </li>
+			  			<li><b>Uthmani to Simple</b>: One-to-one mapping between words in uthmani and simple scripts</li>
+			  			<li><b>Word Infromation</b>: Provides information about any Arabic word in the Quran, provided information includes root, transliteration, frequency and PoS tags </li>
+			  			
+			  			<li><b>Collocation</b>: Show the "collocation" context of any word or PoS tag in the Quran </li>
+			  			<li><b>Concordance</b>: Show the "concordance" context of any word or PoS tag in the Quran </li>
+			  			<li><b>Pause Marks</b>: Show all the verses for any selected Pause Mark</li>
+			  			<li><b>Buckwalter-Arabic Translitertation</b>: Two-way conversion between Arabic and Buckwalter transliteration </li>
+			  			<li><b>Word similarity</b>: Lists the top 20 similar words for any selected word from the Quran</li>
+			  			<li><b>Quran Initials</b>: Analytics and Visualization to help deciphering the meaning of the disjoined letter in the Quran </li>
 			  		</ul>
 			</div>
 	
@@ -94,7 +107,7 @@ if ( isset($_GET['lang']) )
 		$(document).ready(function()
 		{
 
-
+			
 		
 		});
 		

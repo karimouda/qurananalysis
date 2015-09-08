@@ -129,7 +129,7 @@ loadModels("core",$lang);
 						     },
 					      	 error: function (xhr, ajaxOptions, thrownError)
 					         {
-					      		$("#words-context-area-area").html("<center>Error occured !</center>");
+					      		$("#words-context-area").html("<center>Error occured !</center>");
 					      		$("#loading-layer").hide();
 					         }
 						});

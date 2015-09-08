@@ -23,6 +23,12 @@ body
 {
 	font-family: Tahoma;
 	margin: 0px;
+	/*background-image: url(/images/quran-analysis-bg-cover.png);
+	background-position: -140px;
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-size:140%;*/
+	
 }
 
 A
@@ -89,30 +95,70 @@ TEXTAREA
 #main-container
 {
 	width:90%;
-	margin: 10px 0px 0px 20px;
+	margin: 10px 5% 0px 5%;
 	min-height: 400px;
 }
 
 #options-area
 {
-	background-color: #f8f8f8;
-	margin: 30px 20% 10px 20%;
-	padding:10px;
-	border-radius:5px;
-	vertical-align: top;
-	position: relative;
-	width:60%;
+  background-color: #8FBB0F;
+  margin: 40px 25% 10px 25%;
+  padding: 10px;
+  border-radius: 5px;
+  vertical-align: top;
+  position: relative;
+  width: 50%;
+  max-width: 700px;
+}
+#search-results-options
+{
+  margin: 0px 25%;
+  width: 800px;
+  font-size: 10px;
+  color: #bbb;
+  padding-bottom: 10px;
+  min-width: 450px;
 }
 
+#search-results-options SELECT
+{
+	background-color: #fff;
+	border:0px;
+	outline-color: #fff;
+	width: auto;
+	margin-right: 10px;
+
+}
+
+
+#search-results-options OPTION
+{
+	background-color: #fff;
+	border:0px;
+	outline-color: #fff;
+	font-size: 11px;
+
+
+}
+
+#content-area
+{
+	
+}
 #options-area table
 {
 	border-spacing: 0px;
-	width:90%;
+	width:100%;
 }
 
 #options-area.oa-analysis
 {
 	background-color: #4CA5FF;
+}
+
+#options-area.oa-explore
+{
+	background-color:#FFD11A;
 }
 
 #main-sections
@@ -134,8 +180,9 @@ TEXTAREA
 }
 #section-item-search
 {
-	background-color: #eee;
+	background-color: #8FBB0F;
 	border-top-left-radius:5px;
+	
 }
 #section-item-explore
 {
@@ -150,9 +197,18 @@ TEXTAREA
 
 }
 
-.section-item A
+#section-item-search A
 {
-	color:#222;
+	color:#fff;
+	text-decoration: none;
+	padding:10px;
+	display: inline-block;
+	font-size: 20px;
+		
+}
+#section-item-explore A
+{
+	color:#000;
 	text-decoration: none;
 	padding:10px;
 	display: inline-block;
@@ -198,26 +254,55 @@ TEXTAREA
 
 #doSearch 
 {
-	 background-color: hsl(75, 100%, 18%) !important;
-	 background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#82ad00", endColorstr="#445b00"); 
-	 background-image: -khtml-gradient(linear, left top, left bottom, from(#82ad00), to(#445b00));
-	 background-image: -moz-linear-gradient(top, #82ad00, #445b00);
-	 background-image: -ms-linear-gradient(top, #82ad00, #445b00); 
-	 background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #82ad00), color-stop(100%, #445b00)); 
-	 background-image: -webkit-linear-gradient(top, #82ad00, #445b00);
-	 background-image: -o-linear-gradient(top, #82ad00, #445b00);
-	 background-image: linear-gradient(#82ad00, #445b00); 
-	 border-color: hsl(75, 100%, 50%) ; 
+	/*
+	 background-color: #A0D012;
+	 background-repeat: repeat-x; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#A0D012", endColorstr="#628105"); 
+	 background-image: -khtml-gradient(linear, left top, left bottom, from(#A0D012), to(#628105));
+	 background-image: -moz-linear-gradient(top, #A0D012, #628105);
+	 background-image: -ms-linear-gradient(top, #A0D012, #628105); 
+	 background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #A0D012), color-stop(100%, #628105)); 
+	 background-image: -webkit-linear-gradient(top, #A0D012, #628105);
+	 background-image: -o-linear-gradient(top, #A0D012, #628105);
+	 background-image: linear-gradient(#A0D012, #628105); 
+	 
+	 background-image: linear-gradient(#A0D012, #628105);
+	 border-color: #888 ; 
 	 border-left:0px;
 	 border-radius:0px 5px 5px 0px;
 	 color: #fff !important; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.26); 
 	 -webkit-font-smoothing: antialiased; 
+	 */
+	 
+ 
+  background-color: hsl(0, 0%, 59%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fefefe", endColorstr="#969696");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#fefefe), to(#969696));
+  background-image: -moz-linear-gradient(top, #fefefe, #969696);
+  background-image: -ms-linear-gradient(top, #fefefe, #969696);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe), color-stop(100%, #969696));
+  background-image: -webkit-linear-gradient(top, #fefefe, #969696);
+  background-image: -o-linear-gradient(top, #fefefe, #969696);
+  background-image: linear-gradient(#fefefe, #969696);
+  border-color: #969696 #969696 hsl(0, 0%, 49%);
+  color: #333 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.66);
+  -webkit-font-smoothing: antialiased;
+
+
 	 cursor: pointer;
-	 padding: 12px;
+	 padding: 10px;
 	 margin-left: 20px !important;
-	 margin-top: -1px !important;
+	 margin-top: 0px !important;
 	 font-size: 20px;
 	 height:auto !important;
+	 line-height:1.3;
+	 
+	 border-left:0px;
+	 border-radius:0px 5px 5px 0px;
+	 
+	 
+	 outline-width: 0px;
 
 }
 
@@ -257,7 +342,7 @@ TEXTAREA
 {
 	margin-left:auto;
 	
-	width:430px;
+	width:480px;
 }
 
 #header-panel TR TD
@@ -370,6 +455,14 @@ marked_fg
 	font-weight: bold;
 }
 
+marked_prospect_answer
+{
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+    /* color: #fff; */
+    /* opacity: 0.4; */
+}
+
 .marked_for_concordance
 {
 	color:red;
@@ -381,6 +474,14 @@ marked_fg
 marked_for_concordance_right_left
 {
 	color:#0095CC;
+	
+	font-weight: bold;
+	display: inline-block;
+
+}
+marked_for_initials
+{
+	color:red;
 	
 	font-weight: bold;
 	display: inline-block;
@@ -473,22 +574,23 @@ marked_for_concordance_right_left
 {
 	background-color: #FFF;
 	color:#222;
-	font-size:18px;
-	font-weight:bold;
-	width: 80%;
+	font-size:14px;
+	font-weight:lighter;
+	width: 100%;
 	margin:auto;
-	border-bottom:1px dotted green;
-	padding:10px;
+	border-top:0px dotted green;
+	padding-top:5px;
+	padding-bottom: 5px;
 	direction: rtl;
 }
 
 .result-aya-info
 {
 	height: 30px;
-		border-bottom:1px dotted green;
-		width: 80%;
-		margin:auto;
-		padding:2px;
+	border-bottom:1px dotted green;
+	width: 100%;
+	margin:auto;
+	padding:2px;
 }
 	
 .result-sura-info
@@ -497,7 +599,7 @@ marked_for_concordance_right_left
 	color:#000;
 	padding:4px;
 	min-width:100px;
-	font-size:16px;
+	font-size:12px;
 
 
 	text-align: left;
@@ -525,7 +627,7 @@ marked_for_concordance_right_left
 	color:#444;
 	padding:4px;
 	
-	
+	margin:20px 0px;
 	
 	text-align: center;
 }
@@ -543,27 +645,25 @@ marked_for_concordance_right_left
 	padding: 10px;
 	border-top: 1px solid #eee;
 	font-weight: normal;
+	direction: ltr;
 }
 
 .result-aya-showtranslation
 {
-		background-color: #8EC5FF;
-	color:#fff;
-	padding:4px;
-	min-width:100px;
-	font-size:14px;
+	background-color: #8EC5FF;
+  color: #fff;
+  padding: 4px;
 
-
-	text-align: left;
-	direction:rtl;
-	
-	float:left;
+  font-size: 12px;
+  text-align: left;
+  direction: rtl;
+  float: left;
 }
 .result-aya-showtranslation A
 {
 	text-decoration: none;
 	color:#fff;
-		font-size:16px;
+		font-size:12px;
 }
 .result-aya-showtranslation:HOVER
 {
@@ -575,11 +675,21 @@ marked_for_concordance_right_left
 
 #result-graph-area
 {
-	border:1px solid black;
-	min-height: 400px;
-	width:80%;
-	margin:10px auto;
+	  position: relative;
+  border: 1px solid black;
+  min-height: 400px;
+  width: 100%;
+
+
 	
+}
+
+#visualization-table
+{
+    width: 45%;
+  float: right;
+  min-width: 500px;
+  margin: 0px 10px;
 }
 
 #analysis-switch-lang-button
@@ -635,6 +745,7 @@ rect
 .graph-node {
   fill: #eee;
   color:#222;
+  cursor: pointer;
   
 }
 
@@ -646,46 +757,75 @@ rect
 
 .graph-link {
 
-    stroke: #eee;
-  stroke-width: 1.5px;
+    stroke: #efefef;
+    /* icrease for better hover */
+  stroke-width: 2px;
+  
+  /*stroke-dasharray:1,1;*/
+  
+  cursor: pointer;
+  marker-end: url(#blueArrow);
+  padding:10px;
+}
+.graph-link:HOVER
+{
+	   stroke: red;
 }
 
-.graph-link text{
+.graph-link g text{
 
-    stroke: #000;
- stroke-width: 0.1px;
-  font-weight: lighter;
-  font-size: 10px;
+   
+stroke:#000;
+stroke-width:0.1px;
+  font-weight: normal;
+  font-size: 16px;
+  text-decoration:underline;
+
+  fill:#000;
+    stroke-dasharray:none;
+  
+}
+
+
+.graph-link rect{
+fill:#000;
 }
 
 .graph-link text tspan{
 
     display: block;
+	background-color: #000;
+   stroke: #fff;
+   fill:fff;
 }
 
 
 .graph-words
 {
-  fill: #2E7FBA;
+ fill: #2E7FBA;
 
+font-weight: bold;
 
 }
 
 #result-stats-chart-area
 {
-	margin:10px auto;
-	
-		width:80%;
-	min-height: 100px;
-	border:1px solid black;
+margin: 20px auto 0px auto;;
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid black;
 }
 
 #result-verses-area
 {
-		margin:10px auto;
-	padding:10px;
-		width:80%;
-	min-height: 100px;
+  
+  width: 40%;
+  min-width: 400px;
+  min-height: 600px;
+  float: left;
+  padding:10px;
+  border:1px solid #eee;
+  margin-bottom: 10px;
 	
 }
 
@@ -743,22 +883,69 @@ rect
 .graph-tooltip
 {
   position: absolute;
-  width: 200px;
-  height: 384px;
+  width: 624px;
+  height: 104px;
   font-size: 11px;
   border:1px;
   background-color: #000;
-  color:#fff;
+
   border-radius:0px;
   border-top-left-radius:0px;
   border-bottom-left-radius:0px;
    border-top-right-radius:0px;
    
-  padding:10px;
+
+  z-index:1;;
+
+  
+  
+  
+}
+
+
+
+.graph-tooltip-close
+{
+	position: absolute;
+	top:0px;
+	right:0px;
+	cursor:pointer;
+}
+
+.graph-tooltip DIV
+{
+	opacity:0.9 !important;
+	filter: alpha(opacity =     90)  !important;
+	
+	 background-color: #000;
+	   color:#fff;
+	   padding:10px;
+}
+
+.graph-link-tooltip
+{
+  position: absolute;
+  min-width: 40px;
+  min-height: 10px;
+  font-size: 12px;
+  border:1px;
+  background-color: #000;
+	color:#fff;
+  border-radius:5px;
+	padding:5px;
   z-index:100;
 
   
   
+}
+
+.graph-tooltip-text-area
+{
+	 background-color: #000;
+	 width:auto;
+	 height: 200px;
+	 padding:10px;
+	   color:#fff;
 }
 
 
@@ -775,6 +962,7 @@ margin: 10px auto;
 #graph-verse-selection
 {
 	width:400px;
+	font-size: 16px;
 }
 #graph-verse-or-text-selection
 {
@@ -785,7 +973,7 @@ margin: 10px auto;
 {
 	width: 100%;
 	height: 100%;
-	min-height: 400px;
+	min-height: 600px;
 	overflow: none;
 	border:1px solid black;
 }
@@ -865,18 +1053,22 @@ text-align: center;
 
 #main-page-main-message
 {
-	margin:auto;
-	width:40%;
-	min-width:540px;
-	color:#052F59;
-	font-family: Tahoma;
-	font-weight: lighter;
-	padding:20px 0px;
+  margin: auto;
+  width: 570px;
+  color: #052F59;
+  font-family: Tahoma;
+  font-weight: lighter;
+  padding: 20px 0px;
+  font-size: 24px;
+  padding-left: 0px;
+  text-align: left;
 }
 
 #main-page-try
 {
 	color:#bbb;
+	text-align: left;
+   
 }
 
 
@@ -885,7 +1077,7 @@ text-align: center;
 {
 	text-decoration: none;
 	color:#1597FE;
-	font-size: 24px;
+	font-size: 22px;
 	padding:0px;
 	font-family: Arial;
 	font-weight: lighter;
@@ -900,9 +1092,37 @@ text-align: center;
 #main-page-examples-area
 {
 	margin:10px auto;
-	width:400px;
-	margin-top: -45px;
+	width:570px;
+	margin-top: 0px;
+	text-align: center;
+	min-width: 570px;
 	
+}
+
+#main-page-examples-table
+{
+	width:90%;
+	margin-top:20px;
+	border:0px solid #eee;
+	min-width:540px;
+	
+	
+}
+
+
+#main-page-examples-table TD
+{
+	text-align: left;
+	  border-bottom: 1px solid #fafafa;
+	
+
+}
+
+#main-page-examples-table TD:first-child
+{
+	text-align: left;
+background-color: #fdfcfb;
+	padding: 0px 10px;
 }
 
 #info-pages-main-table
@@ -917,6 +1137,7 @@ text-align: center;
 #info-pages-main-table TR TD:first-child
 {
 	border-right: 1px solid #345;
+
 }
 
 .info-page-text
@@ -1256,7 +1477,7 @@ text-align: center;
 
 #technical-error
 {
-	background-color: #fafafa;
+	background-color: #fff;
 	color:#dd1111;
 	padding:2px;
 	vertical-align: middle;
@@ -1275,7 +1496,7 @@ text-align: center;
 #pause-marks-selection
 {
 	margin:0px auto;
-	width:30px;
+	width:50px;
 	font-size: 32px !important;
 	padding:2px 10px;
 
@@ -1406,7 +1627,8 @@ text-align: center;
 
 #analysis-main-table
 {
-	width: 100%;
+	  width: 90%;
+  margin:0px 5%;
 }
 #left-menu-area
 {
@@ -1468,11 +1690,12 @@ A.analysis-links[selected="1"]
 .analysis-sub-title
 {
 
-	color:#aaa;
+	color:#000;
 	font-size: 14px;
 }
 
-.treemap-node {
+.treemap-node 
+{
   border: solid 1px white;
   font: 14px sans-serif;
   line-height: 20px;
@@ -1494,4 +1717,264 @@ A.analysis-links[selected="1"]
 	font-weight: bold;
 	
 
+}
+
+.svg-button
+{
+	border:1px solid #eee;
+	border-radius:5px;
+	cursor: pointer;
+	
+}
+
+#search-results-summary
+{
+  border-bottom: 1px dashed #fafafa;
+  margin-bottom: 10px;
+  color: #aaa;
+  font-weight: lighter;
+  font-size: 10px;
+}
+
+#main-logo
+{
+	position: relative;
+	width:auto;
+	height:110px;
+  top: 0px;
+  left: 0px;
+  margin-left: -125px;
+  display: inline-block;
+  float: left;
+  margin-top: -50px;
+}
+
+
+.result-more-about-aya
+{
+  background-color: #fafafa;
+  display: inline-block;
+  height: 22px;
+  padding: 0px 10px;
+	
+}
+.result-more-about-aya:HOVER
+{
+	opacity: 0.90;
+	filter: alpha(opacity =     90);
+}
+.result-more-about-aya A
+{
+font-size: 11px;
+  color: #bfbfbf;
+  padding: 2px;
+	
+	
+}
+.result-match-type
+{
+	color:#eee;
+}
+
+#question-answering-area
+{
+  background-color: #fff;
+  width: 60%;
+  margin: 10px auto;
+
+  min-height: 40px;
+  text-align: center;
+  font-size: 20px;
+  padding: 20px;
+    padding-left: 70px;
+  border-radius: 10px;
+  border: 1px dashed #eee
+}
+#question-answering-area-answer-title
+{
+	color: #fff;
+  background-color: red;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+#question-answering-area-noanswer-msg
+{
+
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: lighter;
+  font-size: 20px;
+}
+
+#truth-area
+{
+	margin:30px auto;
+	width:80%;
+	font-size: 12px;
+	color:#ccc;
+	text-align: center;
+	clear: both;
+}
+
+#full-ontology-graph-area
+{
+  margin: 0px auto;
+  width: 100%;
+}
+
+#quran-full-ontology-header-panel
+{
+	background-color: #000;
+	color:#fff;
+	padding:10px 0px;
+}
+
+.explore-node
+{
+	cursor: pointer;
+	
+	    
+	
+}
+
+.explore-node circle 
+{
+	
+}
+
+.explore-node text 
+{
+	  fill: #fff;
+	  text-anchor:middle;
+	  font-size:12px;
+	  font-weight: bold;
+}
+
+.explore-node:HOVER circle
+{
+	
+
+  stroke: #fff;
+  stroke-width:3px;
+  r:50px;
+  trasition-delay:0.5s;
+   transition: 1s r;
+
+	
+}
+
+#explore-guide-msg
+{
+  /* margin: 10px auto; */
+  width: auto;
+  /* min-width: 900px; */
+  color: #000;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+#explore-result-verses
+{
+	background-color: #fff;
+	padding:10px;	
+	border-radius:10px;
+	border:5px solid #333;
+	overflow: auto;
+    height: 400px;
+}
+
+
+.explore-verses-close
+{
+	position: relative;
+	top:10px;
+	left:-10px;
+	cursor:pointer;
+	background-color: #fff;
+	border-radius:10px;
+	
+}
+
+A#home-beta-button 
+{
+	background-color:red;
+	color:#fff;
+	padding:1px;
+	border-radius:3px;
+	font-size: 11px;
+	font-weight: bold;
+}
+A#home-beta-button:HOVER
+{
+		color:#fff;
+}
+
+#homepage-important-messages-area
+{
+	width:50%;
+	min-wdith:700px;
+	margin:30px auto 50px auto;
+	padding:10px;
+	font-size: 20px;
+	color:#0D5E9B;
+	display: none;
+	height: 80px;
+	border:1px solid #333;
+}
+
+#analyze-title
+{
+	color:#4CA5FF;
+}
+
+.search-wordcloud-item
+{
+		padding:4px;
+	margin:0px;
+	display: inline-block;
+	color:#191919;
+	text-decoration:none !important;
+	cursor:pointer;
+	line-height: 0;
+}
+
+.initials-wordcloud-item
+{
+	padding:4px;
+	margin:0px;
+	display: inline-block;
+	color:#191919;
+	text-decoration:none !important;
+	cursor:pointer;
+	line-height: 0;
+}
+
+#result-wordcloud-area
+{
+	  margin: 60px auto 0px auto;
+	  width: auto;
+	  min-height: 200px;
+	  padding:20px 10px;
+	  border: 1px solid black;
+}
+
+.buckwalter-trans-result-header
+{
+	font-size: 16px;
+	padding:20px 0px;
+}
+
+#initials-cloud-area
+{
+	padding:40px;
+}
+
+#language-selection
+{
+	margin-left:20px;
 }

@@ -1,7 +1,14 @@
 <?php 
+$logo = "quran-analysis-logo.png";
 
+if ( !empty($_GET['logo']) )
+{
+	$logo = $_GET['logo'];
+}
 ?>
+<a href='/'><img id='main-logo' src="/images/<?=$logo ?>" /></a>
 <div id='main-sections'>
+			
  			<div id='section-item-search' class='section-item' >
   				<a href='/'>Search</a>
   			</div>

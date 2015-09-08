@@ -13,8 +13,8 @@ if ( isset($_GET['lang']) )
 
 if ( $lang=="EN")
 {
-	echoN("POS Tags is supported only for Arabic.");
-	exit;
+	showTechnicalError("Only Arabic is supported here, you chose English !");
+	
 }
 
 loadModels("core,qac",$lang);

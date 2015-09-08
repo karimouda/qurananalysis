@@ -25,19 +25,25 @@ if (  $_SERVER['REMOTE_ADDR']!="127.0.0.1" )
 	<table>
 		<tr>
 			<td>
-					<a href="/" >Home</a>
+					<a href="javascript:showBETAWarning('homepage-important-messages-area')" id="home-beta-button"  >BETA!</a>
+			</td>
+			<td>
+					<a href="/" ><b>Home</b></a>
 			</td>
 			<td>
 					<a href="/info/index.php?page=about" >About</a>
-			</td>
-			<td>
-					<a href="/info/index.php?page=resources" >Resources</a>
 			</td>	
 			<td>
 					<a href="/info/index.php?page=contribute" style="color:red" >Contribute</a>
 			</td>
 			<td>
 					<a href="/info/index.php?page=feedback" style="color:red" >Feedback</a>
+			</td>
+			<td>
+					<a href="/info/index.php?page=faq" >Faq</a>
+			</td>
+			<td>
+					<a href="/info/index.php?page=resources" >Resources</a>
 			</td>
 			<td>
 					<a href="/info/index.php?page=credits" >Credits</a>
@@ -66,5 +72,8 @@ if (  $_SERVER['REMOTE_ADDR']!="127.0.0.1" )
 
 </div>
 
+<div  id='homepage-important-messages-area'>
+
+</div>
 
 </div>

@@ -7,7 +7,7 @@ $query = $_GET['q'];
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Semantic Search and Intelligence System (BETA) </title>
+    <title>Quran Smart Semantic Search and Question Answering System - QA (BETA)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Quran Semantic-based Search, Analysis & Expert System">
     <meta name="author" content="">
@@ -15,6 +15,11 @@ $query = $_GET['q'];
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<script type="text/javascript" src="<?=$D3_PATH?>"></script>
+	<script type="text/javascript" src="<?=$TINYSORT_PATH?>"></script>
+	<script type="text/javascript" src="<?=$TINYSORT_JQ_PATH?>"></script>	
+	<script type="text/javascript" src="<?=$JQUERY_TAGCLOUD_PATH?>" ></script> 
+	
+
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
 	<link rel="icon" type="image/png" href="/qe/favicon.png">
       	 
@@ -68,9 +73,77 @@ $query = $_GET['q'];
 			  		Loading ...
 			  	</div>
 			  	<div id='content-area'>
-			  	 	<h1 id='main-page-main-message'>Explore the Quran like never before ...</h1>
+			  	 	<h1 id='main-page-main-message'>Search and Explore the Quran like never before ...</h1>
 			  	 	<div id='main-page-examples-area'>
-			  	 		<span id='main-page-try'>EXAMPLES:</span> 
+			  	 	
+			  	 	
+			  	 	<div id='main-page-try'><b>Click</b> and try the following examples</div> 
+			  	 	
+			  	 	<table id='main-page-examples-table'>
+			  	 		<tr>
+			  	 			<td>
+			  	 				One Word
+			  	 			</td>
+			  	 			<td>
+			  	 				<a href="?q=Muhammad" class='main-page-example-item'>Muhammad</a>
+			  	 				/
+			  	 				<a href="?q=محمد" class='main-page-example-item'>محمد</a>
+			  	 			</td>
+			  	 		</tr>
+			  	 		<tr>
+			  	 			<td>
+			  	 				Multiple Words
+			  	 			</td>
+			  	 			<td>
+			  	 				<a href="?q=Heaven Hellfire" class='main-page-example-item'>Heaven Hellfire</a>
+			  	 				/
+			  	 				<a href="?q=الجنة و النار" class='main-page-example-item'>الجنة و النار</a>
+			  	 				<br>
+			  	 				<span class='note'>Verses containing Heaven OR Hellfire</span>
+			  	 			</td>
+			  	 		</tr>
+			  	 		<tr>
+			  	 			<td>
+			  	 				Phrases
+			  	 			</td>
+			  	 			<td>
+			  	 				<a href="?q=%22Those who believe%22" class='main-page-example-item'>"Those who believe"</a>
+			  	 				/
+			  	 				<a href="?q=<?php echo urlencode('"الذين آمنوا"')?>" class='main-page-example-item'>"الذين آمنوا"</a>
+			  	 				<br>
+			  	 				 <span class='note'>Should be enclosed by quotes ""</span>
+			  	 			</td>
+			  	 		</tr>
+			  	 		<tr>
+			  	 			<td>
+			  	 				Questions
+			  	 			</td>
+			  	 			<td>
+			  	 				<a href="?q=Animals in the Quran?" class='main-page-example-item'>Animals in the Quran ?</a>
+			  	 				/
+			  	 				<a href="?q=الحيوانات فى القرآن ؟" class='main-page-example-item'>الحيوانات فى القرآن ؟</a>
+			  	 				<br>
+			  	 				<a href="?q=Who is Muhammad" class='main-page-example-item'>Who is Muhammad</a>
+			  	 				/
+			  	 				<a href="?q=من هو محمد" class='main-page-example-item'>من هو محمد</a>
+			  	 				<br>
+			  	 				 <span class='note'>Who, What and "?" are supported in Arabic and English</span>
+			  	 			</td>
+			  	 		</tr>
+			  	 		<tr>
+			  	 			<td>
+			  	 				Specific Verse <br>
+			  	 			   <span class='note'>(Chapter : Verse)</span>
+			  	 			</td>
+			  	 			<td>
+			  	 				<a href="?q=50:12" class='main-page-example-item'>50:12</a>
+			  	 			 	 				
+		
+			  	 			</td>
+			  	 		</tr>
+			  	 	</table>
+			  	 	<?php /*
+			  	 		
 
 			  	 	
 			  	 		<a href="?q=Allah" class='main-page-example-item'>Allah</a>,
@@ -114,7 +187,8 @@ $query = $_GET['q'];
 			  	 		<a href="?q=Freedom" class='main-page-example-item'>Freedom</a>,
 			  	 		<a href="?q=Martyrs" class='main-page-example-item'>Martyrs</a>
 			  	 		
-		  	 		
+		  	 		*/
+			  		?>
 			  	 		
 			  	 	</div>
 			  	</div>
@@ -123,18 +197,47 @@ $query = $_GET['q'];
 
 	<script type="text/javascript">
 
-				
+
 		$(document).ready(function()
 		{
 
 			<?php if ( !empty($query) ):?>
-				$("#search-field").val(("<?=$query?>"));
+				$("#search-field").val(("<?= addslashes($query)?>"));
 				doSearch();
+				
+			<?php else:?>
+
+			$("#options-area").css("margin-top","100px");
 
 			<?php endif;?>
 
+			
+
 		
 		});
+
+		function clientSortResults(listElementsClass)
+		{
+		
+				var selectedField = $("#qa-sort-select option:selected").val();
+
+				var currentOrder = $("#qa-sort-select option:selected").attr("sortorder");
+
+				
+	
+				$('.'+listElementsClass).tsort({attr:selectedField, order: currentOrder});
+
+
+				
+			
+		}	
+
+		function changeDefaultQuranScript()
+		{
+			var query = $("#search-field").val();
+			var script = $("#qa-script-select option:selected").val();
+			showResultsForQueryInSpecificDiv(query,"result-verses-area",script);
+		}
 	
 		function doSearch()
 		{
@@ -151,7 +254,8 @@ $query = $_GET['q'];
 
 				destroyGraph();
 				
-				
+
+				$("#options-area").css("margin-top","40px");
 				
 				$.ajaxSetup({
 					url:  "/search/index.php?q="+encodeURIComponent(query),
@@ -208,7 +312,9 @@ $query = $_GET['q'];
 
 
 
-
+	<div id='truth-area' >
+	Caution: in addition to the beta-experimental nature of this website,<br> it is a human endeavour which can't be perfect and should NOT be considered truth or fact source 
+	</div>
 	<?php 
 		require("footer.php");
 	?>

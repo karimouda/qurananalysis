@@ -1,14 +1,13 @@
 <?php 
 require_once("../global.settings.php");
 
+
+//only arabic is supported here, english $lang spoils the functions
 $lang = "AR";
 
 
 
-if ( isset($_GET['lang']) )
-{
-	$lang = $_GET['lang'];
-}
+
 
 loadModels("core,search,qac",$lang);
 

@@ -112,11 +112,12 @@ function printTag($tags) {
 	echo "\n";
 }
 
-$tagger = new PosTagger(dirname(__FILE__).'/../data/postagging-corpus/lexicon.txt');
+
 
 function posTagText($text)
 {
-	global $tagger;
+	$tagger = new PosTagger(dirname(__FILE__).'/../data/postagging-corpus/lexicon.txt');
+	//global $tagger;
 	$tags = $tagger->tag($text);
 	return $tags;
 }
