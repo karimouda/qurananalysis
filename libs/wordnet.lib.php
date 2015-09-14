@@ -290,7 +290,9 @@ function getLongPoSName($smallPOS)
 
 function loadWordnet()
 {
+	global $MODEL_WORDNET;
 	
+	echoN("D");
 	if (  apc_fetch("WORDNET_INDEX") == false)
 	{
 		 $wordnetDir = array();
@@ -320,13 +322,21 @@ function loadWordnet()
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_INDEX"); }
 		 
+		 $MODEL_WORDNET['WORDNET_INDEX'] = $wordnetIndex;
+		 
 		 $res = apc_store("WORDNET_LEXICO_SEMANTIC_CATEGORIES",$lexicoSemanticCategories);
+		
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_INDEX"); }
+		 
+		 $MODEL_WORDNET['WORDNET_LEXICO_SEMANTIC_CATEGORIES'] = $lexicoSemanticCategories;
 	
 		 $res = apc_store("WORDNET_DATA",$dataArr);
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_DATA"); }
+		 
+		 $MODEL_WORDNET['WORDNET_DATA'] = $dataArr;
+		 
 	}
 	
 	return true;
