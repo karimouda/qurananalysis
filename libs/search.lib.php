@@ -495,6 +495,26 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 			}
 		}
 		
+		
+		if ( !$isQuestion )
+		{
+		
+			///////// add concept name to query if the current query word is found to be synonym to that concept
+			if ( isset($MODEL_QA_ONTOLOGY['SYNONYMS_INDEX'][$word]) )
+			{
+				$conceptNameAR = $MODEL_QA_ONTOLOGY['SYNONYMS_INDEX'][$word];
+				$finalConceptName = $conceptNameAR;
+	
+				if ( $lang=="EN")
+				{
+					$finalConceptName  = $MODEL_QA_ONTOLOGY['CONCEPTS'][$conceptNameAR]['label_en'];
+				}
+				$conceptsFromTaxRelations[]=$finalConceptName;
+			}
+			
+			//////////////////////////////////////////////////////////////
+		}
+		
 
 		//$lang=="AR" check since AR wprds are not PoS tagged yet
 		if ( $isQuestion && ($lang=="AR" ||posIsVerb($pos)) )
@@ -698,6 +718,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	
 
 	
+	
 	if ( $isColumnSearch)
 	{
 		
@@ -736,7 +757,10 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	 */
 	foreach ($extendedQueryWordsArr as $word =>$targetQACLocation)
 	{
-		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
+		//echoN("|$word|");
+		//echoN($lang);
+		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);
+		
 		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
 		{
 	
