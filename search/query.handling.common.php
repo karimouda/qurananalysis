@@ -21,6 +21,8 @@ if ( $isInTestScript )
 }
 
 
+$originalQuery = $query;
+
 
 $script = $_GET['script'];
 
@@ -53,6 +55,9 @@ else if ($lang=="AR" && !isDevEnviroment())
 	//echoN(time());
 	loadModels("core,search,qac,ontology",$lang);
 	//echoN(time());
+	
+
+	
 	
 	
 //preprint_r($MODEL_CORE);
@@ -247,7 +252,7 @@ if (  !$isColumnSearch && !$noOntologyExtentionConstraint )
 }
 
 
-//echoN($query);preprint_r($userQuestionAnswerConceptsArr);exit;
+//echoN($query);preprint_r($queryWordsArr);exit;
 
 //////////////
 $scoringTable = array();
@@ -285,8 +290,6 @@ if ( count($extendedQueryWordsArr) > 25 )
 }
 
 
-//echoN($query);
-//preprint_r($extendedQueryWordsArr);
 
 // SEARCH INVERTED INDEX FOR DOCUMENTS
 $scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams);
@@ -309,7 +312,7 @@ if ($isQuestion)
 
 
 // NOT RESULTS FOUND
-handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query);
+handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch);
 
 if ( !$isQuestion && !$isColumnSearch)
 {

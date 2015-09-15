@@ -80,7 +80,7 @@
    				 >Pause Marks</a> 		
    			    <a href="./buckwalter-transliteration.php<?=$langParameter?>" class='analysis-links'
    				 <?php if ( isCurrentPage("buckwalter-transliteration.php")) echo "selected='1'"?> 
-   				 >Arabic to Buckwalter Transliteration </a>
+   				 >Arabic to Buckwalter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transliteration </a>
    				
    				 <a href="./simmilar-words.php<?=$langParameter?>" class='analysis-links'
    				 <?php if ( isCurrentPage("simmilar-words.php")) echo "selected='1'"?> 

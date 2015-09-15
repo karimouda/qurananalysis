@@ -6,6 +6,7 @@ require_once("../libs/microsoft.translator.api.lib.php");
 require_once("../libs/pos.tagger.lib.php");
 require_once("../libs/ontology.lib.php");
 require_once("../libs/custom.translation.table.lib.php");
+require_once("../libs/graph.lib.php");
 
 require_once("../libs/owllib/OWLLib.php");
 require_once("../libs/owllib/reader/OWLReader.php");
@@ -31,6 +32,7 @@ if ( isset($_GET['lang']) )
 }
 
 loadModels("core,search,qac,qurana,wordnet",$lang);
+
 
 
 $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
@@ -109,7 +111,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	//exit;
 			  	
 			  	
-			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
+			  	$GENERATE_CONCEPTS_SWITCH = FALSE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
@@ -2458,6 +2460,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							$wordnetInfoArr = getWordnetEntryByWordString($conceptNameEn);
 							
+							
+							//echoN("^^^^ ".count($wordnetInfoArr));
+							
+							
 							if ( empty($wordnetInfoArr))
 							{
 							
@@ -2946,33 +2952,15 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						//////////// DATA ATTRIBUTES TO BE REMOVED
 						
 						
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Paradiso_Canto_31.jpg?width=300";//HEAVEN:not beautiful :)
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/NoahsSacrifice.JPG?width=300";//NOAH: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/StJohnsAshfield_StainedGlass_GoodShepherd-frame_crop.jpg?width=300";//JESUS: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Extermination_of_Evil_Sendan_Kendatsuba_crop.jpg?width=300";//evil:dont like it
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Aaron_(Kirillo-Belozersk).jpg?width=300";//AARON: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Judgement_of_Solomon.jpg?width=300";//SOLOMON: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Navez_Agar_et_Ismaël.jpg?width=300";//ishmael: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Tug-of-war.jpg?width=300";//Game/صيد: english translation should be rechecked
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Osmar_Schindler_David_und_Goliath.jpg?width=300";//goliath: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt_Harmensz._van_Rijn_035.jpg?width=300";//saul: not accepted by muslims
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Tomb_of_Ezra.jpg?width=300";//uzair: no value
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Catalogue_of_Sects.GIF?width=300";//sect: no value
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Sleeping-girl.jpg?width=300";//sleep: sleeping girl, patial nude and out of context
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/David_SM_Maggiore.jpg?width=300";//david: depictions
-						
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt_-_Jacob_Wrestling_with_the_Angel_-_Google_Art_Project.jpg?width=300";//jacpb: depictions
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Sistine_jonah.jpg?width=300";//jonah: depictions
-						$imagesToBeRemoved[]="http://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt_-_Moses_with_the_Ten_Commandments_-_Google_Art_Project.jpg?width=300";//moses: depictions
+		
 						
 						
+						$imagesToBeRemoved = loadExcludesByType('images');
+						$linksToBeRemoved = loadExcludesByType('links');
 						
+
 						
-						
-						$englishLongDescriptionsToBeRemoved["نوح"]=true;
-						$arabicShortMeaningToBeRemoved["نوح"]=true;
-						
-						$synonymsToBeRemoved = loadExcludedSynonymssArr();
+						$synonymsToBeRemoved = loadExcludesByType('synonyms');
 						
 						
 				
@@ -2982,14 +2970,26 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						$conceptsRemoved=0;
 						$relationsRemoved = 0;
+						$removedLongDesc = 0;
+						$removedShortDesc = 0;
+						$removedImages = 0;
+						$removedLinks = 0;
+						$removedSynonyms =0;
 
 						$filteredConcepts = array();
 						
-
 						
-						$EXCLUDED_CONCEPTS = loadExcludedConceptsArr();
+						$excludedRelationsFromFileArr = loadExcludesByType('relations');
+						$excludedShortDescArr = loadExcludesByType('shortdesc');
+						$excludedLongDescConceptsArr  = loadExcludesByType('longdesc');
+						
+						
+						//also used down in relation filtering
+						$excludedConceptsArr = loadExcludesByType('concepts');
 						$isAddedBeforeArr = array();
-						//preprint_r($EXCLUDED_CONCEPTS);
+					
+						echoN("^^^^");
+						preprint_r($excludedConceptsArr);
 						
 						/// CONCEPTS
 						foreach($finalConcepts as $concept => $conceptArr)
@@ -3000,21 +3000,22 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$conceptNameEn  = $conceptArr['EXTRA']['TRANSLATION_EN'];
 							$conceptNameAr  = $concept;
 							
-							//echoN("$conceptNameAr|$conceptNameEn|".isset( $EXCLUDED_CONCEPTS[$conceptNameAr]));
+							echoN("$conceptNameAr|$conceptNameEn|".isset( $excludedConceptsArr[$conceptNameAr]));
 							
-							if (isset( $EXCLUDED_CONCEPTS[$conceptNameAr]) || isset( $EXCLUDED_CONCEPTS[$conceptNameEn]) )
+							if (isset( $excludedConceptsArr[$conceptNameAr]) || isset( $excludedConceptsArr[$conceptNameEn]) )
 							{
 								
 								$conceptsRemoved++;
+								echoN("IGNORING:$concept");
 								continue;
 							}
 							
 							
 							////////// ATTRIBUTE CLEANING
-							
+					
 							//echoN("::".isset($englishLongDescriptionsToBeRemoved[$concept])." ".$concept);
 							//showHiddenChars($concept,"AR",false);
-							if ( isset($englishLongDescriptionsToBeRemoved[$concept]) )
+							if ( isset($excludedLongDescConceptsArr[$concept]) )
 							{
 								$descArr = $conceptArr['EXTRA']['DESC_EN'];
 								
@@ -3027,9 +3028,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									$conceptArr['EXTRA']['DESC_EN'][$source]="";
 								}
 								
+								$removedLongDesc++;
 							}
 							
-							if ( isset($arabicLongDescriptionsToBeRemoved[$concept]) )
+							if ( isset($excludedLongDescConceptsArr[$concept]) )
 							{
 								$descArr = $conceptArr['EXTRA']['DESC_AR'];
 							
@@ -3037,23 +3039,20 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								{
 									$conceptArr['EXTRA']['DESC_AR'][$source]="";
 								}
+								
+								$removedLongDesc++;
 							
 							}
+							
 							
 
-							if ( isset($englishShortMeaningToBeRemoved[$concept]) )
-							{
-								$descArr = $conceptArr['EXTRA']['MEANING_EN'];
-									
-								foreach($descArr as $source => $desc)
-								{
-									$conceptArr['EXTRA']['MEANING_EN'][$source]="";
-								}
-									
-							}
+							
+
+							$shortDescAR = $conceptArr['EXTRA']['MEANING_AR']['WORDNET'];
 								
-							if ( isset($arabicShortMeaningToBeRemoved[$concept]) )
+							if ( isset($excludedShortDescArr[$shortDescAR]) )
 							{
+								
 								$descArr = $conceptArr['EXTRA']['MEANING_AR'];
 									
 								foreach($descArr as $source => $desc)
@@ -3061,7 +3060,23 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									$conceptArr['EXTRA']['MEANING_AR'][$source]="";
 								}
 									
-							}						
+								$removedShortDesc++;
+							}
+							
+							$shortDescEN = $conceptArr['EXTRA']['MEANING_EN']['WORDNET'];
+
+							if ( isset($excludedShortDescArr[$shortDescEN]) )
+							{
+							
+								$descArr = $conceptArr['EXTRA']['MEANING_EN'];
+									
+								foreach($descArr as $source => $desc)
+								{
+									$conceptArr['EXTRA']['MEANING_EN'][$source]="";
+								}
+									
+								$removedShortDesc++;
+							}
 							
 							
 							
@@ -3071,14 +3086,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							{
 								//echoN("IMURL:$url|$source");
 								
-								if ( !empty($url) && in_array($url,$imagesToBeRemoved))
+								if ( !empty($url) && isset($imagesToBeRemoved[$url]) )
 								{
 									//echoN("removed:$url");
 									
 									//using $conceptArr since it is assigned after the loop
 									$conceptArr['EXTRA']['IMAGES'][$source]="";
 									
-									
+									$removedImages++;
 									
 								}
 							}
@@ -3112,22 +3127,40 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										$conceptArr['EXTRA']['AKA'][$lang][$source]="";
 											
 											
-											
+										$removedSynonyms++;
 									}
 								}
 							}
 								
 							
+							////// LINK
+							$wpLink = $conceptArr['EXTRA']['WIKIPEDIA_LINK'];
+							$dbPediaLink = $conceptArr['EXTRA']['DBPEDIA_LINK'];
+							
+							echoN($wpLink);
+							echon($dbPediaLink);
+							
+							if (  (!empty($wpLink) && isset($linksToBeRemoved[$wpLink])) ||
+								  (!empty($dbPediaLink) && isset($linksToBeRemoved[$dbPediaLink])) )
+							{
+								$conceptArr['EXTRA']['WIKIPEDIA_LINK']="";
+								$conceptArr['EXTRA']['DBPEDIA_LINK']="";
+								$removedLinks++;
+							}
+							
+							
 							
 							
 							//////////////////////////////
 
-							
+							echoN("ADDING:$concept");
 							
 							$filteredConcepts[$concept]=$conceptArr;
 							
 							
 						}
+						
+					
 						
 						echoN("Unique Synonyms:".count($isAddedBeforeArr));
 						//preprint_r($isAddedBeforeArr);
@@ -3138,12 +3171,50 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"ابن","OBJECT"=>"الله");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"الله","VERB"=>"*","OBJECT"=>"الشخص");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"قال","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"قالت","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"يقول","OBJECT"=>"*");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"إنسان","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"ناس","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
 						//DBpedia mess
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"صيد","VERB"=>"*","OBJECT"=>"*");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"أنثى","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
 						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"مرء","VERB"=>"$is_a_relation_name_ar","OBJECT"=>"حيوان");
+						
+						//this verb has no significant meaning by its own -> addition words should be added to the verb to be meaningful
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"فجعلناهم","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"جعلناهم","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"وجعلناهم","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"فجعلناهم","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"وجعلناها","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"جعلناه","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"جعلناها","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"وجعلناه","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"جعلناك","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"فجعلناهن","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"جعل","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"تجعلونه","OBJECT"=>"*");
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"جعلناكم","OBJECT"=>"*");
+						
+						
+						//object vague
+						$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>"*","VERB"=>"*","OBJECT"=>"بعض");
+						
+						//preprint_r($excludedRelationsFromFileArr);
+						
+						
+						foreach($excludedRelationsFromFileArr as $relationTripleText => $dummy)
+						{
+							$subject = convertConceptIDtoGraphLabel($relationTripleArr[0]);
+							$verb = ($relationTripleArr[1]);
+							$object = convertConceptIDtoGraphLabel($relationTripleArr[2]);
+							
+							$relationTripleArr = explode(",",$relationTripleText);
+							$RELATIONS_EXCLUSION_RULES[]=array("SUBJECT"=>$subject,
+												 "VERB"=>$verb,"OBJECT"=>$object);
+							
+						}
+						
+						//preprint_r($RELATIONS_EXCLUSION_RULES);
 						
 						
 						
@@ -3166,10 +3237,10 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							}
 							
 						
-							//echoN("$subject|$object|".isset($EXCLUDED_CONCEPTS[$subject]));
+							//echoN("$subject|$object|".isset($excludedConceptsArr[$subject]));
 							
 							// IF CONCEPTS ARE EXCLUDED, RELATIONS ARE ALSO EXSCLUDED
-							if ( isset($EXCLUDED_CONCEPTS[$subject]) || isset($EXCLUDED_CONCEPTS[$object]))
+							if ( isset($excludedConceptsArr[$subject]) || isset($excludedConceptsArr[$object]))
 							{
 								$relationsRemoved++;
 								continue;
@@ -3221,7 +3292,17 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						echoN("Concepts Removed:$conceptsRemoved");
 						echoN("Relations Removed:$relationsRemoved");
+						
+						echoN("Short Desc Removed:$removedShortDesc");
+						echoN("Long Desc Removed:$removedLongDesc");
+						
+						echoN("Links Removed:$removedLinks");
+						echoN("Images Removed:$removedImages");
+						echoN("Synonyms Removed:$removedSynonyms");
+		
 
+						// final concepts and relations
+						echoN(count($filteredConcepts));
 						echoN(count($filteredRelationsArr));
 						
 						
@@ -3241,9 +3322,78 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7"));
 							
 						
+						
+						
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE = array();
+						$TRANSLATION_FIXER_LOOKUP_TABLE['المسجد']='the mosque';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['عمل']='deed';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['شهر']='month';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['بني']='children of';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['كفار']='disbelievers';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['سورة']='chapter';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['جنود']='soldiers';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['زمرة']='group';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['خير']='good';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['ظالم']='unjust';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['غفور']='often forgiving';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['ابن']='son';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['ميت']='dead';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['بشر']='man';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['مرسل']='sent';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['ظلمات']='darkness';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['جن']='jinn';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['مؤمنات']='faithful women';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['صبر']='patience';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['تواب']='often returning';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['فقير']='needy';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['فصل']='decisive';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['هدي']='guidance';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['حديد']='iron';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['صيد']='hunt';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['برق']='the lightning';						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['حواريون']='the disciples';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['المستهزئين']='mockers';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['المساجد']='mosques';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['القبلة']='prayer direction';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['الأبصار']='vission';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['السبل']='paths';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['الحر']='heat';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['التكاثر']='competition to increase';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['ولد']='baby';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['وزر']='burden';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['آدم']='adam';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['أسر']='forms';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['الأشهر']='months';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['يأجوج']='gog';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['عقب']='descendents';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['الجلود']='skins';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['منشور']='Wide open';
+						$TRANSLATION_FIXER_LOOKUP_TABLE['بحيرة']='bahirah';
+						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['أول']='first';
+						
+						
+						
+						
+						
+						
+						//preprint_r($TRANSLATION_FIXER_LOOKUP_TABLE);
+						
+						
 						echoN("Concepts b4 PP:".count($finalConcepts));
 						
-						echoN("DUPLICATES:");
+						//echoN("DUPLICATES:");
 						$duplicateCounter = 0;
 						$filteredFinalConcepts = $finalConcepts;
 						foreach($finalConcepts as $concept => $coneptArr)
@@ -3304,7 +3454,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										updateNameInAllRelations($relationsArr,$conceptNameAr,$conceptNameArNoAl);
 									}
 									
-									echoN("$toBeRemovedConcept REMOVED");
+									//echoN("$toBeRemovedConcept REMOVED");
 									
 									unset($filteredFinalConcepts[$toBeRemovedConcept]);
 									
@@ -3350,6 +3500,16 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$conceptNameAr  = $concept;
 							$conceptType = $coneptArr['CONCEPT_TYPE'];
 							
+							
+							////////// FIX ENGLISH TRANSLATION, SINCE WORD-TO-WORD FILE DOES NOT GIVE
+							////////// PROPER ONTOLOGY TRANSLATIONS FOR THE VALUES IN THE LOOKUP TABLE
+							if ( isset($TRANSLATION_FIXER_LOOKUP_TABLE[$conceptNameAr]))
+							{
+								$finalConcepts[$concept]['EXTRA']['TRANSLATION_EN'] = $TRANSLATION_FIXER_LOOKUP_TABLE[$conceptNameAr];
+								//echoN($finalConcepts[$concept]['TRANSLATION_EN']);
+								
+							}
+							/////////////////////////////////////////
 							//ECHOn("___ $conceptNameAr | $conceptNameEn");
 							
 							// FIX CONCEPT TYPE FOR ANY CONCEPT WITH EXCLUDED RELATIONS
@@ -3383,6 +3543,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.final", serialize($finalConcepts));
 					
 					////////////////////////////////////////////////////////////////////////
+					
+				
 					
 				
 					if ($GENERATE_OWL_FILE)
@@ -3494,7 +3656,15 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							{
 								$classOrInstanceName = $classID;
 								
-								$ontology->addInstance($classOrInstanceName, $thingClassName , $properties);
+								if ( !conceptHasParentClasses($relationsArr,$classOrInstanceName))
+								{
+									$ontology->addInstance($classOrInstanceName, $thingClassName , $properties);
+								}
+								else
+								{
+									$ontology->createClass($classOrInstanceName);
+								}
+								
 							}
 							
 							
@@ -3625,7 +3795,18 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								}
 								else
 								{
-									$ontology->addProperty($subjectID,$properties);
+									//echoN("!!! $subjectID|$verbSimple|$objectID|$relationsType");
+									
+									if ( $ontology->getClass($subjectID)!=null)
+									{
+										$ontology->addProperty($subjectID,$properties,"CLASS");
+									}
+									else
+									{
+										//PROPERTY IN INSTANCE
+										$ontology->addProperty($subjectID,$properties);
+									}
+									
 								}
 							
 								

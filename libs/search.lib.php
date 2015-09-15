@@ -416,7 +416,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 			
 			
 		
-			
+		
 			
 			// FOR INBOUND IS-A RELATIONS EX: X IS AN ANIMAL($word)
 			foreach($inboundRelationsArr as $index => $relationArr)
@@ -444,6 +444,10 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 					{
 						$conceptsFromTaxRelations[]=$subject;
 					}
+					
+				
+					
+					
 				}
 				
 	
@@ -453,18 +457,20 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 			}
 			
 			
-		
+	
+			
 			if ( $isQuestion )
 			{
+			
 				
-				
-				// FOR OUTBOUND IS-A RELATIONS EX: X($word) IS AN PERSON			
+				// FOR OUTBOUND IS-A RELATIONS EX: X($word) IS A PERSON			
 				foreach($outboundRelationsArr as $index => $relationArr)
 				{
 					
 					$verbAR = $relationArr['link_verb'];
 					$object = $relationArr['target'];
 					
+			
 					
 				
 					if ( $lang=="EN")
@@ -475,18 +481,23 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 					/// CLEAN AND REPLACE CONCEPT
 					$object = cleanWordnetCollocation($object);
 					///////////////////////////
-					
 				
+					
+					
 					if ( $verbAR==$is_a_relation_name_ar && $object!=$thing_class_name)
 					{
-						
-						
+						//echoN(" $object!=$thing_class_name");
+						//echoN("|$thing_class_name|$object|");
 						// ignore phrase parent concepts
 						// عذاب + عذاب الله
 						if ( strpos($object,$conceptIDStr)===false)
 						{
 							$conceptsFromTaxRelations[]=$object;
 						}
+						
+			
+						
+					
 					}
 					
 				
@@ -516,7 +527,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		}
 		
 
-		//$lang=="AR" check since AR wprds are not PoS tagged yet
+		//$lang=="AR" check since AR words are not PoS tagged yet
 		if ( $isQuestion && ($lang=="AR" ||posIsVerb($pos)) )
 		{
 			if (  (($verbArr=$MODEL_QA_ONTOLOGY['VERB_INDEX'][$word])!=null) || ($verbArr = isWordPartOfAVerbInVerbIndex($word,$lang) ) )
@@ -534,12 +545,20 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 						$subject = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$subject]['label_en'])));
 					}
 					
-					//echoN("$subject>$word>$object");
-	
+					// we are not interested in X is_a Thing - does not add value
+					if ( $object==$thing_class_name)
+					{
+						continue;
+					}
+					
+					
+					//echoN("-$subject>$word>$object");
 				
+					//echoN(" $object!=$thing_class_name");
+					
 					if ( isset($extendedQueryArr[$subject]))
 					{
-						
+					
 						$conceptsFromTaxRelations[]=$object;
 						
 						
@@ -548,7 +567,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 					else 
 					if ( isset($extendedQueryArr[$object]))
 					{
-							
+						
 						$conceptsFromTaxRelations[]=$subject;
 						
 			
@@ -561,6 +580,9 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		
 			
 	}
+	
+	
+	$conceptsFromTaxRelations = array_unique($conceptsFromTaxRelations);
 	
 	//preprint_r($conceptsFromTaxRelations);
 
@@ -1354,7 +1376,7 @@ function showSuggestions($suggestionsArr)
 			<?php 
 	}
 }
-function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
+function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch)
 {
 	// NOT RESULTS FOUND
 	if ( empty($scoringTable))
@@ -1364,10 +1386,21 @@ function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query)
 		$suggestionsArr = getSimilarWords(array_keys($extendedQueryWordsArr));
 	
 	
+		$searchedForText = $query;
+		
+		if ( $isColumnSearch)
+		{
+			$searchedForText = " this verse \"$originalQuery\" ";
+		}
+		else 
+		{
+			$searchedForText = "\"$searchedForText\"";
+		}
+		
 		?>
 		
 			<div class='search-error-message'>
-				No results found for "<?php echo $query;?>"
+				No results found for <?php echo $searchedForText;?>
 			</div>
 			
 		<?php 

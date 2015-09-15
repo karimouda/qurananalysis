@@ -707,20 +707,21 @@ function getWordsByPos(&$finalTerms,$POS)
 	return $finalTerms;
 }
 
-function loadExcludedConceptsArr()
+function loadExcludesByType($type)
 {
-	$fileArr = file("../data/ontology/extraction/excluded.concepts",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+	$fileArr = file("../data/ontology/extraction/cleaner/excluded.$type",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
 	
-	$EXCLUDED_CONCEPTS = array();
+	$excludedItemsArr = array();
 	
-	foreach($fileArr as  $conceptName)
+	foreach($fileArr as  $itemName)
 	{
 
-		$EXCLUDED_CONCEPTS[$conceptName]=1;
+		$itemName = trim($itemName);
+		$excludedItemsArr[$itemName]=1;
 		
 	}
 	
-	return $EXCLUDED_CONCEPTS;
+	return $excludedItemsArr;
 	
 }
 
@@ -784,6 +785,28 @@ function conceptHasSubclasses($relationsArr,$concept)
 	
 	return false;
 }
+function conceptHasParentClasses($relationsArr,$concept)
+{
+	global $is_a_relation_name_ar;
+
+	foreach($relationsArr as $hash => $relationArr)
+	{
+		$relationsType = $relationArr['TYPE'];
+
+		$subject = 	$relationArr['SUBJECT'];
+		$object = $relationArr['OBJECT'];
+		$verbAR = $relationArr['VERB'];
+			
+		// IF IT IS AN IS-A RELATION
+		if ( $verbAR==$is_a_relation_name_ar && $concept==$subject)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 function buildRelationHashID($subject,$verb,$object)
 {
@@ -794,7 +817,7 @@ function isWordPartOfAVerbInVerbIndex($word,$lang)
 {
 	global $MODEL_QA_ONTOLOGY;
 	
-
+	
 	
 	foreach( $MODEL_QA_ONTOLOGY['VERB_INDEX'] as $verbWord => $verbArr)
 	{
@@ -803,9 +826,10 @@ function isWordPartOfAVerbInVerbIndex($word,$lang)
 			$verbWord = strtolower($verbWord);
 			
 		}
-		//echoN("|$verbWord| |$word|".( mb_strpos($verbWord, $word)!==false));
+		
 		if ( mb_strpos($verbWord, $word)!==false) 
 		{
+			//echoN("|$verbWord| |$word|".( mb_strpos($verbWord, $word)!==false));
 			return $verbArr;
 		}
 	}

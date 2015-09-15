@@ -186,7 +186,7 @@ if ( $presentation=="TREE")
 {
 $treeRootObj = ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,0,$lang);
 
-
+//preprint_r($treeRootObj);
 
 $dataListObj = json_encode($treeRootObj);
 

@@ -1,6 +1,6 @@
 <?php 
 require_once("../global.settings.php");
-
+require_once("../libs/search.lib.php");
 
 //only arabic is supported here, english $lang spoils the functions
 $lang = "AR";
@@ -30,6 +30,14 @@ $word = $_GET['word'];
 		if ( empty($wordInfoArr))
 		{
 			showTechnicalError("Word not found");
+			$suggestionsArr = getSimilarWords(array($word));
+			
+			if ( !empty($suggestionsArr))
+			{
+				$suggestionsArr = array_slice($suggestionsArr, 0,10);
+				
+				echoN("<b>Do you mean</b>:<br>".join(", ", array_keys($suggestionsArr)));
+			}
 			exit;
 		}
 		

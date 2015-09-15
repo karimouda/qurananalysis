@@ -838,6 +838,13 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 					  			$("#"+divID).html(retRes);
 
 					  	
+					  			var selectedField = $("#qa-sort-select option:selected").val();
+								var currentOrder = $("#qa-sort-select option:selected").attr("sortorder");
+
+								
+								
+								$('.result-aya-container').tsort({attr:selectedField, order: currentOrder});
+
 
 					 	 	
 					     },

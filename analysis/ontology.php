@@ -89,7 +89,7 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
   				   						 		 </td>
   				   						 		  <td >
   				   						 			
-  				   						 					<?php /*echo  $conceptArr['EXTRACTION_PHASE']*/?> 
+  				   						 					<?php /* echo  $conceptArr['EXTRACTION_PHASE']*/?> 
   				   						 			
   				   						 		 </td>
   				   						 		</tr>

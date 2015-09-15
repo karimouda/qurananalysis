@@ -796,6 +796,8 @@ function ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,$minFreq=0,$lang)
 	/** SHOULD BE ZERO BASED FOR D3 TO WORK - o.target.weight = NULL**/
 	$nodeSerialNumber = 0;
 
+	
+	
 
 	//echoN(count($MODEL_QA_ONTOLOGY['CONCEPTS']));
 	
@@ -820,6 +822,8 @@ function ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,$minFreq=0,$lang)
 		if ( $type=="class")
 		{
 			$alreadyInLevel1[$conceptNameID]=1;
+			
+			//echoN($conceptLabelAR);
 			
 			//echoN($conceptNameID);
 			

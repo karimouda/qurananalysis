@@ -424,7 +424,7 @@ EN|a person who transgresses moral or civil law|DESC|الشخص الذي ينت�
 EN|a person who tries to please or amuse|DESC|شخص الذي يحاول إرضاء أو يروق
 EN|a person who wagers money on the outcome of games or sporting events|DESC|شخص الرهانات المال عن نتائج الأحداث الرياضية أو ألعاب
 EN|a person who works at a specific occupation|DESC|شخص الذي يعمل في مهنة معينة
-EN|a person you know well and regard with affection and trust|DESC|شخص تعرفه جيدا ويتعلق بالمودة والثقة
+EN|a person you know well and regard with affection and trust|DESC|شخص تعرفه جيدا
 EN|a phenomenon that follows and is caused by some previous phenomenon|DESC|ظاهرة أن يتبع ويحدث بسبب بعض هذه الظاهرة السابقة
 EN|a physical phenomenon associated with the atmosphere|DESC|ظاهرة الفيزيائية المرتبطة بالغلاف الجوي
 EN|a piece of fiction that narrates a chain of related events|DESC|قطعة من الخيال أن يروي سلسلة من الأحداث ذات الصلة
@@ -1420,7 +1420,7 @@ EN|Reflex|CONCEPT|منعكس
 EN|Refracting telescope|CONCEPT|تلسكوب العدسات
 EN|Region|CONCEPT|منطقة
 EN|Rejection|VERB|نبذ
-EN|relating to or characteristic of Arabs|DESC|ذات علاقة أو سما للعرب
+EN|relating to or characteristic of Arabs|DESC|ذات علاقة بالعرب
 EN|Relation|CONCEPT|علاقة
 EN|Relative|CONCEPT|قريب
 EN|Released|CONCEPT|صدر
@@ -1535,7 +1535,7 @@ EN|someone who expresses in language|DESC|شخص يعرب عن اللغة
 EN|someone who gives a warning so that a mistake can be avoided|DESC|الشخص الذي يعطي تحذير بحيث يمكن تجنب خطأ
 EN|someone who has committed a crime or has been legally convicted of a crime|DESC|شخص ارتكب جريمة أو قد أدين بجريمة قانونا
 EN|someone who is the first to think of or make something|DESC|شخص ما هو الأول من التفكير أو تقديم شيء
-EN|someone who leads you to believe something that is not true|DESC|شخص ما يقودك إلى الاعتقاد بما غير صحيح
+EN|someone who leads you to believe something that is not true|DESC|شخص ما يقودك إلى الاعتقاد بما هو غير صحيح
 EN|someone who leaves one country to settle in another|DESC|شخص يترك بلد واحد تسوية في مكان آخر
 EN|someone who manages or has significant financial interest in an industrial enterprise|DESC|الشخص الذي يقوم بإدارة أو مصلحة مالية كبيرة في مؤسسة الصناعية
 EN|someone who plays [or knows how to play] card games|DESC|شخص يلعب [أو يعرف كيفية اللعب] بطاقة الألعاب
@@ -1763,7 +1763,7 @@ EN|the point in time at which something ends|DESC|النقطة في الوقت �
 EN|the position and power of an exalted person [a sovereign or bishop] who is entitled to sit in a chair of state on ceremonial occasions|DESC|موقف وسلطة شخص تعالى [ذات السيادة أو الأسقف] الذي يحق له الجلوس على كرسي للدولة في المناسبات الاحتفالية
 EN|the positive quality of being precious and beyond value|DESC|نوعية إيجابية يجري الثمينة وتتجاوز قيمة
 EN|the power of retaining and recalling past experience|DESC|السلطة للاحتفاظ بها، وإذ تشير إلى التجربة السابقة
-EN|the practice of being unjust or unfair|DESC|هذه الممارسة أنها غير عادلة أو غير منصفة
+EN|the practice of being unjust or unfair|DESC|ممارسة غير عادلة أو غير منصفة
 EN|the precise location of something|DESC|الموقع الدقيق لشيء
 EN|the principal activity in your life that you do to earn money|DESC|النشاط الرئيسي في الحياة الخاصة بك التي يمكنك القيام به لكسب المال
 EN|the process of using your mind to consider something carefully|DESC|أن عملية استخدام عقلك للنظر بعناية في شيء
@@ -2046,7 +2046,7 @@ EN|abstaining from food|DESC|الامتناع عن الطعام
 EN|act or practice of refraining from indulging an appetite|DESC|قانون أو ممارسة الامتناع عن الانغماس شهية
 EN|remorse for your past conduct|DESC|الندم على السلوك السابق الخاص بك
 EN|a feeling of deep regret [usually for some misdeed]|DESC|شعور بالأسف العميق [عادة لبعض جرميا]
-EN|an abusive attack on a person's character or good name|DESC|هجوم مسيئة على الحرف للشخص أو اسم جيد
+EN|an abusive attack on a person's character or good name|DESC|تشويه السمعة
 EN|a false accusation of an offense or a malicious misrepresentation of someone's words or actions|DESC|تهمة الباطلة لإهانة أو تشويه خبيثة للكلمات أو الأفعال لشخص ما
 EN|a long thin sewing needle with a sharp point|DESC|إبرة خياطة طويلة رقيقة مع نقطة حادة
 EN|a needle used in sewing to pull thread through cloth|DESC|إبرة تستخدم في الخياطة لمؤشر ترابط سحب من خلال القماش
@@ -2141,7 +2141,7 @@ EN|Compassion|CONCEPT|الرحمة
 EN|a deep awareness of and sympathy for another's suffering|DESC|ويعاني الوعي العميق وتعاطفه لآخر
 EN|a desirable state|DESC|دولة المرغوب فيه
 EN|Relief|CONCEPT|الإغاثة
-EN|assistance in time of difficulty|DESC|المساعدة في الوقت المناسب لصعوبة
+EN|assistance in time of difficulty|DESC|المساعدة في وقت الشدة
 EN|people without possessions or wealth [considered as a group]|DESC|الناس دون ممتلكات أو الثروة [تعتبر كمجموعة]
 EN|a predetermined set of movements in dancing or skating|DESC|مجموعة محددة سلفا من الحركات في الرقص أو التزحلق على الجليد
 EN|Illustration|CONCEPT|الرسم التوضيحي
@@ -2413,7 +2413,7 @@ EN|a person who is owned by someone|DESC|شخص الذي يملكها شخص
 EN|any of various leafy plants or their leaves and stems eaten as vegetables|DESC|أي من النباتات الورقية المختلفة أو أوراق الشجر وينبع يؤكل كالخضروات
 EN|someone who journeys to a sacred place as an act of religious devotion|DESC|شخص الرحلات إلى مكان مقدس كفعل من التقوى
 EN|Wayfarer|CONCEPT|ابن السبيل
-EN|a traveler going on a trip|DESC|مسافر الذهاب في رحلة
+EN|a traveler going on a trip|DESC|مسافر في رحلة
 EN|Settler|CONCEPT|المستوطنين
 EN|a person who settles in a new colony or moves into new country|DESC|شخص الذي يستقر في مستعمرة جديدة أو ينتقل إلى بلد جديد
 EN|Believer|CONCEPT|مؤمن
@@ -2636,18 +2636,18 @@ EN|a set that is closed, associative, has an identity element and every element 
 EN|a book of blank pages with pockets or envelopes|DESC|كتاب صفحات فارغة مع جيوب أو المغلفات
 EN|Medium|CONCEPT|متوسطة
 EN|a means or instrumentality for storing or communicating information|DESC|وسيلة أو أداة لتخزين أو نقل المعلومات
-AR|اخر|CONCEPT|Most
-AR|رحمن|CONCEPT|Rahman
+AR|اخر|CONCEPT|Another
+AR|رحمن|CONCEPT|the most gracious
 AR|مجرم|CONCEPT|A criminal
-AR|ساجد|CONCEPT|Sajid
-AR|بر|CONCEPT|BUR
-AR|صابر|CONCEPT|Saber
-AR|حسنى|CONCEPT|Hosny
-AR|طيب|CONCEPT|OK
+AR|ساجد|CONCEPT|Prostrating
+AR|بر|CONCEPT|Righteousness
+AR|صابر|CONCEPT|patient
+AR|حسنى|CONCEPT|Beautiful
+AR|طيب|CONCEPT|good
 AR|ضال|CONCEPT|Stray
 AR|برىء|CONCEPT|Innocent
 AR|مخلص|CONCEPT|Savior
-AR|بنى إسراءيل|CONCEPT|Bani Israel
+AR|بنى إسراءيل|CONCEPT|Children of israel
 AR|كتاب الله|CONCEPT|The book of Allah
 AR|ذكر الله|CONCEPT|God said
 AR|دون الله|CONCEPT|Without God
@@ -2660,7 +2660,7 @@ AR|الزنى|CONCEPT|Adultery
 AR|الصحابة|CONCEPT|Companions
 AR|النسيئ|CONCEPT|postponement
 AR|أعمدة|CONCEPT|Columns
-AR|الخليقة|CONCEPT|The creature
+AR|الخليقة|CONCEPT|creation
 AR|الخضر|CONCEPT|Greens
 AR|يحي|CONCEPT|Yahya
 AR|الحجاج|CONCEPT|Pilgrims
@@ -2674,55 +2674,55 @@ AR|المطففين|CONCEPT|Al-mutaffifin
 AR|التائبين|CONCEPT|Penitents
 AR|المحسنون|CONCEPT|Philanthropists
 AR|أصابع|CONCEPT|Fingers
-AR|رأس|CONCEPT|Top
+AR|رأس|CONCEPT|Head
 AR|منسك|CONCEPT|Rite
 AR|قلم|CONCEPT|Pen
 AR|المرائي|CONCEPT|Tartuffe
-AR|أسلحت|CONCEPT|Aslhat
+AR|أسلحت|CONCEPT|Weapons
 AR|إيمن|CONCEPT|Ayman
 AR|وصف|CONCEPT|Description
 AR|أحبار|CONCEPT|Inks
-AR|صدر|CONCEPT|Released
-AR|نصح|CONCEPT|Advised
+AR|صدر|CONCEPT|Breast
+AR|نصح|CONCEPT|Advise
 AR|عالي|CONCEPT|High
-AR|وارد|CONCEPT|Ward
+AR|وارد|CONCEPT|drawer
 AR|سيد|CONCEPT|Master
 AR|تسبيح|CONCEPT|Praise
 AR|خاسرون|CONCEPT|Losers
 AR|سؤل|CONCEPT|The desires
-AR|رد|CONCEPT|Reply
+AR|رد|CONCEPT|turned back
 AR|اباء|CONCEPT|Parents
-AR|حسيس|CONCEPT|Hasis
-AR|تفث|CONCEPT|Tfth
-AR|فرج|CONCEPT|Faraj
+AR|حسيس|CONCEPT|slightest sound
+AR|تفث|CONCEPT|prescribed duties
+AR|فرج|CONCEPT|chastity
 AR|فتيات|CONCEPT|Girls
 AR|المترفين|CONCEPT|Affluent
 AR|حلم|CONCEPT|Dream
 AR|صاحب|CONCEPT|Owner
-AR|بطشة|CONCEPT|Lower echelon
+AR|بطشة|CONCEPT|assault
 AR|جسم|CONCEPT|Body
-AR|خزنت|CONCEPT|Store
-AR|فجور|CONCEPT|Whoredom
+AR|خزنت|CONCEPT|keepers
+AR|فجور|CONCEPT|immorality
 AR|صفة|CONCEPT|Characteristics
-AR|بنى|CONCEPT|Brown
+AR|بنى|CONCEPT|Built
 AR|المرأة|CONCEPT|Women
 AR|التكاليف|CONCEPT|Costs
 AR|تحريف|CONCEPT|Twist
 AR|أوصياء|CONCEPT|Guardians
 AR|الأم|CONCEPT|Mother
-AR|جوارح|CONCEPT|Member
-AR|شاهدي|CONCEPT|View
-AR|سحرة|CONCEPT|Charmers
+AR|جوارح|CONCEPT|hunting animals
+AR|شاهدي|CONCEPT|witnesses
+AR|سحرة|CONCEPT|wizards
 AR|أقوام|CONCEPT|Folks
-AR|الرجل|CONCEPT|Guy
-AR|منكروا|CONCEPT|Menkrwa
+AR|الرجل|CONCEPT|man
+AR|منكروا|CONCEPT|deniers
 AR|تبليغ|CONCEPT|Communication
-AR|جحود|CONCEPT|Ungrateful
+AR|جحود|CONCEPT|Ungratefulness
 AR|جيش|CONCEPT|Army
-AR|مشركوا|CONCEPT|Mshrkwa
-AR|خدم|CONCEPT|Served
-AR|آكلوا|CONCEPT|Ate
-AR|أتباع|CONCEPT|Follow
+AR|مشركوا|CONCEPT|polytheists
+AR|خدم|CONCEPT|Servants
+AR|آكلوا|CONCEPT|Eaters
+AR|أتباع|CONCEPT|Followers
 AR|الرؤساء|CONCEPT|Presidents
 EN|Store|CONCEPT|مخزن
 AR|أُحْصِرُ|VERB|wrapped up
@@ -2874,13 +2874,13 @@ EN|act of putting off to a future time|DESC|قانون تأجيل إلى وقت 
 EN|Pause|CONCEPT|إيقاف مؤقت
 EN|a time interval during which there is a temporary cessation of something|DESC|فاصل الزمني خلالها هناك وقف مؤقت لشيء
 EN|Delay|CONCEPT|تأخير
-EN|the act of delaying|DESC|قانون لتأخير
+EN|the act of delaying|DESC|فعل التأخير
 AR|الزناة|CONCEPT|Adulterers
-AR|مسافرين|CONCEPT|Passengers
+AR|مسافرين|CONCEPT|travelers
 AR|المرتدون|CONCEPT|Renegades
-AR|الناصر|CONCEPT|Nasser
-AR|قاذف|CONCEPT|Ejector
-AR|النفخة|CONCEPT|Puff
+AR|الناصر|CONCEPT|helper
+AR|قاذف|CONCEPT|accuser
+AR|النفخة|CONCEPT|blast
 AR|عصا|CONCEPT|Stick
 EN|a stout sword with a curved blade and thick back|DESC|سيف شجاع مع شفرة منحنية وظهره سميكة
 EN|Fencing sword|CONCEPT|سيف المبارزة
@@ -2943,18 +2943,18 @@ EN|Intellectual|CONCEPT|الفكرية
 EN|a person who uses the mind creatively|DESC|شخص الذي يستخدم العقل خلاق
 EN|Perceiver|CONCEPT|بيرسيفير
 EN|a person who becomes aware [of things or events] through the senses|DESC|شخص الذي يصبح على علم [من الأشياء أو الأحداث] من خلال الحواس
-EN|someone who listens attentively|DESC|الشخص الذي يستمع اهتمام
+EN|someone who listens attentively|DESC|الشخص الذي يستمع باهتمام
 EN|any customary observance or practice|DESC|أي مراعاة العرفي أو الممارسة
 EN|Religious ceremony|CONCEPT|مراسم دينية
 EN|a ceremony having religious meaning|DESC|حفل لها معنى ديني
 EN|Custom|CONCEPT|مخصص
 EN|accepted or habitual practice|DESC|الممارسة المقبولة أو الاعتيادية
-AR|ناس|CONCEPT|What
-AR|دنيا|CONCEPT|Donia
-AR|ليل|CONCEPT|Come on
+AR|ناس|CONCEPT|mankind
+AR|دنيا|CONCEPT|the world
+AR|ليل|CONCEPT|night
 AR|موت|CONCEPT|Death
-AR|متقين|CONCEPT|Avoid
-AR|بصر|CONCEPT|Trice
+AR|متقين|CONCEPT|The righteous
+AR|بصر|CONCEPT|Vission
 AR|شمس|CONCEPT|Sun
 AR|قمر|CONCEPT|Moon
 AR|يتيم|CONCEPT|Orphan
@@ -2962,53 +2962,53 @@ AR|داود|CONCEPT|David
 AR|مدينة|CONCEPT|City
 AR|مفلحون|CONCEPT|Successful
 AR|أصم|CONCEPT|Deaf
-AR|إنجيل|CONCEPT|Angel
-AR|أعراب|CONCEPT|Syntax
-AR|صور|CONCEPT|Photo
-AR|جاهل|CONCEPT|Clueless
-AR|خبيث|CONCEPT|Sly
+AR|إنجيل|CONCEPT|Bible
+AR|أعراب|CONCEPT|Bedouins
+AR|صور|CONCEPT|The trumpet
+AR|جاهل|CONCEPT|ignorant
+AR|خبيث|CONCEPT|wicked
 AR|معتدين|CONCEPT|Aggressors
 AR|حوت|CONCEPT|Whale
 AR|كلب|CONCEPT|Dog
 AR|نبوة|CONCEPT|Prophecy
 AR|حواريون|CONCEPT|Conversational
-AR|مرء|CONCEPT|Navigating the
+AR|مرء|CONCEPT|man
 AR|جسد|CONCEPT|The body of the
 AR|حرب|CONCEPT|War
 AR|جهاد|CONCEPT|Jihad
 AR|قصر|CONCEPT|Castle
-AR|فجار|CONCEPT|Fajar
-AR|قنطار|CONCEPT|Hundredweight
-AR|سامري|CONCEPT|Samaritan
+AR|فجار|CONCEPT|obscene
+AR|قنطار|CONCEPT|Heap
+AR|سامري|CONCEPT|Samiri
 AR|جبريل|CONCEPT|Gabriel
-AR|قربان|CONCEPT|Korban
-AR|سارق|CONCEPT|Shoplifter
+AR|قربان|CONCEPT|oblation
+AR|سارق|CONCEPT|Thief
 AR|مصلين|CONCEPT|Worshippers
-AR|ميسر|CONCEPT|Facilitator
-AR|حطمة|CONCEPT|Broke
+AR|ميسر|CONCEPT|gambling
+AR|حطمة|CONCEPT|The crusher
 AR|سراب|CONCEPT|Mirage
-AR|نمل|CONCEPT|Which
+AR|نمل|CONCEPT|Ant
 AR|نخلة|CONCEPT|Palm
 AR|ذباب|CONCEPT|Flies
 AR|فردوس|CONCEPT|Paradise
-AR|ضرار|CONCEPT|Dirar
-AR|أب|CONCEPT|AB
-AR|دينار|CONCEPT|JD
-AR|حلي|CONCEPT|Country
+AR|ضرار|CONCEPT|causing harm
+AR|أب|CONCEPT|father
+AR|دينار|CONCEPT|single coin
+AR|حلي|CONCEPT|Jewelery
 AR|روم|CONCEPT|ROM
 AR|أهلة|CONCEPT|His family
-AR|رهبانية|CONCEPT|Proctor
+AR|رهبانية|CONCEPT|monasticism
 AR|نقع|CONCEPT|Soak
 AR|مضطر|CONCEPT|Compelled
-AR|مطففين|CONCEPT|Mutaffiffin
+AR|مطففين|CONCEPT|those who give less
 AR|نحل|CONCEPT|Bee
-AR|مبذرين|CONCEPT|Are after spendthrift
-AR|مكروه|CONCEPT|Hated it
-AR|بدن|CONCEPT|Hull
-AR|مخبتين|CONCEPT|Mkhbetin
+AR|مبذرين|CONCEPT|مبذرين
+AR|مكروه|CONCEPT|Hateful
+AR|بدن|CONCEPT|the camels and cattle
+AR|مخبتين|CONCEPT|humble
 AR|خبز|CONCEPT|Bread
 AR|رماد|CONCEPT|Ash
-AR|هدهد|CONCEPT|Monalisa
+AR|هدهد|CONCEPT|Hoopoe
 EN|Planet|CONCEPT|كوكب
 EN|CelestialBody|CONCEPT|سيليستيالبودي
 EN|Mammal|CONCEPT|حيوان ثديي
@@ -3093,3 +3093,78 @@ EN|Arthropod|CONCEPT|مفصليات الأرجل
 EN|invertebrate having jointed limbs and a segmented body with an exoskeleton made of chitin|DESC|الفقاريات قد انضموا أطرافه وهيئة مجزأة مع الهيكل الخارجي مصنوع من كيتين
 EN|Patriarch|CONCEPT|البطريرك
 EN|Priest|CONCEPT|كاهن
+AR|يُهَاجِرُوا۟|VERB|يهاجروا۟
+AR|ٱسْتُحْفِظُوا۟|VERB|ٱستحفظوا۟
+AR|يُقَٰتِلُونَ|VERB|يقٰتلون
+AR|ٱسْتَطَعْتُم|VERB|ٱستطعتم
+AR|يَدْعُونَ|VERB|Call
+AR|ٱتَّخَذُوا۟|VERB|ٱتخذوا۟
+AR|وَءَاخَرُونَ|VERB|وءاخرون
+AR|فَإِنَّهُمْ|VERB|They
+AR|سَلَٰمٌ|VERB|سلٰم
+AR|عَلَيْكُمْ|VERB|You
+AR|ۖ|VERB|ۖ
+AR|عَلِمَ|VERB|Flag
+AR|أَن|VERB|That
+AR|ۗ|CONCEPT|ۗ
+AR|ۚ|VERB|ۚ
+AR|بَل|VERB|But
+AR|ۙ|VERB|ۙ
+AR|وَلَٰكِن|VERB|ولٰكن
+AR|فى سبيل|CONCEPT|In order to
+AR|من كتاب|CONCEPT|From the book
+AR|من دون|CONCEPT|Without
+AR|يضربون في|CONCEPT|Beat in
+AR|فى|CONCEPT|In
+EN|Wagering|CONCEPT|الرهان
+EN|Bird|CONCEPT|الطيور
+EN|AnatomicalStructure|CONCEPT|أناتوميكالستروكتوري
+EN|AnimalBodyPart|CONCEPT|أنيمالبوديبارت
+EN|a saint who is considered to be a defender of some group or nation|DESC|قديس الذي يعتبر مدافعاً عن بعض المجموعات أو الأمة
+EN|people living in a town or city having local self-government|DESC|الناس الذين يعيشون في البلدة أو المدينة بعد الحكم الذاتي المحلي
+EN|a book regarded as authoritative in its field|DESC|كتاب يعتبر حجية في هذا المجال
+EN|Handbook|CONCEPT|كتيب
+EN|a concise reference book providing specific information about a subject or location|DESC|كتاب مرجعي مختصر توفير معلومات محددة حول الموضوع أو الموقع
+EN|suggestive of or tending to moral looseness|DESC|توحي أو يتجه إلى الارتخاء الأخلاقية
+EN|the act of offering the bread and wine of the Eucharist|DESC|قانون يقدم الخبز والخمر لسر التناول المقدس
+EN|a car that is old and unreliable|DESC|سيارة قديمة وغير موثوق بها
+EN|Car|CONCEPT|سيارات
+EN|a motor vehicle with four wheels|DESC|مركبات ذات العجلات الأربع
+EN|Dysphemism|CONCEPT|ديسفيميسم
+EN|an offensive or disparaging expression that is substituted for an inoffensive one|DESC|تعبير الهجومية أو تحط مستبدل لأحد غير مؤذ
+EN|a means of persuading or arguing|DESC|وسيلة لإقناع أو حجة
+EN|Instrument|CONCEPT|أداة
+EN|a device that requires skill for proper use|DESC|جهاز يتطلب مهارة للاستخدام الصحيح
+EN|Persuasion|CONCEPT|الإقناع
+EN|the act of persuading [or attempting to persuade]|DESC|قانون لإقناع [أو محاولة إقناع]
+EN|the part of an animal's body that corresponds to a person's chest|DESC|الجزء من جسم الحيوان الذي يتوافق مع الصدر للشخص
+EN|Mammary gland|CONCEPT|الغدة الثديية
+EN|milk-secreting organ of female mammals|DESC|جهاز إفراز الحليب من الإناث من الثدييات
+EN|Helping|CONCEPT|مساعدة
+EN|an individual quantity of food or drink taken as part of a meal|DESC|كمية فردية من الطعام أو الشراب كجزء من وجبة
+EN|an artist skilled at drawing|DESC|فنان ماهرة في الرسم
+EN|Storage space|CONCEPT|مساحة التخزين
+EN|the area in any structure that provides space for storage|DESC|المنطقة في أي بنية التي توفر مساحة للتخزين
+EN|Money handler|CONCEPT|معالج المال
+EN|a person who receives or invests or pays out money|DESC|شخص الذي يتلقى أو تستثمر أو تدفع الأموال
+EN|the crime of forcing a woman to submit to sexual intercourse against her will|DESC|جريمة إكراه المرأة على تقديم للجماع الجنسي ضد إرادتها
+EN|Battle|CONCEPT|معركة
+EN|a hostile meeting of opposing military forces in the course of a war|DESC|اجتماع معادية لمعارضة القوات العسكرية أثناء الحرب
+EN|the act of attacking|DESC|قانون لمهاجمة
+EN|Thoroughbred|CONCEPT|أصيل
+EN|a racehorse belonging to a breed that originated from a cross between Arabian stallions and English mares|DESC|فرس الرهان المنتمين لسلالة نشأت من عبور بين فحول العربية والإنجليزية ماريس
+EN|Sexual assault|CONCEPT|الاعتداء الجنسي
+EN|a statutory offense that provides that it is a crime to knowingly cause another person to engage in an unwanted sexual act by force or threat|DESC|جريمة القانوني ينص على أنه جريمة التسبب في علم شخص آخر الانخراط في فعل جنسي غير المرغوب فيها بالقوة أو بالتهديد
+EN|one having charge of buildings or grounds or animals|DESC|واحد المسؤول عنه المباني أو حديقة الحيوانات
+EN|a person who helps people or institutions [especially with financial help]|DESC|شخص الذي يساعد الناس أو المؤسسات [لا سيما مع مساعدة مالية]
+EN|a lack of gratitude|DESC|عدم الامتنان
+EN|the experiencing of affective and emotional states|DESC|تعاني الدول العاطفية والنفسية
+EN|in a subordinate position|DESC|في وضع التبعية
+EN|Subordinateness|CONCEPT|سوبورديناتينيس
+EN|secondary importance|DESC|أهمية ثانوية
+EN|any green goods that are good to eat|DESC|أي السلع الخضراء التي جيدة لتناول الطعام
+EN|Consumer|CONCEPT|المستهلك
+EN|a person who uses goods or services|DESC|شخص الذي يستخدم السلع أو الخدمات
+EN|Produce|CONCEPT|إنتاج
+EN|fresh fruits and vegetable grown for the market|DESC|الفواكه الطازجة والخضروات تزرع للسوق
+EN|someone who imputes guilt or blame|DESC|شخص وراءها الشعور بالذنب أو لوم

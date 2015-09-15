@@ -48,7 +48,7 @@ loadModels("core",$lang);
 			  	<table>
 				  	<tr>
 						<td >
-							Word or PoS Tag
+							Arabic Word or PoS Tag
 						</td>
 						<td align="left">
 						

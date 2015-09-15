@@ -9,8 +9,8 @@ $query = $_GET['q'];
     <meta charset="utf-8">
     <title>Quran Smart Semantic Search and Question Answering System - QA (BETA)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Quran Semantic-based Search, Analysis & Expert System">
-    <meta name="author" content="">
+    <meta name="description" content="Quran Analysis is a Semantic Search and Question Answering System for the Quran">
+    <meta name="google-site-verification" content="2rbTUeea6jdmmhdyQzW2nnk5NdMxZWIivx0DJ9-3czw" />
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
@@ -246,7 +246,11 @@ $query = $_GET['q'];
 		
 				var query = $("#search-field").val();
 		
-				
+				if (query=='' || query.trim().length ==0 )
+				{
+					 $("#search-field").focus();
+					 return;
+				}
 
 				$("#loading-layer").show();
 

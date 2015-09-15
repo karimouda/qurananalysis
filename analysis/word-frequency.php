@@ -113,7 +113,14 @@ loadModels("core",$lang);
 									if ( $withStopWordsExcluded ==1 )
 									{
 										//if ( isset($MODEL_CORE['STOP_WORDS'][$wordLabel]) ) continue;
-										if ( isset($MODEL_CORE['STOP_WORDS_STRICT_L2'][$wordLabel]) ) continue;
+										if ( $lang=="AR")
+										{
+											if ( isset($MODEL_CORE['STOP_WORDS_STRICT_L2'][$wordLabel]) ) continue;
+										}
+										else
+										{
+											if ( isset($MODEL_CORE['STOP_WORDS'][$wordLabel]) ) continue;
+										}
 									}
 									
 									$i++;

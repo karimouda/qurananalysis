@@ -46,7 +46,7 @@ loadModels("core",$lang);
 			  
 			  	
 			  	<div id='words-context-options'>
-					Word or PoS Tag:
+					Arabic Word or PoS Tag:
 					<input type="text" id="word" autofocus="true" />
 					<input type="button" id='words-context-submit' value='Context'  />
 				</div>

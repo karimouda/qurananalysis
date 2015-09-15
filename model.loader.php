@@ -253,7 +253,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	$classes = $ontology->{'owl_data'}['classes'];
 	$instances = $ontology->{'owl_data'}['instances'];
 	
-
+	
 	
 	$qaOntologyConceptsArr = array();
 	
@@ -263,6 +263,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	foreach($classes as $className => $infoArr)
 	{
+		
 		
 		$className = stripOntologyNamespace($className);
 		
@@ -326,6 +327,8 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			$parent = stripOntologyNamespace($infoArr['class']);
 			
+			//echoN("$subjectConceptName $parent");
+			
 			$relHashID = buildRelationHashID($subjectConceptName,$is_a_relation_name_ar,$parent);
 			
 			$qaOntologyRelationsArr[$relHashID]= array("subject"=>$subjectConceptName,"verb"=>"$is_a_relation_name_ar","object"=>$parent,"verb_translation_en"=>"$is_a_relation_name_en");
@@ -370,7 +373,13 @@ function loadModels($modelsToBeLoaded,$lang)
 			}
 
 			
-			$qaOntologyConceptsArr[$subjectConceptName]=array("type"=>"instance");
+			// if it is class dont make it instance even if it is a subject (subclass of another class
+			// BUG: animal was not apearing on ontology graph page since it was instance
+			if ( empty($qaOntologyConceptsArr[$subjectConceptName]) 
+					|| $qaOntologyConceptsArr[$subjectConceptName][type]!='class' )
+			{
+				$qaOntologyConceptsArr[$subjectConceptName]=array("type"=>"instance");
+			}
 	
 		}
 		
@@ -505,6 +514,9 @@ function loadModels($modelsToBeLoaded,$lang)
 	$qaOntologyGraphSourcesIndex = array();
 	$qaOntologyGraphTargetsIndex = array();
 	
+	//preprint_r($qaOntologyRelationsArr);
+	//exit;
+	
 	foreach($qaOntologyRelationsArr as $index => $relArr)
 	{
 		$subject  =$relArr['subject'];
@@ -527,6 +539,10 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 	
+	
+	
+	
+	
 	$qaOntologyConceptsENtoARMapArr = array();
 
 	foreach($qaOntologyConceptsArr as $arName => $conceptArr)
@@ -537,6 +553,33 @@ function loadModels($modelsToBeLoaded,$lang)
 		//$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
 	}
 	
+	$qaSynonymsIndex = array();
+	
+	foreach($qaOntologyConceptsArr as $arName => $conceptArr)
+	{
+	
+			
+		$i=1;
+		while(isset($conceptArr['synonym_'.$i]))
+		{
+			
+			
+			if (empty($conceptArr['synonym_'.$i])) 
+			{
+				$i++;
+				continue;
+			}
+			
+			$synonymLabel = trim(strtolower($conceptArr['synonym_'.$i]));
+	
+			$qaSynonymsIndex[$synonymLabel]=$arName;
+			
+			$i++;
+
+		}
+	}
+	
+	
 
 	
 	$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
@@ -546,6 +589,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
 	
 	$MODEL_QA_ONTOLOGY['VERB_INDEX']  = $qaOntologyVerbIndex;
+	
+	$MODEL_QA_ONTOLOGY['SYNONYMS_INDEX']  = $qaSynonymsIndex;
 	
 	$res = apc_store("MODEL_QA_ONTOLOGY",$MODEL_QA_ONTOLOGY);
 	
@@ -562,6 +607,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	/// WORDNET
 	loadWordnet();
+	
+	
 	/////////////
 	
 
@@ -854,7 +901,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	//needed to be set here after both languages has been loaded
 	
 	
-	
+	// reload all models from memory to set all variables (WORDNET) - after model generation 
+	//loadModels($modelsToBeLoaded,$lang);
 	
 	
 	
@@ -1534,8 +1582,10 @@ function loadModel($lang,$type,$file)
 					  				
 					  				//$INVERTED_INDEX[$word][] = array("SURA"=>$s,"AYA"=>$a,"INDEX_IN_AYA_EMLA2Y"=>$wordIndex,"WORD_TYPE"=>"NORMAL_WORD");
 					  				 
+					  			
 					  				addToInvertedIndex($INVERTED_INDEX,$word,$s,$a,$wordIndex,"NORMAL_WORD");
 					  				 
+					  			
 					  				
 					  				
 					  				/** CALCULATE WORD LENGTHG **/
@@ -1767,9 +1817,7 @@ function loadModel($lang,$type,$file)
 				  		
 				  		$MODEL_SEARCH[$lang]['INVERTED_INDEX'] = $INVERTED_INDEX;
 				  		
-				  		
-				  		
-				  		
+
 				  		
 				  		$res = apc_store("MODEL_CORE[$lang]",$MODEL_CORE[$lang]);
 				  		

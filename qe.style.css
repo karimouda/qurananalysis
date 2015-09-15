@@ -10,12 +10,10 @@
        url(/fonts/DroidKufi-Regular.ttf) format('truetype');
 }
 @font-face {
-  font-family: 'Droid Arabic Kufi';
+  font-family: 'Open Sans';
   font-style: normal;
-  font-weight: 700;
-  src: url(/fonts/DroidKufi-Bold.eot);
-  src: url(/fonts/DroidKufi-Bold.eot?#iefix) format('embedded-opentype'),
-       url(/fonts/DroidKufi-Bold.ttf) format('truetype');
+  font-weight: 400;
+  src: url(/fonts/open-sans/OpenSans-Regular.ttf);
 }
 
 
@@ -1056,7 +1054,7 @@ text-align: center;
   margin: auto;
   width: 570px;
   color: #052F59;
-  font-family: Tahoma;
+  font-family: 'Open Sans';
   font-weight: lighter;
   padding: 20px 0px;
   font-size: 24px;

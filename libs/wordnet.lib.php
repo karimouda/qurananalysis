@@ -292,7 +292,7 @@ function loadWordnet()
 {
 	global $MODEL_WORDNET;
 	
-	echoN("D");
+	
 	if (  apc_fetch("WORDNET_INDEX") == false)
 	{
 		 $wordnetDir = array();
