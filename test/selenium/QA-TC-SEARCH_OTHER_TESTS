@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://dev.qurananalysis.com/" />
+<title>SEARCH_OTHER_TESTS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SEARCH_OTHER_TESTS</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>يوسُفُ</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=11-89</td>
+	<td>exact:قالوا أإنك لأنت يوسف قال أنا يوسف وهذا أخي قد من الله علينا إنه من يتق ويصبر فإن الله لا يضيع أجر المحسنين They said, &quot;Are you indeed Joseph?&quot; He said &quot;I am Joseph, and this is my brother. Allah has certainly favored us. Indeed, he who fears Allah and is patient, then indeed, Allah does not allow to be lost the reward of those who do good.&quot;</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>يوس</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>يوسك</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=يوسف</td>
+	<td>يوسف</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=يونس</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>link=يوسف</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.search-word-suggestion</td>
+	<td>Do you mean ... <br /> ويمسك&nbsp;&nbsp;ونسكي&nbsp;&nbsp;ويسفك&nbsp;&nbsp;يمسكون&nbsp;&nbsp;يمسك&nbsp;&nbsp;يوسف&nbsp;&nbsp;يونس&nbsp;&nbsp;يكسب&nbsp;&nbsp;يئوسا&nbsp;&nbsp;يسلك&nbsp;&nbsp;فيمسك</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=div.search-word-suggestion</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>notavalidquery</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.search-error-message</td>
+	<td>No results found for &quot;notavalidquery&quot;</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>بسم-الله</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>بسم - الله</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='search-results-summary']/table/tbody/tr/td[2]</td>
+	<td>Searched for &quot;بسم الله&quot;</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://dev.qurananalysis.com/" />
+<title>SEARCH_SORT_AND_SCRIPT</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SEARCH_SORT_AND_SCRIPT</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/?q=50:12</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>مكة</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=span.result-sura-info</td>
+	<td>الفتح [48:24]</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=qa-sort-select</td>
+	<td>label=Order</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=span.result-sura-info</td>
+	<td>البقرة [2:126]</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=qa-script-select</td>
+	<td>label=Uthmani</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=1-125</td>
+	<td>وَإِذْ قَالَ إِبْرَٰهِۦمُ رَبِّ ٱجْعَلْ هَٰذَا بَلَدًا ءَامِنًا وَٱرْزُقْ أَهْلَهُۥ مِنَ ٱلثَّمَرَٰتِ مَنْ ءَامَنَ مِنْهُم بِٱللَّهِ وَٱلْيَوْمِ ٱلْءَاخِرِ ۖ قَالَ وَمَن كَفَرَ فَأُمَتِّعُهُۥ قَلِيلًا ثُمَّ أَضْطَرُّهُۥٓ إِلَىٰ عَذَابِ ٱلنَّارِ ۖ وَبِئْسَ ٱلْمَصِيرُ And [mention] when Abraham said, &quot;My Lord, make this a secure city and provide its people with fruits - whoever of them believes in Allah and the Last Day.&quot; [Allah] said. &quot;And whoever disbelieves - I will grant him enjoyment for a little; then I will force him to the punishment of the Fire, and wretched is the destination.&quot;</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=span.result-sura-info</td>
+	<td>البقرة [2:126]</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=qa-sort-select</td>
+	<td>label=Relevance</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=47-23</td>
+	<td>وَهُوَ ٱلَّذِى كَفَّ أَيْدِيَهُمْ عَنكُمْ وَأَيْدِيَكُمْ عَنْهُم بِبَطْنِ مَكَّةَ مِنۢ بَعْدِ أَنْ أَظْفَرَكُمْ عَلَيْهِمْ ۚ وَكَانَ ٱللَّهُ بِمَا تَعْمَلُونَ بَصِيرًا And it is He who withheld their hands from you and your hands from them within [the area of] Makkah after He caused you to overcome them. And ever is Allah of what you do, Seeing.</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=span.result-sura-info</td>
+	<td>الفتح [48:24]</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

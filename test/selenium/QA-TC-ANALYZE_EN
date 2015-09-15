@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://dev.qurananalysis.com/" />
+<title>ANALYZE_EN</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ANALYZE_EN</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/analysis/uthmani-to-simple.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Analyze</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Basic Statistics</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectAndWait</td>
+	<td>id=language-selection</td>
+	<td>label=EN</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr/td[2]</td>
+	<td>114</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[2]/td[2]</td>
+	<td>6236</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[3]/td[2]</td>
+	<td>157935</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[4]/td[2]</td>
+	<td>5304</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[5]/td[2]</td>
+	<td>668733</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Frequency</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[2]</td>
+	<td>and</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[3]</td>
+	<td>9240</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;button&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[2]</td>
+	<td>allah</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[3]</td>
+	<td>2973</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Clouds</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=Verse Beginnings</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=legend</td>
+	<td>Verse Beginnings</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=indeed</td>
+	<td>indeed</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=Verse Endings</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=punishment</td>
+	<td>punishment</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=The Opening</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=merciful</td>
+	<td>merciful</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=Mankind</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=mankind</td>
+	<td>mankind</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Full Text</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-1']/td[5]/span</td>
+	<td>In the name of Allah, the Entirely Merciful, the Especially Merciful.</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-1']/td[4]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-1']/td[3]</td>
+	<td>The Opening</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Charts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=N-Grams</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ngrams-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td</td>
+	<td>of the</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td[2]</td>
+	<td>910</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=PoS Query</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=pos-selection</td>
+	<td>label=DET</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=technical-error</td>
+	<td>Only Arabic is supported here, you chose English !</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Repeated Verses</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='repeated-results-table']/tbody/tr[2]/td</td>
+	<td>exact:So which of the favors of your Lord would you deny?</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='left-menu-area']/a[11]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Ontology Graphs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=graph-verse-selection</td>
+	<td>label=The Opening</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=svg</td>
+	<td>AllahAllahPraisePraiseLordLordWorldsWorldsDayDayRecompenseRecompenseWorshipWorshipHelpHelpStraightStraight</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Similarity</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=arabic-english-word</td>
+	<td>Mary</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=show-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='simmilar-words-area']/ul/li[3]</td>
+	<td>marry</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

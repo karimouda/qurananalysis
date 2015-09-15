@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://dev.qurananalysis.com/" />
+<title>SEARCH_VISUALIZATION</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SEARCH_VISUALIZATION</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=search-field</td>
+	<td>يوسف</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=doSearch</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=text.graph-words</td>
+	<td>يوسف</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=circle</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>link=السجن</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//div[@id='results-stats-table']/table/tbody/tr/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=#results-stats-table &gt; table &gt; tbody &gt; tr &gt; td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=svg.chart</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=svg.chart</td>
+	<td>05101520253035404550556065707580859095100105110Chapter Number05101520253035404550556065Word Repetition</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

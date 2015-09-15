@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://dev.qurananalysis.com/" />
+<title>ANALYZE_AR</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ANALYZE_AR</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/explore/?lang=AR</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Analyze</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Basic Statistics</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr/td[2]</td>
+	<td>114</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[2]/td[2]</td>
+	<td>6236</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[3]/td[2]</td>
+	<td>77797</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[4]/td[2]</td>
+	<td>14870</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[5]/td[2]</td>
+	<td>330709</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[6]/td[2]</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[7]/td[2]</td>
+	<td>4359</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[8]/td[2]</td>
+	<td>15</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[9]/td[2]</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[10]/td[2]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[11]/td[2]</td>
+	<td>ن</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[12]/td[2]</td>
+	<td>11</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[13]/td[2]</td>
+	<td>فأسقيناكموه</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[14]/td[2]</td>
+	<td>4.25</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[15]/td[2]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[16]/td[2]</td>
+	<td>يس</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[17]/td[2]</td>
+	<td>129</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[18]/td[2]</td>
+	<td>يا أيها الذين آمنوا إذا تداينتم بدين إلى أجل مسمى فاكتبوه...</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[19]/td[2]</td>
+	<td>12.48</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr/td[2]</td>
+	<td>1972</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[2]/td[2]</td>
+	<td>22</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[3]/td[2]</td>
+	<td>68</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[4]/td[2]</td>
+	<td>603</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[5]/td[2]</td>
+	<td>1682</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[6]/td[2]</td>
+	<td>12</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[2]/td[3]</td>
+	<td>286</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[2]/td[4]</td>
+	<td>6140</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[2]/td[5]</td>
+	<td>26249</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td[3]</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td[4]</td>
+	<td>20</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td[5]</td>
+	<td>80</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td</td>
+	<td>114</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Frequency</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[2]</td>
+	<td>من</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[3]</td>
+	<td>2763</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[7]</td>
+	<td>181.47</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;button&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[2]</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[3]</td>
+	<td>2153</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[5]</td>
+	<td>81</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[7]</td>
+	<td>319.55</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type=&quot;button&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//fieldset[@id='word-frequency-fs']/table/tbody/tr/td[2]</td>
+	<td>من</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Clouds</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=بدايات الأيات</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=قال</td>
+	<td>قال</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=نهايات الآيات</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=يعملون</td>
+	<td>يعملون</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=الفاتحة</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=الرحيم</td>
+	<td>الرحيم</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=wordcloud-type-selection</td>
+	<td>label=الناس</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=الوسواس</td>
+	<td>الوسواس</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Full Text</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-8']/td[5]/span</td>
+	<td>الم</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-8']/td[3]</td>
+	<td>البقرة</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-8']/td[4]</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//tr[@id='verse-8']/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-6236']/td[5]/span</td>
+	<td>من الجنة والناس</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-6236']/td[4]</td>
+	<td>6</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//tr[@id='verse-6236']/td[2]</td>
+	<td>114</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Charts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=svg.chart</td>
+	<td>5101520253035404550556065707580859095100105110Chapter Number050100150200250Number Of Verses</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=svg.chart</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=N-Grams</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ngrams-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; b</td>
+	<td>43,894</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/thead/tr/td/b[2]</td>
+	<td>71,556</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td</td>
+	<td>إن الله</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td[2]</td>
+	<td>205</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=grams-number</td>
+	<td>11</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ngrams-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td</td>
+	<td>وما أسألكم عليه من أجر إن أجري إلا على رب العالمين</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td[2]</td>
+	<td>5</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=PoS Patterns</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=pos-pattern</td>
+	<td>PN V</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ngrams-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; b</td>
+	<td>281</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/thead/tr/td/b[2]</td>
+	<td>453</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td</td>
+	<td>ٱللَّهَ كَانَ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td[2]</td>
+	<td>29</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=pos-pattern</td>
+	<td>INL *</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=ngrams-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td</td>
+	<td>الٓر تِلْكَ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='ngrams-results-table']/tbody/tr[2]/td[2]</td>
+	<td>3</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=PoS Query</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=pos-selection</td>
+	<td>label=INL</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='pos-words-verses-statistics']/b[3]</td>
+	<td>30</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=span.pos-sura-info</td>
+	<td>[2:1 البقرة]</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=pos-selection</td>
+	<td>label=PN</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=features</td>
+	<td>GEN</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=pos-words-verses-statistics</td>
+	<td>3,911 All Segments - 89 Distinct Words - 1,451 Verses</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Repeated Verses</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; b</td>
+	<td>95</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='repeated-results-table']/tbody/tr[2]/td</td>
+	<td>فبأي آلاء ربكما تكذبان</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='repeated-results-table']/tbody/tr[2]/td[2]</td>
+	<td>31</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//div[@id='left-menu-area']/a[11]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; b</td>
+	<td>24,674</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='repeated-results-table']/tbody/tr[2]/td</td>
+	<td>إن الله</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='repeated-results-table']/tbody/tr[2]/td[2]</td>
+	<td>196</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Ontology Data</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=th</td>
+	<td>Concepts (938)</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>xpath=(//table[@id='ontology-concepts-table']/tbody/tr/th)[2]</td>
+	<td>Relations (1717)</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>xpath=(//table[@id='ontology-concepts-table']/tbody/tr[3]/td)[3]</td>
+	<td>الله -&gt; مع -&gt; صابر</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Ontology Graphs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=graph-verse-selection</td>
+	<td>label=الفاتحة</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=svg</td>
+	<td>اللهاللهربربالعالمينالعالمينغيرغير</td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>css=svg</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Uthmani-to-Simple</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=thead &gt; tr &gt; td</td>
+	<td>18,993 Uthmani Words - 14,911 Simple words</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='uts-mapping-table']/tbody/tr[4]/td</td>
+	<td>ٱلرَّحْمَٰنِ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='uts-mapping-table']/tbody/tr[4]/td[2]</td>
+	<td>الرحمن</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Information</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=word</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=words-info-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=#words-info-table &gt; tbody &gt; tr &gt; td</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[2]/td</td>
+	<td>2153</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[3]/td</td>
+	<td>{ll~ahu</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[4]/td</td>
+	<td>Allah</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[5]/td</td>
+	<td>PN</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[6]/td</td>
+	<td>STEM,POS,LEM,ROOT,NOM</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr/td[2]</td>
+	<td>ٱللَّهُ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[2]/td[2]</td>
+	<td>319.55</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[3]/td[2]</td>
+	<td>Allahu</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[4]/td[2]</td>
+	<td>اله</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[5]/td[2]</td>
+	<td>ٱللَّه</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[7]/th</td>
+	<td>Verses (1566)</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[8]/td</td>
+	<td>بسم الله الرحمن الرحيم</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[8]/td[2]</td>
+	<td>PN</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-info-table']/tbody/tr[8]/td[3]</td>
+	<td>exact:1:1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Collocation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=word</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=words-context-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=target-pos-level-zero-cell</td>
+	<td>الله <br /> [2153*]</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[3]/b</td>
+	<td>إن</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[2]/b</td>
+	<td>من</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; b</td>
+	<td>الذين</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[5]/b</td>
+	<td>من</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[6]/b</td>
+	<td>من</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[7]/b</td>
+	<td>من</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=word</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=word</td>
+	<td>PN</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=words-context-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=target-pos-level-zero-cell</td>
+	<td>PN <br /> [3911*]</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[5]/b</td>
+	<td>N</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[6]/b</td>
+	<td>N</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[7]/b</td>
+	<td>PRON</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[3]/b</td>
+	<td>N</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[2]/b</td>
+	<td>V</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=td &gt; b</td>
+	<td>V</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Concordance</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=word</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=words-context-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/thead/tr[2]/th[2]</td>
+	<td>Concordance for الله</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[2]/table/tbody/tr/td[3]</td>
+	<td>الرحمن الرحيم</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=li</td>
+	<td>[181] إن</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[3]/ul/li</td>
+	<td>[22] غفور رحيم</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=level</td>
+	<td>2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=word</td>
+	<td>PN</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=words-context-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=ul.concordance-list</td>
+	<td>[312] V PRON [301] P N [225] PRON P [183] ACC [124] REM [116] CONJ [109] V P [108] PRON N [95] N P [84] REL V [72] CONJ V [66] V [58] PRON DET [58] N PRON [52] PN CONJ [50] V N [45] REM V [45] NEG V [45] P DET [44] CONJ ACC [43] N DET [43] COND V [37] PRON ACC [31] CONJ P [30] REM ACC [30] N N [30] P PRON [29] N [28] DEM V [28] REM P [28] PRON VOC [28] RSLT ACC [27] T V [23] V DET [23] V ACC [23] N LOC [22] PN N [22] PRON V [22] ACC N [22] SUB V [21] CONJ N [19] DEM N [18] PRON LOC [17] DEM DET [15] P [15] CERT V [14] V EMPH [14] INTG V [14] V VOC [13] PRP V [13] PRON PRON [12] DEM P [12] PRON RES [12] CONJ DET [10] N V [10] RES P [10] DEM [9] VOC N [8] V LOC [8] N RES [8] REM NEG [8] ACC DET [7] N CONJ [7] RES N [6] PREV V [6] PRON CONJ [6] DET N [5] FUT V [5] P ACC [5] ACC P [5] REL LOC [5] VOC [5] INTG N [5] P V [4] T P [4] EMPH PRON [4] PRON [4] PRON REM [4] EMPH N [4] LOC N [4] V V [3] N ACC [3] V PN [3] ACC PRON [3] SUP N [3] INC ACC [3] NEG N [3] CONJ PRON [3] ADJ P [3] PRON EMPH [3] RET [3] COND N [3] REM N [3] PN P [3] PN VOC [2] ADJ CONJ [2] DEM LOC [2] IMPV V [2] PN DET [2] CONJ NEG [2] CIRC [2] DET [2] AMD V [2] N CIRC [2] COND ACC [2] RES [2] RSLT P [2] INTG P [2] N PN [2] P DEM [2] PRON EXP [2] PRON PN [2] INC P [2] ADJ N [2] RET V [1] T DET [1] PRON CIRC [1] N T [1] PREV LOC [1] ANS ACC [1] RET P [1] REM EXL [1] CIRC P [1] CONJ LOC [1] PRON INTG [1] CONJ COND [1] N VOC [1] CONJ EXL [1] RET PRON [1] ADJ LOC [1] P PN [1] AMD N [1] SUP V [1] INT VOC [1] REM COND [1] INTG [1] RES DET [1] ADJ V [1] AMD [1] N RSLT [1] EXP N [1] ACC PREV [1] RSLT V [1] REL P [1] PN CIRC [1] RSLT LOC [1] PN V [1] REM LOC [1] CIRC V [1] INC [1] EMPH P [1] ACC LOC [1] PN ACC [1] V DEM [1] V INTG [1] INC N [1] CONJ DEM [1] RET N [1] SUP ACC [1] REM DEM [1] CIRC N [1] SUP P [1] N REM [1] INT N [1] ADJ ACC [1] V RES [1] NEG DET</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/thead/tr[2]/th[2]</td>
+	<td>Concordance for PN</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[2]/table/tbody/tr/td</td>
+	<td>P N</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//table[@id='words-pos-context-table']/tbody/tr/td[3]/ul/li</td>
+	<td>[209] P N</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Pause Marks</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>id=pause-marks-selection</td>
+	<td>label=ۘ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.pos-value-div</td>
+	<td>[2:26 البقرة] إن الله لا يستحيي أن يضرب مثلا ما بعوضة فما فوقها ۚ فأما الذين آمنوا فيعلمون أنه الحق من ربهم ۖ وأما الذين كفروا فيقولون ماذا أراد الله بهذا مثلا ۘ يضل به كثيرا ويهدي به كثيرا ۚ وما يضل به إلا الفاسقين</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=th</td>
+	<td>Verses (22)</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Arabic to Buckwalter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Transliteration</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=arabic-buckwalter-text</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=conversion-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.buckwalter-trans-result-header &gt; b</td>
+	<td>Allh</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=arabic-buckwalter-text</td>
+	<td>Allh</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=conversion-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.buckwalter-trans-result-header &gt; b</td>
+	<td>الله</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Word Similarity</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=arabic-english-word</td>
+	<td>كريم</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=show-button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=li</td>
+	<td>كريما</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='simmilar-words-area']/ul/li[2]</td>
+	<td>الكريم</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Quran Initials</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=table.analysis-table &gt; tbody &gt; tr &gt; td</td>
+	<td>حمٓ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/table/tbody/tr/td/table/tbody/tr/td[2]</td>
+	<td>7</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=svg.chart</td>
+	<td>5101520253035404550556065707580859095100105110Chapter Number012Verse Number</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>link=ءَايَٰتُ</td>
+	<td>ءَايَٰتُ</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='main-container']/div/table[2]/thead/tr/th</td>
+	<td>Verses (30) - Chapters (29)</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
