@@ -303,177 +303,190 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 	$linksHashLookupTable = array();
 	
 	//preprint_r($graphNodes,true);exit;
+	
 
-	foreach($graphNodes as $concept => $conceptArr)
-	{
-	
-		$conceptID = convertWordToConceptID($concept);
-		$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptID];
-		$relationsOfConceptAsTarget = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptID];
-			
-	
-		
-		foreach( $relationsOfConceptAsSource as $index => $relArr)
+		foreach($graphNodes as $concept => $conceptArr)
 		{
+		
+			$conceptID = convertWordToConceptID($concept);
+			$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptID];
+			$relationsOfConceptAsTarget = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptID];
 				
-			$verb  = $relArr["link_verb"];
-			$object = $relArr["target"];
-			
 		
 			
-			
-			//echoN("$verb==$is_a_relation_name_ar && $object==$thing_class_name_ar");
-			// ignore is-a thing relations
-			if ( $verb==$is_a_relation_name_ar && $object==$thing_class_name_ar) continue;
-			
-			if ( $tooManyConcepts && $verb==$is_a_relation_name_ar) continue;
-			
-			// IF SHOWING MAIN CONCEPTS ONLY, IGNORE CONCEPTS NOT IN MAIN CONCEPTS LIST 
-			if ($mainConceptsOnly &&  !isset($graphNodes[$object])) continue;
-			
-			//preprint_r($relArr,true);
-
-			$randomXLocation = rand($startLocationXMin,$startLocationXMax);
-			$randomYLocation = rand($startLocationYMin,$startLocationYMax);
-			
-			$relHashID = buildRelationHashID($conceptID,$verb,$object);
-			
-			$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
-			
-			
-			$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
-		
-			$finalNodeLabel = $conceptArr['label_ar'];
-				
-			if ( $lang == "EN")
+			foreach( $relationsOfConceptAsSource as $index => $relArr)
 			{
-				$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);
-				$verb = $fullRelationArr['verb_translation_en'];
-			
-			}
-			
-			if ( !isset($graphNodes[$object]))
-			{
-
-				$graphNodes[$object]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $conceptArr,$randomXLocation,$randomYLocation,2);
-			}
-		
-			$linkArr=array("source"=>$graphNodes[$concept]["id"],
-					"target"=>$graphNodes[$object]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
-			
-			//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
-			$arrHash = getArrayHashForFields($linkArr,array('source','target'));
-			
-			/*preprint_r($graphNodes);
-			echoN($finalNodeLabel);
-			preprint_r($linkArr);*/
+					
+				$verb  = $relArr["link_verb"];
+				$object = $relArr["target"];
+				
 			
 				
-			if ( !isset($linksHashLookupTable[$arrHash]))
-			{
-				$graphLinks[]=$linkArr;
 				
-				$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
-			}
-			else
-			{
-				$linkIndex = $linksHashLookupTable[$arrHash];
+				//echoN("$verb==$is_a_relation_name_ar && $object==$thing_class_name_ar");
+				// ignore is-a thing relations
+				if ( $verb==$is_a_relation_name_ar && $object==$thing_class_name_ar) continue;
 				
-				if ( strpos($graphLinks[$linkIndex]['link_verb'],"$verb")===false )
-				{
-					$graphLinks[$linkIndex]['link_verb'].= ",".$verb;		
-				}		
-			}
-			
-			/*if (  $MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en']=="help")
-			{
-				echoN(isset($graphNodes[$object])." ".$object," ");
-				echoN($concept);
-				preprint_r($graphLinks[$linkIndex]);
-				preprint_r($graphNodes[$object]);
-				preprint_r($graphNodes[$concept]);
-				exit;
+				if ( $tooManyConcepts && $verb==$is_a_relation_name_ar) continue;
 				
-			}*/
-			
-			
-			/////////////////////////////////////////////////////////////
-		
-		}
-			
-		foreach( $relationsOfConceptAsTarget as $index => $relArr)
-		{
+				// IF SHOWING MAIN CONCEPTS ONLY, IGNORE CONCEPTS NOT IN MAIN CONCEPTS LIST 
+				if ($mainConceptsOnly &&  !isset($graphNodes[$object])) continue;
 				
-			$verb    = $relArr["link_verb"];
-			$subject = $relArr["source"];
-			$relationIndex = $relArr['relation_index'];
-		
-			// IF SHOWING MAIN CONCEPTS ONLY, IGNORE CONCEPTS NOT IN MAIN CONCEPTS LIST
-			if ($mainConceptsOnly &&  !isset($graphNodes[$subject])) continue;
-			
-			if ( $tooManyConcepts && $verb==$is_a_relation_name_ar) continue;
-			
+				// NO extending by relations in case of search result text 
+				// to reduce number of concepts we only add relations with other concepts 
+				// found in the text
+				if ( $inputType=="SEARCH_RESULTS_TEXT_ARRAY" &&  !isset($graphNodes[$object])) continue;
+				
+				//preprint_r($relArr,true);
 	
-			
-			$relHashID = buildRelationHashID($subject,$verb,$concept);
-			$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
-		
-			$randomXLocation = rand($startLocationXMin,$startLocationXMax);
-			$randomYLocation = rand($startLocationYMin,$startLocationYMax);
-			
-			$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
-	
-			$finalNodeLabel = $conceptArr['label_ar'];
-			
-			if ( $lang == "EN")
-			{
-				$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);;
-				$verb = $fullRelationArr['verb_translation_en'];
-			}
-			
-			if ( !isset($graphNodes[$subject]))
-			{
-			
+				$randomXLocation = rand($startLocationXMin,$startLocationXMax);
+				$randomYLocation = rand($startLocationYMin,$startLocationYMax);
 				
-
+				$relHashID = buildRelationHashID($conceptID,$verb,$object);
 				
-				$graphNodes[$subject]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $conceptArr,$randomXLocation,$randomYLocation,2);
+				$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
 				
-			}
+				
+				$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
 			
-			
-		
-		
-			$linkArr = array("source"=>$graphNodes[$subject]["id"],
-					"target"=>$graphNodes[$concept]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
-			
-
-			//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
-			$arrHash = getArrayHashForFields($linkArr,array('source','target'));
-			
-				
-			if ( !isset($linksHashLookupTable[$arrHash]))
-			{
-				$graphLinks[]=$linkArr;
-				
-				$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
-			}
-			else
-			{
-				$linkIndex = $linksHashLookupTable[$arrHash];
-				
-				if ( strpos($graphLinks[$linkIndex]['link_verb'],"$verb")===false )
+				$finalNodeLabel = $conceptArr['label_ar'];
+					
+				if ( $lang == "EN")
 				{
-					$graphLinks[$linkIndex]['link_verb'].= ",".$verb;		
-				}					
+					$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);
+					$verb = $fullRelationArr['verb_translation_en'];
+				
+				}
+				
+				if ( !isset($graphNodes[$object]))
+				{
+	
+					$graphNodes[$object]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $conceptArr,$randomXLocation,$randomYLocation,2);
+				}
+			
+				$linkArr=array("source"=>$graphNodes[$concept]["id"],
+						"target"=>$graphNodes[$object]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
+				
+				//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
+				$arrHash = getArrayHashForFields($linkArr,array('source','target'));
+				
+				/*preprint_r($graphNodes);
+				echoN($finalNodeLabel);
+				preprint_r($linkArr);*/
+				
+					
+				if ( !isset($linksHashLookupTable[$arrHash]))
+				{
+					$graphLinks[]=$linkArr;
+					
+					$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
+				}
+				else
+				{
+					$linkIndex = $linksHashLookupTable[$arrHash];
+					
+					if ( strpos($graphLinks[$linkIndex]['link_verb'],"$verb")===false )
+					{
+						$graphLinks[$linkIndex]['link_verb'].= ",".$verb;		
+					}		
+				}
+				
+				/*if (  $MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en']=="help")
+				{
+					echoN(isset($graphNodes[$object])." ".$object," ");
+					echoN($concept);
+					preprint_r($graphLinks[$linkIndex]);
+					preprint_r($graphNodes[$object]);
+					preprint_r($graphNodes[$concept]);
+					exit;
+					
+				}*/
+				
+				
+				/////////////////////////////////////////////////////////////
+			
+			}
+				
+			foreach( $relationsOfConceptAsTarget as $index => $relArr)
+			{
+					
+				$verb    = $relArr["link_verb"];
+				$subject = $relArr["source"];
+				$relationIndex = $relArr['relation_index'];
+			
+				// IF SHOWING MAIN CONCEPTS ONLY, IGNORE CONCEPTS NOT IN MAIN CONCEPTS LIST
+				if ($mainConceptsOnly &&  !isset($graphNodes[$subject])) continue;
+				
+				if ( $tooManyConcepts && $verb==$is_a_relation_name_ar) continue;
+				
+				
+				// NO extending by relations in case of search result text
+				// to reduce number of concepts we only add relations with other concepts
+				// found in the text
+				if ( $inputType=="SEARCH_RESULTS_TEXT_ARRAY" &&  !isset($graphNodes[$object])) continue;
+				
+		
+				
+				$relHashID = buildRelationHashID($subject,$verb,$concept);
+				$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
+			
+				$randomXLocation = rand($startLocationXMin,$startLocationXMax);
+				$randomYLocation = rand($startLocationYMin,$startLocationYMax);
+				
+				$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
+		
+				$finalNodeLabel = $conceptArr['label_ar'];
+				
+				if ( $lang == "EN")
+				{
+					$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);;
+					$verb = $fullRelationArr['verb_translation_en'];
+				}
+				
+				if ( !isset($graphNodes[$subject]))
+				{
+				
+					
+	
+					
+					$graphNodes[$subject]= createNewConceptObj($nodeSerialNumber,$lang, $finalNodeLabel, $conceptArr,$randomXLocation,$randomYLocation,2);
+					
+				}
+				
+				
+			
+			
+				$linkArr = array("source"=>$graphNodes[$subject]["id"],
+						"target"=>$graphNodes[$concept]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
+				
+	
+				//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
+				$arrHash = getArrayHashForFields($linkArr,array('source','target'));
+				
+					
+				if ( !isset($linksHashLookupTable[$arrHash]))
+				{
+					$graphLinks[]=$linkArr;
+					
+					$linksHashLookupTable[$arrHash]=(count($graphLinks)-1);
+				}
+				else
+				{
+					$linkIndex = $linksHashLookupTable[$arrHash];
+					
+					if ( strpos($graphLinks[$linkIndex]['link_verb'],"$verb")===false )
+					{
+						$graphLinks[$linkIndex]['link_verb'].= ",".$verb;		
+					}					
+				}
+				
+				
+				//////////////////////////////////////////////////////////////
+					
 			}
 			
-			
-			//////////////////////////////////////////////////////////////
-				
 		}
-		
-	}
+	
 
 	
 	//preprint_r($graphLinks);exit;
