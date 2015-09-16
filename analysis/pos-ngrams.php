@@ -52,14 +52,17 @@ loadModels("core",$lang);
 				
 					<span id='pos-ngrams-type-span'>
 					
-					<span class='note'>Supported Tags: "*" and all <a target='_new' href='http://corpus.quran.com/documentation/tagset.jsp'>QAC Tags</a></span>
-					<br>
+					
 					PoS Pattern <input type="text" id="pos-pattern" placeholder="PN V" />
 					
 					
 					</span>
-					
 					<input type="button" id='ngrams-submit' value='Find' />
+					<br>
+					<span class='note'>Supported Tags: "*" and all <a target='_new' href='http://corpus.quran.com/documentation/tagset.jsp'>QAC Tags</a></span>
+					<br>
+					
+					
 				</div>
 				<div id='ngrames-area'>
 				

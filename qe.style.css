@@ -1,21 +1,6 @@
 @CHARSET "UTF-8";
 
 
-@font-face {
-  font-family: 'Droid Arabic Kufi';
-  font-style: normal;
-  font-weight: 400;
-  src: url(/fonts/DroidKufi-Regular.eot);
-  src: url(/fonts/DroidKufi-Regular.eot?#iefix) format('embedded-opentype'),
-       url(/fonts/DroidKufi-Regular.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: url(/fonts/open-sans/OpenSans-Regular.ttf);
-}
-
 
 body
 {
@@ -340,7 +325,7 @@ TEXTAREA
 {
 	margin-left:auto;
 	
-	width:480px;
+	width:500px;;
 }
 
 #header-panel TR TD
@@ -1054,7 +1039,7 @@ text-align: center;
   margin: auto;
   width: 570px;
   color: #052F59;
-  font-family: 'Open Sans';
+  font-family: 'Tahoma';
   font-weight: lighter;
   padding: 20px 0px;
   font-size: 24px;
@@ -1745,8 +1730,19 @@ A.analysis-links[selected="1"]
   display: inline-block;
   float: left;
   margin-top: -50px;
+  /** needed for IE **/
+  border:0px;
 }
 
+#browser-support-issue-msg
+{
+	margin:30px auto;
+	width:50%;
+	padding:10px;
+	font-size: 14px;
+	border:1px solid #222;
+	border-radius:10px;
+}
 
 .result-more-about-aya
 {
@@ -1884,17 +1880,26 @@ font-size: 11px;
 	border:5px solid #333;
 	overflow: auto;
     height: 400px;
+    /** needed for safari **/
+    position: relative;
+   
+}
+
+#explore-result-verses-container
+{
+	
 }
 
 
 .explore-verses-close
 {
 	position: relative;
-	top:10px;
-	left:-10px;
+	top:15px;
+	left:0px;
 	cursor:pointer;
 	background-color: #fff;
 	border-radius:10px;
+	    z-index: 10;
 	
 }
 
@@ -1975,4 +1980,10 @@ A#home-beta-button:HOVER
 #language-selection
 {
 	margin-left:20px;
+}
+
+#explore-lang-select-area
+{
+	margin:0px 20%;
+	padding-left:30px;
 }

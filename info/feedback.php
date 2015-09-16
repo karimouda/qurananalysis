@@ -10,8 +10,11 @@
 	<input id='feedback_user_email'  name='email' value='' placeholder="Email"></input>
 
 	<div id='feedback_type_area' >
-	<input id='radio_feedback_error' type="radio" name="feedback_type" value="FEEDBACK" checked="true">
-	<label for="radio_feedback_error">Feedback/Error</label>
+	<input id='radio_feedback_feedback' type="radio" name="feedback_type" value="FEEDBACK" checked="true">
+	<label for="radio_feedback_feedbac">Feedback</label>
+	<br>
+		<input id='radio_feedback_error' type="radio" name="feedback_type" value="BUG">
+	<label for="radio_feedback_error">Error/BUG</label>
 	<br>
 	<input id='radio_feedback_idea' type="radio" name="feedback_type" value="IDEA">
 	<label id='radio_feedback_idea' for="radio_feedback_idea">Idea</label>

@@ -35,7 +35,7 @@ if (empty ( $error ))
 } 
 else 
 {
-	echo $error;
+	echo "Error occured! please report it using the contact page";//$error;
 }
 
 ?>

@@ -12,10 +12,12 @@
  	<ul>
 	   	<li>Quran Text (From Tanzil) + Translations</li>
 	   	<li>Files from previous research (QAC and Pronouns)</li>
-	   	<li>Quran Stop Words</li>
+	   	<li>Quran Arabic Stop Words</li>
 	   	<li>QA Quran Ontology</li>
 	   	<li>Simple to Uthmani word mapping</li>
-
+     	<li>QAC to Qurana segment Mapping</li>
+     	<li>Longest Common Substrings (Phrases) in the Quran</li>
+     	
 	    
    	</ul>
 	

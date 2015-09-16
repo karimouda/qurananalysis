@@ -108,7 +108,9 @@ loadModels("core,qac",$lang);
 		  		
      				<div id='pos-data-area'>
 							
-							<span class='note'>based on QAC ( Quranic Arabic Corpus ), more about Tags here:http://corpus.quran.com/documentation/tagset.jsp</span>
+							<span class='note'>based on QAC (Quranic Arabic Corpus). more about the Tags here:
+							<a target="_new" href='http://corpus.quran.com/documentation/tagset.jsp'>http://corpus.quran.com/documentation/tagset.jsp</a>
+							</span>
 					</div>
 					
 					

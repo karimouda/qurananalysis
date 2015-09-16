@@ -93,7 +93,7 @@ class SQLite3DataLayer
 		}
 		
 
-		$this->onErrorShowDebugformation ( $pdoResObj, $sql );
+		//$this->onErrorShowDebugformation ( $pdoResObj, $sql );
 		
 		
 		return $results;
@@ -140,7 +140,7 @@ class SQLite3DataLayer
 			return null;
 		}
 		
-		$this->onErrorShowDebugformation ( $execRes, $sql );
+		//$this->onErrorShowDebugformation ( $execRes, $sql );
 		
 		return $execRes;
 	}

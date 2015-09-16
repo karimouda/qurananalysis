@@ -243,6 +243,8 @@ if ( (($isAllSURA=="") && ($SURA=="") ) ||  (($SURA=="") && ($AYA=="") ) )
 			      .nodes(dataNodes)
 			      .links(dataLinks);
 			     // .start();
+			     
+			   //  alert(JSON.stringify(dataLinks));
 	
 			  var link = svg.selectAll(".link")
 			      .data(dataLinks)
@@ -252,7 +254,7 @@ if ( (($isAllSURA=="") && ($SURA=="") ) ||  (($SURA=="") && ($AYA=="") ) )
 				      .attr("y1", function(d) { return d.source.y; })
 				      .attr("x2", function(d) { return d.target.x; })
 				      .attr("y2", function(d) { return d.target.y; })
-			      .style("stroke-width", function(d) { return Math.sqrt(d.size); });
+				      .style("stroke-width", function(d) {  return Math.sqrt(d.link_frequency); });
 
 			  node = svg.selectAll(".node")
 		      .data(dataNodes)

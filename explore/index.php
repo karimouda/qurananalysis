@@ -68,13 +68,18 @@ loadModels("core,ontology",$lang);
 						  	?>
 			  		</div>
 			  		
-		  	<select id='language-selection' onchange="handlePresentationOptions()" style='float:left'>
-   				<option value='EN' <?php if ($lang=="EN") echo 'selected'?> >EN</option>
-   				<option value='AR' <?php if ($lang=="AR") echo 'selected'?>>AR</option>
-   			</select>	  		
-   			<div id='explore-guide-msg' style='float:none'>
-		  	&nbsp;Click on any topic to find relevant verses, topics of same color are related
-		  </div>
+			  		
+			<div id='explore-lang-select-area'>
+			
+			  	<select id='language-selection' onchange="handlePresentationOptions()" style='float:left'>
+	   				<option value='EN' <?php if ($lang=="EN") echo 'selected'?> >EN</option>
+	   				<option value='AR' <?php if ($lang=="AR") echo 'selected'?>>AR</option>
+	   			</select>	  		
+	   			<span id='explore-guide-msg' style='float:none'>
+			  	&nbsp;Click on any topic to find relevant verses, topics of same color are related
+			    </span>
+			  
+		    </div>
 			  		<?php 
 			
 			
@@ -221,7 +226,13 @@ $clusteredArrJSON = json_encode($clusteredArr);
 		{
 
 			$("#options-area").attr("class","oa-explore");
-				
+
+			var isForeignObjectSupported = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#foreignObject", "1.1");
+
+			if ( !isForeignObjectSupported )
+			{
+				showBrowserSupportErrorMessage('exploration-area');
+			}
 		
 		});
 

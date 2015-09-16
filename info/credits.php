@@ -11,14 +11,34 @@
 				QA would not have been possible if the following projects did not exist
 	   			
 	   			<ul>
-		   			<li>Tanzil Project</li>
-		   			<li>Quranic Arabic Corpus</li>
-		   			<li>Text Mining The Quran</li>
+		   			<li><a target='_NEW' href='http://tanzil.net/wiki/'>Tanzil Project</a></li>
+		   			<li><a target='_NEW' href='http://corpus.quran.com/'>Quranic Arabic Corpus</a></li>
+		   			<li><a target='_NEW' href='http://www.textminingthequran.com/'>Text Mining The Quran</a></li>
 	   			</ul>
 
 		</div>
 		
 </fieldset>
+
+<fieldset class="credits-fs" >
+		  		 
+  		<legend>Papers</legend>
+  				    
+		<div class='info-page-text'>
+	
+				List of key research papers relevant to QA
+	   			
+	   			<ul>
+		   			Soon
+		   		
+	   			</ul>
+
+		</div>
+		
+</fieldset>
+
+
+
 
 <fieldset class="credits-fs" >
 		  		 
@@ -37,13 +57,13 @@
 		
 </fieldset>
 
+
 <fieldset class="credits-fs" >
 		  		 
-  		<legend>People</legend>
+  		<legend>Contributers</legend>
   				    
 		<div class='info-page-text'>
-	
-				Thanks to everyone contributed to this project
+
 	   			
 	   			
 	   			<ul>
@@ -54,24 +74,6 @@
 		</div>
 		
 </fieldset>
-
-<fieldset class="credits-fs" >
-		  		 
-  		<legend>Papers</legend>
-  				    
-		<div class='info-page-text'>
-	
-				List of key papers influenced QA
-	   			
-	   			<ul>
-		   			Soon
-		   		
-	   			</ul>
-
-		</div>
-		
-</fieldset>
-
 
 			   	
 	

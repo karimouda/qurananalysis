@@ -903,3 +903,10 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 
 		$('html, body').animate({scrollTop: '0px'}, 1000);
 	}
+	
+	
+	function showBrowserSupportErrorMessage(showIn)
+	{
+		$("#"+showIn).prepend("<div id='browser-support-issue-msg'>Sorry ! Your browser does not support the technology used in this website<br>Please use the newest version of Chrome, Firefox or Safari </div>")
+		
+	}
