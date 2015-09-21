@@ -61,9 +61,9 @@ $significantWords = array();
 
 //echoN($query);exit;
 
-$MODEL_CORE_UTH = &loadUthmaniDataModel();
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = &apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = &apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+$MODEL_CORE_UTH = loadUthmaniDataModel();
+$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
+$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
 
 echoN(memory_get_peak_usage());

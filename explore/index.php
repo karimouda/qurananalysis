@@ -221,7 +221,7 @@ foreach($clusteredArr as $index => $clusterArrItem)
 	
 	// if not in index (then not qurana or word in quran)
 	// and does not have subclasses // then ignore
-	if ( !wordOrPhraseIsInIndex($conceptName) &&
+	if ( !wordOrPhraseIsInIndex($lang,$conceptName) &&
 	!conceptHasSubclasses($MODEL_QA_ONTOLOGY['RELATIONS'], $conceptNameAR) )
 	{
 		//preprint_r($MODEL_QA_ONTOLOGY['RELATIONS']);exit;

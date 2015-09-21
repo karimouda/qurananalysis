@@ -810,21 +810,107 @@
 		
 	}
 	
-	function addToInvertedIndex(&$INVERTED_INDEX,$word,$suraID,$verseID,$wordIndex,$wordType,$extraInfo=null)
+	function addValueToMemoryModel($lang,$model,$modelKey,$entryKey,$entryValue)
 	{
-		if (!isset($INVERTED_INDEX[$word]) ) $INVERTED_INDEX[$word] = array();
+		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
 		
-		$indexInAyaName = "INDEX_IN_AYA_EMLA2Y";
+		$res = apc_store($apcMemoryEntryKey, $entryValue);
 		
-		if ($wordType!="NORMAL_WORD")
+		if ( $res===false)
 		{
-			$indexInAyaName = "INDEX_IN_AYA_UTHMANI";
+			throw new Exception("Can't add Cache Entry to Memory !");
 		}
 		
-		$INVERTED_INDEX[$word][] = array("SURA"=>$suraID,"AYA"=>$verseID,"$indexInAyaName"=>$wordIndex,"WORD_TYPE"=>"$wordType","EXTRA_INFO"=>$extraInfo);
 		
+	}
+	
+	function updateModelData($key,$valueOrValueArr)
+	{
+		$res = apc_store($key,$valueOrValueArr);
+		
+
+		if ( $res===false)
+		{
+			throw new Exception("Can't Update Cache Entry to Memory !");
+		}
+		
+	}
+	
+	function getModelEntryFromMemory($lang,$model,$modelKey,$entryKey)
+	{
+		
+		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
+		
+		return  apc_fetch($apcMemoryEntryKey);
+	
 	
 	}
+	
+	function modelEntryExistsInMemory($lang,$model,$modelKey,$entryKey)
+	{
+	
+		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
+	
+		return  apc_exists($apcMemoryEntryKey);
+	
+	
+	}
+	
+	function addToMemoryModelList($lang,$model,$modelKey,$entryKey,$entryValue)
+	{
+		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
+		
+		if (apc_exists($apcMemoryEntryKey))
+		{
+			$entryArr = apc_fetch($apcMemoryEntryKey);
+			//$entryArr = array();
+		}
+		else
+		{
+			$entryArr = array();
+		}
+		
+		$entryArr[] = $entryValue;
+		
+	
+		$res = apc_store($apcMemoryEntryKey, $entryArr);
+	
+		if ( $res===false)
+		{
+			throw new Exception("Can't add Cache Entry to Memory !");
+		}
+	
+	
+	}
+	
+	function addToMemoryModelBatch($entryKeysValuesArr)
+	{
+
+	
+		$resArr = apc_add($entryKeysValuesArr);
+	
+		if ( !empty($resArr))
+		{
+			if ( isDevEnviroment() )
+			{	
+				preprint_r($resArr);
+			}
+			
+			throw new Exception("Can't add batch Cache Entries to Memory !");
+		}
+	
+	
+	}
+	
+	function getAPCIterator($apcKeyRegExpPattern)
+	{
+		return new APCIterator('user', "/$apcKeyRegExpPattern/");
+		
+	}
+	
+	
+	
+	
 	
 	function getVerseByQACLocation($MODEL_CORE,$qac3PartLocationStr)
 	{
@@ -2484,4 +2570,7 @@
 		
 		return $wordsArr;
 	}
+	
+	
+	
 ?>

@@ -74,6 +74,35 @@ function getSimilarWords($queryWords)
 	
 }
 
+function addToInvertedIndex(&$invertedIndexBatchApcArr,$lang,$word,$suraID,$verseID,$wordIndex,$wordType,$extraInfo=null)
+{
+
+
+	$indexInAyaName = "INDEX_IN_AYA_EMLA2Y";
+
+	if ($wordType!="NORMAL_WORD")
+	{
+		$indexInAyaName = "INDEX_IN_AYA_UTHMANI";
+	}
+
+
+	$entryValueObj = array("SURA"=>$suraID,"AYA"=>$verseID,"$indexInAyaName"=>$wordIndex,"WORD_TYPE"=>"$wordType","EXTRA_INFO"=>$extraInfo);
+
+	//addToMemoryModelList($lang,"MODEL_SEARCH","INVERTED_INDEX",$word,$entryValueObj);
+
+
+	$apcMemoryEntryKey = "$lang/MODEL_SEARCH/INVERTED_INDEX/$word";
+	
+	$invertedIndexBatchApcArr[$apcMemoryEntryKey][]=$entryValueObj;
+	//$INVERTED_INDEX[$word][] = $entryValueObj;
+
+}
+
+function getWordFromInvertedIndexKey($key)
+{
+	return substr($key, strrpos($key, "/")+1);
+}
+
 function posTagUserQuery($query, $lang)
 {
 	global $MODEL_CORE;
@@ -525,15 +554,17 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 	global $MODEL_SEARCH,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
 
 
-	
+
 
 		/** GET ROOT/STEM FOR EACH QUERY WORD **/
 		foreach ($extendedQueryWordsArr as $word)
 		{
 	
 			//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
+			
+			$invertedIndexEntry = getModelEntryFromMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word);
 	
-			foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
+			foreach ($invertedIndexEntry as $documentArrInIndex)
 			{
 					
 	
@@ -617,7 +648,10 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 			// ONLY UTHMANI SHOULD BE HANDLED
 			if ( isSimpleQuranWord($word)) continue;
 	
-			foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
+			$invertedIndexEntry = getModelEntryFromMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word);
+			
+			
+			foreach ($invertedIndexEntry as $documentArrInIndex)
 			{
 				$SURA = $documentArrInIndex['SURA'];
 				$AYA = $documentArrInIndex['AYA'];
@@ -745,8 +779,9 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 		}*/
 		
 		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);
+		$invertedIndexEntry = getModelEntryFromMemory($lang,"MODEL_SEARCH","INVERTED_INDEX",$word);
 		
-		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
+		foreach ($invertedIndexEntry as $documentArrInIndex)
 		{
 	
 			//echoN("$word");
@@ -1320,7 +1355,7 @@ function postResultSuggestions($queryWordsWithoutDerivation)
 	{
 		if ( mb_strlen($word) <=2) continue;
 		
-		if (!isset($MODEL_SEARCH['INVERTED_INDEX'][$word]) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
+		if (!modelEntryExistsInMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
 		{
 			$wordsNotInTheQuran[$word]=1;
 		}
@@ -1563,7 +1598,7 @@ function convertUthamniQueryToSimple($query)
 	return implode(" ",$newQueryArr);
 }
 
-function wordOrPhraseIsInIndex($wordOrPhrase)
+function wordOrPhraseIsInIndex($lang,$wordOrPhrase)
 {
 	global $MODEL_SEARCH;
 	
@@ -1571,7 +1606,7 @@ function wordOrPhraseIsInIndex($wordOrPhrase)
 	
 	foreach($subwordsArr as $index => $word)
 	{
-		if ( isset($MODEL_SEARCH['INVERTED_INDEX'][$word]) )
+		if (modelEntryExistsInMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word) )
 		{
 			return true;
 		}

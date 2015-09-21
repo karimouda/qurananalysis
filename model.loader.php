@@ -22,7 +22,7 @@ $MODEL_CORE = array();
 $MODEL_CORE['LOADED']=0;
 $MODEL_CORE['SUPPORTED_LANGUAGES']=$supportedLanguages;
 
-$MODEL_SEARCH = array();
+//$MODEL_SEARCH = array();
 $MODEL_QAC = array();
 $MODEL_QURANA = array();
 
@@ -40,7 +40,7 @@ $MODEL_QA_ONTOLOGY['VERB_INDEX'] =  array();;
 foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $supportedLang)
 {
 	$MODEL_CORE[$supportedLang] = array();
-	$MODEL_SEARCH[$supportedLang] = array();
+	//$MODEL_SEARCH[$supportedLang] = array();
 }
 
 $META_DATA = array();
@@ -81,7 +81,7 @@ function loadModels($modelsToBeLoaded,$lang)
 
 
 	
-	//echoN("MODEL EXISTS IN CACHE?:".apc_exists("MODEL_CORE[EN]"));
+	echoN("MODEL EXISTS IN CACHE?:".apc_exists("MODEL_CORE[EN]"));
 	
 	##### CHECK MODEL IN CACHE ##### #####
 	if ( TRUE && apc_exists("MODEL_CORE[EN]")!==false)
@@ -886,8 +886,16 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	//// ENRICH INVERTED INDEX BY UTHMANI-EMLA2Y INDEXES
 	//echoN(count($MODEL_SEARCH['AR']['INVERTED_INDEX']));
-	foreach($MODEL_SEARCH['AR']['INVERTED_INDEX'] as $word => $wordDataArr )
+	
+
+	
+	foreach(getAPCIterator("AR\/MODEL_SEARCH.*") as $invertedIndexCursor )
 	{
+		
+		 $wordDataArr = $invertedIndexCursor['value'];
+		 $key = $invertedIndexCursor['key'];
+		 $word = getWordFromInvertedIndexKey($key);
+		 
 		foreach($wordDataArr as $index => $documentArrInIndex)
 		{
 			$WORD_TYPE = $documentArrInIndex['WORD_TYPE'];
@@ -911,7 +919,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				
 				//echoN($INDEX_IN_AYA_UTHMANI);
 				
-				$MODEL_SEARCH['AR']['INVERTED_INDEX'][$word][$index]['INDEX_IN_AYA_UTHMANI']=$INDEX_IN_AYA_UTHMANI;
+				$wordDataArr[$index]['INDEX_IN_AYA_UTHMANI']=$INDEX_IN_AYA_UTHMANI;
 			}
 			else
 			{
@@ -919,14 +927,17 @@ function loadModels($modelsToBeLoaded,$lang)
 					
 				$INDEX_IN_AYA_EMLA2Y = $UTHMANI_TO_SIMPLE_LOCATION_MAP[($SURA+1).":".($AYA+1)][$INDEX_IN_AYA_UTHMANI];
 					
-				$MODEL_SEARCH['AR']['INVERTED_INDEX'][$word][$index]['INDEX_IN_AYA_EMLA2Y']=$INDEX_IN_AYA_EMLA2Y;
+				$wordDataArr[$index]['INDEX_IN_AYA_EMLA2Y']=$INDEX_IN_AYA_EMLA2Y;
 			}
 		}
+		
+		//PDATE
+		updateModelData($key,$wordDataArr);
 	}
 	
-	$res = apc_store("MODEL_SEARCH[AR]",$MODEL_SEARCH['AR']);
+	//$res = apc_store("MODEL_SEARCH[AR]",$MODEL_SEARCH['AR']);
 	
-	if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[AR]"); }
+	//if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[AR]"); }
 	
 	
 
@@ -951,17 +962,19 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			//$MODEL_SEARCH['EN']['INVERTED_INDEX'][$word]
 			
-			addToInvertedIndex($MODEL_SEARCH['EN']['INVERTED_INDEX'],$transliteratedWord,$s,$a,$wordIndex,"NORMAL_WORD");
+			addToInvertedIndex($invertedIndexBatchApcArr,$lang,$transliteratedWord,$s,$a,$wordIndex,"NORMAL_WORD");
+			
+		
 		}
 	
 		
-		$res = apc_store("MODEL_SEARCH[EN]",$MODEL_SEARCH['EN']);
+		//$res = apc_store("MODEL_SEARCH[EN]",$MODEL_SEARCH['EN']);
 	
 	}
 	
 	
 	
-	if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[EN]"); }
+	//if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[EN]"); }
 	
 
 	/////////////////////////////////////////////////////////
@@ -988,7 +1001,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	 * is requested, also it caused a bug in getPoSTaggedSubsentences
 	 */
 
-	loadModels($modelsToBeLoaded,$lang);
+	//loadModels($modelsToBeLoaded,$lang);
 	
 	
 	
@@ -1008,6 +1021,7 @@ function loadModel($lang,$type,$file)
 		$QURAN_TEXT = array();
 
 	
+		$invertedIndexBatchApcArr = array();
 		
 		
 		$TOTALS_ARR = array();
@@ -1259,7 +1273,9 @@ function loadModel($lang,$type,$file)
 					// non-word features should not be included
 					if ( $featureName=="LEM" || $featureName=="ROOT")
 					{
-						addToInvertedIndex($INVERTED_INDEX,trim($featureValue),($suraID-1),($verseID-1),$wordIndex,trim($featureName),$formOrSegmentReverseTransliterated);
+						addToInvertedIndex($invertedIndexBatchApcArr,$lang,trim($featureValue),($suraID-1),($verseID-1),$wordIndex,trim($featureName),$formOrSegmentReverseTransliterated);
+						
+					
 						
 						if ( $featureName=="ROOT")
 						{
@@ -1418,14 +1434,14 @@ function loadModel($lang,$type,$file)
 							
 							if ( $lang=="EN")
 							{
-								addToInvertedIndex($INVERTED_INDEX,strtolower($quranaConcecpts[$conceptID]['EN']),($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
+								addToInvertedIndex($invertedIndexBatchApcArr,$lang,strtolower($quranaConcecpts[$conceptID]['EN']),($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
 								
 								
 								
 							}
 							else
 							{
-								addToInvertedIndex($INVERTED_INDEX,$quranaConcecpts[$conceptID]['AR'],($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
+								addToInvertedIndex($invertedIndexBatchApcArr,$lang,$quranaConcecpts[$conceptID]['AR'],($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
 							}
 							 
 							
@@ -1673,7 +1689,7 @@ function loadModel($lang,$type,$file)
 					  				//$INVERTED_INDEX[$word][] = array("SURA"=>$s,"AYA"=>$a,"INDEX_IN_AYA_EMLA2Y"=>$wordIndex,"WORD_TYPE"=>"NORMAL_WORD");
 					  				 
 					  			
-					  				addToInvertedIndex($INVERTED_INDEX,$word,$s,$a,$wordIndex,"NORMAL_WORD");
+					  				addToInvertedIndex($invertedIndexBatchApcArr,$lang,$word,$s,$a,$wordIndex,"NORMAL_WORD");
 					  				 
 					  		
 					  			
@@ -1907,7 +1923,19 @@ function loadModel($lang,$type,$file)
 				  		//file_put_contents("$serializedModelFile.core", (json_encode($MODEL_CORE)));
 				  		
 				  		
-				  		$MODEL_SEARCH[$lang]['INVERTED_INDEX'] = $INVERTED_INDEX;
+				  		//$MODEL_SEARCH[$lang]['INVERTED_INDEX'] = $INVERTED_INDEX;
+				  		
+				  		
+				  		/*$invertedIndexIterator = getAPCIterator("MODEL_SEARCH.*");
+				  			
+				  		foreach($invertedIndexIterator as $cursor)
+				  		{
+				  			preprint_r($cursor);
+				  		}*/
+				  			
+				  			
+				  	
+				  		addToMemoryModelBatch($invertedIndexBatchApcArr);
 				  		
 
 				  		
@@ -1915,9 +1943,9 @@ function loadModel($lang,$type,$file)
 				  		
 				  		if ( $res===false){ throw new Exception("Can't cache MODEL_CORE[$lang]"); }
 				  		
-				  		$res = apc_store("MODEL_SEARCH[$lang]",$MODEL_SEARCH[$lang]);
+				  		//$res = apc_store("MODEL_SEARCH[$lang]",$MODEL_SEARCH[$lang]);
 				  		
-				  		if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[$lang]"); }
+				  		//if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[$lang]"); }
 				  		
 				  		
 				  		//file_put_contents("$serializedModelFile.search", (json_encode($MODEL_SEARCH)));
