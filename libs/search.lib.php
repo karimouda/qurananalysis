@@ -733,36 +733,58 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 	return $extendedQueryWordsArr;
 }
 
-function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams)
+function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams,$isConceptSearch,$lang,$isTransliterationSearch)
 {
-	global $MODEL_CORE,$MODEL_SEARCH;
+	global $MODEL_CORE,$MODEL_SEARCH,$MODEL_QA_ONTOLOGY;;
 	global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
 	
 
-	
+
 	
 	if ( $isColumnSearch)
 	{
-		
 		$SURA = $columnSearchKeyValParams['KEY']-1;
-		$AYA = $columnSearchKeyValParams['VAL']-1;
+		$isFullChapter = ($columnSearchKeyValParams['VAL']=="ALL");
 		
-		// VERSE VALIDITY CHECK
-		$qacLocation = getQACLocationStr($SURA+1,$AYA+1,0);
 		
-		$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
-		
-		if ( empty($verseText)) 
+		if ( $isFullChapter)
 		{
-			return array();
-		}
-		//////////////////////
-				
-		$scoringTable[$SURA.":".$AYA]=array();
 			
-		$scoringTable[$SURA.":".$AYA]['SCORE']=1;
-		$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
-		$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
+			
+			$suraSize = count($MODEL_CORE['QURAN_TEXT'][$SURA]);
+			
+			for($AYA=0;$AYA<$suraSize;$AYA++)
+			{
+			
+				$scoringTable[$SURA.":".$AYA]=array();
+				$scoringTable[$SURA.":".$AYA]['SCORE']=1;
+				$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
+				$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
+			}
+		}
+		else
+		{
+			
+			$AYA = $columnSearchKeyValParams['VAL']-1;
+			
+			// VERSE VALIDITY CHECK
+			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,0);
+			
+			$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
+			
+			if ( empty($verseText)) 
+			{
+				return array();
+			}
+			//////////////////////
+					
+			$scoringTable[$SURA.":".$AYA]=array();
+				
+			$scoringTable[$SURA.":".$AYA]['SCORE']=1;
+			$scoringTable[$SURA.":".$AYA]['SURA']=$SURA;
+			$scoringTable[$SURA.":".$AYA]['AYA']=$AYA;
+		
+		}
 		
 		return $scoringTable;
 	}
@@ -773,6 +795,9 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 //	$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
 	//preprint_r($extendedQueryWordsArr);
 	
+	//$isOneWordQuery = preg_match("/ /", $query)==0;
+	
+	//preprint_r($extendedQueryWordsArr);
 	
 	/**
 	 * GET ALL RESULT FORM INDEX USING EXTENDED QUERY WORD (WHICH INCLUDES ALL VARIATIONS AND PRONOUNS)
@@ -781,6 +806,14 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	{
 		//echoN("|$word|");
 		//echoN($lang);
+		//echoN($isConceptSearch);
+		
+		/*if ($lang=="EN" && $isConceptSearch )
+		{
+
+			
+		}*/
+		
 		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);
 		
 		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$word] as $documentArrInIndex)
@@ -820,7 +853,9 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			//echoN("|$query|$verseTextWithoutPauseMarks");
 			$fullQueryIsFoundInVerseCount = preg_match_all("/(^|[ ])$query([ ]|\$)/umi", $verseTextWithoutPauseMarks);
 
+			//echoN("$query | $word");
 		
+			
 			if ( $isPhraseSearch && $WORD_TYPE!="PRONOUN_ANTECEDENT")
 			{
 					
@@ -972,12 +1007,21 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			// NORMAL WORD
 			else
 			{
-				// word was in original user query, not in our extended one
-				///if ( in_array($word,$queryWordsArr))
-				//{
-	
+				
+				if ( $isTransliterationSearch )
+				{
 					
-				$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]=$WORD_TYPE;
+					$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]=$WORD_TYPE;
+				}
+				else
+				{
+					// word was in original user query, not in our extended one
+					///if ( in_array($word,$queryWordsArr))
+					//{
+		
+						
+					$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][$word]=$WORD_TYPE;
+				}
 				//}
 			}
 	
@@ -1096,9 +1140,9 @@ function getDistributionChartData($scoringTable)
 	return $wordDistributionChartJSON;
 }
 
-function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script,$significantCollocationWords=null)
+function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script,$significantCollocationWords=null,$isTransliterationSearch=false)
 {
-	global $MODEL_CORE, $MODEL_CORE_UTH,$script;
+	global $MODEL_CORE, $MODEL_CORE_UTH,$script,$TRANSLITERATION_VERSES_MAP;
 	
 
 	if ( $lang=="EN")
@@ -1141,6 +1185,9 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 		$AYA = $documentScoreArr['AYA'];
 		$TEXT = $MODEL_CORE['QURAN_TEXT'][$SURA][$AYA];
 		$TEXT_UTH = $MODEL_CORE_UTH['QURAN_TEXT'][$SURA][$AYA];
+		$TEXT_TRANSLITERATED = cleanTransliteratedText($TRANSLITERATION_VERSES_MAP[($SURA+1).":".($AYA+1)]);
+		
+		
 		$WORD_TYPE = $documentScoreArr['WORD_TYPE'];
 		$EXTRA_INFO = ($documentScoreArr['EXTRA_INFO']);
 		$INDEX_IN_AYA_EMLA2Y = $documentScoreArr['INDEX_IN_AYA_EMLA2Y'];
@@ -1201,6 +1248,11 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 				// mark all POSSIBLE_HIGHLIGHTABLE_WORDS
 				$TEXT = preg_replace("/(".join("|",array_keys($WORDS_IN_AYA)).")/mui", "<marked>\\1</marked>", $TEXT);
 	
+				
+				if ( $isTransliterationSearch)
+				{
+					$TEXT_TRANSLITERATED = preg_replace("/(".join("|",array_keys($WORDS_IN_AYA)).")/mui", "<marked>\\1</marked>", $TEXT_TRANSLITERATED);
+				}
 			}
 		}
 	
@@ -1268,6 +1320,12 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 					{
 						echo $TEXT;
 						
+						if ($isTransliterationSearch)
+						{
+							echo("<hr class='transliteration-separator'/>");
+							echo("<div class='transliteration-verse-text-area'>$TEXT_TRANSLITERATED</div>");
+						}
+						
 					}
 						
 					
@@ -1296,7 +1354,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 					
 					if ( $lang=="EN")
 					{
-						$showTransText = "Show Origninal";
+						$showTransText = "Show Arabic";
 					}
 				?>
 					<a href="javascript:showTranslationFor('<?=$documentID?>')"><?=$showTransText?></a>
@@ -1330,6 +1388,8 @@ function postResultSuggestions($queryWordsWithoutDerivation)
 
 	foreach($queryWordsWithoutDerivation as $word => $dummy)
 	{
+		if ( mb_strlen($word) <=2) continue;
+		
 		if (!isset($MODEL_SEARCH['INVERTED_INDEX'][$word]) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
 		{
 			$wordsNotInTheQuran[$word]=1;
@@ -1376,7 +1436,7 @@ function showSuggestions($suggestionsArr)
 			<?php 
 	}
 }
-function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch)
+function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch,$searchType)
 {
 	// NOT RESULTS FOUND
 	if ( empty($scoringTable))
@@ -1401,6 +1461,10 @@ function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$origina
 		
 			<div class='search-error-message'>
 				No results found for <?php echo $searchedForText;?>
+				
+				<script>
+				trackEvent('SEARCH',$searchType,'FAILED','');
+				</script>
 			</div>
 			
 		<?php 
@@ -1466,6 +1530,7 @@ function searchResultsToWordcloud($searchResultTextArr,$lang,$maxItems)
 function getStatisticallySginificantWords($extendedQueryWordsArr,$scoringTable)
 {
 	global $MODEL_CORE, $MODEL_CORE_UTH,$script;
+	global $saktaLatifaMark, $sajdahMark;
 	
 	
 	
@@ -1500,6 +1565,13 @@ function getStatisticallySginificantWords($extendedQueryWordsArr,$scoringTable)
 			$word = strtolower($word);
 			
 			if ( isset($MODEL_CORE['STOP_WORDS'][$word])) continue;
+			
+			
+			// ignore pause marks
+			if ( isPauseMark($word, $MODEL_CORE['TOTALS']['PAUSEMARKS'], $saktaLatifaMark, $sajdahMark) )
+			{
+				continue;
+			}
 			
 			if (!empty($lastWord) &&  isset($extendedQueryWordsArr[$word]) && !isset($extendedQueryWordsArr[$lastWord]) )
 			{
@@ -1559,6 +1631,58 @@ function convertUthamniQueryToSimple($query)
 	}
 	
 	return implode(" ",$newQueryArr);
+}
+
+function wordOrPhraseIsInIndex($wordOrPhrase)
+{
+	global $MODEL_SEARCH;
+	
+	$subwordsArr = explode(" ", $wordOrPhrase);
+	
+	foreach($subwordsArr as $index => $word)
+	{
+		if ( isset($MODEL_SEARCH['INVERTED_INDEX'][$word]) )
+		{
+			return true;
+		}
+	
+	}
+	
+	return false;
+	
+}
+
+function cleanTransliteratedText($transliteratedText)
+{
+	return strtolower(strip_tags($transliteratedText));
+}
+
+function getSearchType($isPhraseSearch,$isQuestion,$isColumnSearch,$isConceptSearch,$isTransliterationSearch)
+{
+	if ( $isPhraseSearch)
+	{
+		return "PHRASE";
+	}
+	else if ($isQuestion)
+	{
+		return "QUESTION";
+	}
+	else if ($isColumnSearch)
+	{
+		return "VERSE_CHAPTER";
+	}
+	else if ($isConceptSearch )
+	{
+		return "CONCEPT";
+	}
+	else if ($isTransliterationSearch)
+	{
+		return "TRANSLITERATION";
+	}
+	else
+	{
+		return "NORMAL";
+	}
 }
 
 ?>

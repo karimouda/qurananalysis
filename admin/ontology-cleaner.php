@@ -254,9 +254,9 @@ echoN("RELATIONS");
 $relIndex =0;
 foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $hash => $relArr)
 {
-	$subject = $relArr['subject'];
-	$object = $relArr['object'];
-	$verb = $relArr['verb'];
+	$subject = $relArr['SUBJECT'];
+	$object = $relArr['OBJECT'];
+	$verb = $relArr['VERB'];
 	
 	$relationStr = "$subject,$verb,$object";
 	

@@ -5,6 +5,9 @@
 
 	<h1 class='info-page-section-title'>Your Feedback</h1> 
 	
+	
+
+
 	<input id='feedback_user_name'  name='name' value='' placeholder="Name"></input>
 	<br>
 	<input id='feedback_user_email'  name='email' value='' placeholder="Email"></input>
@@ -27,3 +30,9 @@
 	<br>
 	<br>
 </p>
+	<br>
+	<hr/>
+	<br>
+	<br>
+<div class="fb-comments" data-href="http://qurananalysis.com/info/index.php?page=feedback" data-numposts="5"></div>
+	

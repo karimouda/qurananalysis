@@ -42,7 +42,7 @@ loadModels("core,qac",$lang);
 			  	
 		
 			
-
+	    <?php include_once("help-content.php"); ?>
 		
 			  
 			  	
@@ -85,7 +85,7 @@ loadModels("core,qac",$lang);
 						Features
 					</td>
 					<td>
-						<input  type="text" name="features" id="features" style='width:100%'></input>
+						<input  type="text" name="features" id="features" style='width:194px'></input>
 					</td>
 				</tr>
 				<tr>
@@ -188,7 +188,8 @@ loadModels("core,qac",$lang);
 						      	 	
 						  			$("#pos-data-area").html(retRes);
 
-						  	
+
+						  			trackEvent('ANALYSIS','pos-query',selectedPOS,features);
 	
 						 	 	
 						     },

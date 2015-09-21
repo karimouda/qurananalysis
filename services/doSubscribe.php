@@ -7,6 +7,8 @@ include (dirname ( __FILE__ ) . "/../dal/SQLite3DataLayer.class.php");
 $email = $_POST ['email'];
 $name = $_POST ['name'];
 $title = $_POST ['title'];
+$entityVal = $_POST ['entity'];
+
 
 if (empty ( $email )) 
 {
@@ -22,13 +24,13 @@ $sqliteDBObj->openDB ( $dbPath, "rw" );
 
 $sqliteDBObj->execOnewayQuery ( MAILING_LIST_TABLE );
 
-$sqliteDBObj->execOnewayQuery ( "INSERT INTO EmailList " . "(name, title, email) " . "VALUES " . "('$name', '$title','$email')" );
+$sqliteDBObj->execOnewayQuery ( "INSERT INTO EmailList " . "(name, title, entity, email) " . "VALUES " . "('$name', '$title','$entityVal','$email')" );
 
 $error = handleDBError ( $sqliteDBObj );
 
 if (empty ( $error )) 
 {
-	$body = "New subscription<br>Name:$name<br>Title:$title<br>Email:$email<br>";
+	$body = "New subscription<br>Name:$name<br>Title:$title<br>Entity:$entityVal<br>Email:$email<br>";
 	include ("sendEmail.inc.php");
 	
 	echo "DONE";

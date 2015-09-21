@@ -24,7 +24,7 @@ if ( empty($lang))
 
 
 //echoN(time());
-loadModels("core,ontology",$lang);
+loadModels("core,search,ontology",$lang);
 //echoN(time());
 	
 
@@ -37,12 +37,15 @@ loadModels("core,ontology",$lang);
     <meta charset="utf-8">
     <title>Quran Analysis | Explore the Quran </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Exploratory search graph for the Quran">
+    <meta name="description" content="Exploratory search for the Quran">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<script type="text/javascript" src="<?=$D3_PATH?>"></script>
+	<script type="text/javascript" src="<?=$TINYSORT_PATH?>"></script>
+	<script type="text/javascript" src="<?=$TINYSORT_JQ_PATH?>"></script>	
+	
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
 	 
 	<script type="text/javascript">
@@ -76,7 +79,7 @@ loadModels("core,ontology",$lang);
 	   				<option value='AR' <?php if ($lang=="AR") echo 'selected'?>>AR</option>
 	   			</select>	  		
 	   			<span id='explore-guide-msg' style='float:none'>
-			  	&nbsp;Click on any topic to find relevant verses, topics of same color are related
+			  	&nbsp;Click on any topic to find relevant verses. Topics of same color are related.
 			    </span>
 			  
 		    </div>
@@ -112,6 +115,9 @@ $treeRootNodeObj = ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,0,$lang);
 $thingClassClusterCopy = null;
 foreach($treeRootNodeObj['children'] as $index => $nodeArr)
 {
+	
+	
+
 
 	if ( $nodeArr['name']==$thing_class_name_ar || $nodeArr['name']==$thing_class_name_en)
 	{
@@ -203,8 +209,38 @@ addChildrenToCluster($clusteredArr,$treeRootNodeObj,$clusterSerialNumber,$nodeSe
 //echoN($graphLinksJSON);
 //exit;
 
-$clusteredArrJSON = json_encode($clusteredArr);
+$filteredClusteredArr = array();
+$index = 0;
+foreach($clusteredArr as $index => $clusterArrItem)
+{
+	
+	$conceptName = strtolower(convertConceptIDtoGraphLabel($clusterArrItem['word']));
+	
+	$conceptNameAR  = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$conceptName];
+	
+	
+	// if not in index (then not qurana or word in quran)
+	// and does not have subclasses // then ignore
+	if ( !wordOrPhraseIsInIndex($conceptName) &&
+	!conceptHasSubclasses($MODEL_QA_ONTOLOGY['RELATIONS'], $conceptNameAR) )
+	{
+		//preprint_r($MODEL_QA_ONTOLOGY['RELATIONS']);exit;
+		//echoN($conceptName);
+		continue;
+	
+	}
+	
+	$index++;
+	
+	$filteredClusteredArr[] = $clusterArrItem;
+	
+}
 
+//preprint_r($clusteredArr);
+
+//echoN(count($clusteredArr));
+
+$clusteredArrJSON = json_encode($filteredClusteredArr);
 
 ?>
 		  		
@@ -227,7 +263,7 @@ $clusteredArrJSON = json_encode($clusteredArr);
 
 			$("#options-area").attr("class","oa-explore");
 
-			var isForeignObjectSupported = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#foreignObject", "1.1");
+			var isForeignObjectSupported = document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#Extensibility','1.1');
 
 			if ( !isForeignObjectSupported )
 			{
@@ -238,7 +274,7 @@ $clusteredArrJSON = json_encode($clusteredArr);
 
 		var jsonData = <?=$clusteredArrJSON?>;
 		
-
+			//alert(JSON.stringify(jsonData));
 
 
 
@@ -389,15 +425,21 @@ $clusteredArrJSON = json_encode($clusteredArr);
 		{
 
 			//alert(currentPageX+"+"+layerWidth +">"+ width);
+			var finalX = 0;
 			
 			var layerWidth = 600;
 			if ( currentPageX+layerWidth > width )
 			{
 				
-				return currentPageX-(layerWidth)-100;;
+				finalX =  currentPageX-(layerWidth);;
 			}
 
-			return currentPageX;
+				if ( finalX < 0 )
+				{
+					finalX = 10;
+				}
+
+			return finalX;
 		}
 		
 		function getAdjustedCornerPointY(currentPageY)
@@ -452,8 +494,11 @@ $clusteredArrJSON = json_encode($clusteredArr);
 				// make it a phrase search // needed for qurana pron
 				//if ( word.indexOf(" ")>-1)
 				//{
-					word = "\""+word+"\"";
+					//word = "\""+word+"\"";
 				//}
+
+		        	// one concept search
+		        	word = "CONCEPTSEARCH:"+word+"";
 
 				showResultsForQueryInSpecificDiv(word,"explore-result-verses");
 

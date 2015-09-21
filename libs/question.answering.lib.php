@@ -9,10 +9,12 @@ function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scor
 	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 
 
+
+	
 	// answering by relevance and similarity
 	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations($taggedSignificantWords, $lang, true);
 
-	//preprint_r($conceptsFromTaxRelations);
+	
 	
 	
 	$COMMON_CONCEPTS_FACTOR = 10;

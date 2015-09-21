@@ -46,15 +46,14 @@ loadModels("core",$lang);
   		
   <div id='main-container'>
 			  	
-			
+				
 			
 
 		
 					
-				
-			  	<div >
-			  	
-		
+	    <?php include_once("help-content.php"); ?>
+
+	
 		<fieldset> 		
 		
 			 <legend>General Totals</legend>
@@ -215,7 +214,7 @@ loadModels("core",$lang);
 			  		
 			  </fieldset>
 			  	
-			  	</div>	
+			
    </div>
    
 		<?php 

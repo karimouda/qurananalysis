@@ -44,11 +44,31 @@ loadModels("core",$lang);
 			  	
 			  <!--  <h1 class='analysis-title-header'>Collocation</h1>-->	
 			  
+			  	    <?php include_once("help-content.php"); ?>
+			  	    
 			  	
 			  	<div id='words-context-options'>
-					Arabic Word or PoS Tag:
-					<input type="text" id="word" autofocus="true" />
-					<input type="button" id='words-context-submit' value='Context'  />
+			  	<table>
+			  	<tr>
+			  		<td>
+			  			Arabic Word or PoS Tag:
+			  		</td>
+			  		<td>
+			  		<input type="text" id="word" autofocus="true" />
+			  		</td>
+			  	</tr>
+			  	<tr>
+			  		<td>
+			  			
+			  		</td>
+			  		<td>
+			  		<input type="button" id='words-context-submit' value='Context'  />
+			  		</td>
+			  	</tr>
+			  	</table>
+					
+					
+					
 				</div>
 				
 				<div id='words-context-area'>
@@ -123,7 +143,8 @@ loadModels("core",$lang);
 						      	 	
 						  			$("#words-context-area").html(retRes);
 
-						  	
+
+						  			trackEvent('ANALYSIS','collocation',word,'');
 	
 						 	 	
 						     },

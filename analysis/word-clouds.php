@@ -39,6 +39,8 @@ loadModels("core",$lang);
 		?>	
 		
   <div id='main-container'>
+  
+  	    <?php include_once("help-content.php"); ?>
 			  	
 			<div id='words-clouds-options'>
 			  	<table>
@@ -150,7 +152,8 @@ loadModels("core",$lang);
 						      	 	
 						  			$("#words-clouds-area").html(retRes);
 
-						  	
+
+						  			trackEvent('ANALYSIS','word-clouds',cloudToShow,'');
 	
 						 	 	
 						     },

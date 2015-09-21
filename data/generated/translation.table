@@ -3002,7 +3002,7 @@ AR|نقع|CONCEPT|Soak
 AR|مضطر|CONCEPT|Compelled
 AR|مطففين|CONCEPT|those who give less
 AR|نحل|CONCEPT|Bee
-AR|مبذرين|CONCEPT|مبذرين
+AR|مبذرين|CONCEPT|spendthrift
 AR|مكروه|CONCEPT|Hateful
 AR|بدن|CONCEPT|the camels and cattle
 AR|مخبتين|CONCEPT|humble
@@ -3168,3 +3168,65 @@ EN|a person who uses goods or services|DESC|شخص الذي يستخدم الس�
 EN|Produce|CONCEPT|إنتاج
 EN|fresh fruits and vegetable grown for the market|DESC|الفواكه الطازجة والخضروات تزرع للسوق
 EN|someone who imputes guilt or blame|DESC|شخص وراءها الشعور بالذنب أو لوم
+EN|[used of minerals or stone] in its natural state and place|DESC|[تستخدم للمعادن أو الأحجار] في حالته الطبيعية والمكان
+EN|an inseparable companion|DESC|رفيق لا ينفصلان
+EN|Shade|CONCEPT|الظل
+EN|an erroneous mental representation|DESC|تمثيل عقلية بصورة خاطئة
+EN|Foreboding|CONCEPT|نذير
+EN|a feeling of evil to come|DESC|شعور الشر قادمة
+EN|Indication|CONCEPT|إشارة
+EN|something that serves to indicate or suggest|DESC|الأمر الذي يؤدي إلى تبين أو توحي
+EN|Recourse|CONCEPT|اللجوء
+EN|something or someone turned to for assistance or security|DESC|شيء ما أو شخص ما تحول الحصول على مساعدة أو الأمن
+EN|Presence|CONCEPT|وجود
+EN|the state of being present|DESC|لهذه الدولة
+EN|someone who travels behind or pursues another|DESC|شخص يسافر خلف أو تتبع آخر
+EN|Spy|CONCEPT|الجاسوس
+EN|a secret watcher|DESC|مراقب سري
+EN|the act of putting things in a sequential arrangement|DESC|قانون لوضع الأمور في ترتيب متسلسل
+EN|Command|CONCEPT|الأمر
+EN|an authoritative direction or instruction to do something|DESC|اتجاه رسمي أو تعليمات للقيام بشيء ما
+EN|Magnitude|CONCEPT|حجم
+EN|the property of relative size or extent [whether large or small]|DESC|ملكا للحجم النسبي أو مدى [سواء كانت كبيرة أو صغيرة]
+EN|Arrangement|CONCEPT|ترتيب
+EN|an orderly grouping [of things or persons] considered as a unit|DESC|تجمع منظم [من الأشياء أو الأشخاص] تعتبر كوحدة
+EN|Commercial document|CONCEPT|المستندات التجارية
+EN|a document of or relating to commerce|DESC|وثيقة من وثائق أو المتصلة بالتجارة
+EN|Rule|CONCEPT|القاعدة
+EN|prescribed guide for conduct or action|DESC|الدليل المحدد لسلوك أو عمل
+EN|Status|CONCEPT|مركز
+EN|the relative position or standing of things or especially persons in a society|DESC|موضع نسبي أو الدائمة للأشياء أو الأشخاص خصوصا في مجتمع
+EN|Sect|CONCEPT|طائفة
+EN|a subdivision of a larger religious group|DESC|قسم فرعي لأكبر مجموعة دينية
+EN|Artistic style|CONCEPT|النمط الفني
+EN|the style of a particular artist or school or movement|DESC|أسلوب فنان معين أو مدرسة أو حركة
+EN|the activity or result of distributing or disposing persons or things properly or methodically|DESC|النشاط أو نتيجة لتوزيع أو التخلص منها بالأشخاص أو بالأشياء بشكل صحيح أو منهجي
+EN|the act of beating to windward|DESC|قانون الضرب إلى ويندوارد
+EN|Path|CONCEPT|مسار
+EN|an established line of travel or access|DESC|وجود خط محدد للسفر أو الوصول
+EN|Periodic event|CONCEPT|الحدث الدوري
+EN|an event that recurs at intervals|DESC|حدث الذي يتكرر على فترات
+EN|Musical time|CONCEPT|الوقت الموسيقية
+EN|[music] the beat of musical rhythm|DESC|[موسيقى] التغلب على إيقاع موسيقى
+EN|Oscillation|CONCEPT|التذبذب
+EN|[physics] a regular periodic variation in value about a mean|DESC|[فيزياء] اختلاف دوري منتظم في قيمة حول متوسط
+EN|Nonconformist|CONCEPT|المعتزل
+EN|someone who refuses to conform to established standards of conduct|DESC|شخص يرفض الامتثال لمعايير السلوك
+EN|the sudden occurrence of an audible event|DESC|حدوث حدث مسموعة المفاجئ
+EN|Pace|CONCEPT|خطي
+EN|the relative speed of progress or change|DESC|السرعة النسبية للتقدم أو التغيير
+EN|Stroke|CONCEPT|السكتة الدماغية
+EN|a single complete movement|DESC|حركة واحدة كاملة
+EN|Sailing|CONCEPT|الإبحار
+EN|riding in a sailboat|DESC|ركوب الخيل في قارب شراعي
+EN|people who have been slain [as in battle]|DESC|الناس الذين قد تم ذبح [كما هو الحال في معركة]
+EN|Dead|CONCEPT|الميت
+EN|people who are no longer living|DESC|الناس الذين لم يعودوا يعيشون
+EN|degree of figurative distance or separation|DESC|درجة المسافة التصويرية أو الانفصال
+EN|an attempt to acquire or gain something|DESC|محاولة لاكتساب أو الحصول على شيء
+EN|Search|CONCEPT|البحث عن
+EN|the activity of looking thoroughly in order to find something or someone|DESC|نشاط تبحث جيدا من أجل العثور على شيء ما أو شخص ما
+EN|a feeling of profound respect for someone or something|DESC|شعور باحترام عميق لشخص ما أو شيء ما
+EN|Anxiety|CONCEPT|القلق
+EN|a vague unpleasant emotion that is experienced in anticipation of some [usually ill-defined] misfortune|DESC|عاطفة غير سارة غامضة التي تعاني تحسبا لبعض المحن [عادة ما تكون غير محددة]
+EN|physical objects consisting of a number of pages bound together|DESC|الأشياء المادية التي تتألف من عدد من الصفحات المرتبطة معا

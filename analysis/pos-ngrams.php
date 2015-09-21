@@ -41,7 +41,7 @@ loadModels("core",$lang);
 		?>			
   <div id='main-container'>
 			  	
-
+	    <?php include_once("help-content.php"); ?>
 			  
 			  	
 			  	<div id='ngrames-options'>
@@ -148,7 +148,7 @@ loadModels("core",$lang);
 						  			$("#ngrames-area").html(retRes);
 
 						  	
-	
+						  			trackEvent('ANALYSIS','pos-patterns',parameter,'');
 						 	 	
 						     },
 					      	 error: function (xhr, ajaxOptions, thrownError)

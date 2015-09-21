@@ -288,9 +288,9 @@ function getLongPoSName($smallPOS)
 	return  strtr($smallPOS,$trans);
 }
 
-function loadWordnet()
+function loadWordnet(&$MODEL_WORDNET)
 {
-	global $MODEL_WORDNET;
+
 	
 	
 	if (  apc_fetch("WORDNET_INDEX") == false)
@@ -322,20 +322,20 @@ function loadWordnet()
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_INDEX"); }
 		 
-		 $MODEL_WORDNET['WORDNET_INDEX'] = $wordnetIndex;
+		 $MODEL_WORDNET['INDEX'] = $wordnetIndex;
 		 
 		 $res = apc_store("WORDNET_LEXICO_SEMANTIC_CATEGORIES",$lexicoSemanticCategories);
 		
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_INDEX"); }
 		 
-		 $MODEL_WORDNET['WORDNET_LEXICO_SEMANTIC_CATEGORIES'] = $lexicoSemanticCategories;
+		 $MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES'] = $lexicoSemanticCategories;
 	
 		 $res = apc_store("WORDNET_DATA",$dataArr);
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_DATA"); }
 		 
-		 $MODEL_WORDNET['WORDNET_DATA'] = $dataArr;
+		 $MODEL_WORDNET['DATA'] = $dataArr;
 		 
 	}
 	
@@ -350,7 +350,7 @@ function getWordnetEntryByWordString($wordToSearchFor, $includeOnlyRelationsOfTy
 	if ( empty($MODEL_WORDNET)) { throw  new Exception("Wordnet module is not loaded!"); }
 	if (empty($wordToSearchFor)) return false;
 	
-	
+
 
 	$wordToSearchFor = strtolower($wordToSearchFor);
 	

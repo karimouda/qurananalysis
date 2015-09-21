@@ -42,7 +42,7 @@ loadModels("core",$lang);
 			  	
 	
 			
-
+	    <?php include_once("help-content.php"); ?>
 			
 			  
 			  	
@@ -102,6 +102,8 @@ loadModels("core",$lang);
 	{
 
 		openPopupWindow("/analysis/ontology-full-quran-graph.php",1200,900);
+
+		trackEvent('ANALYSIS','ontology-graph',"full",'');
 			
 	}
 				
@@ -133,6 +135,9 @@ loadModels("core",$lang);
 			{
 				$("#graphing-iframe").attr("src","./graphing.iframe.php?s="+suraIndex+"&a="+verseIndex+"&lang=<?=$lang?>");
 			}
+
+
+			trackEvent('ANALYSIS','ontology-graph',suraIndex,'');
 
 			setTimeout(function()
 					{

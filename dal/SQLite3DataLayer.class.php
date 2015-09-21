@@ -6,7 +6,7 @@ define ( 'SQLITE3_OPEN_SHAREDCACHE', 0x00020000 );
 
 define("MAILING_LIST_TABLE",
 "CREATE TABLE IF NOT EXISTS EmailList " .
-"(subscriberId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,  title TEXT,email TEXT, UNIQUE(email)  )");
+"(subscriberId INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,  title TEXT, entity TEXT, email TEXT, UNIQUE(email)  )");
 
 define("FEEDBACK_TABLE",
 "CREATE TABLE IF NOT EXISTS Feedback " .

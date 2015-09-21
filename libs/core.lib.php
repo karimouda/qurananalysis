@@ -149,6 +149,16 @@
 	
 	}
 	
+	
+	
+	function logQuery($lang,$query,$searchType,$resultCount)
+	{
+		
+		$logStr = time()."|$searchType|$resultCount|$query\n";
+		file_put_contents( dirname(__FILE__)."/../data/logs/query.log.$lang", $logStr,FILE_APPEND);
+		
+	}
+	
 
 	
 	
@@ -1721,10 +1731,12 @@
  	
  	
  		$MODEL_USED = null;
+ 		
  		if ( $coreModelUsed=="UTH")
  		{
  			$MODEL_USED = loadUthmaniDataModel();
- 		}else
+ 		}
+ 		else
  		{
  			$MODEL_USED = $MODEL_CORE;
  		}
@@ -1773,9 +1785,11 @@
  		  				
  		  				//echoN("$index|$uthmaniWord");
  		  				
+ 		  				
  		  				// WORD IS A PUASE MARK
  		  				if ( isPauseMark($uthmaniWord, $MODEL_CORE['TOTALS']['PAUSEMARKS'], $saktaLatifaMark, $sajdahMark) )
  		  				{
+ 		  					
  		  					
  		  					// INCREASE SUBSENTENCE INDEX
  		  					$subsentenceIndex++;
@@ -1788,7 +1802,8 @@
  		  					continue;
  		  				}
  		  				
- 		  				
+
+ 		
  		  				
  		  				//$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$uthmaniWord];
  		
@@ -2414,4 +2429,33 @@
 		
 	}
 
+	function addAlefLam($str)
+	{
+		return "ال".$str;
+	}
+	
+	function removeAlefLamFromBegening($str)
+	{
+		if ( startsWithAL($str))
+		{
+			return mb_substr($str, 2);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param $query a ulr encoded string
+	 * @return string
+	 */
+	function getSharingLinkForQuery($query)
+	{
+		
+
+		$reuqetURI = "/?q=".($query);
+		
+
+		$serverURL = $_SERVER['SERVER_NAME'];
+		
+		return "http://$serverURL"."$reuqetURI";
+	}
 ?>

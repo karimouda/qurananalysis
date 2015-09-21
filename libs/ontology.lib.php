@@ -775,6 +775,9 @@ function conceptHasSubclasses($relationsArr,$concept)
 		$subject = 	$relationArr['SUBJECT'];
 		$object = $relationArr['OBJECT'];
 		$verbAR = $relationArr['VERB'];
+		
+		
+	
 			
 		// IF IT IS AN IS-A RELATION
 		if ( $verbAR==$is_a_relation_name_ar && $concept==$object)
@@ -927,6 +930,8 @@ function getConceptRichnessScore($coneptArr)
 
 function updateNameInAllRelations(&$relationsArr, $nameFrom, $nameTo)
 {
+	$relationsArrComp = $relationsArr;
+	
 	foreach($relationsArr as $hash => $relationArr)
 	{
 		$relationsType = $relationArr['TYPE'];
@@ -946,8 +951,18 @@ function updateNameInAllRelations(&$relationsArr, $nameFrom, $nameTo)
 		}
 			
 			
+		$newHash = md5($relationsArr[$hash]['SUBJECT'].$relationsArr[$hash]['VERB'].$relationsArr[$hash]['OBJECT']);
 			
+		//echoN("###  $newHash $hash $subject $verbAR $object");
+		
+		if ( $newHash!=$hash)
+		{
+			$relationsArrComp[$newHash] = $relationsArr[$hash];
+			unset($relationsArrComp[$hash]);
+		}
 	}
+	
+	 $relationsArr = $relationsArrComp;
 }
 
 function getConceptsFoundInText($text,$lang)

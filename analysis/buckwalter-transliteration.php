@@ -41,9 +41,12 @@ loadModels("core",$lang);
   <div id='main-container'>
 			  	
 
+  	    <?php include_once("help-content.php"); ?>
+  	    
 			
 				Enter Arabic word or Buckwalter Transliteration to convert
-				<br>
+				<br/>
+				<br/>
 				<input type="text" id='arabic-buckwalter-text' name="word" />
 				<input type="button" value="Convert" id='conversion-button'  />
 				
@@ -105,6 +108,8 @@ loadModels("core",$lang);
 				{
 				
 
+					 
+					
 			
 						$("#converted-text-area").html("");
 						
@@ -126,7 +131,8 @@ loadModels("core",$lang);
 								      	 	
 								  			$("#converted-text-area").html(retRes);
 
-								  	
+
+								  			trackEvent('ANALYSIS','buckwalter-transliteration',text,'');
 			
 								 	 	
 								     },
@@ -139,7 +145,8 @@ loadModels("core",$lang);
 									
 						
 						
-						
+
+						 
 						
 						
 				}

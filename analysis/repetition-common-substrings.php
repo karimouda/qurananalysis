@@ -43,7 +43,7 @@ $LOAD_FROM_CACHE = TRUE;
   <div id='main-container'>
 
 			  		
-			
+				    <?php include_once("help-content.php"); ?>
 
 	
 			  

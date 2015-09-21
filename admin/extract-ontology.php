@@ -31,7 +31,12 @@ if ( isset($_GET['lang']) )
 	$lang = $_GET['lang'];
 }
 
+
+
 loadModels("core,search,qac,qurana,wordnet",$lang);
+
+
+
 
 
 
@@ -121,7 +126,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  				  	
 			  	
 			 
-			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;;
 			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = FALSE;
 			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
 			  	
@@ -1087,6 +1092,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					echoN("NON-TAX SYNTATIC PATTERNS RELATIONS COUNT:".count($relationsArr));
 					//preprint_r($relationsArr);
 					//exit;
+					
+				
+					
 					$poTaggedSubsentences = getPoSTaggedSubsentences();
 					
 					//preprint_r($poTaggedSubsentences);exit;
@@ -1829,6 +1837,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								$object = $relationsArr['OBJECT'];
 								$verb = $relationsArr['VERB'];
 								
+					
+								
 								handleNewConceptFromRelation($finalConcepts,$subject,"SUBJECT",$notInCounceptsCounter,$statsUniqueSubjects);
 								
 								handleNewConceptFromRelation($finalConcepts,$object,"OBJECT",$notInCounceptsCounter,$statsUniqueSubjects);
@@ -1848,8 +1858,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						echoN("Final Concepts Count:". count($finalConcepts));
 						
-						//preprint_r($finalConcepts);
-						//exit;;
+						preprint_r($finalConcepts);
+						
+			
 							
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage2", serialize($finalConcepts));
 						
@@ -2431,9 +2442,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 
 						
 						$lexicoSemanticCategories = apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
-						
-						
-					
+				
 					
 					
 						
@@ -2460,8 +2469,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 							$wordnetInfoArr = getWordnetEntryByWordString($conceptNameEn);
 							
+							echoN($conceptNameEn."-".$wordnetInfoArr);
 							
-							//echoN("^^^^ ".count($wordnetInfoArr));
+							echoN("^^^^ ".count($wordnetInfoArr));
+							
+							
 							
 							
 							if ( empty($wordnetInfoArr))
@@ -2960,7 +2972,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 
 						
-						$synonymsToBeRemoved = loadExcludesByType('synonyms');
+						$synonymsToBeRemovedArr = loadExcludesByType('synonyms');
 						
 						
 				
@@ -2989,7 +3001,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$isAddedBeforeArr = array();
 					
 						echoN("^^^^");
-						preprint_r($excludedConceptsArr);
+						preprint_r($synonymsToBeRemovedArr);
 						
 						/// CONCEPTS
 						foreach($finalConcepts as $concept => $conceptArr)
@@ -3048,7 +3060,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 
 							
 
-							$shortDescAR = $conceptArr['EXTRA']['MEANING_AR']['WORDNET'];
+							$shortDescAR = trim($conceptArr['EXTRA']['MEANING_AR']['WORDNET']);
 								
 							if ( isset($excludedShortDescArr[$shortDescAR]) )
 							{
@@ -3063,8 +3075,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								$removedShortDesc++;
 							}
 							
-							$shortDescEN = $conceptArr['EXTRA']['MEANING_EN']['WORDNET'];
-
+							$shortDescEN = trim($conceptArr['EXTRA']['MEANING_EN']['WORDNET']);
+							
+							//echoN("|the force of workers available|");
+							///echoN("|$shortDescEN|");
+							
 							if ( isset($excludedShortDescArr[$shortDescEN]) )
 							{
 							
@@ -3115,11 +3130,11 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 										$isAddedBeforeArr[$synonym]=1;
 									}
 									
-									//echoN($synonym);
+									echoN("::".$synonym);
 									
 									
 									if ( !empty($synonym) && 
-									( isset($synonymsToBeRemoved[$synonym]) || $conceptNameAr==$synonym || $conceptNameEn==$synonym ) )
+									( isset($synonymsToBeRemovedArr[$synonym]) || $conceptNameAr==$synonym || $conceptNameEn==$synonym ) )
 									{
 										//echoN("removed:$synonym");
 											
@@ -3214,9 +3229,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 						}
 						
-						//preprint_r($RELATIONS_EXCLUSION_RULES);
+						preprint_r($RELATIONS_EXCLUSION_RULES);
 						
-						
+					
 						
 						
 						$filteredRelationsArr = array();
@@ -3237,7 +3252,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							}
 							
 						
-							//echoN("$subject|$object|".isset($excludedConceptsArr[$subject]));
+							echoN("$subject|$object|".isset($excludedConceptsArr[$subject]));
 							
 							// IF CONCEPTS ARE EXCLUDED, RELATIONS ARE ALSO EXSCLUDED
 							if ( isset($excludedConceptsArr[$subject]) || isset($excludedConceptsArr[$object]))
@@ -3251,15 +3266,33 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							foreach($RELATIONS_EXCLUSION_RULES as $index=>$ruleArr)
 							{
 								if ( 
-									($ruleArr["SUBJECT"]=="*" || $ruleArr["SUBJECT"]==$subject) &&
+									($ruleArr["SUBJECT"]=="*" || $ruleArr["SUBJECT"]==$subject ) &&
 									($ruleArr["VERB"]=="*" || $ruleArr["VERB"]==$verbSimple) &&
-									($ruleArr["OBJECT"]=="*" || $ruleArr["OBJECT"]==$object) 
+									($ruleArr["OBJECT"]=="*" || $ruleArr["OBJECT"]==$object ) 
 						           )
 								   {
+								   	echoN("removed");
 								      $relationsRemoved++;
 								      $ruleFlag = true;
 									  break;
 								   }
+								   
+								   
+								   // REMOVE WHEN THE RELATION IS VARIANT OF AN EXCLUDED RELATION
+								   if (
+								   ( $ruleArr["SUBJECT"]=="*" || $ruleArr["SUBJECT"]==addAlefLam($subject) || $ruleArr["SUBJECT"]==removeAlefLamFromBegening($subject)) &&
+								     ($ruleArr["VERB"]=="*" || $ruleArr["VERB"]==$verbSimple) &&
+								     ($ruleArr["OBJECT"]=="*" || $ruleArr["OBJECT"]==addAlefLam($object) || $ruleArr["OBJECT"]==removeAlefLamFromBegening($object))
+								   )
+								   {
+								   	echoN("//////////// RELATION REMOVED BY LAZY ASSUMPTION");
+								   	preprint_r($ruleArr);
+								   	$relationsRemoved++;
+								   	$ruleFlag = true;
+								   	break;
+								   }
+								   
+								  
 								   
 									// NOT USED
 								   // CONJUNCTION SUBJECT IN IS-A RELATION
@@ -3321,7 +3354,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$relationsArr = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.relations"));
 						$finalConcepts = unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7"));
 							
-						
+					
 						
 						
 						
@@ -3384,6 +3417,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$TRANSLATION_FIXER_LOOKUP_TABLE['أول']='first';
 						
 						
+						$TRANSLATION_FIXER_LOOKUP_TABLE['علي']='on me';
+						
+						
 						
 						
 						
@@ -3438,8 +3474,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									$duplicateConceptRichnessScore = getConceptRichnessScore($duplicateConceptArr);
 									
 									
-									//echoN("ORIGINAL :[$conceptNameAr][$concept1RichnessScore]");
-									//echoN("DUPLICATE:[$conceptNameArNoAl][$duplicateConceptRichnessScore]");
+									echoN("ORIGINAL :[$conceptNameAr][$concept1RichnessScore]");
+									echoN("DUPLICATE:[$conceptNameArNoAl][$duplicateConceptRichnessScore]");
 									
 									$toBeRemovedConcept = null;
 									if ($duplicateConceptRichnessScore < $concept1RichnessScore )
@@ -3471,6 +3507,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$finalConcepts = $filteredFinalConcepts;
 						
 						echoN("Duplicates:".$duplicateCounter);
+						
+						
 						
 						foreach($relationsArr as $hash => $relationArr)
 						{

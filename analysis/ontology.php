@@ -48,7 +48,7 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 				
   <div id='main-container'>
 			  	
-
+	    <?php include_once("help-content.php"); ?>
 			  
 			  	
 			  	<div id='ontology-main-area'>
@@ -79,6 +79,11 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 	  				   						  foreach($finalConcepts as $concept=> $conceptArr)
 	  				   						  {
   				   						 		
+	  				   						  	
+	  				   						  	if ((mb_strlen($concept)==1))
+	  				   						  	{
+	  				   						  		echoN($concept);
+	  				   						  	}
   				   						 
   				   						 	?>
   				   						 	   <tr>

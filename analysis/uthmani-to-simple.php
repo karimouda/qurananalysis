@@ -42,7 +42,7 @@ $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 		?>	
 				
   <div id='main-container'>
-			  	
+			  		    <?php include_once("help-content.php"); ?>
 
 			  
 			  	

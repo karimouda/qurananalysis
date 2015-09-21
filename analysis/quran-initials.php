@@ -44,6 +44,9 @@ $MODEL_CORE_UTH = loadUthmaniDataModel();
 		?>	
 				
   <div id='main-container'>
+  
+  
+  	    <?php include_once("help-content.php"); ?>
 	
 
 		<?php 

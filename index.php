@@ -9,8 +9,8 @@ $query = $_GET['q'];
     <meta charset="utf-8">
     <title>Quran Smart Semantic Search and Question Answering System - QA (BETA)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Quran Analysis is a Semantic Search and Question Answering System for the Quran">
-    <meta name="google-site-verification" content="2rbTUeea6jdmmhdyQzW2nnk5NdMxZWIivx0DJ9-3czw" />
+    <meta name="description" content="Quran Analysis is a Smart Search and Question Answering System for the Quran">
+
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
@@ -21,22 +21,26 @@ $query = $_GET['q'];
 	
 
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	<link rel="icon" type="image/png" href="/qe/favicon.png">
+	<link rel="icon" type="image/png" href="/favicon.png">
       	 
 	<script type="text/javascript">
 	</script>
 
 
+     <?php 
+		require("in-head.php");
+	 ?>
+
+
   </head>
   <body>
   
-  <div id='header'>
+
 			  	
      <?php 
 		require("header.php");
 	 ?>
   		
-  </div>
   
   <div id='main-container'>
 			  	
@@ -77,17 +81,24 @@ $query = $_GET['q'];
 			  	 	<div id='main-page-examples-area'>
 			  	 	
 			  	 	
-			  	 	<div id='main-page-try'><b>Click</b> and try the following examples</div> 
+			  	 	<div id='main-page-try'>
+			  	 	 <b>Click</b>
+			  	 	 to try the following examples
+			  	 	 
+			  	 	 </div> 
 			  	 	
 			  	 	<table id='main-page-examples-table'>
 			  	 		<tr>
 			  	 			<td>
 			  	 				One Word
+			  	 					
 			  	 			</td>
-			  	 			<td>
+			  	 			<td style="position:relative">
 			  	 				<a href="?q=Muhammad" class='main-page-example-item'>Muhammad</a>
 			  	 				/
 			  	 				<a href="?q=محمد" class='main-page-example-item'>محمد</a>
+			  	 				 <br>
+			  	 				<img src='/images/hand-click-icon.png' id='main-page-click-icon'/> 
 			  	 			</td>
 			  	 		</tr>
 			  	 		<tr>
@@ -132,63 +143,36 @@ $query = $_GET['q'];
 			  	 		</tr>
 			  	 		<tr>
 			  	 			<td>
-			  	 				Specific Verse <br>
-			  	 			   <span class='note'>(Chapter : Verse)</span>
+			  	 				Phonetic Search
 			  	 			</td>
 			  	 			<td>
+			  	 			    <a href="?q=allahu" class='main-page-example-item'>Allahu</a>
+			  	 				/
+			  	 				<a href="?q=taAAmaloona" class='main-page-example-item'>taAAmaloona</a>
+			  	 				<br>
+			  	 			 	<span class='note'>Search using transliterated Arabic words. <a target="_new" href='/info/transliteration-words-list.php'>Full List</a></span>
+		
+			  	 			</td>
+			  	 		</tr>
+			  	 		<tr>
+			  	 			<td>
+			  	 				Specific Chapter/Verse <br>
+			  	 			  
+			  	 			</td>
+			  	 			<td>
+			  	 			    <a href="?q=50" class='main-page-example-item'>50</a>
+			  	 				/
 			  	 				<a href="?q=50:12" class='main-page-example-item'>50:12</a>
-			  	 			 	 				
+			  	 				<br>
+			  	 			 	 <span class='note'>(<a target="_NEW" href='/analysis/full-quran-text.php'>Chapter</a>) (<a target="_NEW" href='/analysis/full-quran-text.php'>Chapter</a>:Verse)</span>
+			  	 			 	 <br>
+			  	 			 	
 		
 			  	 			</td>
 			  	 		</tr>
 			  	 	</table>
-			  	 	<?php /*
-			  	 		
-
-			  	 	
-			  	 		<a href="?q=Allah" class='main-page-example-item'>Allah</a>,
-			  	 		<a href="?q=Muhammad" class='main-page-example-item'>Muhammad</a>,
-			  	 		<a href="?q=Islam" class='main-page-example-item'>Islam</a>,
-			  	 		<a href="?q=Quran" class='main-page-example-item'>Quran</a>,
-			  	 		<a href="?q=Jesus" class='main-page-example-item'>Jesus</a>,
-			  	 		<a href="?q=Moses" class='main-page-example-item'>Moses</a>,
-			  	 		<a href="?q=Angels" class='main-page-example-item'>Angels</a>,
-			  	 		<a href="?q=Adam" class='main-page-example-item'>Adam</a>,
-			  	 		<br>
-			  	 		
-			  	 		<a href="?q=Life" class='main-page-example-item'>Life</a>,
-			  	 		<a href="?q=Death" class='main-page-example-item'>Death</a>,
-			  	 		<a href="?q=Win" class='main-page-example-item'>Win</a>,
-			  	 		<a href="?q=Loss" class='main-page-example-item'>Loss</a>,
-			  	 		<a href="?q=Signs" class='main-page-example-item'>Signs</a>,
-			  	 		<a href="?q=Heaven" class='main-page-example-item'>Heaven</a>,
-			  	 		<a href="?q=Hell" class='main-page-example-item'>Hell</a>,
-			  	 		<a href="?q=Love" class='main-page-example-item'>Love</a>,
-			  	 		<a href="?q=Manners" class='main-page-example-item'>Manners</a>,
-			  	 		<a href="?q=Children" class='main-page-example-item'>Children</a>,
-			  	 		<a href="?q=Repentance" class='main-page-example-item'>Repentance</a>,
-			  	 		<a href="?q=Money" class='main-page-example-item'>Money</a>,
-			  	 		
-	
-			  	 		
-			  	 		<a href="?q=Sky" class='main-page-example-item'>Sky</a>,
-			  	 		<a href="?q=Stories" class='main-page-example-item'>Stories</a>,
-			  	 		<a href="?q=Science" class='main-page-example-item'>Science</a>,
-			  	 		<a href="?q=Thought" class='main-page-example-item'>Thought</a>,
-			  	 		<a href="?q=Creation" class='main-page-example-item'>Creation</a>,
-			  	 		<a href="?q=Animals" class='main-page-example-item'>Animals</a>,		  	 		
-
-			  	 		
-			  	 		<a href="?q=Woman" class='main-page-example-item'>Woman</a>,
-			  	 		<a href="?q=Marriage" class='main-page-example-item'>Marriage</a>,
-			  	 		<a href="?q=Jihad" class='main-page-example-item'>Jihad</a>,
-			  	 		<a href="?q=War" class='main-page-example-item'>War</a>,
-			  	 		<a href="?q=Kill" class='main-page-example-item'>Kill</a>,
-			  	 		<a href="?q=Freedom" class='main-page-example-item'>Freedom</a>,
-			  	 		<a href="?q=Martyrs" class='main-page-example-item'>Martyrs</a>
-			  	 		
-		  	 		*/
-			  		?>
+			  
+			  		
 			  	 		
 			  	 	</div>
 			  	</div>
@@ -209,8 +193,13 @@ $query = $_GET['q'];
 
 			$("#options-area").css("margin-top","100px");
 
+			var intervalID = setInterval(function(){ $("#main-page-click-icon").toggle(); },"100");
+
+			setTimeout(function(){ clearInterval(intervalID) },500);
 			<?php endif;?>
 
+
+			
 			
 
 		
@@ -322,6 +311,9 @@ $query = $_GET['q'];
 	<?php 
 		require("footer.php");
 	?>
+	
+
+	
 	
   </body>
 </html>

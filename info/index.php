@@ -7,7 +7,7 @@ $page = $_GET['page'];
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analysis | Information Pages </title>
+    <title>Quran Analysis | Information </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Quran Semantic-based Search, Analysis & Expert System">
     <meta name="author" content="">
@@ -16,7 +16,7 @@ $page = $_GET['page'];
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<script type="text/javascript" src="<?=$D3_PATH?>"></script>
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	<link rel="icon" type="image/png" href="/qe/favicon.png">
+	<link rel="icon" type="image/png" href="/favicon.png">
       	 
 	<script type="text/javascript">
 	</script>
@@ -25,6 +25,11 @@ $page = $_GET['page'];
   </head>
   <body>
   
+  
+  
+
+  
+  
   <div id='header'>
 			  	
      <?php 
@@ -32,6 +37,8 @@ $page = $_GET['page'];
 	 ?>
   		
   </div>
+  
+  
   
   <div id='main-container'>
 			  
@@ -99,12 +106,19 @@ $page = $_GET['page'];
 						
 						var emailVal =  $("#subscriber_email").val();
 
-					
+
+						
 						var nameVal =  $("#subscriber_name").val();
-						var titleVal =  $("#subscriber_title").val();
+						var titleVal =  $("#subscriber_title option:selected").val();
+						var entityVal =  $("#subscriber_entity").val();
 						
 						
-						
+						if ( titleVal=='')
+						{
+							$("#subscribing").attr("class","general-error-color");
+							$("#subscribing").html("Invalid Occupation !");
+							return;
+						}
 						
 						
 						
@@ -127,11 +141,11 @@ $page = $_GET['page'];
 							
 						  });
 					
-							if (_gaq){_gaq.push(['_trackPageview', 'ACTION:Subscribe']);}
+							
 									
 							$.ajax({
 								
-						 	 data: 'email='+emailVal+"&title="+titleVal+"&name="+nameVal,
+						 	 data: 'email='+emailVal+"&title="+titleVal+"&name="+nameVal+"&entity="+entityVal,
 							 timeout: 10000,
 							 success: function(response){
 								
@@ -149,7 +163,8 @@ $page = $_GET['page'];
 												$("#subscribing").html("Thank you");
 								  			}
 											
-											
+
+								  			trackEvent('INFO_PAGES','SUBSCRIBE','','');
 										
 								 	 	
 								  },
@@ -228,7 +243,8 @@ $page = $_GET['page'];
 												$("#feedback-status").html("Thank you");
 								  			}
 											
-											
+
+								  			trackEvent('INFO_PAGES','FEEDBACK','','');
 										
 								 	 	
 								  },
@@ -247,6 +263,11 @@ $page = $_GET['page'];
 				}
 					
 	</script>
+	
+	
+		<?php 
+		require("../footer.php");
+	?>
   </body>
 </html>
 

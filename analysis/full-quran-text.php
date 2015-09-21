@@ -39,7 +39,7 @@ loadModels("core",$lang);
 				
   <div id='main-container'>
 	
-
+	    <?php include_once("help-content.php"); ?>
 		
 			  	<div >
 			  	

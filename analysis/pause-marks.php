@@ -40,6 +40,7 @@ loadModels("core",$lang);
   <div id='main-container'>
 	
 
+  	    <?php include_once("help-content.php"); ?>
 		
 			  	<div id="pause-marks-area" >
 			  	<?php 
@@ -134,6 +135,8 @@ loadModels("core",$lang);
 
 					  			$("#loading-layer").hide();
 					  			$("#pausemarks-data-area").html(retRes);
+
+					  			trackEvent('ANALYSIS','pause-marks',selectedMark,'');
 
 					     },
 				      	 error: function (xhr, ajaxOptions, thrownError)

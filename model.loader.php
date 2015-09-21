@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__)."/global.settings.php");
 require_once(dirname(__FILE__)."/libs/core.lib.php");
 require_once(dirname(__FILE__)."/libs/wordnet.lib.php");
-
+require_once(dirname(__FILE__)."/libs/search.lib.php");
 
 
 ///////// ONTOLOGY 
@@ -37,10 +37,10 @@ $MODEL_QA_ONTOLOGY['VERB_INDEX'] =  array();;
 
 
 
-foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $lang)
+foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $supportedLang)
 {
-	$MODEL_CORE[$lang] = array();
-	$MODEL_SEARCH[$lang] = array();
+	$MODEL_CORE[$supportedLang] = array();
+	$MODEL_SEARCH[$supportedLang] = array();
 }
 
 $META_DATA = array();
@@ -54,6 +54,8 @@ $TRANSLATION_MAP_EN_TO_AR = array();
 $TRANSLATION_MAP_AR_TO_EN = array();
 $TRANSLITERATION_WORDS_MAP = array();
 $TRANSLITERATION_VERSES_MAP = array();
+$TRANSLITERATION_WORDS_LOCATION_MAP = array();
+$TRANSLITERATION_WORDS_INDEX = array();
 
 function loadModels($modelsToBeLoaded,$lang)
 {
@@ -64,7 +66,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	global $wordByWordTranslationFile,$transliterationFile;
 	global $MODEL_WORDNET,$qaOntologyNamespace,$qaOntologyFile,$is_a_relation_name_ar,$is_a_relation_name_en;
 	global $thing_class_name_ar,$thing_class_name_en;
-	GLOBAL $MODEL_QA_ONTOLOGY,$arabicStopWordsFileL2;
+	global $MODEL_QA_ONTOLOGY,$arabicStopWordsFileL2;
+	global $TRANSLITERATION_WORDS_LOCATION_MAP,$TRANSLITERATION_WORDS_INDEX;
 	
 
 	//not working
@@ -103,7 +106,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 			
 				
-				$MODEL_QA_ONTOLOGY = apc_fetch("MODEL_QA_ONTOLOGY");
+				$MODEL_QA_ONTOLOGY = &apc_fetch("MODEL_QA_ONTOLOGY");
 				
 				if ($MODEL_QA_ONTOLOGY===false )
 				{
@@ -113,7 +116,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			if ( $modelName=="wordnet")
 			{
-				$MODEL_WORDNET['INDEX']  = apc_fetch("WORDNET_INDEX");
+				$MODEL_WORDNET['INDEX']  = &apc_fetch("WORDNET_INDEX");
 				
 				if ($MODEL_WORDNET['INDEX']===false )
 				{
@@ -121,7 +124,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				}
 				
 				
-				$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+				$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= &apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
 				
 				if ($MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']===false )
 				{
@@ -129,7 +132,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				}
 				
 				
-				$MODEL_WORDNET['DATA'] = apc_fetch("WORDNET_DATA");
+				$MODEL_WORDNET['DATA'] = &apc_fetch("WORDNET_DATA");
 				
 				if ($MODEL_WORDNET['DATA']===false )
 				{
@@ -141,8 +144,10 @@ function loadModels($modelsToBeLoaded,$lang)
 				
 			if ( ($modelName=="core"))
 			{
+				
+			
 				//$MODEL_CORE = json_decode((file_get_contents("$serializedModelFile.core")),TRUE);
-				$MODEL_CORE  = apc_fetch("MODEL_CORE[$lang]");
+				$MODEL_CORE  = &apc_fetch("MODEL_CORE[$lang]");
 				
 				
 				if ($MODEL_CORE===false )
@@ -156,7 +161,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_SEARCH = json_decode((file_get_contents("$serializedModelFile.search")),TRUE);
 				
-				$MODEL_SEARCH  = apc_fetch("MODEL_SEARCH[$lang]");
+				$MODEL_SEARCH  = &apc_fetch("MODEL_SEARCH[$lang]");
 				
 				
 				if ($MODEL_SEARCH===false )
@@ -170,7 +175,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_QAC = json_decode((file_get_contents("$serializedModelFile.qac")),TRUE);
 				
-				$MODEL_QAC  = apc_fetch("MODEL_QAC");
+				$MODEL_QAC  = &apc_fetch("MODEL_QAC");
 				
 				
 				if ($MODEL_QAC===false )
@@ -182,7 +187,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_QURANA = json_decode((file_get_contents("$serializedModelFile.qurana")),TRUE);
 				
-				$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
+				$MODEL_QURANA  = &apc_fetch("MODEL_QURANA");
 				
 				
 				if ($MODEL_QURANA===false )
@@ -297,9 +302,9 @@ function loadModels($modelsToBeLoaded,$lang)
 				$verbUthmani = $attributedArr['verb_uthmani'];
 					
 				$relHashID = buildRelationHashID($className,$verb,$objectConceptName);
-				$qaOntologyRelationsArr[$relHashID]= array("subject"=>$className,"verb"=>$verb,
-						"object"=>$objectConceptName,"frequency"=>$freq,
-						"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
+				$qaOntologyRelationsArr[$relHashID]= array("SUBJECT"=>$className,"VERB"=>$verb,
+						"OBJECT"=>$objectConceptName,"FREQUENCY"=>$freq,
+						"VERB_TRANSLATION_EN"=>$engTranslation,"VERB_UTHMANI"=>$verbUthmani);
 				//preprint_r($qaOntologyRelationsArr[$relHashID]);
 				$relationsCount++;
 		
@@ -331,7 +336,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			$relHashID = buildRelationHashID($subjectConceptName,$is_a_relation_name_ar,$parent);
 			
-			$qaOntologyRelationsArr[$relHashID]= array("subject"=>$subjectConceptName,"verb"=>"$is_a_relation_name_ar","object"=>$parent,"verb_translation_en"=>"$is_a_relation_name_en");
+			$qaOntologyRelationsArr[$relHashID]= array("SUBJECT"=>$subjectConceptName,"VERB"=>"$is_a_relation_name_ar","OBJECT"=>$parent,"VERB_TRANSLATION_EN"=>"$is_a_relation_name_en");
 			
 			
 			if ( $parent!=$thing_class_name_ar)
@@ -365,9 +370,9 @@ function loadModels($modelsToBeLoaded,$lang)
 					$verbUthmani = $attributedArr['verb_uthmani'];
 					
 					$relHashID = buildRelationHashID($subjectConceptName,$verb,$objectConceptName);
-					$qaOntologyRelationsArr[$relHashID]= array("subject"=>$subjectConceptName,"verb"=>$verb,
-												"object"=>$objectConceptName,"frequency"=>$freq,
-												"verb_translation_en"=>$engTranslation,"verb_uthmani"=>$verbUthmani);
+					$qaOntologyRelationsArr[$relHashID]= array("SUBJECT"=>$subjectConceptName,"VERB"=>$verb,
+												"OBJECT"=>$objectConceptName,"FREQUENCY"=>$freq,
+												"VERB_TRANSLATION_EN"=>$engTranslation,"VERB_UTHMANI"=>$verbUthmani);
 					$relationsCount++;
 				
 			}
@@ -397,13 +402,23 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	foreach($qaOntologyConceptsArr as $conceptName => $infoArr)
 	{
+		
+	
+		
 		$fullConceptName = $qaOntologyNamespace.$conceptName;
 		$labelsArr = $ontology->{'owl_data'}['labels'][$fullConceptName];
 		
-		foreach($labelsArr as $lang => $label)
+		foreach($labelsArr as $labelLang => $label)
 		{
-			$qaOntologyConceptsArr[$conceptName]['label_'.strtolower($lang)] = $label;
+			/*if ( mb_strlen($label)==1)
+			{
+				echon($fullConceptName);
+				preprint_r($ontology->{'owl_data'}['labels'][$fullConceptName]);
+			}*/
+			$qaOntologyConceptsArr[$conceptName]['label_'.strtolower($labelLang)] = $label;
 		}
+		
+	
 		
 		// "Thing" does not have annotations
 		if ( isset($ontology->{'owl_data'}['annotations'][$fullConceptName]))
@@ -464,10 +479,10 @@ function loadModels($modelsToBeLoaded,$lang)
 
 	foreach($qaOntologyRelationsArr as $index => $relArr)
 	{
-		$trippleStr =$relArr['subject']."->".$relArr['verb']."->".$relArr['object'];
+		$trippleStr =$relArr['SUBJECT']."->".$relArr['VERB']."->".$relArr['OBJECT'];
 		
 		//since Thing relations are not in the list we are comparing with
-		if ( $relArr['object']==$thing_class_name_ar ) continue;
+		if ( $relArr['OBJECT']==$thing_class_name_ar ) continue;
 		//echoN($trippleStr);
 	
 		$trippleStr = trim($trippleStr);
@@ -519,10 +534,10 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	foreach($qaOntologyRelationsArr as $index => $relArr)
 	{
-		$subject  =$relArr['subject'];
-		$verb = $relArr['verb'];
-		$verb_translation_en = $relArr['verb_translation_en'];
-		$object = $relArr['object'];
+		$subject  =$relArr['SUBJECT'];
+		$verb = $relArr['VERB'];
+		$verb_translation_en = $relArr['VERB_TRANSLATION_EN'];
+		$object = $relArr['OBJECT'];
 		
 	
 		
@@ -558,6 +573,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	foreach($qaOntologyConceptsArr as $arName => $conceptArr)
 	{
 	
+	
 			
 		$i=1;
 		while(isset($conceptArr['synonym_'.$i]))
@@ -580,7 +596,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	}
 	
 	
-
+	//preprint_r($qaOntologyConceptsArr);exit;
 	
 	$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
 	$MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'] = $qaOntologyConceptsENtoARMapArr;
@@ -606,9 +622,9 @@ function loadModels($modelsToBeLoaded,$lang)
 	////////////////////////////
 	
 	/// WORDNET
-	loadWordnet();
+	loadWordnet($MODEL_WORDNET);
 	
-	
+
 	/////////////
 	
 
@@ -617,14 +633,14 @@ function loadModels($modelsToBeLoaded,$lang)
 	$quranMetaDataXMLObj = null;
 	unset($quranMetaDataXMLObj);
 	
-	foreach ($modelSources as $lang => $modelSourceArr)
+	foreach ($modelSources as $supportedLang => $modelSourceArr)
 	{
 		$type = $modelSourceArr['type'];
 		$file = $modelSourceArr['file'];
 		
 		//echoN("$lang $type $file");
 		
-		loadModel($lang,$type,$file);
+		loadModel($supportedLang,$type,$file);
 		
 		//not working
 		$gced = gc_collect_cycles();
@@ -644,6 +660,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	$translitertationArr = file($transliterationFile,FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
 
+
+	
 	$WORD_SENSES_EN = array();
 	$WORD_SENSES_AR = array();
 	
@@ -678,6 +696,8 @@ function loadModels($modelsToBeLoaded,$lang)
 		  $lineParts = preg_split("/\|/", $transliterationLine);
 		  $verseTransliteration = $lineParts[2];
 		  
+		  
+		  //echoN($transliterationLine);
 		  
 		  $TRANSLITERATION_VERSES_MAP[$verseLocation]=$verseTransliteration;
 		  
@@ -759,7 +779,15 @@ function loadModels($modelsToBeLoaded,$lang)
 		  	  $TRANSLATION_MAP_AR_TO_EN[$wordUthmani]=$englishTranslationForCurrentWord;
 		  	  $TRANSLITERATION_WORDS_MAP[$wordUthmani]=$wordsTransliterationArr[$index];
 		  	  
-		  	  //preprint_r($TRANSLATION_MAP_EN_TO_AR);
+		  	  $clenaedTranliteration  = cleanTransliteratedText($wordsTransliterationArr[$index]);
+		  	  $TRANSLITERATION_WORDS_INDEX[$clenaedTranliteration]=1;
+		  	  $TRANSLITERATION_WORDS_LOCATION_MAP["$s:$a:$index"]=$wordsTransliterationArr[$index];
+		  	  
+		  	  
+		  	  
+		  	  
+		  	  
+		  	  //preprint_r($TRANSLITERATION_WORDS_LOCATION_MAP);
 		  	 // preprint_r($TRANSLATION_MAP_AR_TO_EN);
 		  	 // preprint_r($TRANSLITERATION_WORDS_MAP);
 		  	  	
@@ -828,6 +856,21 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	if ( $res===false){ throw new Exception("Can't cache WORDS_TRANSLITERATION"); }
 	
+	$res = apc_store("TRANSLITERATION_WORDS_LOCATION_MAP",$TRANSLITERATION_WORDS_LOCATION_MAP);
+	
+	if ( $res===false){ throw new Exception("Can't cache TRANSLITERATION_WORDS_LOCATION_MAP"); }
+	
+	$res = apc_store("TRANSLITERATION_VERSES_MAP",$TRANSLITERATION_VERSES_MAP);
+	
+	if ( $res===false){ throw new Exception("Can't cache TRANSLITERATION_VERSES_MAP"); }
+		
+	$res = apc_store("TRANSLITERATION_WORDS_INDEX",$TRANSLITERATION_WORDS_INDEX);
+	
+	if ( $res===false){ throw new Exception("Can't cache TRANSLITERATION_WORDS_INDEX"); }
+	
+	
+	
+	
 
 	$res = apc_store("WORD_SENSES_EN",$WORD_SENSES_EN);
 	
@@ -882,6 +925,41 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[AR]"); }
 	
+	
+
+	/// ADD TRANSLITERATION TO INVERETD INDEX WWITH ENGLISH WORDS
+	if ($lang=="EN")
+	{
+		 
+		
+	
+		foreach($TRANSLITERATION_WORDS_LOCATION_MAP as $location => $transliteratedWord )
+		{
+			$locationArr = explode(":",$location);
+			 
+			$s = $locationArr[0];
+			$a = $locationArr[1];
+			$wordIndex = $locationArr[2];
+			 
+			//echoN("$transliteratedWord,$s,$a,$wordIndex");
+	
+			
+			$transliteratedWord = strtolower(strip_tags($transliteratedWord));
+			
+			//$MODEL_SEARCH['EN']['INVERTED_INDEX'][$word]
+			
+			addToInvertedIndex($MODEL_SEARCH['EN']['INVERTED_INDEX'],$transliteratedWord,$s,$a,$wordIndex,"NORMAL_WORD");
+		}
+	
+		
+		$res = apc_store("MODEL_SEARCH[EN]",$MODEL_SEARCH['EN']);
+	
+	}
+	
+	
+	
+	if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[EN]"); }
+	
 
 	/////////////////////////////////////////////////////////
 	
@@ -902,7 +980,12 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 	// reload all models from memory to set all variables (WORDNET) - after model generation 
-	//loadModels($modelsToBeLoaded,$lang);
+	/* needed to reload all generated models from memory specialy model_core since 
+	 * it has 3 languages, if this line is removed: all 3 langauges are loaded although only one language 
+	 * is requested, also it caused a bug in getPoSTaggedSubsentences
+	 */
+
+	loadModels($modelsToBeLoaded,$lang);
 	
 	
 	
@@ -917,6 +1000,7 @@ function loadModel($lang,$type,$file)
 		global $quranaPronounResolutionConceptsFile,$quranaPronounResolutionDataFileTemplate,$quranFileUthmaniAR;
 		global $TRANSLATION_MAP_EN_TO_AR,$TRANSLATION_MAP_AR_TO_EN,$TRANSLITERATION_WORDS_MAP,$TRANSLITERATION_VERSES_MAP;
 		global $basmalaTextUthmani2,$arabicStopWordsFileL2;
+		global $TRANSLITERATION_WORDS_LOCATION_MAP;
 				
 		$QURAN_TEXT = array();
 
@@ -1332,6 +1416,9 @@ function loadModel($lang,$type,$file)
 							if ( $lang=="EN")
 							{
 								addToInvertedIndex($INVERTED_INDEX,strtolower($quranaConcecpts[$conceptID]['EN']),($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
+								
+								
+								
 							}
 							else
 							{
@@ -1585,6 +1672,7 @@ function loadModel($lang,$type,$file)
 					  			
 					  				addToInvertedIndex($INVERTED_INDEX,$word,$s,$a,$wordIndex,"NORMAL_WORD");
 					  				 
+					  		
 					  			
 					  				
 					  				
@@ -1797,7 +1885,8 @@ function loadModel($lang,$type,$file)
 				  		 	
 				  		 	
 				  		 }
-						
+				  		 
+				  		
 
 
 				  		$MODEL_CORE['LOADED']=1;

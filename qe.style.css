@@ -580,7 +580,8 @@ marked_for_initials
 {
 	background-color: #FFCA1C;
 	color:#000;
-	padding:4px;
+	padding:5px;
+	padding-bottom:4px;
 	min-width:100px;
 	font-size:12px;
 
@@ -633,19 +634,23 @@ marked_for_initials
 
 .result-aya-showtranslation
 {
-	background-color: #8EC5FF;
-  color: #fff;
+	background-color: #E4F0FB;
+  color: #000;
   padding: 4px;
 
   font-size: 12px;
   text-align: left;
   direction: rtl;
   float: left;
+  -webkit-box-shadow: 1px 1px 1px #aaa;
+-moz-box-shadow: 1px 1px 1px #aaa;
+  box-shadow: 1px 1px 1px #aaa;
+    margin: 0px 1px;
 }
 .result-aya-showtranslation A
 {
 	text-decoration: none;
-	color:#fff;
+	color:#000;
 		font-size:12px;
 }
 .result-aya-showtranslation:HOVER
@@ -661,7 +666,7 @@ marked_for_initials
 	  position: relative;
   border: 1px solid black;
   min-height: 400px;
-  width: 100%;
+  width: 640px;
 
 
 	
@@ -672,7 +677,7 @@ marked_for_initials
     width: 45%;
   float: right;
   min-width: 500px;
-  margin: 0px 10px;
+ /* margin: 0px 10px;*/
 }
 
 #analysis-switch-lang-button
@@ -797,6 +802,7 @@ margin: 20px auto 0px auto;;
   width: 100%;
   min-height: 200px;
   border: 1px solid black;
+  width:640px;
 }
 
 #result-verses-area
@@ -809,6 +815,7 @@ margin: 20px auto 0px auto;;
   padding:10px;
   border:1px solid #eee;
   margin-bottom: 10px;
+  margin-top:3px;
 	
 }
 
@@ -821,7 +828,7 @@ margin: 20px auto 0px auto;;
 
 #results-stats-table th
 {
-	background-color: #efefef;
+	background-color: #fafafa;
 	color:#000;
 	padding:5px;
 
@@ -865,13 +872,13 @@ margin: 20px auto 0px auto;;
 
 .graph-tooltip
 {
-  position: absolute;
-  width: 624px;
-  height: 104px;
+  position: relative;
+  width: 642px;
+  height: 100px;
   font-size: 11px;
   border:1px;
   background-color: #000;
-
+  display:none;
   border-radius:0px;
   border-top-left-radius:0px;
   border-bottom-left-radius:0px;
@@ -1043,7 +1050,7 @@ text-align: center;
   font-weight: lighter;
   padding: 20px 0px;
   font-size: 24px;
-  padding-left: 0px;
+  padding-left: 10px;
   text-align: left;
 }
 
@@ -1051,6 +1058,7 @@ text-align: center;
 {
 	color:#bbb;
 	text-align: left;
+	    padding-left: 20px;
    
 }
 
@@ -1059,7 +1067,7 @@ text-align: center;
 .main-page-example-item
 {
 	text-decoration: none;
-	color:#1597FE;
+	color:#0D5E9B;
 	font-size: 22px;
 	padding:0px;
 	font-family: Arial;
@@ -1069,16 +1077,17 @@ text-align: center;
 
 .main-page-example-item:HOVER
 {
-	color:#0D5E9B;
+	color:#4D82BD;
 }
 
 #main-page-examples-area
 {
 	margin:10px auto;
-	width:570px;
+	width:600px;
 	margin-top: 0px;
 	text-align: center;
-	min-width: 570px;
+	min-width: 600px;
+	 
 	
 }
 
@@ -1088,6 +1097,7 @@ text-align: center;
 	margin-top:20px;
 	border:0px solid #eee;
 	min-width:540px;
+	   margin-left: 20px;
 	
 	
 }
@@ -1173,7 +1183,7 @@ background-color: #fdfcfb;
 }
 #feedback_user_text
 {
-	height: 200px;
+	height: 100px;
 }
 #feedback_type_area
 {
@@ -1209,9 +1219,10 @@ background-color: #fdfcfb;
 
 #ontology-concepts-table
 {
-		width:100%;
+	   width:auto;
 	border:1px;
 	margin:auto;
+	    margin-right: 100px;
 }
 #ontology-concepts-table TD
 {
@@ -1718,6 +1729,10 @@ A.analysis-links[selected="1"]
   font-weight: lighter;
   font-size: 10px;
 }
+#search-results-summary-table
+{
+	width:auto;
+}
 
 #main-logo
 {
@@ -1746,10 +1761,15 @@ A.analysis-links[selected="1"]
 
 .result-more-about-aya
 {
-  background-color: #fafafa;
+  background-color: #fefefe;
   display: inline-block;
-  height: 22px;
-  padding: 0px 10px;
+  height: 23px;
+  padding: 0px 6px;
+  
+  -webkit-box-shadow: 1px 1px 1px #aaa;
+-moz-box-shadow: 1px 1px 1px #aaa;
+  box-shadow: 1px 1px 1px #aaa;
+    margin: 0px 1px;
 	
 }
 .result-more-about-aya:HOVER
@@ -1759,8 +1779,8 @@ A.analysis-links[selected="1"]
 }
 .result-more-about-aya A
 {
-font-size: 11px;
-  color: #bfbfbf;
+font-size: 12px;
+  color: #000;
   padding: 2px;
 	
 	
@@ -1772,17 +1792,17 @@ font-size: 11px;
 
 #question-answering-area
 {
-  background-color: #fff;
-  width: 60%;
-  margin: 10px auto;
-
-  min-height: 40px;
-  text-align: center;
-  font-size: 20px;
-  padding: 20px;
-    padding-left: 70px;
-  border-radius: 10px;
-  border: 1px dashed #eee
+    background-color: #fff;
+    width: 95%;
+    margin: 10px auto;
+    min-height: 40px;
+    text-align: inherit;
+    font-size: 18px;
+    padding: 5px;
+    /* padding-left: 70px; */
+    border-radius: 5px;
+    border: 1px dashed #eee;
+    
 }
 #question-answering-area-answer-title
 {
@@ -1855,7 +1875,7 @@ font-size: 11px;
   stroke: #fff;
   stroke-width:3px;
   r:50px;
-  trasition-delay:0.5s;
+  transition-delay:0.5s;
    transition: 1s r;
 
 	
@@ -1932,7 +1952,8 @@ A#home-beta-button:HOVER
 
 #analyze-title
 {
-	color:#4CA5FF;
+	color:#0357AA;
+	font-weight: normal;
 }
 
 .search-wordcloud-item
@@ -1959,13 +1980,23 @@ A#home-beta-button:HOVER
 
 #result-wordcloud-area
 {
-	  margin: 60px auto 0px auto;
-	  width: auto;
-	  min-height: 200px;
-	  padding:20px 10px;
-	  border: 1px solid black;
+    margin: 20px 0px 0px 0px;
+    width: 640px;
+    min-height: 100px;
+ 
+    border: 1px solid black;
 }
-
+#result-wordcloud-title
+{
+	background-color: #000;
+	color:#fff;
+	margin-top:0px;
+	padding:5px;
+}
+#result-wordcloud-content
+{
+	   padding: 30px 10px 20px 10px;
+}
 .buckwalter-trans-result-header
 {
 	font-size: 16px;
@@ -1986,4 +2017,210 @@ A#home-beta-button:HOVER
 {
 	margin:0px 20%;
 	padding-left:30px;
+}
+
+#main-page-click-icon
+{
+	/*-ms-transform: rotate(45deg); 
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    */
+    position:absolute;
+    left:-10px;
+    top:15px;
+    display: inline-block;
+    
+     -webkit-transition: opacity 1s ease-in-out;
+	  -moz-transition: opacity 1s ease-in-out;
+	  -ms-transition: opacity 1s ease-in-out;
+	  -o-transition: opacity 1s ease-in-out;
+	  transition: opacity 1s ease-in-out;
+	  
+
+	  
+	 
+	  filter: alpha(opacity=20);
+	  opacity: 0.2;
+}
+    
+ 
+    
+.help-icon
+{
+	width:25px;
+	height: 25px;
+
+/*
+  -webkit-box-shadow: 1px 1px 1px #555;
+-moz-box-shadow: 1px 1px 1px #555;
+  box-shadow: 1px 1px 1px #555;
+  */
+	cursor:pointer;
+	
+}
+.help-icon:HOVER 
+{
+		filter: brightness(1.2);
+	-webkit-filter: brightness(1.2);
+	-moz-filter: brightness(1.2);
+}
+
+#graph-help-icon
+{
+		position:absolute;
+	bottom: 10px;
+    right: 10px;
+}
+.help-message-area
+{
+	display: none;
+	padding:10px;
+	font-size: 14px;
+}
+
+#help-message-graph
+{
+ background-color: #fefefe;
+    border: 1px solid #eee;
+    /* margin-left: 2px; */
+    width: 620px;
+        
+}
+
+#result-statistics-title
+{
+	background-color: #000;
+	color:#fff;
+	margin-top:0px;
+	padding:5px;
+}
+
+.analyze-help-icon
+{
+	position:relative;
+	right:0px;
+	top:0px;
+	float:right;
+	background-color: #fff;
+}
+.analysis-help-area
+{
+	
+}
+
+#analysis-help-message
+{
+	text-align: left;
+	border:1px solid #eee;
+	margin:10px 0px;
+	padding:10px;
+	min-height: 50px;
+	font-size:16px;
+	width: 700px;
+	
+}
+
+.transliteration-separator
+{
+	
+    border: 0px solid #fff;
+    height: 1px;
+    background-color:#fafafa;
+     -webkit-box-shadow: 1px 1px 1px #eee;
+-moz-box-shadow: 1px 1px 1px #eee;
+  box-shadow: 1px 1px 1px #eee;
+}
+
+.transliteration-verse-text-area
+{
+	maring:10px;
+	
+}
+
+#answer-verse-location
+{
+	font-size: 14px;
+	color:#aaa;
+}
+
+#footer-sharing-section
+{
+	margin:10px 0px 30px 0px;;
+	vertical-align: middle;
+	
+}
+
+.twitter-button-fixer
+{
+	    display: inline-block;
+    /* margin-bottom: -5px; */
+    position: relative;
+    bottom: -3px;
+}
+
+select[id=subscriber_title]
+{
+	height: 28px;
+}
+
+#result-share-link-area
+{
+width:100%;	
+text-align: right;
+display: block;
+    height: 2px;
+}
+#result-share-link
+{
+	    color: #0095CC;
+    font-weight: normal;
+    position: relative;
+    top:-15px;
+    
+}
+
+DIV#sharing-link-panel
+{
+	position: relative;
+	right:0px;
+	top:10px;
+	color:#222;
+	font-size: 12px;
+	background-color: #fcfcfc;
+	border:3px solid #FFCA1C;
+	display: none;
+	width: 90%;
+	min-height: 60px;
+	padding:10px;
+	margin-bottom:10px;
+
+	
+}
+
+DIV#sharing-link-panel IMG
+{
+	cursor: pointer;
+	
+}
+
+#sharing-link-panel-linkholder
+{
+	color:#333;
+	font-size: 14px;
+	font-weight: lighter;;
+}
+#sharing-link-title
+{
+	color:#0095CC;
+	font-size: 16px;
+	border-bottom:1px dotted #ddd;
+}
+
+#sharing-link-panel-close-buttom
+{
+	position: absolute;
+	right:0px;
+	top:0px;
+	cursor: pointer;
+	float: right;
 }

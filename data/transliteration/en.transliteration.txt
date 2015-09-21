@@ -6233,7 +6233,7 @@
 114|3|Il<u>a</U>hi a<b>l</B>nn<u>a</U>s<b>i</b>
 114|4|Min sharri alwasw<u>a</U>si alkhann<u>a</U>s<b>i</b>
 114|5|Alla<u>th</U>ee yuwaswisu fee <u>s</U>udoori a<b>l</B>nn<u>a</U>s<b>i</b>
-114|6|Mina aljinnati wa<b> al</B>nn<u>a</U>s<b>m</b>
+114|6|Mina aljinnati wa<b>al</B>nn<u>a</U>s<b>m</b>
 
 
 #=====================================================================
@@ -6246,4 +6246,7 @@
 #  Last Update: September 6, 2010
 #  Source: Tanzil.net
 #
+#  changed in QA from,to
+#  114|6|Mina aljinnati wa<b> al</B>nn<u>a</U>s<b>m</b>
+#  114|6|Mina aljinnati wa<b>al</B>nn<u>a</U>s<b>m</b>
 #=====================================================================

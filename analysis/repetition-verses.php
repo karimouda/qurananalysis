@@ -42,7 +42,7 @@ loadModels("core",$lang);
 
 			  		
 			
-
+	    <?php include_once("help-content.php"); ?>
 	
 			  
 			  	

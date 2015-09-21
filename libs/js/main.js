@@ -5,11 +5,13 @@ function showTranslationFor(divID)
 	$("#"+divID+"-translation").show();
 }
 
-function switchToSelectedLang()
+function switchToSelectedLang(section)
 {
 	
 	var selectedLang = $("SELECT[id=language-selection] option:selected").val();
 	
+	
+	trackEvent(section,'switch-language',selectedLang,'');
 
 
 	if ( location.href.indexOf("?") >= 0 )
@@ -278,8 +280,9 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 	
 
 
-    var tooltip = d3.select("body").append("div")
+    var tooltip = d3.select("#graph-tooltip-area").append("div")
     .attr("class", "graph-tooltip")
+    .attr("id","graph-tooltip")
     .style("opacity", 0);
     
     tooltip.append("div");
@@ -293,14 +296,11 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
     
   
     // svg.node().parentNode =  svg's div container
-    tooltip.style("left", (svg.node().parentNode.offsetLeft-20) + "px")
-    .style("top", (svg.node().parentNode.offsetTop+height-40) + "px");
+    /*tooltip.style("left", (svg.node().parentNode.offsetLeft-20+1) + "px")
+    .style("top", (svg.node().parentNode.offsetTop+height+5) + "px");*/
 	
     
-  	function hideGraphTootip()
-	{
-		tooltip.transition().duration(400).style("opacity", 0).duration(100).style("display","none");
-	}
+
 	
 
 //    var drag = force.drag()
@@ -377,7 +377,9 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 				
 				verbQueryStr = verbQueryStr.trim();
 				
+			//TODO: rethink if it should be handled as CONCEPTSEARCH:
 	  		showResultsForQueryInSpecificDiv(l.source.word+" "+verbQueryStr+" "+l.target.word+" CONSTRAINT:NODERIVATION CONSTRAINT:NOEXTENTIONFROMONTOLOGY",showResultsDivID);
+	  	
 	  	})
 	    .append("line")
 	    	      .style("stroke-width", 
@@ -507,9 +509,10 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 	        	// comming from another event such as drag
 	        	if (d3.event.defaultPrevented) return; 
 	        	  
-	        	word = "\""+d.word+"\"";
+	        	// one concept search
+	        	word = "CONCEPTSEARCH:"+d.word+"";
 	        	
-	        	  		showResultsForQueryInSpecificDiv(word,showResultsDivID);
+	        	showResultsForQueryInSpecificDiv(word,showResultsDivID);
 	        
 	        	  
 	          })
@@ -602,7 +605,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 		svg.append("image")
 		.attr("width", "20px")
 	    .attr("height", "20px")
-	    .attr("x", width-20)
+	    .attr("x", width-30)
 	    .attr("y", 10)
 	    .attr("class", "svg-button")
 	    .attr("xlink:href","/images/plus-zoomin.png")
@@ -614,7 +617,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 		svg.append("image")
 		.attr("width", "20px")
 	    .attr("height", "20px")
-	    .attr("x", width-20)
+	    .attr("x", width-30)
 	    .attr("y", 30)
 	    .attr("class", "svg-button")
 	    .attr("xlink:href","/images/minus-zoomout.png")
@@ -882,6 +885,8 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 		
 		$("#"+showInDivID).html(text);
 		$("#"+showInDivID).toggle();
+		
+		trackEvent('INFO_PAGES','BETA_BUTTON','','');
 	}
 
 	function drawSearchWordCloud(drawInDivID)
@@ -908,5 +913,48 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 	function showBrowserSupportErrorMessage(showIn)
 	{
 		$("#"+showIn).prepend("<div id='browser-support-issue-msg'>Sorry ! Your browser does not support the technology used in this website<br>Please use the newest version of Chrome, Firefox or Safari </div>")
+		
+		trackEvent('ERROR','BROWSER_SUPPORT','','');
+	}
+	
+	function showHelpMessage(divID,section,area)
+	{
+		$("#"+divID).toggle();
+		
+		trackEvent(section,'SHOW_HELP',area,'');
+	}
+	
+  	function hideGraphTootip()
+	{
+		$("#graph-tooltip").css("display","none");
+	}
+  	
+  	function trackPageView(pageName)
+  	{
+  		 if (_gaq){_gaq.push(['_trackPageview', pageName ]);}
+  		 
+  	}
+  	
+  	function trackEvent(category,actionName,value1, value2)
+  	{
+  		
+  		//_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
+  		if(_gaq)_gaq.push(['_trackEvent', category,actionName,value1,value2]);
+
+  	}
+  	
+  	function closeSharingPanel()
+	{
+		$("#sharing-link-panel").hide();
+	}			
+
+
+
+	function showShareLink(link)
+	{
+		
+		$("#sharing-link-panel-linkholder").html(link);
+		
+		$("#sharing-link-panel").show();
 		
 	}

@@ -14,7 +14,7 @@
 			    <?php 
 		  			if ( strpos($_SERVER["PHP_SELF"],"index.php")===false):
 		  		?>
-   				<select id='language-selection' onchange="switchToSelectedLang()">
+   				<select id='language-selection' onchange="switchToSelectedLang('ANALYSIS')">
    					<option value='EN' <?php if ($lang=="EN") echo 'selected'?> >EN</option>
    					<option value='AR' <?php if ($lang=="AR") echo 'selected'?>>AR</option>
    				</select>

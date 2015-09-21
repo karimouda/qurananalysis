@@ -42,22 +42,17 @@ if (isArabicString($query))
 
 
 
-if ($lang=="EN" && !isDevEnviroment() )
-{
-	file_put_contents( dirname(__FILE__)."/../data/query.log.en", time().",".$query."\n",FILE_APPEND);
-}
-else if ($lang=="AR" && !isDevEnviroment())
-{
-	file_put_contents( dirname(__FILE__)."/../data/query.log.ar",  time().",".$query."\n",FILE_APPEND);
-}
 
 
-	//echoN(time());
-	loadModels("core,search,qac,ontology",$lang);
-	//echoN(time());
+echoN(memory_get_peak_usage());
+
+//echoN(time());
+loadModels("core,search,qac,ontology",$lang);
+//echoN(time());
 	
+echoN(memory_get_peak_usage());
 
-	
+
 	
 	
 //preprint_r($MODEL_CORE);
@@ -66,11 +61,12 @@ $significantWords = array();
 
 //echoN($query);exit;
 
-$MODEL_CORE_UTH = loadUthmaniDataModel();
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+$MODEL_CORE_UTH = &loadUthmaniDataModel();
+$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = &apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
+$UTHMANI_TO_SIMPLE_LOCATION_MAP = &apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
 
+echoN(memory_get_peak_usage());
 
 //$TRANSLATION_MAP_EN_TO_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
 
@@ -83,6 +79,8 @@ $columnSearchType = null;
 $columnSearchKeyValParams = null;
 $noDerivationsConstraint = false;
 $noOntologyExtentionConstraint = false;
+$isConceptSearch = false;
+$isTransliterationSearch = false;
 
 $matchesCount = preg_match("/\".*?\"/", $query);
 
@@ -102,7 +100,26 @@ if ( !$isPhraseSearch && containsQuestionWords($query,$lang))
 }
 
 
-if ( !$isPhraseSearch && !$isQuestion && strpos($query,":")!==false)
+
+$trimmedQuery = trim($query);
+
+if ( is_numeric($trimmedQuery) && intval($trimmedQuery)>=1 && intval($trimmedQuery)<=114)
+{
+		//CHAPTER
+		$columnSearchKeyValParams['KEY'] = $trimmedQuery;
+		//VERSE
+		$columnSearchKeyValParams['VAL'] = "ALL";
+		
+		$isColumnSearch = true;
+}
+
+if (strpos($query,"CONCEPTSEARCH")!==false )
+{
+	$query = str_replace("CONCEPTSEARCH:", "", $query);
+	$isConceptSearch = true;
+}
+
+if ( !$isConceptSearch && !$isPhraseSearch && !$isQuestion && strpos($query,":")!==false)
 {
 
 	
@@ -150,6 +167,7 @@ if ( !$isPhraseSearch && !$isQuestion && strpos($query,":")!==false)
 						
 				}
 			}
+		
 		}
 		
 	}
@@ -178,7 +196,7 @@ $query = convertUthamniQueryToSimple($query);
 
 
 // CASE HANDLING
-if ($lang=="EN" )
+if ($lang=="EN"  )
 {
 	$query = strtolower($query);
 
@@ -192,19 +210,45 @@ else
 
 }
 
+$originalQueryWordsArr = preg_split("/ /",$query);
+
+//for faster access
+$originalQueryWordsArrSwaped = swapAssocArrayKeyValues($originalQueryWordsArr);
 
 
+// CHECK IF TRANSLITERATION
+if ($lang=="EN" &&  !$isConceptSearch && !$isPhraseSearch && !$isQuestion  )
+{
+	$firstWordInQuery =$originalQueryWordsArr[0];
+	
+	// load transliteration verse mapping
+	$TRANSLITERATION_VERSES_MAP = apc_fetch("TRANSLITERATION_VERSES_MAP");
+	
+	$TRANSLITERATION_WORDS_INDEX = apc_fetch("TRANSLITERATION_WORDS_INDEX");
+	
 
-//removed is question from here
+	echoN("==".memory_get_peak_usage());
+	
+	if (!empty($firstWordInQuery) && isset($TRANSLITERATION_WORDS_INDEX[$firstWordInQuery]) )
+	{
+		$isTransliterationSearch = true;
+	}
+	
+	
+}
 
-if ( !$isPhraseSearch && !$noDerivationsConstraint)
+//echoN("isTransliterationSearch:$isTransliterationSearch");
+
+
+if ( $isquestion || (!$isPhraseSearch && !$noDerivationsConstraint && !$isColumnSearch && !$isConceptSearch && !$isTransliterationSearch ) )
 {
 
+	
 	$taggedSignificantWords = posTagUserQuery($query,$lang);
 
 	$taggedSignificantWordsAfterDerivation = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
 	
-	
+	echoN(memory_get_peak_usage());
 
 	//preprint_r($taggedSignificantWords);
 
@@ -229,19 +273,28 @@ if ( !$isPhraseSearch && !$noDerivationsConstraint)
 }
 else
 {
-	$queryWordsArr = preg_split("/ /",$query);
+	$queryWordsArr = $originalQueryWordsArr;
 
 	//consider the full query as oen word, needed for Qurana pronouns
 	if ($isPhraseSearch)
 	{
 		$queryWordsArr[]=$query;
 	}
+	else if ( $isConceptSearch)
+	{
+		//$queryWordsArr = array();
+		// if the concept is a phrase concept the individual words need to be added also
+		// since the phrase might not be in the index but the words will ex: most merciful
+		$queryWordsArr[]=$query;
+		$originalQueryWordsArr = $queryWordsArr;
+	}
+	
 	
 	
 }
 
 //!$isQuestion && 
-if (  !$isColumnSearch && !$noOntologyExtentionConstraint )
+if (  !$isColumnSearch && !$noOntologyExtentionConstraint && !$isTransliterationSearch )
 {
 
 	
@@ -266,7 +319,7 @@ $extendedQueryWordsArr = array_fill_keys($queryWordsArr,1);
 
 
 // IF NOT PHRASE OF QUESTION SEARCH, EXTEND QUERY BY ADDING DERVIATION OF THE QUERY WORDS
-if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSearch)
+if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSearch && !$isConceptSearch && !$isTransliterationSearch)
 {
 
 	$extendedQueryWordsArr = extendQueryByExtractingQACDerviations($extendedQueryWordsArr);
@@ -289,10 +342,10 @@ if ( count($extendedQueryWordsArr) > 25 )
 	$extendedQueryWordsArr = array_slice($extendedQueryWordsArr, 0,25);
 }
 
-
+//preprint_r($extendedQueryWordsArr);
 
 // SEARCH INVERTED INDEX FOR DOCUMENTS
-$scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams);
+$scoringTable = getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams,$isConceptSearch,$lang,$isTransliterationSearch);
 
 
 if ($isQuestion)
@@ -306,20 +359,40 @@ if ($isQuestion)
 	 $userQuestionAnswerVersesArr = $answerInformationContainerArr['ANSWER_VERSES'];
 	 
 	
+	 //preprint_r($userQuestionAnswerConceptsArr);
 	 
 	 $queryWordsArr  = array_merge($queryWordsArr,$userQuestionAnswerConceptsArr);
 }
 
+/// LOG QUERY //LOCATION SIGNIFICANT BEFORE  handleEmptyResults because of exit inside
+if ( !isDevEnviroment() )
+{
+	$searchType = getSearchType($isPhraseSearch,$isQuestion,$isColumnSearch,$isConceptSearch,$isTransliterationSearch);
+	
+	logQuery($lang,$query,$searchType, count($scoringTable));
+}
 
 // NOT RESULTS FOUND
-handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch);
+handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch,$searchType);
 
 if ( !$isQuestion && !$isColumnSearch)
 {
 	// Check is some words were written incorrectly even if results are returned 
 	// اكثر الناس case should be أكثر
 	$queryWordsWithoutDerivation = array_diff_assoc($extendedQueryWordsArr, $derivedWords);
-	$postResultSuggestionArr = postResultSuggestions($queryWordsWithoutDerivation);
+	
+
+
+	$postResultSuggestionArr = postResultSuggestions(($originalQueryWordsArrSwaped));
+	
+	
+	// remove query words from suggestion
+	/*foreach($queryWordsWithoutDerivation as $word => $dummy)
+	{
+		if ( isset($postResultSuggestionArr[$word])) unset($postResultSuggestionArr[$word]);
+	}*/
+	
+	//preprint_r($postResultSuggestionArr);
 }
 
 
@@ -334,5 +407,7 @@ $resultStatsArr = getStatsByScoringTable($scoringTable);
 
 
 //preprint_r($scoringTable);
+echoN(memory_get_peak_usage());
+
 
 ?>

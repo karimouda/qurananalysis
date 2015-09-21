@@ -42,7 +42,8 @@ loadModels("core",$lang);
   <div id='main-container'>
 			  	
  				 <!-- <h1 class='analysis-title-header'>Concordance</h1>-->
-			  	
+			  		    <?php include_once("help-content.php"); ?>
+			  		    
 			  	
 			  	<div id='words-context-options'>
 			  	<table>
@@ -178,7 +179,8 @@ loadModels("core",$lang);
 						      	 	
 						  			$("#words-context-area").html(retRes);
 
-						  	
+
+						  			trackEvent('ANALYSIS','concordance',word,level);
 	
 						 	 	
 						     },

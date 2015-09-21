@@ -237,6 +237,9 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 			
 			if ( isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]) )
 			{
+
+				
+				
 				//preprint_r($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]);exit;
 				//echoN($wordConveretedToConceptID);
 				
@@ -354,7 +357,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 				if ( $lang == "EN")
 				{
 					$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);
-					$verb = $fullRelationArr['verb_translation_en'];
+					$verb = $fullRelationArr['VERB_TRANSLATION_EN'];
 				
 				}
 				
@@ -365,7 +368,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 				}
 			
 				$linkArr=array("source"=>$graphNodes[$concept]["id"],
-						"target"=>$graphNodes[$object]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['frequency']);
+						"target"=>$graphNodes[$object]["id"],"link_verb"=>$verb,"link_frequency"=>$fullRelationArr['FREQUENCY']);
 				
 				//////// HANDLING MULTIPLE LINKS BETWEEN SAME NODES BEFORE ASSIGNING LINK
 				$arrHash = getArrayHashForFields($linkArr,array('source','target'));
@@ -440,7 +443,7 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 				if ( $lang == "EN")
 				{
 					$finalNodeLabel = formatEnglishConcept($conceptArr['label_en']);;
-					$verb = $fullRelationArr['verb_translation_en'];
+					$verb = $fullRelationArr['VERB_TRANSLATION_EN'];
 				}
 				
 				if ( !isset($graphNodes[$subject]))
@@ -587,12 +590,12 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 		foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $index => $relArr)
 		{
 
-			$subject = $relArr['subject'];
-			$verbAR = $relArr['verb'];
-			$verbEN = $relArr['verb_translation_en'];
-			$verbUthmani = $relArr['verb_uthmani'];
-			$relFreq = $relArr['frequency'];
-			$object = $relArr['object'];
+			$subject = $relArr['SUBJECT'];
+			$verbAR = $relArr['VERB'];
+			$verbEN = $relArr['VERB_TRANSLATION_EN'];
+			$verbUthmani = $relArr['VERB_UTHMANI'];
+			$relFreq = $relArr['FREQUENCY'];
+			$object = $relArr['OBJECT'];
 			
 			if ( isset($graphNodes[$subject]) && isset($graphNodes[$object]) )
 			{
@@ -674,12 +677,13 @@ function ontologyToD3TreemapFlat($MODEL_QA_ONTOLOGY,$minFreq=0)
 	foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $index => $relArr)
 	{
 
-		$subject = $relArr['subject'];
-		$verbAR = $relArr['verb'];
-		$verbEN = $relArr['verb_translation_en'];
-		$verbUthmani = $relArr['verb_uthmani'];
-		$relFreq = $relArr['frequency'];
-		$object = $relArr['object'];
+	
+		$subject = $relArr['SUBJECT'];
+		$verbAR = $relArr['VERB'];
+		$verbEN = $relArr['VERB_TRANSLATION_EN'];
+		$verbUthmani = $relArr['VERB_UTHMANI'];
+		$relFreq = $relArr['FREQUENCY'];
+		$object = $relArr['OBJECT'];
 			
 		
 		//$treeRootObj[$subject]["children"][]["name"]=$object;
@@ -877,7 +881,7 @@ function ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,$minFreq=0,$lang)
 
 		$subject = $relArr['subject'];
 		$verbAR = $relArr['verb'];
-		$verbEN = $relArr['verb_translation_en'];
+		$verbEN = $relArr['VERB_TRANSLATION_EN'];
 		$verbUthmani = $relArr['verb_uthmani'];
 		$relFreq = $relArr['frequency'];
 		$object = $relArr['object'];

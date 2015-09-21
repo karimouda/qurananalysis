@@ -20,3 +20,12 @@ QA offers exlusive/unique features which makes searching and exploring the Quran
 The translation used for the Quran in this website is <a target="_new" href='http://www.saheehinternational.com/'>Sahih International</a>
 </p>
 
+	<br>
+	<hr/>
+	<br>
+	<br>
+	<b>Ask Questions ?</b>
+	<br>
+	<br>
+<div class="fb-comments" data-href="http://qurananalysis.com/info/index.php?page=feedback" data-numposts="5"></div>
+	

@@ -40,10 +40,12 @@ loadModels("core",$lang);
 				
   <div id='main-container'>
 			  	
+			    <?php include_once("help-content.php"); ?>
 
 			
 				Enter Arabic or English word
-				<br>
+				<br/>
+				<br/>
 				<input type="text" id='arabic-english-word' name="word" />
 				<input type="button" value="Find" id='show-button'  />
 				
@@ -126,7 +128,8 @@ loadModels("core",$lang);
 								      	 	
 								  			$("#simmilar-words-area").html(retRes);
 
-								  	
+
+								  			trackEvent('ANALYSIS','simmilar-words',word,'');
 			
 								 	 	
 								     },

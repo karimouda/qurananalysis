@@ -8,6 +8,9 @@
 	The following GitHub repository will include the source code of the whole website + all data files used 
 	<br>
 	<br>
+	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a> (will be accessible in November 2015)
+	<br>
+	<br>
 	<b>Examples</b>
  	<ul>
 	   	<li>Quran Text (From Tanzil) + Translations</li>
@@ -21,14 +24,16 @@
 	    
    	</ul>
 	
-	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a> (will be accessible in October 2015)
-
+	<br>
+	<b>Join the <a href="/info/index.php?page=contribute#maillist">mail list</a> in contribute page to be notified when the code is released.</b>
+	<br>
+	<br>
 </p>
 <p class='info-page-text'>
 		
 	<h1 class='info-page-section-title'>Documentation</h1> 
 	
-	Documents for code setup and testing
+	Documentation for code setup, development and testing
 	<br>
 	<br>
 	<b>Soon</b> 

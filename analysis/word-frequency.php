@@ -48,9 +48,8 @@ loadModels("core",$lang);
   <div id='main-container'>
 			  	
 		
-			  		
-			
-
+			  	<?php include_once("help-content.php")?>
+			  	
 			
 				
 			  	<div >
@@ -167,6 +166,9 @@ loadModels("core",$lang);
 
 		function reloadWithStopWords(withStopWords)
 		{
+
+			trackEvent('ANALYSIS','word-frequency','reload-stopwords-button',withStopWords);
+			
 			//alert(withStopWords);
 			if ( withStopWords==1)
 			{

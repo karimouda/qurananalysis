@@ -1,5 +1,6 @@
 <?php 
 require_once("../global.settings.php");
+$time1 = time();
 require_once("query.handling.common.php");
 
 
@@ -31,7 +32,15 @@ require_once("query.handling.common.php");
 
 // SHOW SUGGESTIONS
 showSuggestions($postResultSuggestionArr);
+?>
 
+
+
+
+<div id="result-verses-area" >
+
+
+<?php 
 
 if ($isQuestion )
 {
@@ -61,7 +70,13 @@ if ($isQuestion )
 			
 			$verseText = getVerseTextBySuraAndAya($firstAnswerVerseArr['SURA']+1, $firstAnswerVerseArr['AYA']+1);
 			
+			
+			$answerVerseLocation = "[".($firstAnswerVerseArr['SURA']+1).":".($firstAnswerVerseArr['AYA']+1)."]";
 			echoN($verseText);
+			
+			$SURA_NAME = $MODEL_CORE['META_DATA']['SURAS'][($firstAnswerVerseArr['SURA']+1)]['name_'.strtolower($lang)];
+			$answerVerseLocation = "$SURA_NAME $answerVerseLocation";
+			echoN("<span id='answer-verse-location'>$answerVerseLocation</span>");
 		}
 		
 		
@@ -80,16 +95,10 @@ if ($isQuestion )
 ?>
 
 
-
-<div id="result-verses-area" >
-
-<!-- <h1><?=$MODEL_CORE['RESOURCES']['RESULTS']?></h1> -->
-
 <?php require_once('search.result.statement.inc.php')?>
 <?php 
 
-$searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script,$significantCollocationWords);
-
+$searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script,$significantCollocationWords,$isTransliterationSearch);
 
 ?>
 
@@ -103,13 +112,31 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 		<!-- ONTOLOGY GRAPH AREA -->
 		<div id="result-graph-area">
 		
+		<img id='graph-help-icon' src='/images/help-icon-2.png' class='help-icon'  onclick="hideGraphTootip();showHelpMessage('help-message-graph','SEARCH','GRAPH')"/>
 		</div>
+	
+			<div id='graph-tooltip-area'>
+			</div>
+			<div id='help-message-graph' class='help-message-area'>
+				<b style='color:red'>Red Circles</b> and <b style='color:#2E7FBA'>Blue words</b> are concepts (Things)
+				<br>
+				<b style='color:grey'>Grey Links</b> are relations between concepts
+				<br>
+				Click on Concepts to search them in the Quran
+				<br>
+				Click on Links to search for relations between two concepts
+			</div>
+		
 	</td>
 </tr>
 <tr>
 			<td>
 				<!-- WORDCLOUD AREA -->
 				<div id="result-wordcloud-area">
+					<div id='result-wordcloud-title' <?=returnDirectionStyle($lang)?>>
+						<?=$MODEL_CORE['RESOURCES']['INDEX_WORDCLOUD_TITLE']?>
+					</div>
+					<div id='result-wordcloud-content'>
 					<?php 
 						$wordCloudArr = searchResultsToWordcloud($searchResultsTextArr,$lang,50);
 						
@@ -117,12 +144,13 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 						
 						//preprint_r($wordCloudArr,1);
 						
-				
 							
 						$i=0;
 						foreach ($wordCloudArr as $wordLabel => $wordFreq )
 						{
 								
+							if ( isset($originalQueryWordsArrSwaped[$wordLabel])) continue;
+							
 							$freq = $wordFreq;//log($wordFreq,2);
 							$i++;
 								
@@ -134,14 +162,21 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 						
 						}
 					?>
+					</div>
 				</div>
 			</td>
 		</tr>
 <tr>
 	<td>
+	
+	
+	
+	
 		<!-- ONTOLOGY GRAPH AREA -->
 		<div  id="result-stats-chart-area">
-
+			<div id='result-statistics-title' <?=returnDirectionStyle($lang)?>>
+				<?=$MODEL_CORE['RESOURCES']['INDEX_STATISTICS_TITLE']?>
+			</div>
 			<div id="results-stats-table" <?=returnDirectionStyle($lang)?> >
 					
 
@@ -194,23 +229,30 @@ $wordDistributionChartJSON = getDistributionChartData($scoringTable);
 
 
 
+$time2 = time();
 
+echoN((intval($time2)-intval($time1)));
 ?>
 
 
 
 <script>
 
+var searchLogStr = "<?="$lang, $query, ".count($scoringTable)?>";
+var searchLogSearchType = '<?=$searchType?>';
 
 <?php if (!empty($graphObj['nodes'])) : ?>
-drawGraph(<?="$graphNodesJSON" ?>,<?="$graphLinksJSON"?>,600,400,"#result-graph-area",<?="'$lang'"?>,"result-verses-area");
+drawGraph(<?="$graphNodesJSON" ?>,<?="$graphLinksJSON"?>,640,400,"#result-graph-area",<?="'$lang'"?>,"result-verses-area");
 <?php else: ?>
 $("#result-graph-area").hide();
 $("#result-wordcloud-area").css("margin-top","0px");
 <?php endif; ?>
 
-drawChart(<?=$wordDistributionChartJSON?>,600,400,0,<?=$numberOfSuras?>,'#results-chart-area',"Chapter Number","Word Repetition",function(d){return "Chapter Number:" + d[0]+ "<br/>Repetition: "+d[1]} );
+drawChart(<?=$wordDistributionChartJSON?>,640,400,0,<?=$numberOfSuras?>,'#results-chart-area',"Chapter Number","Word Repetition",function(d){return "Chapter Number:" + d[0]+ "<br/>Repetition: "+d[1]} );
 
 
 drawSearchWordCloud("result-wordcloud-area");
+
+
+trackEvent('SEARCH',searchLogSearchType,searchLogStr,'');
 </script>
