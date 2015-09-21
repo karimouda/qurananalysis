@@ -282,4 +282,109 @@ function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scor
 
 }
 
+function removeQuestionCluesFromArr($targetArr,$lang)
+{
+	if ( $lang=="EN")
+	{
+		$questionCluesPhrasesArr = getSupportedEnglishQuestionTypes();
+	
+	}
+	else
+	{
+		$questionCluesPhrasesArr = getSupportedArabicQuestionTypes();
+	
+	}
+
+	// get keys (question clue phrases)
+	$questionCluesWordsArr = phraseArrayToWordsArray(array_keys($questionCluesPhrasesArr));
+	
+	preprint_r($questionCluesWordsArr);
+	
+	$newTargetArr = array();
+
+		foreach ($targetArr as $word =>$index)
+		{
+		
+			//echoN("$basicStopWordsArr[$word] $word");
+			if ( empty($word) || isset($questionCluesWordsArr[$word])) continue;
+		
+			$newTargetArr[$word]=$index;
+		}
+	
+	
+	return $newTargetArr;
+}
+
+
+function getSupportedArabicQuestionTypes()
+{
+	$arabicQuestionWords = array();
+	$arabicQuestionWords['من هو']="Person";
+	$arabicQuestionWords['من هم']="Person";
+	$arabicQuestionWords['من هى']="Person";
+	$arabicQuestionWords['من الذى']="Person";
+	$arabicQuestionWords['من الذين']="Person";
+	$arabicQuestionWords['ما هى']="General";
+	$arabicQuestionWords['ما هو']="General";
+	$arabicQuestionWords['ماذا']="General";
+
+	return $arabicQuestionWords;
+}
+
+function getSupportedEnglishQuestionTypes()
+{
+	$englishQuestionWords = array();
+	$englishQuestionWords['who']="Person";
+	$englishQuestionWords['what']="General";
+	$englishQuestionWords['how long']="Time";
+	$englishQuestionWords['how many']="Quantity";
+	$englishQuestionWords['how much']="Quantity";
+
+	return $englishQuestionWords;
+}
+
+function  containsQuestionWords($query,$lang)
+{
+
+	$query = strtolower($query);
+
+
+
+
+
+		
+	if ( $lang=="EN")
+	{
+		$englishQuestionWords = getSupportedEnglishQuestionTypes();
+
+		foreach($englishQuestionWords as  $word=>$questionType)
+		{
+			if ( strpos($query, "$word ")===0)
+			{
+				return $questionType;
+			}
+
+				
+		}
+	}
+	else
+	{
+		$arabicQuestionWords = getSupportedArabicQuestionTypes();
+
+		foreach($arabicQuestionWords as  $word=>$questionType)
+		{
+			if ( mb_strpos($query, "$word ")===0)
+			{
+				return $questionType;
+			}
+
+
+		}
+	}
+
+	return false;
+
+}
+
+
 ?>

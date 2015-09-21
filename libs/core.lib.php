@@ -2458,4 +2458,30 @@
 		
 		return "http://$serverURL"."$reuqetURI";
 	}
+	
+	function phraseArrayToWordsArray($phraseArr)
+	{
+		
+		$wordsArr = array();
+		
+		foreach($phraseArr as $index => $word)
+		{
+			$phraseWordsArr  = explode(" ",$word);
+			
+			if ( isMultiWordStr($word) )
+			{
+				
+				foreach($phraseWordsArr as $index2 => $subPhraseWord)
+				{
+					$wordsArr[$subPhraseWord]=1;
+				}
+			}
+			else
+			{
+				$wordsArr[$word]=1;
+			}
+		}
+		
+		return $wordsArr;
+	}
 ?>

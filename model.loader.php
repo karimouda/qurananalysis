@@ -89,8 +89,7 @@ function loadModels($modelsToBeLoaded,$lang)
 		// split list by comma
 		$modelListArr = preg_split("/,/",trim($modelsToBeLoaded));
 		
-		
-	
+
 		
 		
 		/**
@@ -100,13 +99,17 @@ function loadModels($modelsToBeLoaded,$lang)
 		foreach( $modelListArr as $modelName)
 		{
 			//echoN("$modelName $lang ".time());
-			//echoN($modelName);
+			echoN(memory_get_peak_usage());
+			echoN($modelName);
+			
 			
 			if ( $modelName=="ontology")
 			{
 			
 				
-				$MODEL_QA_ONTOLOGY = &apc_fetch("MODEL_QA_ONTOLOGY");
+				$MODEL_QA_ONTOLOGY =  apc_fetch("MODEL_QA_ONTOLOGY");
+				
+				
 				
 				if ($MODEL_QA_ONTOLOGY===false )
 				{
@@ -116,7 +119,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			if ( $modelName=="wordnet")
 			{
-				$MODEL_WORDNET['INDEX']  = &apc_fetch("WORDNET_INDEX");
+				$MODEL_WORDNET['INDEX']  = apc_fetch("WORDNET_INDEX");
 				
 				if ($MODEL_WORDNET['INDEX']===false )
 				{
@@ -124,7 +127,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				}
 				
 				
-				$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= &apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+				$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
 				
 				if ($MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']===false )
 				{
@@ -132,7 +135,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				}
 				
 				
-				$MODEL_WORDNET['DATA'] = &apc_fetch("WORDNET_DATA");
+				$MODEL_WORDNET['DATA'] = apc_fetch("WORDNET_DATA");
 				
 				if ($MODEL_WORDNET['DATA']===false )
 				{
@@ -147,7 +150,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				
 			
 				//$MODEL_CORE = json_decode((file_get_contents("$serializedModelFile.core")),TRUE);
-				$MODEL_CORE  = &apc_fetch("MODEL_CORE[$lang]");
+				$MODEL_CORE  = apc_fetch("MODEL_CORE[$lang]");
 				
 				
 				if ($MODEL_CORE===false )
@@ -161,13 +164,13 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_SEARCH = json_decode((file_get_contents("$serializedModelFile.search")),TRUE);
 				
-				$MODEL_SEARCH  = &apc_fetch("MODEL_SEARCH[$lang]");
+				//$MODEL_SEARCH  = apc_fetch("MODEL_SEARCH[$lang]");
 				
 				
-				if ($MODEL_SEARCH===false )
+				/*if ($MODEL_SEARCH===false )
 				{
 					echo "SEARCH MODEL [$lang] NOT CACHED";exit;
-				}
+				}*/
 				
 				
 			}
@@ -175,7 +178,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_QAC = json_decode((file_get_contents("$serializedModelFile.qac")),TRUE);
 				
-				$MODEL_QAC  = &apc_fetch("MODEL_QAC");
+				$MODEL_QAC  = apc_fetch("MODEL_QAC");
 				
 				
 				if ($MODEL_QAC===false )
@@ -187,7 +190,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_QURANA = json_decode((file_get_contents("$serializedModelFile.qurana")),TRUE);
 				
-				$MODEL_QURANA  = &apc_fetch("MODEL_QURANA");
+				$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
 				
 				
 				if ($MODEL_QURANA===false )

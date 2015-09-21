@@ -50,7 +50,7 @@ echoN(memory_get_peak_usage());
 loadModels("core,search,qac,ontology",$lang);
 //echoN(time());
 	
-echoN(memory_get_peak_usage());
+
 
 
 	
@@ -328,7 +328,13 @@ if ( $lang=="AR" && $isPhraseSearch==false && $isQuestion==false && !$isColumnSe
 
 $extendedQueryBeforeRemovingStopWords = $extendedQueryWordsArr;
 $extendedQueryWordsArr = removeBasicStopwordsFromArr($extendedQueryWordsArr,$lang);
-//preprint_r($extendedQueryWordsArr);
+
+// REMOVE QUESTION CLUES FROM QUERY TERMS ARRAY
+if ($isQuestion)
+{
+	$extendedQueryWordsArr = removeQuestionCluesFromArr($extendedQueryWordsArr,$lang);
+}
+
 
 // if the query is all stop words
 if ( empty($extendedQueryWordsArr))
