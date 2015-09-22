@@ -60,7 +60,7 @@ $query = $_GET['q'];
 							$firstAnswerVerseArr = current($userQuestionAnswerVersesArr);
 
 								
-							$verseText = getVerseTextBySuraAndAya($firstAnswerVerseArr['SURA']+1, $firstAnswerVerseArr['AYA']+1);
+							$verseText = getVerseTextBySuraAndAya("EN",$firstAnswerVerseArr['SURA']+1, $firstAnswerVerseArr['AYA']+1);
 						
 							
 							echo "\"$testQuery\"| Yes| Yes| ".$verseText."<br>";

@@ -78,12 +78,14 @@ if ( (($isAllSURA=="") && ($SURA=="") ) ||  (($SURA=="") && ($AYA=="") ) )
 				
 						
 					$customFreqArr = array();
+					
+					$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
 
-					$suraSize = count($MODEL_CORE['QURAN_TEXT'][$SURA]);
+					$suraSize = count($QURAN_TEXT[$SURA]);
 						
 					for ($a=0;$a<$suraSize;$a++)
 					{
-						$verseText = $MODEL_CORE['QURAN_TEXT'][$SURA][$a];
+						$verseText = $QURAN_TEXT[$SURA][$a];
 						
 						$verseTextArr = explode(" ", $verseText);
 						

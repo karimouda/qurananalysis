@@ -16,21 +16,35 @@ function getDistanceByCommonUniqueChars($word1,$word2)
     
     $commonChars = implode($uniqueCommonChars);
     
+    $extraPoints = 0;
+    
+
+    
+    // if tword 1 mtches word2 in both first and last character then add more similarity score
+    if ( current($uniqueCommonChars)==current($word2Arr) && 
+    end($uniqueCommonChars)==end($word2Arr) )
+    {
+    	//echoN("$word1,$word2 $commonChars");
+    	$extraPoints = $extraPoints+1;
+    }
+    
  
 
     
-    return mb_strlen($commonChars);
+    return (mb_strlen($commonChars)+$extraPoints);
 }
 
-function getSimilarWords($queryWords)
+function getSimilarWords($lang,$queryWords)
 {
-	global $MODEL_CORE;
+
+	$WORDS_FREQUENCY_WORDS = getModelEntryFromMemory($lang, "MODEL_CORE", "WORDS_FREQUENCY", "WORDS");
+	
 	
 
 	$simmilarWords = array();
 	
 	
-	foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS'] as $wordFromQuran=>$one)
+	foreach ($WORDS_FREQUENCY_WORDS as $wordFromQuran=>$one)
 	{
 		
 		
@@ -68,7 +82,7 @@ function getSimilarWords($queryWords)
 	//sort words by simmilarity to query
 	arsort($simmilarWords);
 	
-	//preprint_r($simmilarWords);
+	
 	
 	return $simmilarWords;
 	
@@ -105,7 +119,7 @@ function getEntryKeyFromAPCKey($key)
 
 function posTagUserQuery($query, $lang)
 {
-	global $MODEL_CORE;
+
 	
 	$taggedSignificantWords = array();
 	
@@ -640,7 +654,11 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 		}
 	
 	
-	
+		$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
+		$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
+		
+		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
+		
 		/** GET EMLA2Y (SIMPLE) WORDS CORRESPONSING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX
 		 *  ADD TO EXTENDED QUERY WORDS
 		 *  TODO: recheck to remove this whole loop
@@ -667,9 +685,9 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 					
 				//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 					
-				$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);
+				$verseText = getVerseByQACLocation($QURAN_TEXT,$qacLocation);
 					
-				$wordFromVerse = getWordFromVerseByIndex($MODEL_CORE,$verseText,$INDEX_IN_AYA_EMLA2Y);
+				$wordFromVerse = getWordFromVerseByIndex($PAUSEMARKS,$verseText,$INDEX_IN_AYA_EMLA2Y);
 					
 			
 				if ( empty($wordFromVerse) ) continue;
@@ -705,6 +723,12 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 	global $MODEL_CORE,$MODEL_SEARCH,$MODEL_QA_ONTOLOGY;;
 	global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
 	
+	
+	$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+	$TOTALS = getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+	
+	$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
+	
 
 
 	
@@ -718,7 +742,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 		{
 			
 			
-			$suraSize = count($MODEL_CORE['QURAN_TEXT'][$SURA]);
+			$suraSize = count($QURAN_TEXT[$SURA]);
 			
 			for($AYA=0;$AYA<$suraSize;$AYA++)
 			{
@@ -737,7 +761,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			// VERSE VALIDITY CHECK
 			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,0);
 			
-			$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
+			$verseText = getVerseByQACLocation($QURAN_TEXT, $qacLocation);
 			
 			if ( empty($verseText)) 
 			{
@@ -802,7 +826,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			//echo getQACLocationStr($SURA,$AYA,$INDEX_IN_AYA_EMLA2Y);
 			$qacLocation = getQACLocationStr($SURA+1,$AYA+1,$INDEX_IN_AYA_UTHMANI);
 	
-			$verseText = getVerseByQACLocation($MODEL_CORE, $qacLocation);
+			$verseText = getVerseByQACLocation($QURAN_TEXT, $qacLocation);
 	
 			
 			/*
@@ -1110,27 +1134,34 @@ function getDistributionChartData($scoringTable)
 
 function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch,$isQuestion,$script,$significantCollocationWords=null,$isTransliterationSearch=false)
 {
-	global $MODEL_CORE, $MODEL_CORE_UTH,$script,$TRANSLITERATION_VERSES_MAP;
+	global $script,$TRANSLITERATION_VERSES_MAP;
 	
+	
+	
+	$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+	$QURAN_TEXT_UTH = getModelEntryFromMemory("AR_UTH", "MODEL_CORE", "QURAN_TEXT", "");
 
+	$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+	$TOTALS = getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+	
 	if ( $lang=="EN")
 	{
 	
 		
 		if ($script=="simple")
 		{
-			$MODEL_CORE_OTHER_LANG =  apc_fetch("MODEL_CORE[AR]");
+			$QURAN_TEXT_OTHER_LANG = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
 		}
 		else
 		{
-			$MODEL_CORE_OTHER_LANG = loadUthmaniDataModel();
+			$QURAN_TEXT_OTHER_LANG = $QURAN_TEXT_UTH;
 		}
 	
 	}
 	else
 	{
 		
-		$MODEL_CORE_OTHER_LANG = apc_fetch("MODEL_CORE[EN]");
+		$QURAN_TEXT_OTHER_LANG = getModelEntryFromMemory("EN", "MODEL_CORE", "QURAN_TEXT", "");
 	
 	}
 	
@@ -1151,8 +1182,8 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 	
 		$SURA = $documentScoreArr['SURA'];
 		$AYA = $documentScoreArr['AYA'];
-		$TEXT = $MODEL_CORE['QURAN_TEXT'][$SURA][$AYA];
-		$TEXT_UTH = $MODEL_CORE_UTH['QURAN_TEXT'][$SURA][$AYA];
+		$TEXT = $QURAN_TEXT[$SURA][$AYA];
+		$TEXT_UTH = $QURAN_TEXT_UTH[$SURA][$AYA];
 		$TEXT_TRANSLITERATED = cleanTransliteratedText($TRANSLITERATION_VERSES_MAP[($SURA+1).":".($AYA+1)]);
 		
 		
@@ -1166,15 +1197,15 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 	
 		$searchResultsTextArr[]=$TEXT;
 	
-		$TEXT_TRANSLATED = $MODEL_CORE_OTHER_LANG['QURAN_TEXT'][$SURA][$AYA];
+		$TEXT_TRANSLATED = $QURAN_TEXT_OTHER_LANG[$SURA][$AYA];
 	
-		$SURA_NAME = $MODEL_CORE['META_DATA']['SURAS'][$SURA]['name_'.strtolower($lang)];
+		$SURA_NAME = $META_DATA['SURAS'][$SURA]['name_'.strtolower($lang)];
 	
-		$SURA_NAME_LATIN = $MODEL_CORE['META_DATA']['SURAS'][$SURA]['name_trans'];
+		$SURA_NAME_LATIN = $META_DATA['SURAS'][$SURA]['name_trans'];
 	
 	
 		// وكذلك جلناكم امة وسطا 143/256
-		$TOTAL_VERSES_OF_SURA = $MODEL_CORE['TOTALS']['TOTAL_PER_SURA'][$SURA]['VERSES'];
+		$TOTAL_VERSES_OF_SURA = $TOTALS['TOTAL_PER_SURA'][$SURA]['VERSES'];
 	
 	
 		//preprint_r($MODEL['QURAN_TEXT']);
@@ -1349,7 +1380,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 
 function postResultSuggestions($lang,$queryWordsWithoutDerivation)
 {
-	global $MODEL_SEARCH,$MODEL_QA_ONTOLOGY;
+	global $MODEL_QA_ONTOLOGY;
 	
 	$wordsNotInTheQuran = array();
 	
@@ -1367,7 +1398,7 @@ function postResultSuggestions($lang,$queryWordsWithoutDerivation)
 
 
 		// GET SIMILAR WORDS BY MIN-EDIT-DISTANCE
-		return getSimilarWords(array_keys($wordsNotInTheQuran));
+		return getSimilarWords($lang,array_keys($wordsNotInTheQuran));
 
 		
 	
@@ -1404,14 +1435,14 @@ function showSuggestions($suggestionsArr)
 			<?php 
 	}
 }
-function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch,$searchType)
+function handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch,$searchType,$lang)
 {
 	// NOT RESULTS FOUND
 	if ( empty($scoringTable))
 	{
 	
 		// GET SIMILAR WORDS BY MIN-EDIT-DISTANCE
-		$suggestionsArr = getSimilarWords(array_keys($extendedQueryWordsArr));
+		$suggestionsArr = getSimilarWords($lang,array_keys($extendedQueryWordsArr));
 	
 	
 		$searchedForText = $query;

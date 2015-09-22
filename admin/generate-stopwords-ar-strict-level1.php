@@ -39,12 +39,16 @@ foreach($verbsInfoArr as $word => $infoArr)
 
 $stopWordsFromQuran = array();
 
+$WORDS_FREQUENCY = getModelEntryFromMemory("AR", "MODEL_CORE", "WORDS_FREQUENCY", "");
+
+
+
 foreach ($stopWordsArr as $key => $word)
 {
 	$word = trim($word);
 	
-		
-	if ( isset($MODEL_CORE['WORDS_FREQUENCY']['WORDS'][$word]) )
+
+	if ( isset($WORDS_FREQUENCY['WORDS'][$word]) )
 	{
 		
 		

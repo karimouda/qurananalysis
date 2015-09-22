@@ -25,7 +25,7 @@ $parameter = $_GET['parameter'];
 					$nGramesArr = array();
 					
 					
-					$nGramesArr = getNGrams($grams);
+					$nGramesArr = getNGrams($lang,$grams);
 					
 					
 					

@@ -26,7 +26,7 @@ $features = $_GET['features'];
 
 $features = strtoupper($features);
 
-$MODEL_CORE_UTH = loadUthmaniDataModel();
+
 
 
 // nothing passed
@@ -45,7 +45,10 @@ if ( ($POS=="") )
 					
 					$allOccurencesCount = count($qacPosEntryArr);
 					
+					
+					$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
 			
+					$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
 
 					foreach($qacPosEntryArr as $location => $segmentId)
 					{
@@ -95,7 +98,7 @@ if ( ($POS=="") )
 					
 						if ( !isset($markedVerses[$verseLocation]))
 						{
-							$verseText = getVerseByQACLocation($MODEL_CORE_UTH,$location);
+							$verseText = getVerseByQACLocation($QURAN_TEXT,$location);
 						}
 						else
 						{
@@ -156,7 +159,7 @@ if ( ($POS=="") )
 						//exit;
 					foreach($markedVerses as $location=> $verseText)
 					{
-						$suraName = $MODEL_CORE['META_DATA']['SURAS'][($location[0]-1)]['name_'.strtolower($lang)];
+						$suraName = $META_DATA['SURAS'][($location[0]-1)]['name_'.strtolower($lang)];
 							
 						?>
 						<div class='pos-value-div' location='<?=$location?>'>

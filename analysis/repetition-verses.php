@@ -51,7 +51,7 @@ loadModels("core",$lang);
 					
 					$repeatedVerses = array();
 					
-					$repeatedVerses = getRepeatedVerses();
+					$repeatedVerses = getRepeatedVerses($lang);
 					
 					
 					

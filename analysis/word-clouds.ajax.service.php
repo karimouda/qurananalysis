@@ -19,6 +19,13 @@ if ( $cloudToShow!="0" && empty($cloudToShow) )
 	exit;
 }
 
+
+$RESOURCES = getModelEntryFromMemory($lang, "MODEL_CORE", "RESOURCES", "");
+	
+$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+
+$WORDS_FREQUENCY = getModelEntryFromMemory($lang, "MODEL_CORE", "WORDS_FREQUENCY", "");
+
 ?>
 			
 					
@@ -27,16 +34,16 @@ if ( $cloudToShow!="0" && empty($cloudToShow) )
 			  
 			  <fieldset class="word-cloud-fs">
 		  		 
-  				    <legend><?php echo $MODEL_CORE['RESOURCES']['VERSE_BEGENNINGS']?></legend>
+  				    <legend><?php echo $RESOURCES['VERSE_BEGENNINGS']?></legend>
 			  		
 						
 			  			<div id='verse-beginning-cloud' class='cloud-div'>
 							<?php 
 								
-							shuffle_assoc($MODEL_CORE['WORDS_FREQUENCY']['VERSE_BEGINNINGS']);
+							shuffle_assoc($WORDS_FREQUENCY['VERSE_BEGINNINGS']);
 							
 								$i=0;
-								foreach ($MODEL_CORE['WORDS_FREQUENCY']['VERSE_BEGINNINGS'] as $wordLabel => $wordFreq )
+								foreach ($WORDS_FREQUENCY['VERSE_BEGINNINGS'] as $wordLabel => $wordFreq )
 								{
 									
 									$freq = $wordFreq;
@@ -57,16 +64,16 @@ if ( $cloudToShow!="0" && empty($cloudToShow) )
 			  
 			 <fieldset class="word-cloud-fs">
 		  		 
-  				    <legend><legend><?php echo $MODEL_CORE['RESOURCES']['VERSE_ENDINGS']?></legend></legend>
+  				    <legend><legend><?php echo $RESOURCES['VERSE_ENDINGS']?></legend></legend>
 			  		
 						
 			  			<div id='verse-endings-cloud' class='cloud-div'>
 							<?php 
 						
-								shuffle_assoc($MODEL_CORE['WORDS_FREQUENCY']['VERSE_ENDINGS']);
+								shuffle_assoc($WORDS_FREQUENCY['VERSE_ENDINGS']);
 							
 								$i=0;
-								foreach ($MODEL_CORE['WORDS_FREQUENCY']['VERSE_ENDINGS'] as $wordLabel => $wordFreq )
+								foreach ($WORDS_FREQUENCY['VERSE_ENDINGS'] as $wordLabel => $wordFreq )
 								{
 									
 									$freq = $wordFreq;
@@ -95,7 +102,7 @@ if ( $cloudToShow!="0" && empty($cloudToShow) )
 					
 					  	
 					  	$cloudId = "qc-s-$cloudToShow";
-					  	$suraName = $MODEL_CORE['META_DATA']['SURAS'][$cloudToShow]['name_'.strtolower($lang)];
+					  	$suraName = $META_DATA['SURAS'][$cloudToShow]['name_'.strtolower($lang)];
 				  ?>
 				  
 				 	 <fieldset class="word-cloud-fs" style="min-height:auto">
@@ -106,7 +113,7 @@ if ( $cloudToShow!="0" && empty($cloudToShow) )
 				  			<div id='<?=$cloudId?>' class='cloud-div'>
 								<?php 
 							
-									$suraWordFreqArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_PER_SURA'][$cloudToShow];
+									$suraWordFreqArr = $WORDS_FREQUENCY['WORDS_PER_SURA'][$cloudToShow];
 									shuffle_assoc($suraWordFreqArr);
 								
 									$i=0;

@@ -45,7 +45,11 @@ loadModels("core",$lang);
 	    <?php include_once("help-content.php"); ?>
 			
 			  
+			  	<?php 
 			  	
+			  		$TOTALS= getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+			  		$RESOURCES = getModelEntryFromMemory($lang, "MODEL_CORE", "RESOURCES", "");
+			  	?>
 			  	<div >
 			  	<div id="graph-verse-or-text-selection" >
 			  
@@ -56,11 +60,11 @@ loadModels("core",$lang);
 						<br/>
 					
 					<div style="direction:<?php echo ($lang=="AR")? "rtl":"ltr";?>">
-					<?php echo $MODEL_CORE['RESOURCES']['CHOOSE_CHAPTER_OR_VERSE']?>			
+					<?php echo $RESOURCES['CHOOSE_CHAPTER_OR_VERSE']?>			
 					<select id='graph-verse-selection'>
 					 <option suraIndex="" value="" selected="true">&nbsp;</option>
 						<?php 
-							foreach ($MODEL_CORE['TOTALS']['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
+							foreach ($TOTALS['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
 							{
 								
 								$totalVerses = $perSuraArr['VERSES'];

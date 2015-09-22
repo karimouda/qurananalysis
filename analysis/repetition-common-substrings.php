@@ -71,8 +71,9 @@ $LOAD_FROM_CACHE = TRUE;
 					else
 					{
 					
-						
-					
+							$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+							$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+							
 							$quranVersesArr = array();
 							
 							$i=0;
@@ -81,14 +82,14 @@ $LOAD_FROM_CACHE = TRUE;
 					  		{
 					  		
 					  				
-					  			$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+					  			$suraSize = count($QURAN_TEXT[$s]);
 					  		
 					  			/* VERSES LOOP **/
 						  		for ($a=0;$a<$suraSize;$a++)
 						  		{
 						  			$i++;
-						  			$verseText = $MODEL_CORE['QURAN_TEXT'][$s][$a];
-						  			$suraName = $MODEL_CORE['META_DATA']['SURAS'][$s]['name_'.strtolower($lang)];
+						  			$verseText = $QURAN_TEXT[$s][$a];
+						  			$suraName =  $META_DATA['SURAS'][$s]['name_'.strtolower($lang)];
 						  			
 									
 						  			$verseText = removePauseMarkFromVerse($verseText);

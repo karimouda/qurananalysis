@@ -148,7 +148,7 @@ $query = $_GET['q'];
 			  	 			<td>
 			  	 			    <a href="?q=allahu" class='main-page-example-item'>Allahu</a>
 			  	 				/
-			  	 				<a href="?q=taAAmaloona" class='main-page-example-item'>taAAmaloona</a>
+			  	 				<a href="?q=taAAmaloona" class='main-page-example-item'>Taaamaloona</a>
 			  	 				<br>
 			  	 			 	<span class='note'>Search using transliterated Arabic words. <a target="_new" href='/info/transliteration-words-list.php'>Full List</a></span>
 		

@@ -52,6 +52,11 @@ loadModels("core",$lang);
 		
 					
 	    <?php include_once("help-content.php"); ?>
+	    
+	    <?php 
+	    
+	    $TOTALS = getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+	    ?>
 
 	
 		<fieldset> 		
@@ -71,66 +76,66 @@ loadModels("core",$lang);
 			  			</thead>
 			  			<tbody>
 			  				<tr>
-			  					<td>Chapters</td><td><?=$MODEL_CORE['TOTALS']['SURAS']?></td>
+			  					<td>Chapters</td><td><?=$TOTALS['SURAS']?></td>
 			  				</tr>
 			  				<tr>
-			  					<td>Verses</td><td><?=$MODEL_CORE['TOTALS']['VERSES']?></td>
+			  					<td>Verses</td><td><?=$TOTALS['VERSES']?></td>
 			  				</tr>
 			  				<tr>
-			  					<td>Words</td><td><?=$MODEL_CORE['TOTALS']['WORDS']?></td>
+			  					<td>Words</td><td><?=$TOTALS['WORDS']?></td>
 			  				</tr>
 			  				<tr>
-			  					<td>Non-Repeated Words</td><td><?=$MODEL_CORE['TOTALS']['NRWORDS']?></td>
+			  					<td>Non-Repeated Words</td><td><?=$TOTALS['NRWORDS']?></td>
 			  				</tr>
 		  					<tr>
-			  					<td>Letters</td><td><?=$MODEL_CORE['TOTALS']['CHARS']?></td>
+			  					<td>Letters</td><td><?=$TOTALS['CHARS']?></td>
 			  				</tr>
 			  				<?php if ( $lang=="AR"):?>
 		  					<tr>
-			  					<td>Number of Pause Marks</td><td><?=count($MODEL_CORE['TOTALS']['PAUSEMARKS'])?></td>
+			  					<td>Number of Pause Marks</td><td><?=count($TOTALS['PAUSEMARKS'])?></td>
 			  				</tr>
 		  					
 		  					 <tr>
-			  					<td>Pause Marks Count</td><td><?=$MODEL_CORE['TOTALS']['PAUSEMARKS_AGGREGATION']?></td>
+			  					<td>Pause Marks Count</td><td><?=$TOTALS['PAUSEMARKS_AGGREGATION']?></td>
 			  				</tr>	
 			  				<!-- -->		  				
 			  				
 		  					<tr>
-			  					<td>Sajdat Tilawa count ۩</td><td><?=$MODEL_CORE['TOTALS']['SAJDAT_TELAWA']['COUNT']?></td>
+			  					<td>Sajdat Tilawa count ۩</td><td><?=$TOTALS['SAJDAT_TELAWA']['COUNT']?></td>
 			  				</tr>
 		  					<tr>
-			  					<td>Sakta Latifa ۜ  count</td><td><?=$MODEL_CORE['TOTALS']['SAKTA_LATIFA']['COUNT']?></td>
+			  					<td>Sakta Latifa ۜ  count</td><td><?=$TOTALS['SAKTA_LATIFA']['COUNT']?></td>
 			  				</tr>
 			  				<?php endif;?>
 			  				<tr>
-			  					<td>Min Word Length (chars)</td><td><?=$MODEL_CORE['TOTALS']['MIN_WORD_LENGTH']?></td>
+			  					<td>Min Word Length (chars)</td><td><?=$TOTALS['MIN_WORD_LENGTH']?></td>
 			  				</tr>
 			  				<tr>
-			  					<td>Min Word</td><td><?=$MODEL_CORE['TOTALS']['MIN_WORD']?></td>
+			  					<td>Min Word</td><td><?=$TOTALS['MIN_WORD']?></td>
 			  				</tr>			  				
 			  				<tr>
-			  					<td>Max Word Length (chars)</td><td><?=$MODEL_CORE['TOTALS']['MAX_WORD_LENGTH']?></td>
+			  					<td>Max Word Length (chars)</td><td><?=$TOTALS['MAX_WORD_LENGTH']?></td>
 			  				</tr>					  				
 			  				<tr>
-			  					<td>Max Word</td><td><?=$MODEL_CORE['TOTALS']['MAX_WORD']?></td>
+			  					<td>Max Word</td><td><?=$TOTALS['MAX_WORD']?></td>
 			  				</tr>			  				
 			  				<tr>
-			  					<td>Avg Word Length (chars)</td><td><?=$MODEL_CORE['TOTALS']['AVG_WORD_LENGTH']?></td>
+			  					<td>Avg Word Length (chars)</td><td><?=$TOTALS['AVG_WORD_LENGTH']?></td>
 			  				</tr>			  	
 			  				<tr>
-			  					<td>Min Verse Length (words)</td><td><?=$MODEL_CORE['TOTALS']['MIN_VERSE_LENGTH']?></td>
+			  					<td>Min Verse Length (words)</td><td><?=$TOTALS['MIN_VERSE_LENGTH']?></td>
 			  				</tr>
 			  				<tr>
-			  					<td>Min Verse </td><td><?=$MODEL_CORE['TOTALS']['MIN_VERSE']?></td>
+			  					<td>Min Verse </td><td><?=$TOTALS['MIN_VERSE']?></td>
 			  				</tr>			  				
 			  				<tr>
-			  					<td>Max Verse Length (words)</td><td><?=$MODEL_CORE['TOTALS']['MAX_VERSE_LENGTH']?></td>
+			  					<td>Max Verse Length (words)</td><td><?=$TOTALS['MAX_VERSE_LENGTH']?></td>
 			  				</tr>					  				
 			  				<tr>
-			  					<td>Max Verse</td><td><?=substr($MODEL_CORE['TOTALS']['MAX_VERSE'],0,104)."..."?></td>
+			  					<td>Max Verse</td><td><?=substr($TOTALS['MAX_VERSE'],0,104)."..."?></td>
 			  				</tr>			  				
 			  				<tr>
-			  					<td>Avg Verse Length (words)</td><td><?=$MODEL_CORE['TOTALS']['AVG_VERSE_LENGTH']?></td>
+			  					<td>Avg Verse Length (words)</td><td><?=$TOTALS['AVG_VERSE_LENGTH']?></td>
 			  				</tr>
 
 				  		
@@ -152,7 +157,7 @@ loadModels("core",$lang);
 			  			</thead>
 			  			<tbody>
 							<?php 
-								foreach ($MODEL_CORE['TOTALS']['PAUSEMARKS'] as $pmLabel => $pmCount )
+								foreach ($TOTALS['PAUSEMARKS'] as $pmLabel => $pmCount )
 								{
 							?>
 			  					<tr>
@@ -194,7 +199,7 @@ loadModels("core",$lang);
 			  			</thead>
 			  			<tbody>
 							<?php 
-								foreach ($MODEL_CORE['TOTALS']['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
+								foreach ($TOTALS['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
 								{
 							?>
 			  					<tr>

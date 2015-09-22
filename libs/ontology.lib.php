@@ -562,12 +562,19 @@ function getConceptTypeFromDescriptionText($abstract)
 /** Returns words from QAC by PoS tags - grouped by lemma **/
 function getWordsByPos(&$finalTerms,$POS)
 {
-	global $MODEL_QAC,$MODEL_CORE,$UTHMANI_TO_SIMPLE_LOCATION_MAP,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
+	global $MODEL_QAC,$UTHMANI_TO_SIMPLE_LOCATION_MAP,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
 	global $LEMMA_TO_SIMPLE_WORD_MAP;
 	 
 	 
 	$qacPosEntryArr = getModelEntryFromMemory("AR","MODEL_QAC","QAC_POS",$POS);
 	
+	$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
+	
+	$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
+	
+	$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
+	
+	$WORDS_FREQUENCY = getModelEntryFromMemory("AR", "MODEL_CORE", "WORDS_FREQUENCY", "");
 	
 	// Get all segment in QAC for that PoS
 	foreach($qacPosEntryArr as $location => $segmentId)
@@ -594,10 +601,9 @@ function getWordsByPos(&$finalTerms,$POS)
 
 
 		// get verse text
-		$verseText = getVerseByQACLocation($MODEL_CORE,$location);
+		$verseText = getVerseByQACLocation($QURAN_TEXT,$location);
 		 
-		//$imla2yWord = getWordFromVerseByIndex($MODEL_CORE,$verseText,$imla2yWordIndex);
-		 
+
 		 
 		//echoN("|$segmentWord|$imla2yWord");
 		$segmentWordNoTashkeel = removeTashkeel($segmentWordLema);
@@ -663,7 +669,7 @@ function getWordsByPos(&$finalTerms,$POS)
 		{
 			//only for weight since the lema table decrease qurana matching
 			$imla2yWordForWeight = $LEMMA_TO_SIMPLE_WORD_MAP[$segmentWordLema];
-			$termWeightArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$imla2yWordForWeight];
+			$termWeightArr = $WORDS_FREQUENCY['WORDS_TFIDF'][$imla2yWordForWeight];
 
 
 		}

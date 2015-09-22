@@ -48,7 +48,7 @@ if ($isQuestion )
 <div id='question-answering-area' <?=returnDirectionStyle($lang)?>>
 
 	<?php if (!empty($userQuestionAnswerConceptsArr)  || !empty($userQuestionAnswerVersesArr)):?>
-	<span id='question-answering-area-answer-title'><?=$MODEL_CORE['RESOURCES']['ANSWER']?></span> 
+	<span id='question-answering-area-answer-title'><?=$RESOURCES['ANSWER']?></span> 
 	<span>
 	<?php 
 
@@ -68,13 +68,13 @@ if ($isQuestion )
 			$firstAnswerVerseArr = current($userQuestionAnswerVersesArr);
 			//preprint_r($firstAnswerVerseArr);
 			
-			$verseText = getVerseTextBySuraAndAya($firstAnswerVerseArr['SURA']+1, $firstAnswerVerseArr['AYA']+1);
+			$verseText = getVerseTextBySuraAndAya($lang,$firstAnswerVerseArr['SURA']+1, $firstAnswerVerseArr['AYA']+1);
 			
 			
 			$answerVerseLocation = "[".($firstAnswerVerseArr['SURA']+1).":".($firstAnswerVerseArr['AYA']+1)."]";
 			echoN($verseText);
 			
-			$SURA_NAME = $MODEL_CORE['META_DATA']['SURAS'][($firstAnswerVerseArr['SURA']+1)]['name_'.strtolower($lang)];
+			$SURA_NAME = $META_DATA['SURAS'][($firstAnswerVerseArr['SURA']+1)]['name_'.strtolower($lang)];
 			$answerVerseLocation = "$SURA_NAME $answerVerseLocation";
 			echoN("<span id='answer-verse-location'>$answerVerseLocation</span>");
 		}
@@ -134,7 +134,7 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 				<!-- WORDCLOUD AREA -->
 				<div id="result-wordcloud-area">
 					<div id='result-wordcloud-title' <?=returnDirectionStyle($lang)?>>
-						<?=$MODEL_CORE['RESOURCES']['INDEX_WORDCLOUD_TITLE']?>
+						<?=$RESOURCES['INDEX_WORDCLOUD_TITLE']?>
 					</div>
 					<div id='result-wordcloud-content'>
 					<?php 
@@ -175,7 +175,7 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 		<!-- ONTOLOGY GRAPH AREA -->
 		<div  id="result-stats-chart-area">
 			<div id='result-statistics-title' <?=returnDirectionStyle($lang)?>>
-				<?=$MODEL_CORE['RESOURCES']['INDEX_STATISTICS_TITLE']?>
+				<?=$RESOURCES['INDEX_STATISTICS_TITLE']?>
 			</div>
 			<div id="results-stats-table" <?=returnDirectionStyle($lang)?> >
 					
@@ -183,9 +183,9 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 				
 					 <table>
 					 	<tr>
-					 		<th><?=$MODEL_CORE['RESOURCES']['CHAPTERS']?></th><td><?=$resultStatsArr['CHAPTERS_COUNT']?></td>
-					 		<th><?=$MODEL_CORE['RESOURCES']['VERSES']?></th><td><?=$resultStatsArr['VERSES_COUNT']?></td>
-					  		<!--  <th><?=$MODEL_CORE['RESOURCES']['REPETITION']?></th><td><?=$resultStatsArr['UNIQUE_REP']?></td>		-->
+					 		<th><?=$RESOURCES['CHAPTERS']?></th><td><?=$resultStatsArr['CHAPTERS_COUNT']?></td>
+					 		<th><?=$RESOURCES['VERSES']?></th><td><?=$resultStatsArr['VERSES_COUNT']?></td>
+					  		<!--  <th><?=$RESOURCES['REPETITION']?></th><td><?=$resultStatsArr['UNIQUE_REP']?></td>		-->
 					
 					 	</tr>
 					 </table>

@@ -41,19 +41,25 @@ loadModels("core",$lang);
   <div id='main-container'>
   
   	    <?php include_once("help-content.php"); ?>
+  	    
+  	    <?php 
+  	    $RESOURCES = getModelEntryFromMemory($lang, "MODEL_CORE", "RESOURCES", "");
+  	    
+  	    $META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+  	    ?>
 			  	
 			<div id='words-clouds-options'>
 			  	<table>
 				  	<tr>
 						<td >
-							Choose Cloud Type to show
+							Choose Chapter
 						</td>
 						<td align="left">
 						
 							<select id='wordcloud-type-selection'>
 							 <option value="" selected="true">&nbsp;</option>
-							 <option value="VB" ><?php echo $MODEL_CORE['RESOURCES']['VERSE_BEGENNINGS']?></option>
-							 <option value="VE" ><?php echo $MODEL_CORE['RESOURCES']['VERSE_ENDINGS']?></option>
+							 <option value="VB" ><?php echo $RESOURCES['VERSE_BEGENNINGS']?></option>
+							 <option value="VE" ><?php echo $RESOURCES['VERSE_ENDINGS']?></option>
 						    <option value="" >--------</option>
 								<?php 
 								
@@ -63,7 +69,7 @@ loadModels("core",$lang);
 								{
 									
 									$cloudId = "qc-s-$s";
-									$suraName = $MODEL_CORE['META_DATA']['SURAS'][$s]['name_'.strtolower($lang)];
+									$suraName = $META_DATA['SURAS'][$s]['name_'.strtolower($lang)];
 									
 								
 										

@@ -14,7 +14,7 @@ if ( isset($_GET['lang']) )
 
 loadModels("core,qac",$lang);
 
-$MODEL_CORE_UTH = loadUthmaniDataModel();
+
 
 ?>
 <!DOCTYPE html>
@@ -50,6 +50,7 @@ $MODEL_CORE_UTH = loadUthmaniDataModel();
 	
 
 		<?php 
+		$QURAN_TEXT = getModelEntryFromMemory("AR_UTH", "MODEL_CORE", "QURAN_TEXT", "");
 		
 		if ( $lang=="EN")
 		{
@@ -87,7 +88,7 @@ $MODEL_CORE_UTH = loadUthmaniDataModel();
 			
 			
 				// get verse text
-				$verseText = getVerseByQACLocation($MODEL_CORE_UTH,$location);
+				$verseText = getVerseByQACLocation($QURAN_TEXT,$location);
 				
 				//echoN($verseText);
 				//echoN($segmentWord);

@@ -18,9 +18,9 @@ require_once(dirname(__FILE__)."/libs/ontology.lib.php");
 
 
 
-$MODEL_CORE = array();
-$MODEL_CORE['LOADED']=0;
-$MODEL_CORE['SUPPORTED_LANGUAGES']=$supportedLanguages;
+//$MODEL_CORE = array();
+//$MODEL_CORE['LOADED']=0;
+//$MODEL_CORE['SUPPORTED_LANGUAGES']=$supportedLanguages;
 
 //$MODEL_SEARCH = array();
 $//MODEL_QAC = array();
@@ -36,12 +36,13 @@ $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] =  array();;
 $MODEL_QA_ONTOLOGY['VERB_INDEX'] =  array();;
 
 
-
+/*
 foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $supportedLang)
 {
 	$MODEL_CORE[$supportedLang] = array();
 	//$MODEL_SEARCH[$supportedLang] = array();
 }
+*/
 
 $META_DATA = array();
 $META_DATA['SURAS']=array();
@@ -81,10 +82,10 @@ function loadModels($modelsToBeLoaded,$lang)
 
 
 	
-	echoN("MODEL EXISTS IN CACHE?:".apc_exists("MODEL_CORE[EN]"));
+	echoN("MODEL EXISTS IN CACHE?:".apc_exists("EN/MODEL_CORE/TOTALS/"));
 	
 	##### CHECK MODEL IN CACHE ##### #####
-	if ( TRUE && apc_exists("MODEL_CORE[EN]")!==false)
+	if ( TRUE && apc_exists("EN/MODEL_CORE/TOTALS/")!==false)
 	{
 		// split list by comma
 		$modelListArr = preg_split("/,/",trim($modelsToBeLoaded));
@@ -150,13 +151,13 @@ function loadModels($modelsToBeLoaded,$lang)
 				
 			
 				//$MODEL_CORE = json_decode((file_get_contents("$serializedModelFile.core")),TRUE);
-				$MODEL_CORE  = apc_fetch("MODEL_CORE[$lang]");
+				/*$MODEL_CORE  = apc_fetch("MODEL_CORE[$lang]");
 				
 				
 				if ($MODEL_CORE===false )
 				{
 					echo "CORE MODEL [$lang] NOT CACHED";exit;
-				}
+				}*/
 				
 				
 			}
@@ -669,22 +670,27 @@ function loadModels($modelsToBeLoaded,$lang)
 	$WORD_SENSES_EN = array();
 	$WORD_SENSES_AR = array();
 	
+	$quranTextEntryFromAPC_AR = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
+	$quranTextEntryFromAPC_UTH = getModelEntryFromMemory("AR_UTH", "MODEL_CORE", "QURAN_TEXT", "");
+	
 	/* SURA'S LOOP **/
 	for ($s=0;$s<$numberOfSuras;$s++)
 	{
 			
 		 
-		$suraSize = count($MODEL_CORE["AR"]['QURAN_TEXT'][$s]);
+		$suraSize = count($quranTextEntryFromAPC_AR[$s]);
 			
 		/* VERSES LOOP **/
 		for ($a=0;$a<$suraSize;$a++)
 		{
 		  $i++;
-		  $verseTextSimple = $MODEL_CORE["AR"]['QURAN_TEXT'][$s][$a];
+		  $verseTextSimple = $quranTextEntryFromAPC_AR[$s][$a];
 		  $simpleWordsArr = preg_split("/ /", $verseTextSimple);
-		  $verseTextUthmani = $MODEL_CORE["AR_UTH"]['QURAN_TEXT'][$s][$a];
+		  $verseTextUthmani = $quranTextEntryFromAPC_UTH[$s][$a];
 		  $uthmaniWordsArr = preg_split("/ /", $verseTextUthmani);
 		  
+		  
+
 		  
 		  $simpleWordsArr = removePauseMarksFromArr($pauseMarksArr,$simpleWordsArr);
 		  
@@ -937,7 +943,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			}
 		}
 		
-		//PDATE
+		//UPDATE
 		updateModelData($key,$wordDataArr);
 	}
 	
@@ -945,13 +951,13 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	//if ( $res===false){ throw new Exception("Can't cache MODEL_SEARCH[AR]"); }
 	
-	
+	//preprint_r($TRANSLITERATION_WORDS_LOCATION_MAP);
 
 	/// ADD TRANSLITERATION TO INVERETD INDEX WWITH ENGLISH WORDS
 	if ($lang=="EN")
 	{
 		 
-		
+		$invertedIndexBatchApcArr = array();
 	
 		foreach($TRANSLITERATION_WORDS_LOCATION_MAP as $location => $transliteratedWord )
 		{
@@ -972,7 +978,8 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 		
 		}
-	
+		
+		addToMemoryModelBatch($invertedIndexBatchApcArr);
 		
 		//$res = apc_store("MODEL_SEARCH[EN]",$MODEL_SEARCH['EN']);
 	
@@ -1931,17 +1938,37 @@ function loadModel($lang,$type,$file)
 				  		
 
 
-				  		$MODEL_CORE['LOADED']=1;
-				  		$MODEL_CORE[$lang]['META_DATA'] = $META_DATA;
-				  		$MODEL_CORE[$lang]['TOTALS'] = $TOTALS_ARR;
-				  		$MODEL_CORE[$lang]['WORDS_FREQUENCY'] = $WORDS_FREQUENCY_ARR;
-				  		$MODEL_CORE[$lang]['QURAN_TEXT'] = $QURAN_TEXT;
-
-				  		$MODEL_CORE[$lang]['RESOURCES']=$RESOURCES;
-
-				  		$MODEL_CORE[$lang]['STOP_WORDS']= $stopWordsArr;
+				  		//$MODEL_CORE['LOADED']=1;
+				  		//$MODEL_CORE[$lang]['META_DATA'] = $META_DATA;
 				  		
-				  		$MODEL_CORE[$lang]['STOP_WORDS_STRICT_L2']= $stopWordsStrictL2Arr;
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "META_DATA", "", $META_DATA);
+				  		
+				  		//$MODEL_CORE[$lang]['TOTALS'] = $TOTALS_ARR;
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "TOTALS", "", $TOTALS_ARR);
+				  		
+				  		//$MODEL_CORE[$lang]['WORDS_FREQUENCY'] = $WORDS_FREQUENCY_ARR;
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "WORDS_FREQUENCY", "", $WORDS_FREQUENCY_ARR);
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "WORDS_FREQUENCY", "WORDS", $WORDS_FREQUENCY_ARR['WORDS']);
+				  		
+				  		
+				  		//$MODEL_CORE[$lang]['QURAN_TEXT'] = $QURAN_TEXT;
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "QURAN_TEXT", "", $QURAN_TEXT);
+				  		
+				  		//$MODEL_CORE[$lang]['RESOURCES']=$RESOURCES;
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "RESOURCES", "", $RESOURCES);
+
+				  		//$MODEL_CORE[$lang]['STOP_WORDS']= $stopWordsArr;
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "STOP_WORDS", "", $stopWordsArr);
+				  		
+				  		//$MODEL_CORE[$lang]['STOP_WORDS_STRICT_L2']= $stopWordsStrictL2Arr;
+				  		
+				  		addValueToMemoryModel($lang, "MODEL_CORE", "STOP_WORDS_STRICT_L2", "", $stopWordsStrictL2Arr);
 				  		
 				  		//file_put_contents("$serializedModelFile.core", (json_encode($MODEL_CORE)));
 				  		
@@ -1962,9 +1989,9 @@ function loadModel($lang,$type,$file)
 				  		
 
 				  		
-				  		$res = apc_store("MODEL_CORE[$lang]",$MODEL_CORE[$lang]);
+				  		//$res = apc_store("MODEL_CORE[$lang]",$MODEL_CORE[$lang]);
 				  		
-				  		if ( $res===false){ throw new Exception("Can't cache MODEL_CORE[$lang]"); }
+				  		//if ( $res===false){ throw new Exception("Can't cache MODEL_CORE[$lang]"); }
 				  		
 				  		//$res = apc_store("MODEL_SEARCH[$lang]",$MODEL_SEARCH[$lang]);
 				  		

@@ -30,7 +30,7 @@ $word = $_GET['word'];
 		if ( empty($wordInfoArr))
 		{
 			showTechnicalError("Word not found");
-			$suggestionsArr = getSimilarWords(array($word));
+			$suggestionsArr = getSimilarWords($lang,array($word));
 			
 			if ( !empty($suggestionsArr))
 			{

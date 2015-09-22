@@ -20,7 +20,14 @@ printHTMLPageHeader();
 
 $qacPoSTagsIterator = getAPCIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
 
+$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
 
+
+$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
+
+$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
+
+preprint_r($PAUSEMARKS);
 
 foreach($qacPoSTagsIterator as $qacPoSTagsIteratorCursor)
 {
@@ -80,9 +87,9 @@ foreach($qacPoSTagsIterator as $qacPoSTagsIteratorCursor)
 	
 	
 		// get verse text
-		$verseText = getVerseByQACLocation($MODEL_CORE,$location);
+		$verseText = getVerseByQACLocation($QURAN_TEXT,$location);
 			
-		$imla2yWord = getWordFromVerseByIndex($MODEL_CORE,$verseText,$imla2yWordIndex);
+		$imla2yWord = getWordFromVerseByIndex($PAUSEMARKS,$verseText,$imla2yWordIndex);
 			
 		//echoN($imla2yWord);
 		
@@ -101,7 +108,7 @@ $stopWordsFromQuran[$ya]=1;
 
 echoN(count($stopWordsFromQuran));
 //preprint_r($stopWordsFromQuran);
-
+//exit;
 
 file_put_contents(dirname(__FILE__)."/../data/quran-stop-words.strict.l2.ar", implode("\n", array_keys($stopWordsFromQuran)));
 exit;

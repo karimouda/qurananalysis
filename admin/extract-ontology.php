@@ -375,7 +375,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					if ( $GENERATE_PHRASE_TERMS)
 					{
 						
-							$phraseTerms = getNGrams(2);
+							$phraseTerms = getNGrams("AR",2);
 							
 							//$phraseTermsHIST = histogramFromArray($phraseTerms);
 							

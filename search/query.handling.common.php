@@ -52,16 +52,18 @@ loadModels("core,search,qac,ontology",$lang);
 	
 
 
+$RESOURCES = getModelEntryFromMemory($lang, "MODEL_CORE", "RESOURCES", "");
+	
+$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+	
+	
 
-	
-	
-//preprint_r($MODEL_CORE);
 
 $significantWords = array();
 
 //echoN($query);exit;
 
-$MODEL_CORE_UTH = loadUthmaniDataModel();
+
 $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
 $UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
@@ -215,6 +217,7 @@ $originalQueryWordsArr = preg_split("/ /",$query);
 //for faster access
 $originalQueryWordsArrSwaped = swapAssocArrayKeyValues($originalQueryWordsArr);
 
+echoN(memory_get_peak_usage());
 
 // CHECK IF TRANSLITERATION
 if ($lang=="EN" &&  !$isConceptSearch && !$isPhraseSearch && !$isQuestion  )
@@ -246,9 +249,11 @@ if ( $isquestion || (!$isPhraseSearch && !$noDerivationsConstraint && !$isColumn
 	
 	$taggedSignificantWords = posTagUserQuery($query,$lang);
 
-	$taggedSignificantWordsAfterDerivation = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
 	
+	echoN("### ".memory_get_peak_usage());
+	$taggedSignificantWordsAfterDerivation = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
 	echoN(memory_get_peak_usage());
+	
 
 	//preprint_r($taggedSignificantWords);
 
@@ -370,6 +375,7 @@ if ($isQuestion)
 	 $queryWordsArr  = array_merge($queryWordsArr,$userQuestionAnswerConceptsArr);
 }
 
+
 /// LOG QUERY //LOCATION SIGNIFICANT BEFORE  handleEmptyResults because of exit inside
 if ( !isDevEnviroment() )
 {
@@ -378,8 +384,10 @@ if ( !isDevEnviroment() )
 	logQuery($lang,$query,$searchType, count($scoringTable));
 }
 
+
+
 // NOT RESULTS FOUND
-handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch,$searchType);
+handleEmptyResults($scoringTable,$extendedQueryWordsArr,$query,$originalQuery,$isColumnSearch,$searchType,$lang);
 
 if ( !$isQuestion && !$isColumnSearch)
 {
@@ -388,9 +396,10 @@ if ( !$isQuestion && !$isColumnSearch)
 	$queryWordsWithoutDerivation = array_diff_assoc($extendedQueryWordsArr, $derivedWords);
 	
 
-
+	
 	$postResultSuggestionArr = postResultSuggestions($lang,$originalQueryWordsArrSwaped);
 	
+	echoN(memory_get_peak_usage());
 	
 	// remove query words from suggestion
 	/*foreach($queryWordsWithoutDerivation as $word => $dummy)
@@ -413,7 +422,7 @@ $resultStatsArr = getStatsByScoringTable($scoringTable);
 
 
 //preprint_r($scoringTable);
-echoN(memory_get_peak_usage());
+echoN("LAST:".memory_get_peak_usage());
 
 
 ?>

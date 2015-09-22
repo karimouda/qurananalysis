@@ -2,17 +2,40 @@
 /*
  * SOURCE:http://phpir.com/part-of-speech-tagging/
  */
+function getLexiconItemFromMemory($token)
+{
+	$token = strtolower($token);
+	 
+	$entry  = getModelEntryFromMemory("EN", "PHPIR_LEXICON", "POS_ENTRY", $token);
+	 
+	return $entry[0];
+}
 class PosTagger {
         private $dict; 
         
         public function __construct($lexicon) {
-                $fh = fopen($lexicon, 'r');
-                while($line = fgets($fh)) {
-                        $tags = explode(' ', $line);
-                        $this->dict[strtolower(array_shift($tags))] = $tags;
-                }
-                fclose($fh);
+        	
+        		// caching added by KARIM
+        		if ( apc_fetch("EN/PHPIR_LEXICON/POS_ENTRY/who")===false)
+        		{
+        
+        		
+	                $fh = fopen($lexicon, 'r');
+	                while($line = fgets($fh)) {
+	                        $tags = explode(' ', $line);
+	                       // $this->dict[strtolower(array_shift($tags))] = $tags;
+	                       addValueToMemoryModel("EN", "PHPIR_LEXICON", "POS_ENTRY", strtolower(array_shift($tags)), $tags);
+	                       
+	                }
+	                fclose($fh);
+	                
+	               // preprint_r( $this->dict);
+	                
+	                //apc_store("PHPIR_LEXICON", $this->dict);
+        		}
         }
+        
+     
         
         public function tag($text) {
         		//KARIM: added '-_
@@ -31,8 +54,8 @@ class PosTagger {
                         }
                         
                         // get from dict if set
-                        if(isset($this->dict[strtolower($token)])) {
-                                $return[$i]['tag'] = $this->dict[strtolower($token)][0];
+                        if(modelEntryExistsInMemory("EN", "PHPIR_LEXICON", "POS_ENTRY", $token)) {
+                                $return[$i]['tag'] = getLexiconItemFromMemory($token);
                         }       
                         
                         // Converts verbs after 'the' to nouns
@@ -88,11 +111,11 @@ class PosTagger {
                         if($i > 0) {
                                 if(in_array($return[$i]['tag'], $nouns) 
                                                 && in_array($return[$i-1]['tag'], $nouns) 
-                                                && isset($this->dict[strtolower($token)])) {
-                                        if(in_array('VBN', $this->dict[strtolower($token)])) {
+                                                && modelEntryExistsInMemory("EN", "PHPIR_LEXICON", "POS_ENTRY", $token)) {
+                                        if(in_array('VBN', getLexiconItemFromMemory($token))) {
                                                 $return[$i]['tag'] = 'VBN';
                                         } else if(in_array('VBZ', 
-                                                        $this->dict[strtolower($token)])) {
+                                                        getLexiconItemFromMemory($token))) {
                                                 $return[$i]['tag'] = 'VBZ';
                                         }
                                 }

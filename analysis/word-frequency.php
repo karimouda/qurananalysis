@@ -103,22 +103,31 @@ loadModels("core",$lang);
 			  			<tbody>
 							<?php 
 						
-								//preprint_r($MODEL_CORE['STOP_WORDS_STRICT_L2']);
+							$STOP_WORDS = getModelEntryFromMemory($lang, "MODEL_CORE", "STOP_WORDS", "");
+								
+							$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+							
+							$STOP_WORDS_STRICT_L2 = getModelEntryFromMemory($lang, "MODEL_CORE", "STOP_WORDS_STRICT_L2", "");
+							
+							$TOTALS = getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+							
+						
+							$WORDS_FREQUENCY = getModelEntryFromMemory($lang, "MODEL_CORE", "WORDS_FREQUENCY", "");
+								
 							
 								$i=0;
-								foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
+								foreach ($WORDS_FREQUENCY['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
 								{
 									
 									if ( $withStopWordsExcluded ==1 )
 									{
-										//if ( isset($MODEL_CORE['STOP_WORDS'][$wordLabel]) ) continue;
 										if ( $lang=="AR")
 										{
-											if ( isset($MODEL_CORE['STOP_WORDS_STRICT_L2'][$wordLabel]) ) continue;
+											if ( isset($STOP_WORDS_STRICT_L2[$wordLabel]) ) continue;
 										}
 										else
 										{
-											if ( isset($MODEL_CORE['STOP_WORDS'][$wordLabel]) ) continue;
+											if ( isset($STOP_WORDS[$wordLabel]) ) continue;
 										}
 									}
 									

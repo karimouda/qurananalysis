@@ -889,10 +889,11 @@
 	
 		$resArr = apc_add($entryKeysValuesArr);
 	
-		if ( !empty($resArr))
+		if ($resArr===FALSE)
 		{
 			if ( isDevEnviroment() )
 			{	
+				echoN("APC Response");
 				preprint_r($resArr);
 			}
 			
@@ -912,7 +913,7 @@
 	
 	
 	
-	function getVerseByQACLocation($MODEL_CORE,$qac3PartLocationStr)
+	function getVerseByQACLocation($QURAN_TEXT,$qac3PartLocationStr)
 	{
 		
 		
@@ -933,7 +934,7 @@
 			
 		$wordIndex =  $locationArr[2];
 		
-		return $MODEL_CORE['QURAN_TEXT'][($suraID-1)][($verseID-1)];
+		return $QURAN_TEXT[($suraID-1)][($verseID-1)];
 			
 		
 		
@@ -941,9 +942,10 @@
 	
 	function getVerseTextBySuraAndAya($sura, $aya)
 	{
-		global $MODEL_CORE;
 		
-		return $MODEL_CORE['QURAN_TEXT'][($sura-1)][($aya-1)];
+		$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+		
+		return $QURAN_TEXT[($sura-1)][($aya-1)];
 	
 	}
 	
@@ -970,13 +972,16 @@
 	
 	function markSpecificWordInText($TEXT,$wordIndex,$charsToBeMarked,$markingTagName)
 	{
-		global $MODEL_CORE;
+	
+		$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
+		
+		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
 		
 		$wordsArr = preg_split("/ /", $TEXT);
 		
 		//preprint_r($wordsArr);
 		
-		$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'],$wordsArr);
+		$wordsArr = removePauseMarksFromArr($PAUSEMARKS,$wordsArr);
 		
 		
 		
@@ -1033,9 +1038,13 @@
 	
 	function removePauseMarkFromVerse($verseText)
 	{
-		global $MODEL_CORE,$saktaLatifaMark,$sajdahMark;
+		global $saktaLatifaMark,$sajdahMark;
+		
+		$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
+		
+		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
 	
-		$pauseMarksPattern  = join("|",array_keys($MODEL_CORE['TOTALS']['PAUSEMARKS']))."|$saktaLatifaMark|$sajdahMark";
+		$pauseMarksPattern  = join("|",array_keys($PAUSEMARKS))."|$saktaLatifaMark|$sajdahMark";
 		
 		
 		$verseText =  preg_replace("/$pauseMarksPattern/um", "", $verseText);
@@ -1056,12 +1065,12 @@
 		return  $emla2tWordIndex;
 	}
 	
-	function getWordFromVerseByIndex($MODEL_CORE,$verseText, $oneBasedWordIndex)
+	function getWordFromVerseByIndex($PAUSEMARKS,$verseText, $oneBasedWordIndex)
 	{
 		$wordsArr = preg_split("/ /", $verseText);
 
 	
-		$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'],$wordsArr);
+		$wordsArr = removePauseMarksFromArr($PAUSEMARKS,$wordsArr);
 	
 		
 		return $wordsArr[$oneBasedWordIndex-1];
@@ -1196,11 +1205,11 @@
 	/*
 	 * $threshold: frequency of verse repetition, returned verses will have freq more than the specified threshold
 	 */
-	function getRepeatedVerses($threshold=1)
+	function getRepeatedVerses($lang,$threshold=1)
 	{
-		global $MODEL_CORE,$numberOfSuras;
+		global $numberOfSuras;
 		
-	
+		$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
 		
 		$repeatedVerses = array();
 		
@@ -1210,14 +1219,14 @@
 			{
 				
 				
-				$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+				$suraSize = count($QURAN_TEXT[$s]);
 						
 						/* VERSES LOOP **/
 				for ($a=0;$a<$suraSize;$a++)
 				{
 						
 					$i++;
-					$verseText = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+					$verseText = $QURAN_TEXT[$s][$a];
 						
 						
 					initArrayWithZero($repeatedVerses[$verseText]);
@@ -1244,10 +1253,13 @@
 	/*
 	 * $threshold: frequency of Ngrams repetition, returned ngrams with frequency more than the specified threshold
 	*/
-	function getNGrams($n,$threshold=0)
+	function getNGrams($lang,$n,$threshold=0)
 	{
-		global $MODEL_CORE,$numberOfSuras,$mandatoryStop,$saktaLatifaMark,$sajdahMark;
+		global $numberOfSuras,$mandatoryStop,$saktaLatifaMark,$sajdahMark;
 		
+		$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+		$TOTALS = getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
 		
 		$grams = $n;
 		
@@ -1259,20 +1271,19 @@
 		{
 			
 			
-			$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+			$suraSize = count($QURAN_TEXT[$s]);
 				
 			/* VERSES LOOP **/
 			for ($a=0;$a<$suraSize;$a++)
 			{
 				
 				$i++;
-				$verseText = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+				$verseText = $QURAN_TEXT[$s][$a];
 				
 				
 						
 					$wordsArr = preg_split("/ /", $verseText);
 				
-					//$wordsArr = removePauseMarksFromArr($MODEL_CORE['TOTALS']['PAUSEMARKS'], $wordsArr);
 				
 				
 							$verseLength = count($wordsArr);
@@ -1309,7 +1320,7 @@
 							//echoN("|$word|");
 							
 					
-							if ( isPauseMark($word,$MODEL_CORE['TOTALS']['PAUSEMARKS'],$saktaLatifaMark,$sajdahMark) )
+							if ( isPauseMark($word,$PAUSEMARKS,$saktaLatifaMark,$sajdahMark) )
 							{
 							
 								// in case of mandatory pause, just jump and start a new group after the pause
@@ -1389,7 +1400,7 @@
 	*/
 	function getPoSNGrams($posPatternString,$threshold=0)
 	{
-		global $MODEL_CORE,$numberOfSuras,$quranCorpusMorphologyFile;
+		global $numberOfSuras,$quranCorpusMorphologyFile;
 	
 	
 		$grams = $n;
@@ -1601,8 +1612,9 @@
 		}
 		
 
+		$WORDS_FREQUENCY = getModelEntryFromMemory("AR", "MODEL_CORE", "WORDS_FREQUENCY", "");
 		
-		$freqArr = $MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$wordSimple];
+		$freqArr = $WORDS_FREQUENCY['WORDS_TFIDF'][$wordSimple];
 		
 		//preprint_r($freqArr);
 		
@@ -1651,6 +1663,12 @@
 		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple]);
 		
 		$invertedIndexEntry = getModelEntryFromMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$wordSimple);
+		
+		$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
+		
+		$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
+		
+		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
 		
 		
 		foreach ($invertedIndexEntry as $documentArrInIndex)
@@ -1704,7 +1722,7 @@
 				
 				$featuresArr = array_merge($segmentDataArr['FEATURES']);
 				
-				$verseText = getVerseByQACLocation($MODEL_CORE,$qacLocation);
+				$verseText = getVerseByQACLocation($QURAN_TEXT,$qacLocation);
 		
 				
 		
@@ -1712,7 +1730,7 @@
 				
 				if ( $exactWord==TRUE)
 				{
-					$wordFromVerseAtLocation = getWordFromVerseByIndex($MODEL_CORE, $verseText, $wordId);
+					$wordFromVerseAtLocation = getWordFromVerseByIndex($PAUSEMARKS, $verseText, $wordId);
 					
 					if ( $wordSimple!==$wordFromVerseAtLocation) continue;
 				}
@@ -1814,7 +1832,7 @@
 	 */
  	function getPoSTaggedSubsentences($coreModelUsed = "UTH")
  	{
- 		global $MODEL_CORE,$MODEL_QAC,$numberOfSuras;
+ 		global $MODEL_QAC,$numberOfSuras;
  		global $saktaLatifaMark, $sajdahMark;
  	
  		
@@ -1822,25 +1840,28 @@
  		$posTaggedSubSentencesArr = array();
  	
  	
- 		$MODEL_USED = null;
- 		
+ 		 		
  		if ( $coreModelUsed=="UTH")
  		{
- 			$MODEL_USED = loadUthmaniDataModel();
+ 			$QURAN_TEXT = getModelEntryFromMemory("AR_UTH", "MODEL_CORE", "QURAN_TEXT", "");
  		}
  		else
  		{
- 			$MODEL_USED = $MODEL_CORE;
+ 			$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
  		}
  			
+ 		$TOTALS = getModelEntryFromMemory("AR", "MODEL_CORE", "TOTALS", "");
  		
+ 		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
+ 		
+ 		//preprint_r($PAUSEMARKS);
  		
  		/* SURA'S LOOP **/
  		for ($s=0;$s<$numberOfSuras;$s++)
  		{
  			
  			
-	 		$suraSize = count($MODEL_USED['QURAN_TEXT'][$s]);
+	 		$suraSize = count($QURAN_TEXT[$s]);
 	 			
 	 			
 	 		
@@ -1849,7 +1870,7 @@
 	 		{
 	 		
 	 		  $i++;
-	 		  $verseTextUthmani = $MODEL_USED['QURAN_TEXT'][$s][$a];
+	 		  $verseTextUthmani = $QURAN_TEXT[$s][$a];
 	 		  $uthmaniWordsArr = preg_split("/ /", $verseTextUthmani);
 	 		
  		  	
@@ -1867,6 +1888,7 @@
 				
  		  			//$uthmaniWordsArr = removePauseMarksFromArr($pauseMarksArr,$uthmaniWordsArr);
  		  				
+	 		  		
  		  				
  		  			$wordsInSubSentence = 0;
  		  			$verseNonPauseWordsIndex = 1;
@@ -1879,7 +1901,7 @@
  		  				
  		  				
  		  				// WORD IS A PUASE MARK
- 		  				if ( isPauseMark($uthmaniWord, $MODEL_CORE['TOTALS']['PAUSEMARKS'], $saktaLatifaMark, $sajdahMark) )
+ 		  				if ( isPauseMark($uthmaniWord, $PAUSEMARKS, $saktaLatifaMark, $sajdahMark) )
  		  				{
  		  					
  		  					

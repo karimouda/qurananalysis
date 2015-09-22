@@ -1,15 +1,16 @@
 <?php
 function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scoringTable, $lang)
 {
-	global $MODEL_QA_ONTOLOGY,$MODEL_CORE;
+	global $MODEL_QA_ONTOLOGY;
 	global $is_a_relation_name_ar;
 	
 	
 	
 	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 
-
-
+	
+	$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+	
 	
 	// answering by relevance and similarity
 	$conceptsFromTaxRelations = extendQueryWordsByConceptTaxRelations($taggedSignificantWords, $lang, true);
@@ -73,7 +74,7 @@ function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scor
 
 		$SURA = $documentScoreArr['SURA'];
 		$AYA = $documentScoreArr['AYA'];
-		$TEXT = $MODEL_CORE['QURAN_TEXT'][$SURA][$AYA];
+		$TEXT = $QURAN_TEXT[$SURA][$AYA];
 		$score = $documentScoreArr['SCORE'];
 
 		//echoN("SCORE BEFORE QUESTION RELEVANCE:$score");

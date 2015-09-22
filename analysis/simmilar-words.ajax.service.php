@@ -34,7 +34,7 @@ else
 	loadModels("core","EN");
 }
 
-$similarWordsArr = getSimilarWords(array($word));
+$similarWordsArr = getSimilarWords($lang,array($word));
 
 ?>
 

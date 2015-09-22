@@ -52,8 +52,10 @@ loadModels("core",$lang);
 						<div id="charts-verses-persura" >
 							<?php 
 							
+							$TOTALS = getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+							
 							$suraVerseArr = array();
-							foreach ($MODEL_CORE['TOTALS']['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
+							foreach ($TOTALS['TOTAL_PER_SURA'] as $suraIndex => $perSuraArr )
 							{
 								$suraVerseArr[] = array($suraIndex+1,$perSuraArr['VERSES']);
 							}

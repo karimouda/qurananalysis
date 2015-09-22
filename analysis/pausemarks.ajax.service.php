@@ -35,6 +35,14 @@ if ( ($pauseMark=="") )
 
 					$markedVerses = array();
 					$unrepeatedWords = array();
+					
+					$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+						
+					$META_DATA = getModelEntryFromMemory($lang, "MODEL_CORE", "META_DATA", "");
+					
+					$TOTALS= getModelEntryFromMemory($lang, "MODEL_CORE", "TOTALS", "");
+						
+				
 			
 
 				$i=0;
@@ -43,17 +51,17 @@ if ( ($pauseMark=="") )
 		  		{
 		  		
 		  				
-		  			$suraSize = count($MODEL_CORE['QURAN_TEXT'][$s]);
+		  			$suraSize = count($QURAN_TEXT[$s]);
 		  		
 		  			/* VERSES LOOP **/
 			  		for ($a=0;$a<$suraSize;$a++)
 			  		{
 			  			$i++;
-			  			$verseText = $MODEL_CORE['QURAN_TEXT'][$s][$a];
+			  			$verseText = $QURAN_TEXT[$s][$a];
 			  			
 			  			if ( mb_strpos($verseText,$pauseMark)!==false)
 			  			{
-				  			$suraName = $MODEL_CORE['META_DATA']['SURAS'][$s]['name_'.strtolower($lang)];
+				  			$suraName = $META_DATA['SURAS'][$s]['name_'.strtolower($lang)];
 				  			
 						
 							$verseLocation = ($s+1).":".($a+1);
@@ -97,7 +105,7 @@ if ( ($pauseMark=="") )
 						//exit;
 					foreach($markedVerses as $location=> $verseText)
 					{
-						$suraName = $MODEL_CORE['META_DATA']['SURAS'][($location[0]-1)]['name_'.strtolower($lang)];
+						$suraName = $META_DATA['SURAS'][($location[0]-1)]['name_'.strtolower($lang)];
 							
 						?>
 						<div class='pos-value-div' location='<?=$location?>'>
