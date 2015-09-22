@@ -98,7 +98,7 @@ function addToInvertedIndex(&$invertedIndexBatchApcArr,$lang,$word,$suraID,$vers
 
 }
 
-function getWordFromInvertedIndexKey($key)
+function getEntryKeyFromAPCKey($key)
 {
 	return substr($key, strrpos($key, "/")+1);
 }
@@ -562,9 +562,9 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 	
 			//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
 			
-			$invertedIndexEntry = getModelEntryFromMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word);
+			$invertedIndexEntryArr1 = getModelEntryFromMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word);
 	
-			foreach ($invertedIndexEntry as $documentArrInIndex)
+			foreach ($invertedIndexEntryArr1 as $documentArrInIndex)
 			{
 					
 	
@@ -588,9 +588,12 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 				//echoN($WORD_TYPE);
 				//preprint_r($documentArrInIndex);
 				//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
+				
+				 $qacMasterTableEntryArr2 = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$qacLocation);
+		  	
 					
 				// search QAC for roots and LEMMAS for this word
-				foreach ( $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation] as $segmentIndex => $segmentDataArr)
+				foreach ($qacMasterTableEntryArr2 as $segmentIndex => $segmentDataArr)
 				{
 					$segmentFormAR = $segmentDataArr['FORM_AR'];
 					$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentFormAR];
@@ -1344,7 +1347,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 	return $searchResultsTextArr;
 }
 
-function postResultSuggestions($queryWordsWithoutDerivation)
+function postResultSuggestions($lang,$queryWordsWithoutDerivation)
 {
 	global $MODEL_SEARCH,$MODEL_QA_ONTOLOGY;
 	
@@ -1355,7 +1358,7 @@ function postResultSuggestions($queryWordsWithoutDerivation)
 	{
 		if ( mb_strlen($word) <=2) continue;
 		
-		if (!modelEntryExistsInMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
+		if (!modelEntryExistsInMemory($lang,"MODEL_SEARCH","INVERTED_INDEX",$word) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
 		{
 			$wordsNotInTheQuran[$word]=1;
 		}
@@ -1606,7 +1609,7 @@ function wordOrPhraseIsInIndex($lang,$wordOrPhrase)
 	
 	foreach($subwordsArr as $index => $word)
 	{
-		if (modelEntryExistsInMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$word) )
+		if (modelEntryExistsInMemory($lang,"MODEL_SEARCH","INVERTED_INDEX",$word) )
 		{
 			return true;
 		}

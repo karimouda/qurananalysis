@@ -65,8 +65,18 @@ loadModels("core,qac",$lang);
 							<select id='pos-selection'>
 					 <option value="" selected="true">&nbsp;</option>
 						<?php 
-							foreach ($MODEL_QAC['QAC_POS'] as $posTypeName => $posArr )
+						
+							$qacPoSTagsIterator = getAPCIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
+						
+						
+							
+							foreach ($qacPoSTagsIterator as $qacPoSTagsIteratorCursor )
 							{
+								
+								$posArr = $qacPoSTagsIteratorCursor['value'];
+								$key = $qacPoSTagsIteratorCursor['key'];
+								$posTypeName = getEntryKeyFromAPCKey($key);
+							
 								
 								
 						?>

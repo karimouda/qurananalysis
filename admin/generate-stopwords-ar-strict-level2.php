@@ -15,20 +15,36 @@ $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
 printHTMLPageHeader();
 
+//$qacMasterTableEntryArr2 = getModelEntryFromMemory("AR","MODEL_QAC","QAC_POS",$qacLocation);
 
-foreach($MODEL_QAC['QAC_POS'] as $POS => $POS_ARR)
+
+$qacPoSTagsIterator = getAPCIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
+
+
+
+foreach($qacPoSTagsIterator as $qacPoSTagsIteratorCursor)
 {
-	
+
+	$POS_ARR = $qacPoSTagsIteratorCursor['value'];
+	$key = $qacPoSTagsIteratorCursor['key'];
+	$POS = getEntryKeyFromAPCKey($key);
 	
 	if ( $POS=="N" || $POS=="PN" || $POS=="ADJ") continue;
 	//echoN("|$POS|");
+	
+	
 	foreach($POS_ARR as $location => $segmentId)
 	{
+		
+
+		
+		$qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$location);
+		
 	
 		// get Word, Lema and root
-		$segmentWord = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FORM_AR'];
-		$segmentWordLema = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['LEM'];
-		$segmentWordRoot = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['ROOT'];
+		$segmentWord = $qacMasterTableEntry[$segmentId-1]['FORM_AR'];
+		$segmentWordLema = $qacMasterTableEntry[$segmentId-1]['FEATURES']['LEM'];
+		$segmentWordRoot = $qacMasterTableEntry[$segmentId-1]['FEATURES']['ROOT'];
 		$verseLocation = substr($location,0,strlen($location)-2);
 		//$segmentWord = removeTashkeel($segmentWord);
 		
@@ -37,10 +53,10 @@ foreach($MODEL_QAC['QAC_POS'] as $POS => $POS_ARR)
 		if ( $POS=="DET"  )
 		{
 			// second segment PoS
-			$segmentPoStag = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId]['TAG'];
+			$segmentPoStag = $qacMasterTableEntry[$segmentId]['TAG'];
 			
 			//number of segments
-			$numberOfSegmentsInWord = count($MODEL_QAC['QAC_MASTERTABLE'][$location]);
+			$numberOfSegmentsInWord = count($qacMasterTableEntry);
 			
 			if ( ($segmentPoStag=="N" || $segmentPoStag=="ADJ") && $numberOfSegmentsInWord==2 )
 			{
@@ -85,6 +101,7 @@ $stopWordsFromQuran[$ya]=1;
 
 echoN(count($stopWordsFromQuran));
 //preprint_r($stopWordsFromQuran);
+
 
 file_put_contents(dirname(__FILE__)."/../data/quran-stop-words.strict.l2.ar", implode("\n", array_keys($stopWordsFromQuran)));
 exit;

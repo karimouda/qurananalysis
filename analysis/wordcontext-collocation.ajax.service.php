@@ -65,7 +65,10 @@ $ssPoSAggregationCorrespondingSent = array();
 			
 			if ( $targetType=="POS" )
 			{
-				if (   !isset($MODEL_QAC['QAC_POS'][$targetPOSorWord]))
+				
+				
+				
+				if (   !modelEntryExistsInMemory("AR","MODEL_QAC","QAC_POS",$targetPOSorWord))
 				{
 					showTechnicalError("Not a valid PoS tag !");
 					exit;

@@ -57,13 +57,21 @@ $MODEL_CORE_UTH = loadUthmaniDataModel();
 		
 		}
 		$initialsVersesWordsArr = array();
-			foreach($MODEL_QAC['QAC_POS']["INL"] as $location => $segmentId)
+		
+		
+		    $qacPosEntryArr = getModelEntryFromMemory("AR","MODEL_QAC","QAC_POS","INL");
+		
+		
+			foreach($qacPosEntryArr as $location => $segmentId)
 			{
 			
+				$qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$location);
+				
+				
 				// get Word, Lema and root
-				$segmentWord = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FORM_AR'];
-				$segmentWordLema = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['LEM'];
-				$segmentWordRoot = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['ROOT'];
+				$segmentWord = $qacMasterTableEntry[$segmentId-1]['FORM_AR'];
+				$segmentWordLema = $qacMasterTableEntry[$segmentId-1]['FEATURES']['LEM'];
+				$segmentWordRoot = $qacMasterTableEntry[$segmentId-1]['FEATURES']['ROOT'];
 				$verseLocation = substr($location,0,strlen($location)-2);
 				//$segmentWord = removeTashkeel($segmentWord);
 			

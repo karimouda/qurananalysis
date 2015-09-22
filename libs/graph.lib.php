@@ -109,7 +109,7 @@ function createNewConceptObj(&$nodeSerialNumber,$lang,$finalNodeLabel,$ontologyC
 	
 	if ( $lang=="EN")
 	{
-		$conceptShortDesc = htmlspecialchars($ontologyConceptArr['meaning_wordnet_en'],ENT_QUOTES);
+		$conceptShortDesc = ucfirst(trim(htmlspecialchars($ontologyConceptArr['meaning_wordnet_en'],ENT_QUOTES)));
 	}
 	else 
 	{

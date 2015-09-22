@@ -566,14 +566,19 @@ function getWordsByPos(&$finalTerms,$POS)
 	global $LEMMA_TO_SIMPLE_WORD_MAP;
 	 
 	 
+	$qacPosEntryArr = getModelEntryFromMemory("AR","MODEL_QAC","QAC_POS",$POS);
+	
+	
 	// Get all segment in QAC for that PoS
-	foreach($MODEL_QAC['QAC_POS'][$POS] as $location => $segmentId)
+	foreach($qacPosEntryArr as $location => $segmentId)
 	{
 
+		$qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$location);
+		
 		// get Word, Lema and root
-		$segmentWord = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FORM_AR'];
-		$segmentWordLema = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['LEM'];
-		$segmentWordRoot = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES']['ROOT'];
+		$segmentWord = $qacMasterTableEntry[$segmentId-1]['FORM_AR'];
+		$segmentWordLema = $qacMasterTableEntry[$segmentId-1]['FEATURES']['LEM'];
+		$segmentWordRoot = $qacMasterTableEntry[$segmentId-1]['FEATURES']['ROOT'];
 		$verseLocation = substr($location,0,strlen($location)-2);
 		//$segmentWord = removeTashkeel($segmentWord);
 

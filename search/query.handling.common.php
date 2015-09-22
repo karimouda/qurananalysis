@@ -389,7 +389,7 @@ if ( !$isQuestion && !$isColumnSearch)
 	
 
 
-	$postResultSuggestionArr = postResultSuggestions(($originalQueryWordsArrSwaped));
+	$postResultSuggestionArr = postResultSuggestions($lang,$originalQueryWordsArrSwaped);
 	
 	
 	// remove query words from suggestion

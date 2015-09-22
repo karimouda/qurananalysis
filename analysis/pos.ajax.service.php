@@ -39,16 +39,25 @@ if ( ($POS=="") )
 					$unrepeatedWords = array();
 					//preprint_r($MODEL_QAC['QAC_POS'][$POS]);
 					
-					$allOccurencesCount = count($MODEL_QAC['QAC_POS'][$POS]);
 					
-					//preprint_r($MODEL_QAC['QAC_POS'][$POS]);exit;
+					$qacPosEntryArr = getModelEntryFromMemory("AR","MODEL_QAC","QAC_POS",$POS);
+					 
+					
+					$allOccurencesCount = count($qacPosEntryArr);
+					
+			
 
-					foreach($MODEL_QAC['QAC_POS'][$POS] as $location => $segmentId)
+					foreach($qacPosEntryArr as $location => $segmentId)
 					{
 						//echoN($location);
 						//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$location]);
 						//echoN($segmentId);
-						$segmentWord = $MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FORM_AR'];
+						
+						$qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$location);
+						
+						
+						
+						$segmentWord = $qacMasterTableEntry[$segmentId-1]['FORM_AR'];
 						$verseLocation = substr($location,0,strlen($location)-2);
 						//$segmentWordSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];//removeTashkeel($segmentWord);
 						
@@ -68,7 +77,7 @@ if ( ($POS=="") )
 							$isFeatureFound = false;
 							foreach($featuresArr as $oneFeature)
 							{
-								$isFeatureFound = isset($MODEL_QAC['QAC_MASTERTABLE'][$location][$segmentId-1]['FEATURES'][$features]);
+								$isFeatureFound = isset($qacMasterTableEntry[$segmentId-1]['FEATURES'][$features]);
 							}
 						
 							if ( $isFeatureFound==false)

@@ -955,6 +955,6 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 		
 		$("#sharing-link-panel-linkholder").html(link);
 		
-		$("#sharing-link-panel").show();
+		$("#sharing-link-panel").toggle();
 		
 	}

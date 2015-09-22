@@ -1642,7 +1642,7 @@
 		$wordRoot="";
 		
 	
-		if ( empty($wordSimple) || count($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple])==0)
+		if ( empty($wordSimple) || !modelEntryExistsInMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$wordSimple))
 		{
 			return null;
 		}
@@ -1650,8 +1650,10 @@
 		
 		//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple]);
 		
+		$invertedIndexEntry = getModelEntryFromMemory("AR","MODEL_SEARCH","INVERTED_INDEX",$wordSimple);
 		
-		foreach ($MODEL_SEARCH['INVERTED_INDEX'][$wordSimple] as $documentArrInIndex)
+		
+		foreach ($invertedIndexEntry as $documentArrInIndex)
 		{
 
 		
@@ -1674,8 +1676,12 @@
 			//preprint_r($MODEL_QAC['QAC_MASTERTABLE'][$qacLocation]);
 			//exit;
 		
+			
+			$qacMasterTableEntryArr = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$qacLocation);
+			 
+			
 			// search QAC for roots and LEMMAS for this word
-			foreach ( $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation] as $segmentIndex => $segmentDataArr)
+			foreach ( $qacMasterTableEntryArr as $segmentIndex => $segmentDataArr)
 			{
 				$tag = $segmentDataArr['TAG'];
 				$segmentWord = $segmentDataArr['FORM_AR'];
@@ -1898,7 +1904,9 @@
  		  				// $verseNonPauseWordsIndex = QAC WORD INDEX EXCLUDING PAUSE MAKRS
  		  				$qacLocation = ($s+1).":".($a+1).":".($verseNonPauseWordsIndex);
  		
- 		  				$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+ 		  				$qacWordSegmentsArr = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$qacLocation);
+ 		  					
+ 		  				//$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
  		
  		  				//echoN($qacLocation);
  		  				//echoN($verseLocation);
@@ -2501,7 +2509,10 @@
 		
 		//echoN($MODEL_QAC['QAC_ROOTS_LOOKUP'][$wordUthmani]);
 	
-		return $MODEL_QAC['QAC_ROOTS_LOOKUP'][$wordUthmani];
+			
+		return getModelEntryFromMemory("AR", "MODEL_QAC", "QAC_ROOTS_LOOKUP", $wordUthmani);
+		 
+		//return $MODEL_QAC['QAC_ROOTS_LOOKUP'][$wordUthmani];
 		
 	
 	}

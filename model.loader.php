@@ -23,7 +23,7 @@ $MODEL_CORE['LOADED']=0;
 $MODEL_CORE['SUPPORTED_LANGUAGES']=$supportedLanguages;
 
 //$MODEL_SEARCH = array();
-$MODEL_QAC = array();
+$//MODEL_QAC = array();
 $MODEL_QURANA = array();
 
 $MODEL_WORDNET = array();
@@ -178,13 +178,14 @@ function loadModels($modelsToBeLoaded,$lang)
 			{
 				//$MODEL_QAC = json_decode((file_get_contents("$serializedModelFile.qac")),TRUE);
 				
-				$MODEL_QAC  = apc_fetch("MODEL_QAC");
+				/*$MODEL_QAC  = apc_fetch("MODEL_QAC");
 				
 				
 				if ($MODEL_QAC===false )
 				{
 					echo "QAC MODEL NOT CACHED";exit;
 				}
+				*/
 			}
 			else if ( ($modelName=="qurana"))
 			{
@@ -714,12 +715,17 @@ function loadModels($modelsToBeLoaded,$lang)
 		  foreach($uthmaniWordsArr as $index => $wordUthmani)
 		  {
 	
-		  	  $lemma = $MODEL_QAC['QAC_MASTERTABLE'][($s+1).":".($a+1).":".($index+1)][0]['FEATURES']['LEM'];
+		  	  $qacMasterID = ($s+1).":".($a+1).":".($index+1);
+		  		
+		  	  $qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$qacMasterID);
+		  		
+		  		
+		  	  $lemma = $qacMasterTableEntry[0]['FEATURES']['LEM'];
 		  	
 		  	  // to handle multi segment words such as الدنيا 
 		  	  if ( empty($lemma))
 		  	  {
-		  	  	$lemma = $MODEL_QAC['QAC_MASTERTABLE'][($s+1).":".($a+1).":".($index+1)][1]['FEATURES']['LEM'];
+		  	  	$lemma = $qacMasterTableEntry[1]['FEATURES']['LEM'];
 		  	  }
 		  	  //echoN("|$lemma|$wordUthmani");
 		  	  
@@ -894,7 +900,7 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 		 $wordDataArr = $invertedIndexCursor['value'];
 		 $key = $invertedIndexCursor['key'];
-		 $word = getWordFromInvertedIndexKey($key);
+		 $word = getEntryKeyFromAPCKey($key);
 		 
 		foreach($wordDataArr as $index => $documentArrInIndex)
 		{
@@ -1022,6 +1028,9 @@ function loadModel($lang,$type,$file)
 
 	
 		$invertedIndexBatchApcArr = array();
+		$qacMasterTableBatchApcArr = array();
+		$qacPOSTableBatchApcArr = array();
+		$qacFeatureTableBatchApcArr = array();
 		
 		
 		$TOTALS_ARR = array();
@@ -1266,7 +1275,12 @@ function loadModel($lang,$type,$file)
 					
 					$featureValue = trim($featureValue);
 					// fill Features Index table
-					$qacFeaturesTable[$featureName][$masterID]= $featureValue;
+					//$qacFeaturesTable[$featureName][$masterID]= $featureValue;
+					
+					$apcMemoryEntryKey = "$lang/MODEL_QAC/QAC_FEATURES/$featureName";
+					
+					$qacFeatureTableBatchApcArr[$apcMemoryEntryKey][$masterID]=$featureValue;
+					
 					
 					$featuresArr[$featureName] = $featureValue;
 					
@@ -1279,7 +1293,10 @@ function loadModel($lang,$type,$file)
 						
 						if ( $featureName=="ROOT")
 						{
-							$rootsLookupArray[$formOrSegmentReverseTransliterated]=$featureValue;
+							//$rootsLookupArray[$formOrSegmentReverseTransliterated]=$featureValue;
+							
+							
+							addValueToMemoryModel($lang, "MODEL_QAC", "QAC_ROOTS_LOOKUP", $formOrSegmentReverseTransliterated, $featureValue);
 						}
 					}
 					
@@ -1292,21 +1309,27 @@ function loadModel($lang,$type,$file)
 				$qacSegmentToWordTable[$segmentIndex] = $wordIndex;
 				
 				// Fill master table
-				$qacMasterSegmentTable[$masterID][] = array("FORM_EN"=>$formOrSegment,
+				//$qacMasterSegmentTable[$masterID][]
+				$qacMasterTableEntry = array("FORM_EN"=>$formOrSegment,
 															"FORM_AR"=>$formOrSegmentReverseTransliterated,
 													  		"TAG"=>$posTAG,
 															"SEGMENT_INDEX"=>$segmentIndex++,
 															"FEATURES"=>$featuresArr);
 				
+				$apcMemoryEntryKey = "$lang/MODEL_QAC/QAC_MASTERTABLE/$masterID";
+				
+				$qacMasterTableBatchApcArr[$apcMemoryEntryKey][]=$qacMasterTableEntry;
 				
 				// Fill Part of Speech tagging table 
 				$qacPOSTable[$posTAG][$masterID]=$wordSegmentID;
 				
+				$apcMemoryEntryKey = "$lang/MODEL_QAC/QAC_POS/$posTAG";
 				
-			
+				$qacPOSTableBatchApcArr[$apcMemoryEntryKey][$masterID]=$wordSegmentID;
 				
-		
 				
+				
+
 			}
 		
 		
@@ -1953,19 +1976,31 @@ function loadModel($lang,$type,$file)
 		
 				  		if ( $lang=="AR"  )
 				  		{
-					  		$MODEL_QAC['QAC_MASTERTABLE'] = $qacMasterSegmentTable;
-					  		$MODEL_QAC['QAC_POS'] = $qacPOSTable;
-					  		$MODEL_QAC['QAC_FEATURES'] = $qacFeaturesTable;
-					  		$MODEL_QAC['QAC_ROOTS_LOOKUP'] = $rootsLookupArray;
+					  		//$MODEL_QAC['QAC_MASTERTABLE'] = $qacMasterSegmentTable;
+					  		
+				  			addToMemoryModelBatch($qacMasterTableBatchApcArr);
+				  			
+					  		//$MODEL_QAC['QAC_POS'] = $qacPOSTable;
+					  		
+				  			
+				  			
+				  			addToMemoryModelBatch($qacPOSTableBatchApcArr);
+				  			
+					  		//$MODEL_QAC['QAC_FEATURES'] = $qacFeaturesTable;
+					  		
+				  			
+				  			addToMemoryModelBatch($qacFeatureTableBatchApcArr);
+				  			
+					  		//$MODEL_QAC['QAC_ROOTS_LOOKUP'] = $rootsLookupArray;
 					  		
 					  		
 					  		
 					  		
 					  		//file_put_contents("$serializedModelFile.qac", (json_encode($MODEL_QAC)));
 					  		
-					  		$res = apc_store("MODEL_QAC",$MODEL_QAC);
+					  		//$res = apc_store("MODEL_QAC",$MODEL_QAC);
 					  		
-					  		if ( $res===false){ throw new Exception("Can't cache MODEL_QAC"); }
+					  		//if ( $res===false){ throw new Exception("Can't cache MODEL_QAC"); }
 					  		
 					  		
 					  		rsortBy($quranaConcecpts,'FREQ');

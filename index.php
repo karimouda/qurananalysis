@@ -195,7 +195,13 @@ $query = $_GET['q'];
 
 			var intervalID = setInterval(function(){ $("#main-page-click-icon").toggle(); },"100");
 
-			setTimeout(function(){ clearInterval(intervalID) },500);
+			setTimeout(function()
+			{ 
+				clearInterval(intervalID);
+				$("#main-page-click-icon").toggle();
+				
+			 },500);
+			 
 			<?php endif;?>
 
 

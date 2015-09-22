@@ -35,7 +35,7 @@ if ( ($pauseMark=="") )
 
 					$markedVerses = array();
 					$unrepeatedWords = array();
-					//preprint_r($MODEL_QAC['QAC_POS'][$POS]);
+			
 
 				$i=0;
 				/* SURA'S LOOP **/
