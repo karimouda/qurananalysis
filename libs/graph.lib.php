@@ -225,7 +225,10 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 				$word = strtolower($word);
 				
 				// translate English name to arabic concept name/id
-				$wordConveretedToConceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+				//$wordConveretedToConceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+				
+				$wordConveretedToConceptID  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS_EN_AR_NAME_MAP", $word);
+				
 			}
 			else 
 			{
@@ -235,15 +238,15 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 			
 		
 			
-			if ( isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]) )
+			if ( modelEntryExistsInMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $wordConveretedToConceptID) )
 			{
 
 				
 				
 				//preprint_r($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]);exit;
 				//echoN($wordConveretedToConceptID);
-				
-				$mainConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID];
+				$mainConceptArr  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $wordConveretedToConceptID);
+				//$mainConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID];
 				
 				$conceptLabelAR = $mainConceptArr['label_ar'];
 				$conceptLabelEN = $mainConceptArr['label_en'];
@@ -301,6 +304,8 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 	$tooManyConcepts = (count($graphNodes) > 200);
 	
 
+	$ONTOLOGY_RELATIONS = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "RELATIONS", "");
+	
 	//preprint_r($graphNodes,1);exit;
 	
 	$linksHashLookupTable = array();
@@ -312,9 +317,13 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 		{
 		
 			$conceptID = convertWordToConceptID($concept);
-			$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptID];
-			$relationsOfConceptAsTarget = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptID];
+			//$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptID];
+			
+			$relationsOfConceptAsSource  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_SOURCES", $conceptID);
+			
+			//$relationsOfConceptAsTarget = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptID];
 				
+			$relationsOfConceptAsTarget  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_TARGETS", $conceptID);
 		
 			
 			foreach( $relationsOfConceptAsSource as $index => $relArr)
@@ -347,10 +356,12 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 				
 				$relHashID = buildRelationHashID($conceptID,$verb,$object);
 				
-				$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
+				$fullRelationArr = $ONTOLOGY_RELATIONS[$relHashID];
 				
 				
-				$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
+				//$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
+				$conceptArr  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $object);
+				
 			
 				$finalNodeLabel = $conceptArr['label_ar'];
 					
@@ -431,12 +442,13 @@ function ontologyTextToD3Graph($MODEL_QA_ONTOLOGY,$inputType,$searchResultTextAr
 		
 				
 				$relHashID = buildRelationHashID($subject,$verb,$concept);
-				$fullRelationArr = $MODEL_QA_ONTOLOGY['RELATIONS'][$relHashID];
+				$fullRelationArr = $ONTOLOGY_RELATIONS[$relHashID];
 			
 				$randomXLocation = rand($startLocationXMin,$startLocationXMax);
 				$randomYLocation = rand($startLocationYMin,$startLocationYMax);
 				
-				$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
+				//$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
+				$conceptArr  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $subject);
 		
 				$finalNodeLabel = $conceptArr['label_ar'];
 				
@@ -535,8 +547,11 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 	/** SHOULD BE ZERO BASED FOR D3 TO WORK - o.target.weight = NULL**/
 	$nodeSerialNumber = 0;
 
+	$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+	
+	$conceptCount = $qaOntologyConceptsIterator->getTotalCount();
 
-	if ( count($MODEL_QA_ONTOLOGY['CONCEPTS']) < 100)
+	if ( count($conceptCount) < 100)
 	{
 		$startLocationXMin = 100;
 		$startLocationXMax = 200;
@@ -551,8 +566,11 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 		$startLocationYMax = 300;
 	}
 
-	foreach($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptNameID => $conceptArr)
+	foreach($qaOntologyConceptsIterator as $conceptsCursor )
 	{
+		$conceptNameID = getEntryKeyFromAPCKey($conceptsCursor['key']);
+		
+		$conceptArr = $conceptsCursor['value'];
 
 			$conceptLabelAR = $conceptArr['label_ar'];
 			$conceptLabelEN = $conceptArr['label_en'];
@@ -585,9 +603,9 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 
 	}
 	
+	$ONTOLOGY_RELATIONS = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "RELATIONS", "");
 	
-	
-		foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $index => $relArr)
+		foreach($ONTOLOGY_RELATIONS as $index => $relArr)
 		{
 
 			$subject = $relArr['SUBJECT'];
@@ -647,10 +665,13 @@ function ontologyToD3TreemapFlat($MODEL_QA_ONTOLOGY,$minFreq=0)
 	$nodeSerialNumber = 0;
 
 
+	$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 
-
-	foreach($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptNameID => $conceptArr)
+	foreach($qaOntologyConceptsIterator as $conceptsCursor )
 	{
+		$conceptNameID = getEntryKeyFromAPCKey($conceptsCursor['key']);
+		
+		$conceptArr = $conceptsCursor['value'];
 
 		$conceptLabelAR = $conceptArr['label_ar'];
 		$conceptLabelEN = $conceptArr['label_en'];
@@ -672,9 +693,10 @@ function ontologyToD3TreemapFlat($MODEL_QA_ONTOLOGY,$minFreq=0)
 
 	}
 
+	$ONTOLOGY_RELATIONS = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "RELATIONS", "");
+	
 
-
-	foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $index => $relArr)
+	foreach($ONTOLOGY_RELATIONS as $index => $relArr)
 	{
 
 	
@@ -688,7 +710,9 @@ function ontologyToD3TreemapFlat($MODEL_QA_ONTOLOGY,$minFreq=0)
 		
 		//$treeRootObj[$subject]["children"][]["name"]=$object;
 		
-		$objectConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
+		
+		$objectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $object);
+		//$objectConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$object];
 		
 			
 		$index = search2DArrayForValue($currentArr,$subject);
@@ -719,8 +743,8 @@ function getTreeNodeChildren($MODEL_QA_ONTOLOGY,$conceptNameID,$minFreq,$lang,$l
 	if ( $level++ > 5 ) return;
 	
 	
-	
-	$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptNameID];
+	$relationsOfConceptAsSource = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_TARGETS", $conceptNameID);
+	//$relationsOfConceptAsSource = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptNameID];
 	
 		
 
@@ -736,7 +760,8 @@ function getTreeNodeChildren($MODEL_QA_ONTOLOGY,$conceptNameID,$minFreq,$lang,$l
 			
 		//echoN("==".$subject);
 		
-		$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
+		$conceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $subject);
+		//$conceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$subject];
 	
 		$conceptLabelAR = $conceptArr['label_ar'];
 		$conceptLabelEN = $conceptArr['label_en'];
@@ -816,10 +841,15 @@ function ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,$minFreq=0,$lang)
 	
 	
 
-	//echoN(count($MODEL_QA_ONTOLOGY['CONCEPTS']));
+
+	$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 	
-	foreach($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptNameID => $conceptArr)
+	foreach($qaOntologyConceptsIterator as $conceptsCursor )
 	{
+		$conceptNameID = getEntryKeyFromAPCKey($conceptsCursor['key']);
+	
+		$conceptArr = $conceptsCursor['value'];
+
 
 		$conceptLabelAR = $conceptArr['label_ar'];
 		$conceptLabelEN = $conceptArr['label_en'];

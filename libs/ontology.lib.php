@@ -139,7 +139,6 @@ function addNewRelation(&$relationArr,$type,$subject,$verbSimple,$object,$posPat
 
 function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern,$verbEngTranslation="",$fullVerbQuranWord="")
 {
-	global  $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
 	global $WORDS_TRANSLATIONS_AR_EN;
 	global $is_a_relation_name_en;
 	
@@ -155,7 +154,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 	if ( !isSimpleQuranWord($subject) )
 	{
 		//CONVERT UTHMANI TO SIMPLE
-		$subjectSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$subject];
+		$subjectSimple = getItemFromUthmaniToSimpleMappingTable($subject);
 			
 		// IF NOT CORRESPONDING SIMPLE WORD, CONVERT USING SHALLOW CONVERSION ALGORITHM
 		if ( empty($subjectSimple))
@@ -171,7 +170,7 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 	// SAME AS ABOVE BUT FOR OBJECT
 	if ( !isSimpleQuranWord($object) )
 	{
-		$objectSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$object];
+		$objectSimple = getItemFromUthmaniToSimpleMappingTable($object);
 
 		//object simple to avoid null in case when not in the mapping table
 		if ( empty($objectSimple))
@@ -203,13 +202,13 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 			// VERB IS SIMPLE
 			if ( isSimpleQuranWord($verb) )
 			{
-				$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$fullVerbQuranWord];
+				$translatableVerb = getItemFromUthmaniToSimpleMappingTable($fullVerbQuranWord);
 
 			}
 			else
 			{
 
-				$verbSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verb];;
+				$verbSimple = getItemFromUthmaniToSimpleMappingTable($verb);;
 			}
 			
 			$verbEngTranslation = cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$translatableVerb]);
@@ -255,12 +254,12 @@ function addRelation(&$relationsArr,$type, $subject,$verb,$object,$joinedPattern
 				if ( isSimpleQuranWord($verbPart) )
 				{
 					//GET UTHMANI WORD TO BE ABEL TO TRANSLATE
-					$translatableVerb = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verbPart];
+					$translatableVerb = getItemFromUthmaniToSimpleMappingTable($verbPart);
 				}
 				else
 				{
 					// GET SIMPLE WORD TO BE ADDED IN RELATION META
-					$simplePart = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$verbPart];
+					$simplePart = getItemFromUthmaniToSimpleMappingTable($verbPart);
 					
 					//if not in translation table, use shalow conversion
 					if ( empty($simplePart))
@@ -562,7 +561,7 @@ function getConceptTypeFromDescriptionText($abstract)
 /** Returns words from QAC by PoS tags - grouped by lemma **/
 function getWordsByPos(&$finalTerms,$POS)
 {
-	global $MODEL_QAC,$UTHMANI_TO_SIMPLE_LOCATION_MAP,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
+
 	global $LEMMA_TO_SIMPLE_WORD_MAP;
 	 
 	 
@@ -597,7 +596,7 @@ function getWordsByPos(&$finalTerms,$POS)
 		//$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];
 
 		// get simple version of the word index
-		$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location,$UTHMANI_TO_SIMPLE_LOCATION_MAP);
+		$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location);
 
 
 		// get verse text
@@ -620,7 +619,7 @@ function getWordsByPos(&$finalTerms,$POS)
 		|| mb_strpos($segmentWordLema, $alefWasla) !==false )
 		{
 
-			$imla2yWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWordLema];
+			$imla2yWord = getItemFromUthmaniToSimpleMappingTable($segmentWordLema);
 
 			if (empty($imla2yWord))
 			{
@@ -632,7 +631,7 @@ function getWordsByPos(&$finalTerms,$POS)
 		}
 		else
 		{
-			$imla2yWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWordLema];
+			$imla2yWord = getItemFromUthmaniToSimpleMappingTable($segmentWordLema);
 
 			if ( empty($imla2yWord))
 			{
@@ -829,12 +828,17 @@ function buildRelationHashID($subject,$verb,$object)
 
 function isWordPartOfAVerbInVerbIndex($word,$lang)
 {
-	global $MODEL_QA_ONTOLOGY;
+
 	
+	$verbIndexIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/VERB_INDEX\/.*");
 	
-	
-	foreach( $MODEL_QA_ONTOLOGY['VERB_INDEX'] as $verbWord => $verbArr)
+	foreach($verbIndexIterator as $verbIndexCursor )
 	{
+		$verbWord = getEntryKeyFromAPCKey($verbIndexCursor['key']);
+	
+		$verbArr = $verbIndexCursor['value'];
+	
+
 		if ( $lang=="EN")
 		{
 			$verbWord = strtolower($verbWord);
@@ -853,7 +857,7 @@ function isWordPartOfAVerbInVerbIndex($word,$lang)
 
 function handleNewConceptFromRelation(&$finalConcepts,$subjectOrObject,$conceptLocationInRelation,&$notInCounceptsCounter,&$statsUniqueSubjects)
 {
-	global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS, $WORDS_TRANSLATIONS_AR_EN;
+	global  $WORDS_TRANSLATIONS_AR_EN;
 	
 	$subjectOrObjectFlag =  null;
 		
@@ -900,7 +904,7 @@ function handleNewConceptFromRelation(&$finalConcepts,$subjectOrObject,$conceptL
 	}
 	else
 	{
-		$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$subjectOrObject];
+		$uthmaniWord = getItemFromUthmaniToSimpleMappingTable($subjectOrObject);
 		$engTranslation = ucfirst(cleanEnglishTranslation($WORDS_TRANSLATIONS_AR_EN[$uthmaniWord]));
 	}
 		
@@ -982,7 +986,7 @@ function getConceptsFoundInText($text,$lang)
 
 	global $thing_class_name_ar, $is_a_relation_name_ar;
 
-	global $MODEL_QA_ONTOLOGY;
+
 	
 	$conceptsInTextArr = array();
 
@@ -1001,9 +1005,11 @@ function getConceptsFoundInText($text,$lang)
 				$word = strtolower($word);
 				
 				
-
+				
 				// translate English name to arabic concept name/id
-				$wordConveretedToConceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+				//$wordConveretedToConceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+				
+				$wordConveretedToConceptID  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS_EN_AR_NAME_MAP", $word);
 			}
 			else
 			{
@@ -1012,13 +1018,15 @@ function getConceptsFoundInText($text,$lang)
 			}
 				
 			//echoN($wordConveretedToConceptID);
-				
-			if ( isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]) )
+			
+			if ( modelEntryExistsInMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $wordConveretedToConceptID) )
 			{
 				//preprint_r($MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID]);exit;
 				//echoN($wordConveretedToConceptID);
 
-				$mainConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID];
+				//$mainConceptArr = $MODEL_QA_ONTOLOGY['CONCEPTS'][$wordConveretedToConceptID];
+				
+				$mainConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $wordConveretedToConceptID);
 
 				$conceptLabelAR = $mainConceptArr['label_ar'];
 				$conceptLabelEN = $mainConceptArr['label_en'];

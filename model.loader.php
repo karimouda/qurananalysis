@@ -28,14 +28,15 @@ $MODEL_QURANA = array();
 
 $MODEL_WORDNET = array();
 
+/*
+
 $MODEL_QA_ONTOLOGY = array();
 $MODEL_QA_ONTOLOGY['CONCEPTS'] =  array();;
 $MODEL_QA_ONTOLOGY['RELATIONS'] =  array();;
 $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] =  array();;
 $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] =  array();;
 $MODEL_QA_ONTOLOGY['VERB_INDEX'] =  array();;
-
-
+/*
 /*
 foreach ($MODEL_CORE['SUPPORTED_LANGUAGES'] as $supportedLang)
 {
@@ -82,7 +83,7 @@ function loadModels($modelsToBeLoaded,$lang)
 
 
 	
-	echoN("MODEL EXISTS IN CACHE?:".apc_exists("EN/MODEL_CORE/TOTALS/"));
+	//echoN("MODEL EXISTS IN CACHE?:".apc_exists("EN/MODEL_CORE/TOTALS/"));
 	
 	##### CHECK MODEL IN CACHE ##### #####
 	if ( TRUE && apc_exists("EN/MODEL_CORE/TOTALS/")!==false)
@@ -100,15 +101,15 @@ function loadModels($modelsToBeLoaded,$lang)
 		foreach( $modelListArr as $modelName)
 		{
 			//echoN("$modelName $lang ".time());
-			echoN(memory_get_peak_usage());
-			echoN($modelName);
+		//	echoN(memory_get_peak_usage());
+			//echoN($modelName);
 			
 			
 			if ( $modelName=="ontology")
 			{
 			
 				
-				$MODEL_QA_ONTOLOGY =  apc_fetch("MODEL_QA_ONTOLOGY");
+				/*$MODEL_QA_ONTOLOGY =  apc_fetch("MODEL_QA_ONTOLOGY");
 				
 				
 				
@@ -116,6 +117,7 @@ function loadModels($modelsToBeLoaded,$lang)
 				{
 					echo "$MODEL_QA_ONTOLOGY NOT CACHED";exit;
 				}
+				*/
 			}
 			
 			if ( $modelName=="wordnet")
@@ -546,11 +548,19 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 	
 		
-		$qaOntologyVerbIndex[$verb][]=array("SUBJECT"=>$subject,"OBJECT"=>$object);
-		$qaOntologyVerbIndex[$verb_translation_en][]=array("SUBJECT"=>$subject,"OBJECT"=>$object);
 		
-		$qaOntologyGraphSourcesIndex[$subject][]=array("link_verb"=>$verb,"target"=>$object,"relation_index"=>$index);
-		$qaOntologyGraphTargetsIndex[$object][]=array("source"=>$subject,"link_verb"=>$verb,"relation_index"=>$index);
+		//$qaOntologyVerbIndex[$verb][]=array("SUBJECT"=>$subject,"OBJECT"=>$object);
+		//$qaOntologyVerbIndex[$verb_translation_en][]=array("SUBJECT"=>$subject,"OBJECT"=>$object);
+		
+		addValueToMemoryModel("ALL", "MODEL_QA_ONTOLOGY", "VERB_INDEX", $verb, array("SUBJECT"=>$subject,"OBJECT"=>$object));
+		addValueToMemoryModel("ALL", "MODEL_QA_ONTOLOGY", "VERB_INDEX", $verb_translation_en, array("SUBJECT"=>$subject,"OBJECT"=>$object));
+		
+		//$qaOntologyGraphSourcesIndex[$subject][]=array("link_verb"=>$verb,"target"=>$object,"relation_index"=>$index);
+		//$qaOntologyGraphTargetsIndex[$object][]=array("source"=>$subject,"link_verb"=>$verb,"relation_index"=>$index);
+		
+		
+		addToMemoryModelList("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_SOURCES", $subject, array("link_verb"=>$verb,"target"=>$object,"relation_index"=>$index));
+		addToMemoryModelList("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_TARGETS", $object, array("source"=>$subject,"link_verb"=>$verb,"relation_index"=>$index));
 		
 		
 		
@@ -569,15 +579,22 @@ function loadModels($modelsToBeLoaded,$lang)
 	{
 		$enLabel = trim(strtolower($conceptArr['label_en']));
 	
-		$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
 		//$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
+		//$qaOntologyConceptsENtoARMapArr[$enLabel]=$arName;
+		
+		
+		
+		addValueToMemoryModel("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS_EN_AR_NAME_MAP", $enLabel, $arName);
+		
+		
+		
 	}
 	
 	$qaSynonymsIndex = array();
 	
 	foreach($qaOntologyConceptsArr as $arName => $conceptArr)
 	{
-	
+		addValueToMemoryModel("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $arName, $conceptArr);
 	
 			
 		$i=1;
@@ -595,6 +612,8 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 			$qaSynonymsIndex[$synonymLabel]=$arName;
 			
+			addValueToMemoryModel("ALL", "MODEL_QA_ONTOLOGY", "SYNONYMS_INDEX", $synonymLabel, $arName);
+			
 			$i++;
 
 		}
@@ -603,19 +622,27 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	//preprint_r($qaOntologyConceptsArr);exit;
 	
-	$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
-	$MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'] = $qaOntologyConceptsENtoARMapArr;
-	$MODEL_QA_ONTOLOGY['RELATIONS'] = $qaOntologyRelationsArr;
-	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] = $qaOntologyGraphSourcesIndex;
-	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
+	//$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
 	
-	$MODEL_QA_ONTOLOGY['VERB_INDEX']  = $qaOntologyVerbIndex;
 	
-	$MODEL_QA_ONTOLOGY['SYNONYMS_INDEX']  = $qaSynonymsIndex;
 	
-	$res = apc_store("MODEL_QA_ONTOLOGY",$MODEL_QA_ONTOLOGY);
+	//$MODEL_QA_ONTOLOGY['RELATIONS'] = $qaOntologyRelationsArr;
 	
-	if ( $res===false){ throw new Exception("Can't cache MODEL_QA_ONTOLOGY"); }
+	
+	addValueToMemoryModel("ALL", "MODEL_QA_ONTOLOGY", "RELATIONS", "", $qaOntologyRelationsArr);
+	
+	//$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] = $qaOntologyGraphSourcesIndex;
+	//$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
+	
+
+	 //$MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'] = $qaOntologyConceptsENtoARMapArr;
+	 //$MODEL_QA_ONTOLOGY['VERB_INDEX']  = $qaOntologyVerbIndex;
+	
+	//$MODEL_QA_ONTOLOGY['SYNONYMS_INDEX']  = $qaSynonymsIndex;
+	
+	//$res = apc_store("MODEL_QA_ONTOLOGY",$MODEL_QA_ONTOLOGY);
+	
+	//if ( $res===false){ throw new Exception("Can't cache MODEL_QA_ONTOLOGY"); }
 	
 	//preprint_r($MODEL_QA_ONTOLOGY);exit;
 	//////// END ONTOLOGY LOADING
@@ -809,7 +836,9 @@ function loadModels($modelsToBeLoaded,$lang)
 		     
 		  	  	
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordUthmani]=$wordSimple;
+			  addValueToMemoryModel("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP", $wordUthmani, $wordSimple);
 			  $UTHMANI_TO_SIMPLE_WORD_MAP[$wordSimple]=$wordUthmani;
+			  addValueToMemoryModel("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP", $wordSimple, $wordUthmani);
 			  
 			  if (!empty($lemma))
 			  {
@@ -839,6 +868,20 @@ function loadModels($modelsToBeLoaded,$lang)
 		  
 		}
 	}
+	
+	
+	/////// ADD UTHMANI TO SIMPLE LOCATION MAP TO MEMORY
+	foreach($UTHMANI_TO_SIMPLE_LOCATION_MAP as $verseLocation => $verseMappingArr)
+	{
+		/*foreach($mappingArr as $uhtmaniIndex=>$imal2yIndex)
+		{
+			
+		}*/
+		
+		addValueToMemoryModel("AR", "OTHERS", "UTHMANI_TO_SIMPLE_LOCATION_MAP", $verseLocation, $verseMappingArr);
+		
+	}
+	///////////////////////////////////////////////////////
 	  
 	//preprint_r($TRANSLATION_MAP_EN_TO_AR);exit;
 	//preprint_r($WORD_SENSES_AR);exit;
@@ -847,13 +890,13 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 	
 	// CAN'T BE ADDED IN THE CORE_MODEL since the mapping happens after loadModel
-	$res = apc_store("UTHMANI_TO_SIMPLE_WORD_MAP",$UTHMANI_TO_SIMPLE_WORD_MAP);
+	//$res = apc_store("UTHMANI_TO_SIMPLE_WORD_MAP",$UTHMANI_TO_SIMPLE_WORD_MAP);
 	
-	if ( $res===false){ throw new Exception("Can't cache UTHMANI_TO_SIMPLE_WORD_MAP"); }
+	//if ( $res===false){ throw new Exception("Can't cache UTHMANI_TO_SIMPLE_WORD_MAP"); }
 
-	$res = apc_store("UTHMANI_TO_SIMPLE_LOCATION_MAP",$UTHMANI_TO_SIMPLE_LOCATION_MAP);
+	//$res = apc_store("UTHMANI_TO_SIMPLE_LOCATION_MAP",$UTHMANI_TO_SIMPLE_LOCATION_MAP);
 	
-	if ( $res===false){ throw new Exception("Can't cache UTHMANI_TO_SIMPLE_LOCATION_MAP"); }
+	//if ( $res===false){ throw new Exception("Can't cache UTHMANI_TO_SIMPLE_LOCATION_MAP"); }
 	
 	$res = apc_store("LEMMA_TO_SIMPLE_WORD_MAP",$LEMMA_TO_SIMPLE_WORD_MAP);
 	
@@ -901,12 +944,16 @@ function loadModels($modelsToBeLoaded,$lang)
 	
 
 	
-	foreach(getAPCIterator("AR\/MODEL_SEARCH.*") as $invertedIndexCursor )
+	foreach(getAPCIterator("AR\/MODEL_SEARCH\/INVERTED_INDEX\/.*") as $invertedIndexCursor )
 	{
+		
+
 		
 		 $wordDataArr = $invertedIndexCursor['value'];
 		 $key = $invertedIndexCursor['key'];
 		 $word = getEntryKeyFromAPCKey($key);
+		 
+	
 		 
 		foreach($wordDataArr as $index => $documentArrInIndex)
 		{
@@ -935,13 +982,16 @@ function loadModels($modelsToBeLoaded,$lang)
 			}
 			else
 			{
+				// needed for highlighting pronoun charcters in search
 				$INDEX_IN_AYA_UTHMANI = $documentArrInIndex['INDEX_IN_AYA_UTHMANI'];
 					
-				$INDEX_IN_AYA_EMLA2Y = $UTHMANI_TO_SIMPLE_LOCATION_MAP[($SURA+1).":".($AYA+1)][$INDEX_IN_AYA_UTHMANI];
+				$INDEX_IN_AYA_EMLA2Y = getSimpleWordIndexByUthmaniWordIndex(($SURA+1).":".($AYA+1), $INDEX_IN_AYA_UTHMANI);
 					
 				$wordDataArr[$index]['INDEX_IN_AYA_EMLA2Y']=$INDEX_IN_AYA_EMLA2Y;
 			}
 		}
+		
+	
 		
 		//UPDATE
 		updateModelData($key,$wordDataArr);
@@ -1355,6 +1405,10 @@ function loadModel($lang,$type,$file)
 			unset($qacFileLinesArr);
 			
 			
+			// need to fluch tabel in memory since it is needed by Qurana - in segment function
+			addToMemoryModelBatch($qacMasterTableBatchApcArr);
+			
+			
 		}
 		
 			######### Qurana Pronomial Anaphone Corpus ###################	
@@ -1443,15 +1497,16 @@ function loadModel($lang,$type,$file)
 							$quranaSegmentForm = trim($quranaSegmentForm);
 							
 							// convert Qurana Segment ID to QAC segment for cross referenceing 
-							$qacSegment = getQACSegmentByQuranaSeqment($qacMasterSegmentTable,$suraID,$verseID,$verseLocalSegmentIndex,$quranaSegmentForm);
+							$qacSegment = getQACSegmentByQuranaSeqment($suraID,$verseID,$verseLocalSegmentIndex,$quranaSegmentForm);
 							
-							
+						
 							//echo("$qacSegment,$quranaSegmentID\n");
+					
 							
 							// get the id of the word where the segment is
 							$wordId = $qacSegmentToWordTable[$qacSegment];
 							
-							//echoN("$quranaSegmentForm $qacSegment $wordId");
+					
 							
 							
 							$quranaConcecpts[$conceptID]["FREQ"]++;
@@ -1474,6 +1529,8 @@ function loadModel($lang,$type,$file)
 								addToInvertedIndex($invertedIndexBatchApcArr,$lang,$quranaConcecpts[$conceptID]['AR'],($suraID-1),($verseID-1),$wordId,"PRONOUN_ANTECEDENT",$quranaSegmentForm);
 							}
 							 
+							
+						
 							
 						}
 					}
@@ -2005,7 +2062,7 @@ function loadModel($lang,$type,$file)
 				  		{
 					  		//$MODEL_QAC['QAC_MASTERTABLE'] = $qacMasterSegmentTable;
 					  		
-				  			addToMemoryModelBatch($qacMasterTableBatchApcArr);
+				  			
 				  			
 					  		//$MODEL_QAC['QAC_POS'] = $qacPOSTable;
 					  		

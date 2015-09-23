@@ -112,10 +112,7 @@ function addToInvertedIndex(&$invertedIndexBatchApcArr,$lang,$word,$suraID,$vers
 
 }
 
-function getEntryKeyFromAPCKey($key)
-{
-	return substr($key, strrpos($key, "/")+1);
-}
+
 
 function posTagUserQuery($query, $lang)
 {
@@ -172,7 +169,7 @@ function posTagUserQuery($query, $lang)
 //TODO: ADD SYNONYMS ENRICHMENT
 function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 {
-	global $MODEL_QA_ONTOLOGY;
+
 	
 	foreach($taggedSignificantWords as $word => $posTag)
 	{
@@ -200,9 +197,14 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 		
 			$simmlarWords = array();
 			
-			foreach ($MODEL_QA_ONTOLOGY['CONCEPTS'] as $conceptID => $mainConceptArr )
+			$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+			
+			foreach($qaOntologyConceptsIterator as $conceptsCursor )
 			{
-		
+				$conceptID = getEntryKeyFromAPCKey($conceptsCursor['key']);
+			
+				$mainConceptArr = $conceptsCursor['value'];
+	
 				
 				$conceptLabelAR = $mainConceptArr['label_ar'];
 				
@@ -335,7 +337,7 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 
 function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuestion = false)
 {
-	global $MODEL_QA_ONTOLOGY, $is_a_relation_name_ar,$thing_class_name_en,$thing_class_name_ar,$TRANSLATION_MAP_EN_TO_AR;
+	global  $is_a_relation_name_ar,$thing_class_name_en,$thing_class_name_ar,$TRANSLATION_MAP_EN_TO_AR;
 	
 	$conceptsFromTaxRelations = array();
 	
@@ -372,7 +374,8 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		if ( $lang=="EN")
 		{
 			//corresponding arabic Concept - only if it is a concept
-			$conceptIDStr = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+			//$conceptIDStr = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$word];
+			$conceptIDStr  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS_EN_AR_NAME_MAP", $word);
 		}
 		else 
 		{
@@ -382,11 +385,16 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 	
 		
 		//!$questionIncludesVerb since if the question includes a verb then the user is not looking ofr is-a relation
-		if ( !$questionIncludesVerb && isset($MODEL_QA_ONTOLOGY['CONCEPTS'][$conceptIDStr]) )
+		if ( !$questionIncludesVerb && modelEntryExistsInMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $conceptIDStr) )
 		{
-			$inboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptIDStr];
-			$outboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptIDStr];
+			//$inboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptIDStr];
 			
+			$inboundRelationsArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_TARGETS", $conceptIDStr);
+				
+			
+			//$outboundRelationsArr = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'][$conceptIDStr];
+			
+			$outboundRelationsArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_SOURCES", $conceptIDStr);
 			
 		
 		
@@ -397,9 +405,12 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 				$subject = $relationArr['source'];
 				$verbAR = $relationArr['link_verb'];
 				
+				$subjectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $subject);
+				$objectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $object);
+				
 				if ( $lang=="EN")
 				{
-					$subject = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$subject]['label_en'])));
+					$subject = trim(removeBasicEnglishStopwordsNoNegation(($subjectConceptArr['label_en'])));
 				}
 				
 				/// CLEAN AND REPLACE CONCEPT
@@ -448,7 +459,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 				
 					if ( $lang=="EN")
 					{
-						$object = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en'])));
+						$object = trim(removeBasicEnglishStopwordsNoNegation(($objectConceptArr['label_en'])));
 					}
 				
 					/// CLEAN AND REPLACE CONCEPT
@@ -484,14 +495,18 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		{
 		
 			///////// add concept name to query if the current query word is found to be synonym to that concept
-			if ( isset($MODEL_QA_ONTOLOGY['SYNONYMS_INDEX'][$word]) )
+			if ( modelEntryExistsInMemory("ALL", "MODEL_QA_ONTOLOGY", "SYNONYMS_INDEX", $word) )
 			{
-				$conceptNameAR = $MODEL_QA_ONTOLOGY['SYNONYMS_INDEX'][$word];
+				//$conceptNameAR = $MODEL_QA_ONTOLOGY['SYNONYMS_INDEX'][$word];
+				$conceptNameAR = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "SYNONYMS_INDEX", $word);
+				
+				
 				$finalConceptName = $conceptNameAR;
 	
 				if ( $lang=="EN")
 				{
-					$finalConceptName  = $MODEL_QA_ONTOLOGY['CONCEPTS'][$conceptNameAR]['label_en'];
+					$conceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $conceptNameAR);
+					$finalConceptName  = $conceptArr['label_en'];
 				}
 				$conceptsFromTaxRelations[]=$finalConceptName;
 			}
@@ -503,7 +518,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 		//$lang=="AR" check since AR words are not PoS tagged yet
 		if ( $isQuestion && ($lang=="AR" ||posIsVerb($pos)) )
 		{
-			if (  (($verbArr=$MODEL_QA_ONTOLOGY['VERB_INDEX'][$word])!=null) || ($verbArr = isWordPartOfAVerbInVerbIndex($word,$lang) ) )
+			if (  (($verbArr=getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "VERB_INDEX", $word))!=null) || ($verbArr = isWordPartOfAVerbInVerbIndex($word,$lang) ) )
 			{
 				
 		
@@ -514,8 +529,11 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 					
 					if ( $lang=="EN")
 					{
-						$object = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$object]['label_en'])));
-						$subject = trim(removeBasicEnglishStopwordsNoNegation(($MODEL_QA_ONTOLOGY['CONCEPTS'][$subject]['label_en'])));
+						$subjectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $wordConveretedToConceptID);
+						$objectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $wordConveretedToConceptID);
+						
+						$object = trim(removeBasicEnglishStopwordsNoNegation(($objectConceptArr['label_en'])));
+						$subject = trim(removeBasicEnglishStopwordsNoNegation(($subjectConceptArr['label_en'])));
 					}
 					
 					// we are not interested in X is_a Thing - does not add value
@@ -565,7 +583,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 
 function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 {
-	global $MODEL_SEARCH,$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
+	global $MODEL_SEARCH;
 
 
 
@@ -610,7 +628,7 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 				foreach ($qacMasterTableEntryArr2 as $segmentIndex => $segmentDataArr)
 				{
 					$segmentFormAR = $segmentDataArr['FORM_AR'];
-					$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentFormAR];
+					$segmentFormARimla2y = getItemFromUthmaniToSimpleMappingTable($segmentFormAR);
 	
 	
 					//preprint_r($segmentDataArr);
@@ -720,8 +738,8 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 
 function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPhraseSearch,$isQuestion,$isColumnSearch,$columnSearchKeyValParams,$isConceptSearch,$lang,$isTransliterationSearch)
 {
-	global $MODEL_CORE,$MODEL_SEARCH,$MODEL_QA_ONTOLOGY;;
-	global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$UTHMANI_TO_SIMPLE_LOCATION_MAP;
+	global $MODEL_CORE,$MODEL_SEARCH;;
+
 	
 	
 	$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
@@ -812,7 +830,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 		{
 	
 			//echoN("$word");
-			//preprint_r($documentArrInIndex);exit;
+			//preprint_r($documentArrInIndex);;
 			$SURA = $documentArrInIndex['SURA'];
 			$AYA = $documentArrInIndex['AYA'];
 			$INDEX_IN_AYA_EMLA2Y = $documentArrInIndex['INDEX_IN_AYA_EMLA2Y'];
@@ -966,6 +984,8 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			if ( $WORD_TYPE=="PRONOUN_ANTECEDENT"    )
 			{
 				$scoringTable[$SURA.":".$AYA]['PRONOUNS'][$EXTRA_INFO]=$INDEX_IN_AYA_EMLA2Y;
+				
+			
 			}
 			else if ( $WORD_TYPE=="ROOT" || $WORD_TYPE=="LEM"   )
 			{
@@ -977,9 +997,10 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 				$scoringTable[$SURA.":".$AYA]['POSSIBLE_HIGHLIGHTABLE_WORDS'][removeTashkeel($EXTRA_INFO)]=$WORD_TYPE;
 					
 				// try to convert QAC uthmani word to simpleimla2y using the MAP table with and withou tashkeel
-				$wordInAya = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$EXTRA_INFO];
+				$wordInAya = getItemFromUthmaniToSimpleMappingTable($EXTRA_INFO);
+		
 					
-				if ( empty($wordInAya ) ) { $wordInAya = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[removeTashkeel($EXTRA_INFO)]; }
+				if ( empty($wordInAya ) ) { $wordInAya = getItemFromUthmaniToSimpleMappingTable(removeTashkeel($EXTRA_INFO)); }
 					
 				if ( empty($wordInAya ) ) { $wordInAya = removeTashkeel($EXTRA_INFO); }
 	
@@ -1257,7 +1278,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 	
 	
 
-		
+		//preprint_r($PRONOUNS);
 		
 		// mark PRONOUNS
 		//if ( $WORD_TYPE=="PRONOUN_ANTECEDENT") {} // COMMENTED SINCE WORD MAY HAVE BOTH PRON AND NORMAKL WORDS
@@ -1266,7 +1287,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 			{
 				$pronounText = removeTashkeel($pronounText);
 	
-	
+
 				$TEXT = markSpecificWordInText($TEXT,($PRONOUN_INDEX_IN_AYA_EMLA2Y-1),$pronounText,"marked");
 	
 				//$TEXT = preg_replace("/(".$EXTRA_INFO.")/mui", "<marked>\\1</marked>", $TEXT);
@@ -1380,7 +1401,7 @@ function printResultVerses($scoringTable,$lang,$direction,$query,$isPhraseSearch
 
 function postResultSuggestions($lang,$queryWordsWithoutDerivation)
 {
-	global $MODEL_QA_ONTOLOGY;
+
 	
 	$wordsNotInTheQuran = array();
 	
@@ -1389,7 +1410,7 @@ function postResultSuggestions($lang,$queryWordsWithoutDerivation)
 	{
 		if ( mb_strlen($word) <=2) continue;
 		
-		if (!modelEntryExistsInMemory($lang,"MODEL_SEARCH","INVERTED_INDEX",$word) && !isset($MODEL_QA_ONTOLOGY['CONCEPTS'][convertWordToConceptID($word)]) )
+		if (!modelEntryExistsInMemory($lang,"MODEL_SEARCH","INVERTED_INDEX",$word) && !modelEntryExistsInMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", convertWordToConceptID($word)) )
 		{
 			$wordsNotInTheQuran[$word]=1;
 		}
@@ -1605,7 +1626,7 @@ function getStatisticallySginificantWords($extendedQueryWordsArr,$scoringTable)
 function convertUthamniQueryToSimple($query)
 {
 	
-     global $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS;
+
 	
 	
 	$queryWords = explode(" ",$query);
@@ -1617,7 +1638,7 @@ function convertUthamniQueryToSimple($query)
 	
 		if ( empty($word)) continue;
 		
-		$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$word];
+		$simpleWord = getItemFromUthmaniToSimpleMappingTable($word);
 		
 		if ( empty($simpleWord))
 		{

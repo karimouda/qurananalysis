@@ -44,7 +44,7 @@ if (isArabicString($query))
 
 
 
-echoN(memory_get_peak_usage());
+//echoN(memory_get_peak_usage());
 
 //echoN(time());
 loadModels("core,search,qac,ontology",$lang);
@@ -64,11 +64,9 @@ $significantWords = array();
 //echoN($query);exit;
 
 
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
 
-echoN(memory_get_peak_usage());
+//echoN(memory_get_peak_usage());
 
 //$TRANSLATION_MAP_EN_TO_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
 
@@ -217,7 +215,7 @@ $originalQueryWordsArr = preg_split("/ /",$query);
 //for faster access
 $originalQueryWordsArrSwaped = swapAssocArrayKeyValues($originalQueryWordsArr);
 
-echoN(memory_get_peak_usage());
+//echoN(memory_get_peak_usage());
 
 // CHECK IF TRANSLITERATION
 if ($lang=="EN" &&  !$isConceptSearch && !$isPhraseSearch && !$isQuestion  )
@@ -230,7 +228,7 @@ if ($lang=="EN" &&  !$isConceptSearch && !$isPhraseSearch && !$isQuestion  )
 	$TRANSLITERATION_WORDS_INDEX = apc_fetch("TRANSLITERATION_WORDS_INDEX");
 	
 
-	echoN("==".memory_get_peak_usage());
+	//echoN("==".memory_get_peak_usage());
 	
 	if (!empty($firstWordInQuery) && isset($TRANSLITERATION_WORDS_INDEX[$firstWordInQuery]) )
 	{
@@ -250,9 +248,9 @@ if ( $isquestion || (!$isPhraseSearch && !$noDerivationsConstraint && !$isColumn
 	$taggedSignificantWords = posTagUserQuery($query,$lang);
 
 	
-	echoN("### ".memory_get_peak_usage());
+	//echoN("### ".memory_get_peak_usage());
 	$taggedSignificantWordsAfterDerivation = extendQueryWordsByDerivations($taggedSignificantWords,$lang);
-	echoN(memory_get_peak_usage());
+	//echoN(memory_get_peak_usage());
 	
 
 	//preprint_r($taggedSignificantWords);
@@ -399,7 +397,7 @@ if ( !$isQuestion && !$isColumnSearch)
 	
 	$postResultSuggestionArr = postResultSuggestions($lang,$originalQueryWordsArrSwaped);
 	
-	echoN(memory_get_peak_usage());
+	//echoN(memory_get_peak_usage());
 	
 	// remove query words from suggestion
 	/*foreach($queryWordsWithoutDerivation as $word => $dummy)
@@ -422,7 +420,7 @@ $resultStatsArr = getStatsByScoringTable($scoringTable);
 
 
 //preprint_r($scoringTable);
-echoN("LAST:".memory_get_peak_usage());
+//echoN("LAST:".memory_get_peak_usage());
 
 
 ?>

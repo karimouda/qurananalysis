@@ -5,9 +5,8 @@ require_once("../libs/core.lib.php");
 loadModels("core,qac", "AR");
 
 
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS  = loadUthmaniToSimpleMappingTable();
 
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+
 
 
 $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
@@ -77,13 +76,12 @@ foreach($qacPoSTagsIterator as $qacPoSTagsIteratorCursor)
 		// get word index in verse
 		$wordIndex = (getWordIndexFromQACLocation($location));
 	
-	
-		//$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];
+
 		
 		//echoN($segmentFormARimla2y);
 
 		// get simple version of the word index
-		$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location,$UTHMANI_TO_SIMPLE_LOCATION_MAP);
+		$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location);
 	
 	
 		// get verse text

@@ -4,7 +4,7 @@ require_once("../libs/core.lib.php");
 
 loadModels("core,ontology", "AR");
 
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = loadLemmaToSimpleMappingTable();
+
 $LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
 
@@ -97,7 +97,11 @@ $excludedShortDescArr = file("$baseDir/excluded.shortdesc",FILE_IGNORE_NEW_LINES
 //() can't be found by in array
 ///////////////////////////////////////////////////
 
-$conceptsArr = $MODEL_QA_ONTOLOGY['CONCEPTS'];
+//$conceptsArr = $MODEL_QA_ONTOLOGY['CONCEPTS'];
+
+$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+
+$conceptCount = $qaOntologyConceptsIterator->getTotalCount();
 
 
 ?>
@@ -130,14 +134,13 @@ $conceptsArr = $MODEL_QA_ONTOLOGY['CONCEPTS'];
 
 <div style='width:100%;padding:10px;background-color:#eee;'>
 <div id='loading-layer'>Excluding ...</div>
-<span><b>CONCEPT #<?=$currentConceptIndex?>/<?=count($conceptsArr)?></b></span>
+<span><b>CONCEPT #<?=$currentConceptIndex?>/<?=$conceptCount?></b></span>
 </div>
 <input type='button' value='Next Concept >> ' onclick="showNextConcept()" style='width:100%;padding:10px;'/>
 <br>
 <?php
 
-
-if ( $currentConceptIndex==count($conceptsArr))
+if ( $currentConceptIndex==$conceptCount)
 {
 	echoN("END");
 	exit;
@@ -148,12 +151,19 @@ if ( $currentConceptIndex==count($conceptsArr))
 // move to the current index
 for($i=0;$i<$currentConceptIndex;$i++)
 {
-	next($conceptsArr);
+	if ( $qaOntologyConceptsIterator->valid() )
+	{
+		$qaOntologyConceptsIterator->next();
+	}
+	
 }
 
-$conceptToBeCleaned = current($conceptsArr);
 
-//preprint_r($conceptToBeCleaned);
+
+$conceptToBeCleaned = $qaOntologyConceptsIterator->current();
+
+$conceptToBeCleaned = $conceptToBeCleaned['value'];
+
 
 
 $labelAr = $conceptToBeCleaned['label_ar'];
@@ -249,10 +259,12 @@ if ( isset($conceptToBeCleaned['synonym_'.($sIndex)]) )
 
 echoN("RELATIONS");
 
-//preprint_r($MODEL_QA_ONTOLOGY['RELATIONS']);
+$qaRelationsArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "RELATIONS", "");
+
+
 
 $relIndex =0;
-foreach($MODEL_QA_ONTOLOGY['RELATIONS'] as $hash => $relArr)
+foreach($qaRelationsArr as $hash => $relArr)
 {
 	$subject = $relArr['SUBJECT'];
 	$object = $relArr['OBJECT'];

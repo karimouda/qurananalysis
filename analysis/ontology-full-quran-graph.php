@@ -172,14 +172,6 @@ height: 2000px;
 			
 
 
-	/*$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
-	$MODEL_QA_ONTOLOGY['RELATIONS'] = $qaOntologyRelationsArr;
-	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] = $qaOntologyGraphSourcesIndex;
-	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
-	*/
-	
-	//preprint_r($MODEL_QA_ONTOLOGY);
-
 
 
 if ( $presentation=="TREE")

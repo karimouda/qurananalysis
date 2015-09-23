@@ -231,7 +231,7 @@ $wordDistributionChartJSON = getDistributionChartData($scoringTable);
 
 $time2 = time();
 
-echoN((intval($time2)-intval($time1)));
+//echoN((intval($time2)-intval($time1)));
 ?>
 
 

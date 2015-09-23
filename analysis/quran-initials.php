@@ -81,10 +81,10 @@ loadModels("core,qac",$lang);
 				$wordIndex = (getWordIndexFromQACLocation($location));
 			
 			
-				//$segmentFormARimla2y = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];
+			
 			
 				// get simple version of the word index
-				$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location,$UTHMANI_TO_SIMPLE_LOCATION_MAP);
+				$imla2yWordIndex = getImla2yWordIndexByUthmaniLocation($location);
 			
 			
 				// get verse text

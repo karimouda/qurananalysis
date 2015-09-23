@@ -85,22 +85,11 @@ loadModels("core,search,ontology",$lang);
 		    </div>
 			  		<?php 
 			
-			
-			
-			
 
 
-	/*$MODEL_QA_ONTOLOGY['CONCEPTS'] = $qaOntologyConceptsArr;
-	$MODEL_QA_ONTOLOGY['RELATIONS'] = $qaOntologyRelationsArr;
-	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_SOURCES'] = $qaOntologyGraphSourcesIndex;
-	$MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'] = $qaOntologyGraphTargetsIndex;
-	*/
+
+
 	
-	//preprint_r($MODEL_QA_ONTOLOGY);
-
-
-
-			  		
 
 //$graphObj = ontologyToD3Graph($MODEL_QA_ONTOLOGY,0,$lang);
 
@@ -209,6 +198,10 @@ addChildrenToCluster($clusteredArr,$treeRootNodeObj,$clusterSerialNumber,$nodeSe
 //echoN($graphLinksJSON);
 //exit;
 
+$qaRelationsArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "RELATIONS", "");
+
+
+
 $filteredClusteredArr = array();
 $index = 0;
 foreach($clusteredArr as $index => $clusterArrItem)
@@ -216,15 +209,18 @@ foreach($clusteredArr as $index => $clusterArrItem)
 	
 	$conceptName = strtolower(convertConceptIDtoGraphLabel($clusterArrItem['word']));
 	
-	$conceptNameAR  = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$conceptName];
+	//$conceptNameAR  = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$conceptName];
+	
+	$conceptNameAR  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS_EN_AR_NAME_MAP", $conceptName);
+	
 	
 	
 	// if not in index (then not qurana or word in quran)
 	// and does not have subclasses // then ignore
 	if ( !wordOrPhraseIsInIndex($lang,$conceptName) &&
-	!conceptHasSubclasses($MODEL_QA_ONTOLOGY['RELATIONS'], $conceptNameAR) )
+	!conceptHasSubclasses($qaRelationsArr, $conceptNameAR) )
 	{
-		//preprint_r($MODEL_QA_ONTOLOGY['RELATIONS']);exit;
+		
 		//echoN($conceptName);
 		continue;
 	

@@ -1,12 +1,10 @@
 <?php
 function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scoringTable, $lang)
 {
-	global $MODEL_QA_ONTOLOGY;
+
 	global $is_a_relation_name_ar;
 	
-	
-	
-	$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
+
 
 	
 	$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
@@ -43,10 +41,12 @@ function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scor
 	$questionType = cleanAndTrim(strtolower($questionType));
 	
 	//echoN($questionType);
-	$conceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$questionType];
+	//$conceptID = $MODEL_QA_ONTOLOGY['CONCEPTS_EN_AR_NAME_MAP'][$questionType];
+	$conceptID  = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS_EN_AR_NAME_MAP", $questionType);
 	
 	//echoN($conceptID);
-	$relationsOfConceptAsTarget = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptID];
+	//$relationsOfConceptAsTarget = $MODEL_QA_ONTOLOGY['GRAPH_INDEX_TARGETS'][$conceptID];
+	$relationsOfConceptAsTarget = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "GRAPH_INDEX_TARGETS", $conceptID);
 	
 	$questionTypeConceptsArr = array();
 	foreach( $relationsOfConceptAsTarget as $index => $relArr)
@@ -193,7 +193,7 @@ function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scor
 				{
 					//echoN("===$wordInQuestion");
 					
-					$root = getRootOfSimpleWord($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$wordInQuestion,array("N","V"));
+					$root = getRootOfSimpleWord($wordInQuestion,array("N","V"));
 					
 					if ( !empty($root))
 					{
@@ -213,7 +213,7 @@ function answerUserQuestion($query, $queryWordsArr,$taggedSignificantWords,$scor
 			{
 				if ( mb_strlen($wordInArray)<=2) continue;
 				
-				$root = getRootOfSimpleWord($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$wordInArray,array("N","V"));
+				$root = getRootOfSimpleWord($wordInArray,array("N","V"));
 					
 				if ( !empty($root))
 				{

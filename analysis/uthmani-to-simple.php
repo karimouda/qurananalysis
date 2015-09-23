@@ -13,7 +13,7 @@ if ( isset($_GET['lang']) )
 loadModels("core",$lang);
 
 
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
+
 
 ?>
 <!DOCTYPE html>
@@ -65,8 +65,18 @@ $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
 							
 								$uthmaniCounter = 0;
 								$simpleCounter = 0;
-								foreach( $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS as $mapTermKey => $mapTermVal)
+								
+								
+								
+								$qaOntologyConceptsIterator = getAPCIterator("AR\/OTHERS\/UTHMANI_TO_SIMPLE_WORD_MAP\/.*");
+								
+								foreach($qaOntologyConceptsIterator as $conceptsCursor )
 								{
+									$mapTermKey = getEntryKeyFromAPCKey($conceptsCursor['key']);
+								
+									$mapTermVal = $conceptsCursor['value'];
+								
+							
 									if ( isSimpleQuranWord($mapTermKey))
 									{
 										$simpleCounter++;

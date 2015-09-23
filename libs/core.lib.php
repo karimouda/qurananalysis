@@ -721,7 +721,7 @@
 
 	}
 	
-	function getQACSegmentByQuranaSeqment($qacMasterSegmentTable,$suraID,$verseID,$verseLocalSegmentIndex,$quranaSegmentForm)
+	function getQACSegmentByQuranaSeqment($suraID,$verseID,$verseLocalSegmentIndex,$quranaSegmentForm)
 	{
 		$masterIDPrefix = "$suraID:$verseID:";
 		
@@ -734,9 +734,15 @@
 		
 		$matchingSegmentLocation = -1;
 		
-		while( isset($qacMasterSegmentTable[$masterID]))
+		
+		
+		
+		while( modelEntryExistsInMemory("AR", "MODEL_QAC", "QAC_MASTERTABLE", $masterID))
 		{
-			$segmentsInWord = $qacMasterSegmentTable[$masterID];
+			
+		
+			//$segmentsInWord = $qacMasterSegmentTable[$masterID];
+			$segmentsInWord = getModelEntryFromMemory("AR", "MODEL_QAC", "QAC_MASTERTABLE", $masterID);
 			
 			
 			
@@ -828,6 +834,8 @@
 	{
 		$res = apc_store($key,$valueOrValueArr);
 		
+	
+		
 
 		if ( $res===false)
 		{
@@ -840,6 +848,8 @@
 	{
 		
 		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
+		
+		//echon($apcMemoryEntryKey);
 		
 		return  apc_fetch($apcMemoryEntryKey);
 	
@@ -1053,14 +1063,26 @@
 		return $verseText;
 	}
 	
-	function getImla2yWordIndexByUthmaniLocation($uthmaniQACLocation,$UTHMANI_TO_SIMPLE_LOCATION_MAP)
+	function getItemFromUthmaniToSimpleMappingTable($simpleOrUthmaniWord)
+	{
+		return getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP", $simpleOrUthmaniWord);
+
+	}
+	
+	function getSimpleWordIndexByUthmaniWordIndex($verseLocation,$uthmaniWordIndex)
+	{
+		$verseMappignArr = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_LOCATION_MAP", $verseLocation);
+
+		return $verseMappignArr[$uthmaniWordIndex];
+	}
+	function getImla2yWordIndexByUthmaniLocation($uthmaniQACLocation)
 	{
 		
 		$locationArr = preg_split("/\:/", $uthmaniQACLocation);
 		
 		$suraAyaBaseLocation = $locationArr[0].":".$locationArr[1];
 		
-		$emla2tWordIndex = $UTHMANI_TO_SIMPLE_LOCATION_MAP[$suraAyaBaseLocation][($locationArr[2])];
+		$emla2tWordIndex = getSimpleWordIndexByUthmaniWordIndex($suraAyaBaseLocation,($locationArr[2]));
 			
 		return  $emla2tWordIndex;
 	}
@@ -1587,14 +1609,14 @@
 		$wordUthmani = "";;
 		$wordSimple = "";;
 		
-		$UTHMANI_TO_SIMPLE_WORD_MAP_VS = loadUthmaniToSimpleMappingTable();
+
 		
 		
 		if ( isSimpleQuranWord($word))
 		{
 		
 		
-			$wordUthmani = $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$word];
+			$wordUthmani = getItemFromUthmaniToSimpleMappingTable($word);
 			$wordSimple = $word;
 		}
 		else
@@ -1606,7 +1628,7 @@
 			
 		
 			// tashkeel of last char is significant, ex: lemmas will probably not be in the MAP because of that
-			$wordSimple =  $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$wordUthmani];;
+			$wordSimple =  getItemFromUthmaniToSimpleMappingTable($wordUthmani);
 		
 			
 		}
@@ -1708,9 +1730,9 @@
 				//preprint_r($segmentDataArr);
 				
 				$segmentWordSimple="";
-				if ( isset($UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord] ))
+				if ( !empty(getItemFromUthmaniToSimpleMappingTable($segmentWord) ))
 				{
-					$segmentWordSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_VS[$segmentWord];
+					$segmentWordSimple = getItemFromUthmaniToSimpleMappingTable($segmentWord);
 				}
 				
 				$buckwalterTransliteration = $segmentDataArr['FORM_EN'];
@@ -2520,12 +2542,12 @@
 	}
 	
 	//TODO:NEEDS OPTIMIZATION, NO NEED FOR ALL THAT
-	function getRootOfSimpleWord($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS,$wordSimple,$expectedPosTagsArr)
+	function getRootOfSimpleWord($wordSimple,$expectedPosTagsArr)
 	{
 		global $MODEL_SEARCH,$MODEL_QAC;
 		
 		
-		$wordUthmani = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$wordSimple];
+		$wordUthmani = getItemFromUthmaniToSimpleMappingTable($wordSimple);
 		
 		
 		
@@ -2604,6 +2626,9 @@
 		return $wordsArr;
 	}
 	
-	
+	function getEntryKeyFromAPCKey($key)
+	{
+		return substr($key, strrpos($key, "/")+1);
+	}
 	
 ?>

@@ -12,10 +12,10 @@ if ( isset($_GET['lang']) )
 
 //loadModels("core,qac",$lang);
 
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
 
 
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+
+
 
 
 $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
@@ -80,10 +80,7 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 	  				   						  {
   				   						 		
 	  				   						  	
-	  				   						  	if ((mb_strlen($concept)==1))
-	  				   						  	{
-	  				   						  		echoN($concept);
-	  				   						  	}
+	  				   						
   				   						 
   				   						 	?>
   				   						 	   <tr>

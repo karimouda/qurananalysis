@@ -19,7 +19,7 @@ if ( $lang=="EN")
 
 loadModels("core,qac",$lang);
 
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
+
 
 $POS = $_GET['pos'];
 $features = $_GET['features'];
@@ -62,7 +62,7 @@ if ( ($POS=="") )
 						
 						$segmentWord = $qacMasterTableEntry[$segmentId-1]['FORM_AR'];
 						$verseLocation = substr($location,0,strlen($location)-2);
-						//$segmentWordSimple = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$segmentWord];//removeTashkeel($segmentWord);
+		
 						
 						// not an Uthmani word, maybe just a DET seg "ال"
 					/*	if ( empty($segmentWordSimple))
