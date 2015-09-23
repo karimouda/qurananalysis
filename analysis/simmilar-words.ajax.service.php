@@ -27,11 +27,13 @@ if ( empty($word)) exit;
 if ( isArabicString($word))
 {
 	loadModels("core","AR");
+	$lang = "AR";
 
 }
 else
 {
 	loadModels("core","EN");
+	$lang = "EN";
 }
 
 $similarWordsArr = getSimilarWords($lang,array($word));
@@ -39,9 +41,10 @@ $similarWordsArr = getSimilarWords($lang,array($word));
 ?>
 
 <br>
-<b>Similar Words</b>
+<b>Similar Words (Character Similarity)</b>
 <ul>
 <?php 
+
 $i=0;
 foreach($similarWordsArr as $similarWord =>$score)
 {

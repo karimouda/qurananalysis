@@ -17,59 +17,229 @@
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>id=search-field</td>
-	<td>مكة</td>
+	<td>clickAndWait</td>
+	<td>link=Muhammad</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=marked</td>
+	<td>Muhammad</td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=span.result-sura-info</td>
+	<td>The Clans (Al-Ahzaab) [33:40]</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=محمد</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=46-1</td>
+	<td>والذين آمنوا وعملوا الصالحات وآمنوا بما نزل على محمد وهو الحق من ربهم كفر عنهم سيئاتهم وأصلح بالهم And those who believe and do righteous deeds and believe in what has been sent down upon Muhammad - and it is the truth from their Lord - He will remove from them their misdeeds and amend their condition.</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>id=doSearch</td>
+	<td>css=span.result-sura-info</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>css=span.result-sura-info</td>
-	<td>الفتح [48:24]</td>
+	<td>محمد [47:2]</td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>id=qa-sort-select</td>
-	<td>label=Order</td>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Heaven Hellfire</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=1-163</td>
+	<td>Indeed, in the creation of the heavens and earth, and the alternation of the night and the day, and the [great] ships which sail through the sea with that which benefits people, and what Allah has sent down from the heavens of rain, giving life thereby to the earth after its lifelessness and dispersing therein every [kind of] moving creature, and [His] directing of the winds and the clouds controlled between the heaven and the earth are signs for a people who use reason. إن في خلق السماوات والأرض واختلاف الليل والنهار والفلك التي تجري في البحر بما ينفع الناس وما أنزل الله من السماء من ماء فأحيا به الأرض بعد موتها وبث فيها من كل دابة وتصريف الرياح والسحاب المسخر بين السماء والأرض لآيات لقوم يعقلون</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=الجنة و النار</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=58-19</td>
+	<td>لا يستوي أصحاب النار وأصحاب الجنة ۚ أصحاب الجنة هم الفائزون Not equal are the companions of the Fire and the companions of Paradise. The companions of Paradise - they are the attainers [of success].</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=&quot;Those who believe&quot;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=4-92</td>
+	<td>There is not upon those who believe and do righteousness [any] blame concerning what they have eaten [in the past] if they [now] fear Allah and believe and do righteous deeds, and then fear Allah and believe, and then fear Allah and do good; and Allah loves the doers of good. ليس على الذين آمنوا وعملوا الصالحات جناح فيما طعموا إذا ما اتقوا وآمنوا وعملوا الصالحات ثم اتقوا وآمنوا ثم اتقوا وأحسنوا ۗ والله يحب المحسنين</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=&quot;الذين آمنوا&quot;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=57-10</td>
+	<td>يا أيها الذين آمنوا إذا قيل لكم تفسحوا في المجالس فافسحوا يفسح الله لكم وإذا قيل انشزوا فانشزوا يرفع الله الذين آمنوا منكم والذين أوتوا العلم درجات والله بما تعملون خبير O you who have believed, when you are told, &quot;Space yourselves&quot; in assemblies, then make space; Allah will make space for you. And when you are told, &quot;Arise,&quot; then arise; Allah will raise those who have believed among you and those who were given knowledge, by degrees. And Allah is Acquainted with what you do.</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Animals in the Quran ?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=question-answering-area-answer-title</td>
+	<td>Answer</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=الحيوانات فى القرآن ؟</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=question-answering-area-answer-title</td>
+	<td>الإجابة</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Who is Muhammad</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='question-answering-area']/span[2]</td>
+	<td>Person, Prophet</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=من هو محمد</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>id=question-answering-area-answer-title</td>
+	<td>الإجابة</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Allahu</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.transliteration-verse-text-area</td>
+	<td>walaw annahum radoo ma atahumu allahu warasooluhu waqaloo hasbuna allahu sayuteena allahu min fadlihi warasooluhu inna ila allahi raghiboona</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Taaamaloona</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>css=div.transliteration-verse-text-area</td>
+	<td>faalyawma la tuthlamu nafsun shayan wala tujzawna illa ma kuntum taaamaloona</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=50</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>css=span.result-sura-info</td>
-	<td>البقرة [2:126]</td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>id=qa-script-select</td>
-	<td>label=Uthmani</td>
+	<td>The letter Qaaf (Qaaf) [50:1]</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>id=1-125</td>
-	<td>وَإِذْ قَالَ إِبْرَٰهِۦمُ رَبِّ ٱجْعَلْ هَٰذَا بَلَدًا ءَامِنًا وَٱرْزُقْ أَهْلَهُۥ مِنَ ٱلثَّمَرَٰتِ مَنْ ءَامَنَ مِنْهُم بِٱللَّهِ وَٱلْيَوْمِ ٱلْءَاخِرِ ۖ قَالَ وَمَن كَفَرَ فَأُمَتِّعُهُۥ قَلِيلًا ثُمَّ أَضْطَرُّهُۥٓ إِلَىٰ عَذَابِ ٱلنَّارِ ۖ وَبِئْسَ ٱلْمَصِيرُ And [mention] when Abraham said, &quot;My Lord, make this a secure city and provide its people with fruits - whoever of them believes in Allah and the Last Day.&quot; [Allah] said. &quot;And whoever disbelieves - I will grant him enjoyment for a little; then I will force him to the punishment of the Fire, and wretched is the destination.&quot;</td>
+	<td>//div[@id='result-verses-area']/div[46]/div[2]/span</td>
+	<td>The letter Qaaf (Qaaf) [50:45]</td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>css=span.result-sura-info</td>
-	<td>البقرة [2:126]</td>
+	<td>clickAndWait</td>
+	<td>css=b</td>
+	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>id=qa-sort-select</td>
-	<td>label=Relevance</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>id=47-23</td>
-	<td>وَهُوَ ٱلَّذِى كَفَّ أَيْدِيَهُمْ عَنكُمْ وَأَيْدِيَكُمْ عَنْهُم بِبَطْنِ مَكَّةَ مِنۢ بَعْدِ أَنْ أَظْفَرَكُمْ عَلَيْهِمْ ۚ وَكَانَ ٱللَّهُ بِمَا تَعْمَلُونَ بَصِيرًا And it is He who withheld their hands from you and your hands from them within [the area of] Makkah after He caused you to overcome them. And ever is Allah of what you do, Seeing.</td>
+	<td>clickAndWait</td>
+	<td>link=exact:50:12</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>css=span.result-sura-info</td>
-	<td>الفتح [48:24]</td>
+	<td>The letter Qaaf (Qaaf) [50:12]</td>
 </tr>
 </tbody></table>
 </body>

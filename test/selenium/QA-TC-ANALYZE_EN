@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/analysis/uthmani-to-simple.php</td>
+	<td>/analysis/</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,27 +33,27 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr/td[2]</td>
 	<td>114</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[2]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[2]/td[2]</td>
 	<td>6236</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[3]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[3]/td[2]</td>
 	<td>157935</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[4]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[4]/td[2]</td>
 	<td>5304</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[5]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[5]/td[2]</td>
 	<td>668733</td>
 </tr>
 <tr>
@@ -243,10 +243,9 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='simmilar-words-area']/ul/li[3]</td>
+	<td>//div[@id='simmilar-words-area']/ul/li[5]</td>
 	<td>marry</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

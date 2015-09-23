@@ -299,7 +299,7 @@ function removeQuestionCluesFromArr($targetArr,$lang)
 	// get keys (question clue phrases)
 	$questionCluesWordsArr = phraseArrayToWordsArray(array_keys($questionCluesPhrasesArr));
 	
-	preprint_r($questionCluesWordsArr);
+
 	
 	$newTargetArr = array();
 

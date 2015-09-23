@@ -19,14 +19,20 @@ function getDistanceByCommonUniqueChars($word1,$word2)
     $extraPoints = 0;
     
 
-    
+    //echoN("$word1,$word2 $commonChars");
     // if tword 1 mtches word2 in both first and last character then add more similarity score
-    if ( current($uniqueCommonChars)==current($word2Arr) && 
-    end($uniqueCommonChars)==end($word2Arr) )
+    if ( current($uniqueCommonChars)==current($word2Arr) )
     {
-    	//echoN("$word1,$word2 $commonChars");
+    
     	$extraPoints = $extraPoints+1;
     }
+    
+    if ( end($uniqueCommonChars)==end($word2Arr) )
+    {
+    
+    	$extraPoints = $extraPoints+1;
+    }
+    
     
  
 
@@ -82,7 +88,7 @@ function getSimilarWords($lang,$queryWords)
 	//sort words by simmilarity to query
 	arsort($simmilarWords);
 	
-	
+	//preprint_r($simmilarWords);
 	
 	return $simmilarWords;
 	
@@ -406,7 +412,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 				$verbAR = $relationArr['link_verb'];
 				
 				$subjectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $subject);
-				$objectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $object);
+				
 				
 				if ( $lang=="EN")
 				{
@@ -454,7 +460,7 @@ function extendQueryWordsByConceptTaxRelations($extendedQueryArr,$lang,$isQuesti
 					$verbAR = $relationArr['link_verb'];
 					$object = $relationArr['target'];
 					
-			
+					$objectConceptArr = getModelEntryFromMemory("ALL", "MODEL_QA_ONTOLOGY", "CONCEPTS", $object);
 					
 				
 					if ( $lang=="EN")

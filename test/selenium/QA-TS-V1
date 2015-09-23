@@ -8,6 +8,7 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="QA-TC-RELOAD_MODELS">RELOAD_MODELS</a></td></tr>
 <tr><td><a href="QA-TC-SEARCH_ALL_EXAMPLES">QA-TC-SEARCH_ALL_EXAMPLES</a></td></tr>
 <tr><td><a href="QA-TC-SEARCH_ALL_EXAMPLES">SEARCH_SORT_AND_SCRIPT</a></td></tr>
 <tr><td><a href="QA-TC-SEARCH_VISUALIZATION">SEARCH_VISUALIZATION</a></td></tr>

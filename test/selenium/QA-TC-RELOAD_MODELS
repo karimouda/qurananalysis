@@ -4,37 +4,17 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://dev.qurananalysis.com/" />
-<title>EXPLORE</title>
+<title>RELOAD_MODELS</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">EXPLORE</td></tr>
+<tr><td rowspan="1" colspan="3">RELOAD_MODELS</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/</td>
+	<td>/admin/reload-models.php</td>
 	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Explore</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=svg</td>
-	<td>*Land*</td>
-</tr>
-<tr>
-	<td>selectAndWait</td>
-	<td>id=language-selection</td>
-	<td>label=AR</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>css=svg</td>
-	<td>*مريم*</td>
 </tr>
 </tbody></table>
 </body>

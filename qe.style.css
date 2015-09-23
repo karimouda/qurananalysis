@@ -2072,8 +2072,8 @@ A#home-beta-button:HOVER
 #graph-help-icon
 {
 		position:absolute;
-	bottom: 10px;
-    right: 10px;
+	top: 55px;
+    right: 8px;
 }
 .help-message-area
 {

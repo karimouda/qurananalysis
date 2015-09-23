@@ -39,12 +39,7 @@
 <tr>
 	<td>type</td>
 	<td>id=search-field</td>
-	<td>يوس</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=search-field</td>
-	<td>يوسك</td>
+	<td>يوسغ</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -69,7 +64,7 @@
 <tr>
 	<td>waitForText</td>
 	<td>css=div.search-word-suggestion</td>
-	<td>Do you mean ... <br /> ويمسك&nbsp;&nbsp;ونسكي&nbsp;&nbsp;ويسفك&nbsp;&nbsp;يمسكون&nbsp;&nbsp;يمسك&nbsp;&nbsp;يوسف&nbsp;&nbsp;يونس&nbsp;&nbsp;يكسب&nbsp;&nbsp;يئوسا&nbsp;&nbsp;يسلك&nbsp;&nbsp;فيمسك</td>
+	<td>*يوسف*</td>
 </tr>
 <tr>
 	<td>assertElementPresent</td>
@@ -121,7 +116,6 @@
 	<td>//div[@id='search-results-summary']/table/tbody/tr/td[2]</td>
 	<td>Searched for &quot;بسم الله&quot;</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

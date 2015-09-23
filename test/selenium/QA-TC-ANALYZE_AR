@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/explore/?lang=AR</td>
+	<td>/</td>
 	<td></td>
 </tr>
 <tr>
@@ -28,162 +28,162 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr/td[2]</td>
 	<td>114</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[2]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[2]/td[2]</td>
 	<td>6236</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[3]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[3]/td[2]</td>
 	<td>77797</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[4]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[4]/td[2]</td>
 	<td>14870</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[5]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[5]/td[2]</td>
 	<td>330709</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[6]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[6]/td[2]</td>
 	<td>6</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[7]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[7]/td[2]</td>
 	<td>4359</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[8]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[8]/td[2]</td>
 	<td>15</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[9]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[9]/td[2]</td>
 	<td>5</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[10]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[10]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[11]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[11]/td[2]</td>
 	<td>ن</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[12]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[12]/td[2]</td>
 	<td>11</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[13]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[13]/td[2]</td>
 	<td>فأسقيناكموه</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[14]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[14]/td[2]</td>
 	<td>4.25</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[15]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[15]/td[2]</td>
 	<td>1</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[16]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[16]/td[2]</td>
 	<td>يس</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[17]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[17]/td[2]</td>
 	<td>129</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[18]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[18]/td[2]</td>
 	<td>يا أيها الذين آمنوا إذا تداينتم بدين إلى أجل مسمى فاكتبوه...</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table/tbody/tr[19]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table/tbody/tr[19]/td[2]</td>
 	<td>12.48</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table[2]/tbody/tr/td[2]</td>
 	<td>1972</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[2]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table[2]/tbody/tr[2]/td[2]</td>
 	<td>22</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[3]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table[2]/tbody/tr[3]/td[2]</td>
 	<td>68</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[4]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table[2]/tbody/tr[4]/td[2]</td>
 	<td>603</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[5]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table[2]/tbody/tr[5]/td[2]</td>
 	<td>1682</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset/table[2]/tbody/tr[6]/td[2]</td>
+	<td>//div[@id='main-container']/fieldset/table[2]/tbody/tr[6]/td[2]</td>
 	<td>12</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[2]/td[3]</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[2]/td[3]</td>
 	<td>286</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[2]/td[4]</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[2]/td[4]</td>
 	<td>6140</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[2]/td[5]</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[2]/td[5]</td>
 	<td>26249</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td[3]</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[114]/td[3]</td>
 	<td>6</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td[4]</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[114]/td[4]</td>
 	<td>20</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td[5]</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[114]/td[5]</td>
 	<td>80</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/fieldset[2]/table/tbody/tr[114]/td</td>
+	<td>//div[@id='main-container']/fieldset[2]/table/tbody/tr[114]/td</td>
 	<td>114</td>
 </tr>
 <tr>
@@ -534,12 +534,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>css=th</td>
-	<td>Concepts (938)</td>
+	<td>Concepts (902)</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>xpath=(//table[@id='ontology-concepts-table']/tbody/tr/th)[2]</td>
-	<td>Relations (1717)</td>
+	<td>Relations (1628)</td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -578,13 +578,13 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//table[@id='uts-mapping-table']/tbody/tr[4]/td</td>
-	<td>ٱلرَّحْمَٰنِ</td>
+	<td>//table[@id='uts-mapping-table']/tbody/tr[2]/td</td>
+	<td>قَبْلِنَا</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//table[@id='uts-mapping-table']/tbody/tr[4]/td[2]</td>
-	<td>الرحمن</td>
+	<td>//table[@id='uts-mapping-table']/tbody/tr[9]/td[2]</td>
+	<td>متربة</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -953,10 +953,9 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='main-container']/div/table[2]/thead/tr/th</td>
+	<td>//div[@id='main-container']/div[2]/table[2]/thead/tr/th</td>
 	<td>Verses (30) - Chapters (29)</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

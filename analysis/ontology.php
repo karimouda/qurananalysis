@@ -50,6 +50,11 @@ $ONTOLOGY_EXTRACTION_FOLDER = "../data/ontology/extraction/";
 			  	
 	    <?php include_once("help-content.php"); ?>
 			  
+			  <div style='width:100%;text-align:center'>
+					The data below is extracted from QA Ontology V1.0
+					<br>
+					A new version of the ontology V1.1 will be released in November 2015
+			  </div>
 			  	
 			  	<div id='ontology-main-area'>
 			  	
