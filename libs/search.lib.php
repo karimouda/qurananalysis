@@ -595,7 +595,7 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 
 
 		/** GET ROOT/STEM FOR EACH QUERY WORD **/
-		foreach ($extendedQueryWordsArr as $word)
+		foreach ($extendedQueryWordsArr as $word=>$index)
 		{
 	
 			//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
@@ -675,7 +675,20 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 	
 					
 			}
+			
+			////////// CUSTOM ROOT TABLE ///////////
+			$zawaga = "زوج";
+			$CUSTOM_ROOTS_TABLE['الزواج']=$zawaga;
+		
+			if (isset($CUSTOM_ROOTS_TABLE[$word]))
+			{
+				$extendedQueryWordsArr[$CUSTOM_ROOTS_TABLE[$word]]=1;
+				
+			}
+			
+			////////////////////////////////////////
 		}
+	
 	
 	
 		$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
@@ -683,7 +696,7 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 		
 		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
 		
-		/** GET EMLA2Y (SIMPLE) WORDS CORRESPONSING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX
+		/** GET EMLA2Y (SIMPLE) WORDS CORRESPONDING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX
 		 *  ADD TO EXTENDED QUERY WORDS
 		 *  TODO: recheck to remove this whole loop
 		 * **/
