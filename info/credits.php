@@ -46,7 +46,7 @@
   				    
 		<div class='info-page-text'>
 	
-				Libraries used in QA
+				External code libraries used in QA
 	   			
 	   			<ul>
 		   			Soon

@@ -16,16 +16,16 @@ loadModels("core",$lang);
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analysis | Word Clouds </title>
+    <title>Quran Word Clouds | Quran Analysis </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Word clouds for the Quran Chapters">
+    <meta name="description" content="Word clouds for each chapter in the Quran">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
 	<script src="<?=$JQUERY_TAGCLOUD_PATH?>" type="text/javascript" ></script> 
-	 
+	<link rel="icon" type="image/png" href="/favicon.png">	 
 	<script type="text/javascript">
 	</script>
      

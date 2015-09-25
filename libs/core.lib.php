@@ -299,7 +299,7 @@
 	function cleanAndTrim($str)
 	{
 		//« spoils arabic words = 0xab
-		$tobeReplacedStr = "\t\n\r\0\x0B~!$%&;^*()+=-<>?\"',”“.][»";
+		$tobeReplacedStr = "\t\n\r\0\x0B~!$%&;^*()+=-<>?\"',”“.][»:";
 		return trim(trim(trim($str),$tobeReplacedStr));
 	}
 
@@ -1065,7 +1065,9 @@
 	
 	function getItemFromUthmaniToSimpleMappingTable($simpleOrUthmaniWord)
 	{
-		return getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP", $simpleOrUthmaniWord);
+		$entry =  getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP", $simpleOrUthmaniWord);
+		
+		return $entry;
 
 	}
 	
@@ -1726,13 +1728,23 @@
 				$tag = $segmentDataArr['TAG'];
 				$segmentWord = $segmentDataArr['FORM_AR'];
 				
+				
+				
+				
+				
+				
 				//echoN($segmentWord);
 				//preprint_r($segmentDataArr);
 				
 				$segmentWordSimple="";
-				if ( !empty(getItemFromUthmaniToSimpleMappingTable($segmentWord) ))
+				
+				$simpleRepresentation = getItemFromUthmaniToSimpleMappingTable($segmentWord);
+				
+			
+				// !empty() produced error = Can't use function return value in write context
+				if ( strlen(trim($simpleRepresentation))>0)
 				{
-					$segmentWordSimple = getItemFromUthmaniToSimpleMappingTable($segmentWord);
+					$segmentWordSimple = $simpleRepresentation;
 				}
 				
 				$buckwalterTransliteration = $segmentDataArr['FORM_EN'];

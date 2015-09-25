@@ -81,6 +81,12 @@ TEXTAREA
 	margin: 10px 5% 0px 5%;
 	min-height: 400px;
 }
+#mainpage-maincontainer
+{
+    width: 98%;
+    margin: 10px 1% 0px 1%;
+    min-height: 400px;
+}
 
 #options-area
 {
@@ -126,7 +132,8 @@ TEXTAREA
 
 #content-area
 {
-	
+	margin: 10px auto;
+    width: 100%;
 }
 #options-area table
 {
@@ -671,13 +678,17 @@ marked_for_initials
 
 	
 }
+#visualization-area
+{
+	max-width:45%;
+	min-width:640px;
+	float:left;
+}
 
 #visualization-table
 {
-    width: 45%;
-  float: right;
-  min-width: 500px;
- /* margin: 0px 10px;*/
+    width: 100%;
+
 }
 
 #analysis-switch-lang-button
@@ -798,7 +809,7 @@ font-weight: bold;
 
 #result-stats-chart-area
 {
-margin: 20px auto 0px auto;;
+margin: 20px 0px 0px 0px;;
   width: 100%;
   min-height: 200px;
   border: 1px solid black;
@@ -808,14 +819,16 @@ margin: 20px auto 0px auto;;
 #result-verses-area
 {
   
-  width: 40%;
-  min-width: 400px;
-  min-height: 600px;
-  float: left;
-  padding:10px;
-  border:1px solid #eee;
-  margin-bottom: 10px;
-  margin-top:3px;
+  width: auto;
+    min-width: 400px;
+    min-height: 600px;
+    float: left;
+    padding: 10px;
+    border: 1px solid #eee;
+    margin-bottom: 10px;
+    margin-top: 3px;
+    max-width: 45%;
+}
 	
 }
 
@@ -1043,23 +1056,24 @@ text-align: center;
 
 #main-page-main-message
 {
-  margin: auto;
-  width: 570px;
-  color: #0051AB;
-  font-family: 'Tahoma';
-  font-weight: lighter;
-  padding: 30px 0px;
-  font-size: 24px;
-  padding-left: 10px;
-  padding-bottom:50px;
-  text-align: left;
+	margin:none;
+    width: 550px;
+    /* min-width: 500px; */
+    color: #0051AB;
+    font-family: 'Tahoma';
+    font-weight: lighter;
+    padding: 30px 0px;
+    font-size: 24px;
+    padding-left: 10px;
+    padding-bottom: 50px;
+    text-align: left;
 }
 
 #main-page-try
 {
 	color:#000717;
 	text-align: left;
-	    padding-left: 20px;
+	    padding-left: 30px;
    
 }
 
@@ -1083,12 +1097,11 @@ text-align: center;
 
 #main-page-examples-area
 {
-	margin:10px auto;
-	width:600px;
-	margin-top: 0px;
-	text-align: center;
-	min-width: 600px;
-	 
+    margin: 10px auto;
+    width: 50%;
+    margin-top: 0px;
+    text-align: center;
+    min-width: 500px;
 	
 }
 
@@ -2159,7 +2172,7 @@ A#home-beta-button:HOVER
 	    display: inline-block;
     /* margin-bottom: -5px; */
     position: relative;
-    bottom: -3px;
+    bottom: 0px;
 }
 
 select[id=subscriber_title]

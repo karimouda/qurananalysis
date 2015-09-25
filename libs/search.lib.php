@@ -53,6 +53,12 @@ function getSimilarWords($lang,$queryWords)
 	foreach ($WORDS_FREQUENCY_WORDS as $wordFromQuran=>$one)
 	{
 		
+		if ( $lang=="EN")
+		{
+			//to remove ":"
+			$wordFromQuran = cleanAndTrim($wordFromQuran);
+			
+		}
 		
 		foreach ($queryWords as $wordFromQuery)
 		{

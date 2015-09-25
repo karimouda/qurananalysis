@@ -18,17 +18,25 @@
 	   	<li>Quran Arabic Stop Words</li>
 	   	<li>QA Quran Ontology</li>
 	   	<li>Simple to Uthmani word mapping</li>
-     	<li>QAC to Qurana segment Mapping</li>
+     	<li>QAC to Qurana segment mapping</li>
      	<li>Longest Common Substrings (Phrases) in the Quran</li>
      	
 	    
    	</ul>
 	
 	<br>
-	<b>Join the <a href="/info/index.php?page=contribute#maillist">mail list</a> in contribute page to be notified when the code is released.</b>
+	<b>Join this <a href="/info/index.php?page=contribute#maillist">mail list</a> to be notified when the code is released.</b>
 	<br>
 	<br>
 </p>
+<p class='info-page-text'>
+		
+	<h1 class='info-page-section-title'>Thesis Paper</h1> 
+	
+	QA Thesis paper, documenting the research part of this project (Soon)
+ 
+	
+<p>
 <p class='info-page-text'>
 		
 	<h1 class='info-page-section-title'>Documentation</h1> 

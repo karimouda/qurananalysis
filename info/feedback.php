@@ -33,6 +33,7 @@
 	<br>
 	<hr/>
 	<br>
+	<h1 class='info-page-section-title'>Public Feedback</h1> 
 	<br>
 <div class="fb-comments" data-href="http://qurananalysis.com/info/index.php?page=feedback" data-numposts="5"></div>
 	

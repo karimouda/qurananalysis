@@ -24,15 +24,15 @@ loadModels("core",$lang);
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analysis | Basic Statistics </title>
+    <title>Quran Statistics | Quran Analysis </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Full Analytics System for the Quran">
+    <meta name="description" content="Statistics from the Quran">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	 
+	<link rel="icon" type="image/png" href="/favicon.png">	 
 	<script type="text/javascript">
 	</script>
      

@@ -9,14 +9,14 @@
 	<span>Share and Spread the Word</span>
 	<br>
 	
-		<span class='twitter-button-fixer'>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-url="qurananalysis.com" data-via="qurananalysis" data-count="none">Tweet</a>
-		</span>
+		
 		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
 		<div class="fb-like" data-href="http://qurananalysis.com" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
-	
-	
+		<br>
+		<div class='twitter-button-fixer' style='margin-top:2px;'>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-url="qurananalysis.com" data-via="qurananalysis" data-count="none">Tweet</a>
+		</div>
 </p>
 
 <p class='info-page-text'>
@@ -81,7 +81,7 @@
 <p class='info-page-text'>
 	<h1 class='info-page-section-title'>Research Community</h1> 
 	
-	We are building a community around QA to boost Quranic Research. In this community we will exchange and apply ideas, solve problems and take QA and Quran Applications to the next level. If you are a Software Engineer or an Academic Researcher in Computing or Linguistics please join the <a href="#maillist">mail list</a> to be notified when the community page is ready. Also follow QA on Social Media. 
+	We are building a community around QA to boost Quranic Research. In this community we will exchange and apply ideas, solve problems and take QA and other Quranic Applications to the next level. If you are a Software Engineer or an Academic Researcher in Computing or Linguistics please join the <a href="#maillist">mail list</a> to be notified when the community page is ready. Also follow QA on Social Media. 
 	<br>
 	
 </p>

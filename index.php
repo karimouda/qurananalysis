@@ -6,6 +6,7 @@ $query = $_GET['q'];
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <meta charset="utf-8">
     <title>Quran Smart Semantic Search and Question Answering System - QA (BETA)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,7 @@ $query = $_GET['q'];
 	<script type="text/javascript" src="<?=$TINYSORT_PATH?>"></script>
 	<script type="text/javascript" src="<?=$TINYSORT_JQ_PATH?>"></script>	
 	<script type="text/javascript" src="<?=$JQUERY_TAGCLOUD_PATH?>" ></script> 
-	
+
 
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
 	<link rel="icon" type="image/png" href="/favicon.png">
@@ -42,7 +43,7 @@ $query = $_GET['q'];
 	 ?>
   		
   
-  <div id='main-container'>
+  <div id='mainpage-maincontainer'>
 			  	
 
 
@@ -63,23 +64,21 @@ $query = $_GET['q'];
 	   						</td>
 	   					</tr>
 	   					<tr>
-							<td>
-			  					
-	   						</td>
-	   						<td>
+							<td colspan='2'>
+			  						
 	   						
 	   						</td>
 	   					</tr>
 	   				</table>
 	   				
+			  	 
 			  	</div>	
 			  	<div id="loading-layer">
 			  		Loading ...
 			  	</div>
 			  	<div id='content-area'>
-			  	 	<h1 id='main-page-main-message'>Search and Explore the Quran like never before ...</h1>
 			  	 	<div id='main-page-examples-area'>
-			  	 	
+			  	 	<h1 id='main-page-main-message'>Search and Explore the Quran like never before ...</h1>
 			  	 	
 			  	 	<div id='main-page-try'>
 			  	 	 <b>Click</b>
@@ -122,7 +121,7 @@ $query = $_GET['q'];
 			  	 				/
 			  	 				<a href="?q=<?php echo urlencode('"الذين آمنوا"')?>" class='main-page-example-item'>"الذين آمنوا"</a>
 			  	 				<br>
-			  	 				 <span class='note'>Should be enclosed by quotes ""</span>
+			  	 				 <span class='note'>Should be enclosed in quotes ""</span>
 			  	 			</td>
 			  	 		</tr>
 			  	 		<tr>

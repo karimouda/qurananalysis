@@ -24,15 +24,15 @@ if ( isset($_GET['lang']) )
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analysis | Scholars Section </title>
+    <title>Quran Analysis and Research Section | Quran Analysis</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Research and Analysis section in QA">
+    <meta name="description" content="Quran Research and Analysis section for Scholars and Computing Researchers">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	 
+	<link rel="icon" type="image/png" href="/favicon.png">	 
 	<script type="text/javascript">
 	</script>
      
@@ -52,13 +52,13 @@ if ( isset($_GET['lang']) )
 			<h1 id='analyze-title'>Are you a Scholar ?</h1>
 			  		<p>
 			  			If you are a Scholar or normal user who is interested in going deep into the Quran 
-			  			to find patterns, relations and new discoveries, you are in the right place ...
+			  			to find patterns, relations and new discoveries then you are in the right place ...
 			  			
 			  			
 			  		</p>
 			  		<p>
-			  			This section was created to be the swiss-knife of Quran Research, it is meant to
-			  			facilitate all kinds of Analysis work around Quran for both Arabic and English languages
+			  			This section is created to be the swiss-knife of Quran Research, it is meant to
+			  			facilitate all kinds of Analysis work around Quran for both Arabic and English languages.
 			  		</p>
 			  		
 			  		 <p style="color:#0357AA">
@@ -69,11 +69,10 @@ if ( isset($_GET['lang']) )
 			  		<ul>
 			  			<li><b>Basic Statistics</b>: Statistics about the total number of Chapters, Verses, Words, Characters and more </li>
 			  			<li><b>Word Frequencies</b>: List of all words in the Quran with their frequencies and weights calculated using the TFIDF algorithm  </li>
-						<li><b>Word clouds</b>: Word clouds for each Chapter in the Quran in addition to 2 other clouds for verse endings and beginnings ( that is clouds for first and last word in each verse ), the bigger the word size the more it is mentioned   </li>
+						<li><b>Word clouds</b>: Word clouds for each Chapter in the Quran in addition to 2 other clouds for verse endings and beginnings (that is clouds for first and last words in each verse), the bigger the word size the more it is mentioned   </li>
 			  			<li><b>Full Text</b>: Listing of all verses in the Quran  </li>
 			  			<li><b>Charts</b>: A collection of charts such as "Chapter/Verse distribution" </li>
-			  			<li><b>Graphs</b>: Convert a verse or a Chapter to a Graph, each node is a word which can be connected to other words preceding or succeeding it (after excluding stopwords)  </li>
-			  			<li><b>N-Grames</b>: Choose "N" to produce an N-grame of words from the Quran</li>
+			  			<li><b>N-Grames</b>: Choose "N" to produce N-grams of words from the Quran</li>
 			  			<li><b>PoS Patterns</b>: Get verses from the Quran which matches a specific PoS Pattern</li>
 			  			<li><b>PoS Query</b>: List verses containing any specific PoS Tag from the Quran using Quranic Arabic Corpus</li>
 			  			<li><b>Repeated Verses</b>: Listing of "full repeated verses" in the Quran  </li>
@@ -88,8 +87,8 @@ if ( isset($_GET['lang']) )
 			  			<li><b>Concordance</b>: Show the "concordance" context of any word or PoS tag in the Quran </li>
 			  			<li><b>Pause Marks</b>: Show all the verses for any selected Pause Mark</li>
 			  			<li><b>Buckwalter-Arabic Translitertation</b>: Two-way conversion between Arabic and Buckwalter transliteration </li>
-			  			<li><b>Word similarity</b>: Lists the top 20 similar words for any selected word from the Quran</li>
-			  			<li><b>Quran Initials</b>: Analytics and Visualization to help deciphering the meaning of the disjoined letter in the Quran </li>
+			  			<li><b>Word similarity</b>: Lists the top 20 nearest words (character similarity) for any selected word from the Quran</li>
+			  			<li><b>Quran Initials</b>: Analytics and Visualization to help deciphering the meaning of the disjoined letters in the Quran </li>
 			  		</ul>
 			</div>
 	

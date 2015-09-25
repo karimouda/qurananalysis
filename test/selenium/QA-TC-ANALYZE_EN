@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/analysis/</td>
+	<td>/analysis/uthmani-to-simple.php</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,12 +49,12 @@
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='main-container']/fieldset/table/tbody/tr[4]/td[2]</td>
-	<td>5304</td>
+	<td>5277</td>
 </tr>
 <tr>
 	<td>waitForText</td>
 	<td>//div[@id='main-container']/fieldset/table/tbody/tr[5]/td[2]</td>
-	<td>668733</td>
+	<td>668684</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='simmilar-words-area']/ul/li[5]</td>
+	<td>//div[@id='simmilar-words-area']/ul/li[6]</td>
 	<td>marry</td>
 </tr>
 </tbody></table>

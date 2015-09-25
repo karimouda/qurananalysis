@@ -113,8 +113,8 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//div[@id='search-results-summary']/table/tbody/tr/td[2]</td>
-	<td>Searched for &quot;بسم الله&quot;</td>
+	<td>//table[@id='search-results-summary-table']/tbody/tr/td[2]/span</td>
+	<td>Searched for &quot;بسم الله سمو ٱسْم اله ٱللَّه الأسماء بأسماء بأسمائهم اسمه اسم أسماء أسمائه الاسم باسم لله بالله والله فالله ولله فلله أبالله آلله تالله وتالله&quot;</td>
 </tr>
 </tbody></table>
 </body>

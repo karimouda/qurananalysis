@@ -32,7 +32,7 @@ loadModels("core",$lang);
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	 
+	<link rel="icon" type="image/png" href="/favicon.png"> 
 	<script type="text/javascript">
 	</script>
      

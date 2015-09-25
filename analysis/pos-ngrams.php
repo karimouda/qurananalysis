@@ -17,15 +17,15 @@ loadModels("core",$lang);
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Quran Analytics | PoS Patterns (N-GRAMES) </title>
+    <title>Quran PoS Patterns Query Tool | Quran Analysis</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Full Analytics System for the Quran">
+    <meta name="description" content="Part of Speech Patterns query tool for the Quran">
     <meta name="author" content="">
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
-	 
+	<link rel="icon" type="image/png" href="/favicon.png">	 
 	  
 	 
 	<script type="text/javascript">
@@ -59,7 +59,7 @@ loadModels("core",$lang);
 					</span>
 					<input type="button" id='ngrams-submit' value='Find' />
 					<br>
-					<span class='note'>Supported Tags: "*" and all <a target='_new' href='http://corpus.quran.com/documentation/tagset.jsp'>QAC Tags</a></span>
+					<span class='note'>Supported Tags: * wildcard and all <a target='_new' href='http://corpus.quran.com/documentation/tagset.jsp'>QAC Tags</a></span>
 					<br>
 					
 					
@@ -95,6 +95,15 @@ loadModels("core",$lang);
 		
 		});
 
+    	$("#pos-pattern").keyup(function(e){ 
+		    var keyCode = e.which; 
+		    
+		    if(keyCode==13)
+		    {
+		    	e.preventDefault();
+		      	$("#ngrams-submit").click();
+		    } 
+		});
 
 
 		$("#ngrams-submit").click(function()

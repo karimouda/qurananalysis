@@ -1,5 +1,6 @@
 var _gaq = _gaq || [];
 
+
 function showTranslationFor(divID)
 {
 	$("#"+divID+"-translation").toggle();
@@ -879,7 +880,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 
 	function showBETAWarning(showInDivID)
 	{
-		var text ="BETA Caution: in addition to the beta-experimental nature of this website "+
+		var text ="BETA Caution: in addition to the beta-experimental nature of this website, "+
 				  "it is a human endeavour which can't be perfect and should NOT be considered truth or fact source";
 		
 		
@@ -937,9 +938,19 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
   	
   	function trackEvent(category,actionName,value1, value2)
   	{
-  		
+  		//alert('s');
   		//_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
-  		if(_gaq)_gaq.push(['_trackEvent', category,actionName,value1,value2]);
+  		//if(_gaq)_gaq.push(['_trackEvent', category,actionName,value1,value2]);
+  		
+  		
+  		
+  		// does not exists in dev environemtn
+  		if ( typeof ga === "function" )
+  		{
+  			//alert(ga);
+  			ga('send', 'event', category, actionName, value1, value2);
+  		}
+  		
 
   	}
   	
