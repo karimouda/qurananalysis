@@ -144,12 +144,27 @@ $searchResultsTextArr = printResultVerses($scoringTable,$lang,$direction,$query,
 						
 						//preprint_r($wordCloudArr,1);
 						
+						$STOP_WORDS = getModelEntryFromMemory($lang, "MODEL_CORE", "STOP_WORDS", "");
+
+						//$STOP_WORDS_STRICT_L2 = getModelEntryFromMemory($lang, "MODEL_CORE", "STOP_WORDS_STRICT_L2", "");
+						
+						
 							
 						$i=0;
 						foreach ($wordCloudArr as $wordLabel => $wordFreq )
 						{
 								
 							if ( isset($originalQueryWordsArrSwaped[$wordLabel])) continue;
+							
+							if ( $lang=="AR")
+							{
+								if ( isset($STOP_WORDS[$wordLabel]) ) continue;
+								
+							}
+							else
+							{
+								if ( isset($STOP_WORDS[$wordLabel]) ) continue;
+							}
 							
 							$freq = $wordFreq;//log($wordFreq,2);
 							$i++;
