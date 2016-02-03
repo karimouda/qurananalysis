@@ -10,3 +10,4 @@
 <meta name="twitter:description" content="Quran Analysis is a Smart Search and Question Answering System for the Quran" />
 <meta name="twitter:title" content="Quran Smart Semantic Search and Question Answering System - QA (BETA)" />
 
+
