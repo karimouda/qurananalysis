@@ -1,3 +1,29 @@
+<?php 
+#   PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+#   ====================================================================
+#
+#    Quran Analysis (www.qurananalysis.com). Full Semantic Search and Intelligence System for the Quran.
+#    Copyright (C) 2015  Karim Ouda
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    You can use Quran Analysis code, framework or corpora in your website
+#	 or application (commercial/non-commercial) provided that you link
+#    back to www.qurananalysis.com and sufficient credits are given.
+#
+#  ====================================================================
+?>
 <div class='analysis-help-area'>	
 <img  src='/images/help-icon-2.png' class='help-icon analyze-help-icon'  onclick="showHelpMessage('analysis-help-message','ANALYSIS','<?=$_SERVER['PHP_SELF']?>')"/>
 <div id='analysis-help-message' class='help-message-area'>
@@ -7,7 +33,10 @@
 	
 	?>
 	<?php if (strpos($_SERVER['PHP_SELF'],"/basic-statistics.php")!==false):?>
-	This page shows much statistics from the Quran for both Arabic text and English translation. Statistics shown includes the following:
+	This page shows much statistics from the Quran for both Arabic text and English translation.
+	<br>
+	<br>
+	 Statistics shown includes the following:
 	<ol>
 		<li>The total number of chapters, verses, words and characters.</li>
 		<li>Minimum and maximum words, verses and word/verse lengths.</li>
@@ -24,11 +53,12 @@
 	</p>	
 	<?php elseif (strpos($_SERVER['PHP_SELF'],"/full-quran-text.php")!==false):?>
 	<p>
-	This page lists all verses in the Quran in order so you can see the source text used in the website in one page.
+	This page lists all verses in the Quran in order so you can see the source text used in this website in one page.
 	</p>		
 	<?php elseif (strpos($_SERVER['PHP_SELF'],"/charts.php")!==false):?>
 	<p>
 	This page shows a collection of charts from Quranic data. 
+	<br>
 	<br>
 	Chapter/Verse distribution shows how many verses are in each chapter in the Quran.
 	</p>	
@@ -65,12 +95,12 @@
 	</p>
 	<?php elseif (strpos($_SERVER['PHP_SELF'],"/repetition-verses.php")!==false):?>
 	<p>
-	This page shows all repeated verses from the Quran. Verses are sorted in a descending order by their repetition
+	This page shows all repeated verses from the Quran. Verses are sorted in a descending order by frequency
 	</p>	
 	
 	<?php elseif (strpos($_SERVER['PHP_SELF'],"/repetition-common-substrings.php")!==false):?>
 	<p>
-	This page shows all repeated “phrases” (sub-verses or substring of verses) from the Quran. Phrases are sorted in a descending order by their repetition.
+	This page shows all repeated “phrases” (sub-verses or substring of verses) from the Quran. Phrases are sorted in a descending order by frequency.
 	<br/>
 	<br/>
 	<a target='_NEW' href='https://en.wikipedia.org/wiki/Longest_common_substring_problem'>LCS (Longest Common Substrings) algorithm</a> was applied on the whole text of the Quran to make up this list.
@@ -106,7 +136,7 @@
 		This tool provides information about any Arabic word in the Quran by gathering data about the word from all relevant data models in QA. For each word the following is shown to the user:
 		<br/>
 		<ol>
-			<li>Simple and Uthmani Word Presentation</li>
+			<li>Simple and Uthmani word presentations</li>
 			<li>Frequency</li>
 			<li>TF-IDF Weight</li>
 			<li>Buckwalter Transliteration</li>
@@ -166,7 +196,7 @@
 		
 	<?php elseif (strpos($_SERVER['PHP_SELF'],"/simmilar-words.php")!==false):?>
 	<p>
-	This tool shows the top 20 similar words for any word in the Quran. The tool supports both Arabic and English. The same function is used in QA for query suggestions.
+	This tool shows the top 20 similar words (character similarity not "semantic meaning") for any word in the Quran. The tool supports both Arabic and English. The same function is used in QA for query suggestions.
 	<br/>
 	<br/>
 	The words are found using an extended <a target='_NEW' href='https://en.wikipedia.org/wiki/Levenshtein_distance'>min-edit-distance algorithm</a>.

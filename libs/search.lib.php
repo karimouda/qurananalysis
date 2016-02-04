@@ -1,4 +1,28 @@
 <?php 
+#   PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+#   ====================================================================
+#
+#    Quran Analysis (www.qurananalysis.com). Full Semantic Search and Intelligence System for the Quran.
+#    Copyright (C) 2015  Karim Ouda
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    You can use Quran Analysis code, framework or corpora in your website
+#	 or application (commercial/non-commercial) provided that you link
+#    back to www.qurananalysis.com and sufficient credits are given.
+#
+#  ====================================================================
 require_once(dirname(__FILE__)."/core.lib.php");
 require_once(dirname(__FILE__)."/pos.tagger.lib.php");
 
@@ -53,6 +77,12 @@ function getSimilarWords($lang,$queryWords)
 	foreach ($WORDS_FREQUENCY_WORDS as $wordFromQuran=>$one)
 	{
 		
+		if ( $lang=="EN")
+		{
+			//to remove ":"
+			$wordFromQuran = cleanAndTrim($wordFromQuran);
+			
+		}
 		
 		foreach ($queryWords as $wordFromQuery)
 		{
@@ -595,7 +625,7 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 
 
 		/** GET ROOT/STEM FOR EACH QUERY WORD **/
-		foreach ($extendedQueryWordsArr as $word)
+		foreach ($extendedQueryWordsArr as $word=>$index)
 		{
 	
 			//preprint_r($MODEL_SEARCH['INVERTED_INDEX'][$word]);exit;
@@ -675,7 +705,20 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 	
 					
 			}
+			
+			////////// CUSTOM ROOT TABLE ///////////
+			$zawaga = "زوج";
+			$CUSTOM_ROOTS_TABLE['الزواج']=$zawaga;
+		
+			if (isset($CUSTOM_ROOTS_TABLE[$word]))
+			{
+				$extendedQueryWordsArr[$CUSTOM_ROOTS_TABLE[$word]]=1;
+				
+			}
+			
+			////////////////////////////////////////
 		}
+	
 	
 	
 		$QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
@@ -683,7 +726,7 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 		
 		$PAUSEMARKS = $TOTALS['PAUSEMARKS'];
 		
-		/** GET EMLA2Y (SIMPLE) WORDS CORRESPONSING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX
+		/** GET EMLA2Y (SIMPLE) WORDS CORRESPONDING TO ANY QAC SEGMENT CONTAINING THE ROOT/STEMS IN THE EXTENDED QUERY WORD FROM INVERTED INDEX
 		 *  ADD TO EXTENDED QUERY WORDS
 		 *  TODO: recheck to remove this whole loop
 		 * **/

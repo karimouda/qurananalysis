@@ -1,4 +1,28 @@
 <?php 
+#   PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+#   ====================================================================
+#
+#    Quran Analysis (www.qurananalysis.com). Full Semantic Search and Intelligence System for the Quran.
+#    Copyright (C) 2015  Karim Ouda
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    You can use Quran Analysis code, framework or corpora in your website
+#	 or application (commercial/non-commercial) provided that you link
+#    back to www.qurananalysis.com and sufficient credits are given.
+#
+#  ====================================================================
 require("global.settings.php");
 
 $query = $_GET['q'];
@@ -6,11 +30,12 @@ $query = $_GET['q'];
 <!DOCTYPE html>
 <html lang="en">
   <head>
+
     <meta charset="utf-8">
     <title>Quran Smart Semantic Search and Question Answering System - QA (BETA)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Quran Analysis is a Smart Search and Question Answering System for the Quran">
-
+    <meta name="description" content="Quran Analysis is a Smart Search, Exploration, Analysis and Question Answering System for the Quran">
+    <meta name="google-site-verification" content="PPEPMQGvF-gQbdLGHhhy_9lBgXdIER22von8qJZyfaI" />
 
 	<script type="text/javascript" src="<?=$JQUERY_PATH?>" ></script>
 	<script type="text/javascript" src="<?=$MAIN_JS_PATH?>"></script>
@@ -18,7 +43,7 @@ $query = $_GET['q'];
 	<script type="text/javascript" src="<?=$TINYSORT_PATH?>"></script>
 	<script type="text/javascript" src="<?=$TINYSORT_JQ_PATH?>"></script>	
 	<script type="text/javascript" src="<?=$JQUERY_TAGCLOUD_PATH?>" ></script> 
-	
+
 
 	<link rel="stylesheet" href="/qe.style.css?bv=<?=$BUILD_VERSION?>" />
 	<link rel="icon" type="image/png" href="/favicon.png">
@@ -42,7 +67,7 @@ $query = $_GET['q'];
 	 ?>
   		
   
-  <div id='main-container'>
+  <div id='mainpage-maincontainer'>
 			  	
 
 
@@ -63,23 +88,21 @@ $query = $_GET['q'];
 	   						</td>
 	   					</tr>
 	   					<tr>
-							<td>
-			  					
-	   						</td>
-	   						<td>
+							<td colspan='2'>
+			  						
 	   						
 	   						</td>
 	   					</tr>
 	   				</table>
 	   				
+			  	 
 			  	</div>	
 			  	<div id="loading-layer">
 			  		Loading ...
 			  	</div>
 			  	<div id='content-area'>
-			  	 	<h1 id='main-page-main-message'>Search and Explore the Quran like never before ...</h1>
 			  	 	<div id='main-page-examples-area'>
-			  	 	
+			  	 	<h1 id='main-page-main-message'>Search and Explore the Quran like never before ...</h1>
 			  	 	
 			  	 	<div id='main-page-try'>
 			  	 	 <b>Click</b>
@@ -122,7 +145,7 @@ $query = $_GET['q'];
 			  	 				/
 			  	 				<a href="?q=<?php echo urlencode('"الذين آمنوا"')?>" class='main-page-example-item'>"الذين آمنوا"</a>
 			  	 				<br>
-			  	 				 <span class='note'>Should be enclosed by quotes ""</span>
+			  	 				 <span class='note'>Should be enclosed in quotes ""</span>
 			  	 			</td>
 			  	 		</tr>
 			  	 		<tr>

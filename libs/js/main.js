@@ -1,4 +1,31 @@
+/*
+#   PLEASE DO NOT REMOVE OR CHANGE THIS COPYRIGHT BLOCK
+#   ====================================================================
+#
+#    Quran Analysis (www.qurananalysis.com). Full Semantic Search and Intelligence System for the Quran.
+#    Copyright (C) 2015  Karim Ouda
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#    You can use Quran Analysis code, framework or corpora in your website
+#	 or application (commercial/non-commercial) provided that you link
+#    back to www.qurananalysis.com and sufficient credits are given.
+#
+#  ====================================================================
+*/
 var _gaq = _gaq || [];
+
 
 function showTranslationFor(divID)
 {
@@ -879,7 +906,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 
 	function showBETAWarning(showInDivID)
 	{
-		var text ="BETA Caution: in addition to the beta-experimental nature of this website "+
+		var text ="BETA Caution: in addition to the beta-experimental nature of this website, "+
 				  "it is a human endeavour which can't be perfect and should NOT be considered truth or fact source";
 		
 		
@@ -937,9 +964,19 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
   	
   	function trackEvent(category,actionName,value1, value2)
   	{
-  		
+  		//alert('s');
   		//_trackEvent(category, action, opt_label, opt_value, opt_noninteraction)
-  		if(_gaq)_gaq.push(['_trackEvent', category,actionName,value1,value2]);
+  		//if(_gaq)_gaq.push(['_trackEvent', category,actionName,value1,value2]);
+  		
+  		
+  		
+  		// does not exists in dev environment
+  		if ( typeof ga === "function" )
+  		{
+  			//alert(ga);
+  			ga('send', 'event', category, actionName, value1);
+  		}
+  		
 
   	}
   	
