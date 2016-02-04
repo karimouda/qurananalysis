@@ -12,6 +12,8 @@ This project started as an Msc project at the University of Leeds in 2015, more 
 
 The WIKI includes more details and tutorials giving examples of how QA can be used and extended
 
+The code is not well commented due to time limitations during the MSc
+
 ## What do you get from QA
 
 ## License
