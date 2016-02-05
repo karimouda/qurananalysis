@@ -25,7 +25,7 @@
 #  ====================================================================
 
 
-
+#CODE SOURCE:https://msdn.microsoft.com/en-us/library/ff512421.aspx#phpexample
 
 $accessToken = null;
 $authHeader = null;
@@ -34,9 +34,9 @@ function refreshAccessToken()
 {
 	
 	// Client ID of the application.
-	$clientID = "cfd0743c-e873-46e2-ba91-e876c096b1e6";
+	$clientID = "YOUR_ID";
 	// Client Secret key of the application.
-	$clientSecret = "u+EYp3A8tc1YeN+NxbGa60NYnHITTH0yl8jlmTQ5W5I";
+	$clientSecret = "YOUR_SECRET";
 	// OAuth Url.
 	$authUrl = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
 	// Application Scope Url
@@ -213,7 +213,7 @@ function translateText($text,$translateFrom="en",$translateTo="ar")
 		
 
 		$translation = trim((string)$xmlObj[0]);
-		echoN($translation);
+		//echoN($translation);
 		//(string) casting to avoid SimpleXMLElement serialization problem
 		// trim for endlines
 		return $translation;

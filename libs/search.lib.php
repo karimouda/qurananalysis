@@ -707,6 +707,7 @@ function extendQueryByExtractingQACDerviations($extendedQueryWordsArr)
 			}
 			
 			////////// CUSTOM ROOT TABLE ///////////
+			//TODO:
 			$zawaga = "زوج";
 			$CUSTOM_ROOTS_TABLE['الزواج']=$zawaga;
 		
@@ -946,7 +947,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 			//echoN("$qacLocation|$targetQACLocation|$word|$EXTRA_INFO|$WORD_TYPE");
 	
 	
-			// incase of non normal word ( QAC/QURANA) .. transslate WordIndex from Uthmani script to Imla2y script
+			// incase of non normal word ( QAC/QURANA) .. translate WordIndex from Uthmani script to Imla2y script
 			/*if ( $WORD_TYPE!="NORMAL_WORD"   )
 			{
 			//echoN("OLD:$INDEX_IN_AYA_EMLA2Y");

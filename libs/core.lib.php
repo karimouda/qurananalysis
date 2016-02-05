@@ -1885,7 +1885,7 @@
 	/*
 	 * Generate Subsentenses list by splitting verses on pause marks
 	 * 
-	 * @param $coreModelUsed whether to ise Uthmani or Simple data model
+	 * @param $coreModelUsed whether to use Uthmani or Simple data model
 	 */
  	function getPoSTaggedSubsentences($coreModelUsed = "UTH")
  	{
@@ -2610,7 +2610,7 @@
 		return "ال".$str;
 	}
 	
-	function removeAlefLamFromBegening($str)
+	function removeAlefLamFromBegining($str)
 	{
 		if ( startsWithAL($str))
 		{

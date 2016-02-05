@@ -3230,3 +3230,555 @@ EN|a feeling of profound respect for someone or something|DESC|شعور باحت
 EN|Anxiety|CONCEPT|القلق
 EN|a vague unpleasant emotion that is experienced in anticipation of some [usually ill-defined] misfortune|DESC|عاطفة غير سارة غامضة التي تعاني تحسبا لبعض المحن [عادة ما تكون غير محددة]
 EN|physical objects consisting of a number of pages bound together|DESC|الأشياء المادية التي تتألف من عدد من الصفحات المرتبطة معا
+AR|الله|CONCEPT|God
+AR|أرض|CONCEPT|Land
+AR|قوم|CONCEPT|Folk
+AR|رسول|CONCEPT|Messenger
+AR|سماء|CONCEPT|Sky
+AR|نفس|CONCEPT|Same
+AR|حق|CONCEPT|Right
+AR|مؤمن|CONCEPT|Locked
+AR|خير|CONCEPT|Okay
+AR|سبيل|CONCEPT|For
+AR|عليم|CONCEPT|Alim
+AR|غير|CONCEPT|But
+AR|نار|CONCEPT|Fire
+AR|موسى|CONCEPT|Moses
+AR|قلب|CONCEPT|Heart
+AR|ظالم|CONCEPT|Unjust
+AR|كافرون|CONCEPT|Apostates
+AR|عظيم|CONCEPT|That's great
+AR|مبين|CONCEPT|Shown
+AR|رحيم|CONCEPT|Rahim
+AR|أجر|CONCEPT|Remuneration
+AR|عزيز|CONCEPT|Aziz
+AR|حكيم|CONCEPT|Sage
+AR|قول|CONCEPT|Bean
+AR|غفور|CONCEPT|Forgiving
+AR|ذو|CONCEPT|With
+AR|مثل|CONCEPT|As
+AR|مال|CONCEPT|Money
+AR|أول|CONCEPT|First
+AR|أكثر|CONCEPT|More
+AR|حياة|CONCEPT|Life
+AR|زوج|CONCEPT|Pair
+AR|أخ|CONCEPT|Brother
+AR|فرعون|CONCEPT|Pharaoh
+AR|صالح|CONCEPT|Saleh
+AR|العالمين|CONCEPT|Worlds
+AR|أليم|CONCEPT|Yemen
+AR|إنسان|CONCEPT|Man
+AR|بينة|CONCEPT|Binh
+AR|قرآن|CONCEPT|Quran
+AR|قليل|CONCEPT|A little
+AR|إبراهيم|CONCEPT|Ibrahim
+AR|كثير|CONCEPT|A lot
+AR|ابن|CONCEPT|Son
+AR|نساء|CONCEPT|Women
+AR|نهار|CONCEPT|Day
+AR|شديد|CONCEPT|Very
+AR|شهيد|CONCEPT|Shahid
+AR|بصير|CONCEPT|Basir
+AR|عدو|CONCEPT|An enemy
+AR|أعلم|CONCEPT|I know
+AR|ساعة|CONCEPT|Hours
+AR|سميع|CONCEPT|Aurally
+AR|خبير|CONCEPT|Expert
+AR|قدير|CONCEPT|Kadeer
+AR|نوح|CONCEPT|Noah
+AR|سلام|CONCEPT|So long
+AR|بحر|CONCEPT|Gamer
+AR|كبير|CONCEPT|Large
+AR|حساب|CONCEPT|Account
+AR|معروف|CONCEPT|Unknown
+AR|ميت|CONCEPT|Mitt
+AR|فاسق|CONCEPT|Punk
+AR|بشر|CONCEPT|Human beings
+AR|مستقيم|CONCEPT|Straight
+AR|أحسن|CONCEPT|Best
+AR|نصير|CONCEPT|Nasir
+AR|مرسل|CONCEPT|Sender
+AR|أم|CONCEPT|Or
+AR|مريم|CONCEPT|Mary
+AR|حرام|CONCEPT|No.
+AR|كاذب|CONCEPT|Hoax
+AR|واحدة|CONCEPT|One
+AR|أشد|CONCEPT|Most
+AR|عاد|CONCEPT|He returned
+AR|كريم|CONCEPT|Cream
+AR|واحد|CONCEPT|One
+AR|ريح|CONCEPT|Wind
+AR|عرش|CONCEPT|Throne
+AR|حسنة|CONCEPT|Good
+AR|رجال|CONCEPT|Men
+AR|ذرية|CONCEPT|Atomic
+AR|سواء|CONCEPT|Both
+AR|لوط|CONCEPT|Lot
+AR|يوسف|CONCEPT|Yusuf
+AR|قريب|CONCEPT|Nearby
+AR|جحيم|CONCEPT|Hell
+AR|ثمود|CONCEPT|Thmod
+AR|بعيد|CONCEPT|Remote
+AR|لسان|CONCEPT|Tongue
+AR|عيسى|CONCEPT|Issa
+AR|غني|CONCEPT|Rich
+AR|حي|CONCEPT|District
+AR|أكبر|CONCEPT|The largest
+AR|طائفة|CONCEPT|Range
+AR|أنثى|CONCEPT|Female
+AR|طعام|CONCEPT|Food
+AR|ظلمات|CONCEPT|The darkness
+AR|مسكين|CONCEPT|Miskin
+AR|شهادة|CONCEPT|Certificate
+AR|ذكرى|CONCEPT|Memory
+AR|سيئة|CONCEPT|Bad
+AR|مؤمنات|CONCEPT|Insurers
+AR|جن|CONCEPT|Jean
+AR|شاهد|CONCEPT|See
+AR|أعمى|CONCEPT|Blind
+AR|حسن|CONCEPT|Hassan
+AR|مكذبين|CONCEPT|Disbelievers
+AR|مسمي|CONCEPT|Named
+AR|حميم|CONCEPT|Intimate
+AR|هارون|CONCEPT|Aaron
+AR|مصدق|CONCEPT|Certified
+AR|طير|CONCEPT|Tair
+AR|أقرب|CONCEPT|As soon as
+AR|مكر|CONCEPT|Feint
+AR|دابة|CONCEPT|Start
+AR|التوراة|CONCEPT|Torah
+AR|حميد|CONCEPT|بندی
+AR|سليمان|CONCEPT|Solomon
+AR|فاحشة|CONCEPT|Obscene
+AR|يعقوب|CONCEPT|Jacob
+AR|حرج|CONCEPT|Sin
+AR|صبر|CONCEPT|Patience
+AR|حليم|CONCEPT|Halim
+AR|ملك|CONCEPT|King
+AR|مسرف|CONCEPT|Profuse
+AR|يسير|CONCEPT|Walking
+AR|بلد|CONCEPT|Country
+AR|صدق|CONCEPT|Sincerely
+AR|ظل|CONCEPT|Under
+AR|أخت|CONCEPT|Sister
+AR|مهين|CONCEPT|Insulting
+AR|أمين|CONCEPT|Amin
+AR|قتال|CONCEPT|Fight
+AR|حرث|CONCEPT|Plow
+AR|خالق|CONCEPT|Creator
+AR|نطفة|CONCEPT|Sperm
+AR|كفور|CONCEPT|Hamlets
+AR|فقير|CONCEPT|Poor
+AR|حفيظ|CONCEPT|Hafeez
+AR|تواب|CONCEPT|Toab
+AR|إسماعيل|CONCEPT|Ismail
+AR|موعد|CONCEPT|Date
+AR|شعيب|CONCEPT|Shoaib
+AR|نجوى|CONCEPT|Najwa
+AR|إبليس|CONCEPT|Satan
+AR|علي|CONCEPT|On
+AR|كثيرة|CONCEPT|Many
+AR|معلوم|CONCEPT|Information
+AR|رءوف|CONCEPT|Rauf
+AR|ضعف|CONCEPT|Double
+AR|عربي|CONCEPT|Arabic
+AR|قوي|CONCEPT|Strong
+AR|عابد|CONCEPT|Abid
+AR|أولى|CONCEPT|First
+AR|أدنى|CONCEPT|Minimum
+AR|ضر|CONCEPT|Commer
+AR|أحق|CONCEPT|The most deserving
+AR|زرع|CONCEPT|Planting
+AR|مدين|CONCEPT|Madin
+AR|حجارة|CONCEPT|Stone
+AR|مصيبة|CONCEPT|Bane
+AR|هود|CONCEPT|Hood
+AR|تجارة|CONCEPT|Trade
+AR|سحاب|CONCEPT|Sahab
+AR|نبات|CONCEPT|Leaf
+AR|صيام|CONCEPT|Siam
+AR|صدقات|CONCEPT|Alms
+AR|قدم|CONCEPT|FT
+AR|الطاغوت|CONCEPT|Juggernaut
+AR|مطر|CONCEPT|Rain
+AR|الربا|CONCEPT|RIBA
+AR|هدي|CONCEPT|Hoda
+AR|توبة|CONCEPT|Repentance
+AR|زكريا|CONCEPT|Zakaria
+AR|حديد|CONCEPT|Iron
+AR|سرر|CONCEPT|Beds
+AR|موج|CONCEPT|MOG
+AR|كاتب|CONCEPT|Writer
+AR|طاغين|CONCEPT|More tyrannical
+AR|بهتان|CONCEPT|Fade
+AR|نصف|CONCEPT|Half
+AR|دين|CONCEPT|Dean
+AR|خيل|CONCEPT|Gil
+AR|صيد|CONCEPT|Fishing
+AR|علقة|CONCEPT|Leech
+AR|أصنام|CONCEPT|Idols
+AR|شاعر|CONCEPT|Cumshot
+AR|صدقة|CONCEPT|Charity
+AR|موقنين|CONCEPT|Certain
+AR|مترفين|CONCEPT|Enchanting
+AR|برق|CONCEPT|Lightning
+AR|الأمانات|CONCEPT|Safe
+AR|المجاهدين|CONCEPT|MMI
+AR|نعجة|CONCEPT|Ewe
+AR|قصاص|CONCEPT|Ullas
+AR|قارون|CONCEPT|Karun
+AR|محمد|CONCEPT|Mohamed
+AR|يونس|CONCEPT|Younis
+AR|أيوب|CONCEPT|Ayoub
+AR|زانية|CONCEPT|Hooker
+AR|المشركات|CONCEPT|The polytheist
+AR|سحر|CONCEPT|Magic
+AR|روح|CONCEPT|Spirit
+AR|إلياس|CONCEPT|Elias
+AR|جالوت|CONCEPT|Goliath
+AR|عمى|CONCEPT|My uncle
+AR|زجاجة|CONCEPT|Bottle
+AR|كاهن|CONCEPT|Priest
+AR|طالوت|CONCEPT|Goliath
+AR|بخل|CONCEPT|Scrimp
+AR|لقمان|CONCEPT|Luqman
+AR|إدريس|CONCEPT|Idris
+AR|برد|CONCEPT|Refund
+AR|ميراث|CONCEPT|Legacy
+AR|أمر|CONCEPT|Order
+AR|سلم|CONCEPT|Blessings
+AR|خضر|CONCEPT|Khader
+AR|خمر|CONCEPT|Vintage
+AR|بعوضة|CONCEPT|Mosquito
+AR|إعصار|CONCEPT|Hurricane
+AR|عسل|CONCEPT|Honey
+AR|هاوية|CONCEPT|Abyss
+AR|تسنيم|CONCEPT|TASNEEM
+AR|عشية|CONCEPT|Eve
+AR|مكة|CONCEPT|Mecca
+AR|قريش|CONCEPT|Quraish
+AR|عزير|CONCEPT|Uzair
+AR|أصحاب|CONCEPT|Owners
+AR|آيات|CONCEPT|Verses
+AR|فضل|CONCEPT|Thanks
+AR|آل|CONCEPT|The
+AR|حدود|CONCEPT|Limits
+AR|أساطير|CONCEPT|Legends
+AR|عباد|CONCEPT|Abbad
+AR|لعنة|CONCEPT|Curse
+AR|الأسماء|CONCEPT|Names
+AR|أنباء|CONCEPT|News
+AR|ليلة|CONCEPT|Night
+AR|حزب|CONCEPT|Party
+AR|معتد|CONCEPT|Aggressor
+AR|رحمة|CONCEPT|Mercy
+AR|أولياء|CONCEPT|The guardians
+AR|ثواب|CONCEPT|Reward
+AR|ماء|CONCEPT|Water
+AR|سدرة|CONCEPT|Sadri
+AR|مغرب|CONCEPT|Morocco
+AR|شفاعة|CONCEPT|The intercession
+AR|الأشهر|CONCEPT|The months
+AR|رحيق|CONCEPT|Nectar
+AR|شهر|CONCEPT|MO
+AR|إخوة|CONCEPT|Brothers
+AR|الفقراء|CONCEPT|Poor
+AR|الأحبار|CONCEPT|Inks
+AR|ذكر|CONCEPT|Male
+AR|كفار|CONCEPT|Kfar
+AR|دون|CONCEPT|Without
+AR|الأمم|CONCEPT|Nations
+AR|بني|CONCEPT|Brown
+AR|امرأة|CONCEPT|Woman
+AR|أبناء|CONCEPT|The sons
+AR|حجة|CONCEPT|Argument
+AR|ناقة|CONCEPT|Camel
+AR|أعداء|CONCEPT|Enemies
+AR|التابعين|CONCEPT|Affiliates
+AR|أولي|CONCEPT|First
+AR|كل|CONCEPT|Each
+AR|يأجوج|CONCEPT|Gog
+AR|سورة|CONCEPT|Sura
+AR|جنود|CONCEPT|Soldiers
+AR|أزواج|CONCEPT|Mature couples
+AR|الإنس|CONCEPT|Jinni
+AR|سفينة|CONCEPT|Ship
+AR|قيام|CONCEPT|All rise
+AR|جبار|CONCEPT|Orion
+AR|العبد|CONCEPT|Slave
+AR|الحاج|CONCEPT|Pilgrim
+AR|المسلمين|CONCEPT|Muslims
+EN|Country|CONCEPT|البلد
+EN|Weapon|CONCEPT|سلاح
+EN|Software|CONCEPT|البرمجيات
+EN|SoftwareObject|CONCEPT|سوفتواريوبجيكت
+EN|Term|CONCEPT|مصطلح
+EN|Organisation|CONCEPT|منظمة
+EN|Company|CONCEPT|الشركة
+EN|Automobile|CONCEPT|السيارات
+EN|BodyOfWater|CONCEPT|بوديوفواتير
+EN|RiverBodyOfWater|CONCEPT|ريفيربوديوفواتير
+EN|NaturalPlace|CONCEPT|ناتورالبليس
+EN|Stream|CONCEPT|تيار
+EN|not equitable or fair|DESC|غير منصفة أو عادلة
+EN|not faithful to religion or party or cause|DESC|غير المؤمنين بالدين أو طرف أو قضية
+EN|the act of paying for goods or services or to recompense for losses|DESC|قانون لدفع ثمن السلع أو الخدمات أو التعويض عن الخسائر
+EN|Regular payment|CONCEPT|الدفع العادية
+EN|a payment made at regular times|DESC|مبلغ يدفع في الأوقات العادية
+EN|the act of paying money|DESC|قانون دفع المال
+EN|of the grey-green color of sage leaves|DESC|للون الرمادي والأخضر من أوراق المريمية
+EN|informal terms for a human head|DESC|شروط غير رسمية لرأس الإنسان
+EN|Legume|CONCEPT|البقول
+EN|the seedpod of a leguminous plant [such as peas or beans or lentils]|DESC|seedpod من النبات قلي [مثل البازلاء أو الفاصوليا أو العدس]
+EN|Seed|CONCEPT|البذور
+EN|a small hard fruit|DESC|فاكهة الصلبة الصغيرة
+EN|Human head|CONCEPT|رأس الإنسان
+EN|the head of a human being|DESC|رأس إنسان
+EN|providing absolution|DESC|تقديم الغفران
+EN|the official currency issued by a government or national bank|DESC|عمله رسمية صادرة عن الحكومة أو المصرف الوطني
+EN|Medium of exchange|CONCEPT|وسيط للتبادل
+EN|anything that is generally accepted as a standard of value and a measure of wealth in a particular country or region|DESC|أي شيء أن من المقبول عموما كمعيار للقيمة، ومقياس للثروة في بلد معين أو منطقة معينة
+EN|Currency|CONCEPT|تحويل العملات
+EN|the metal or paper medium of exchange that is presently used|DESC|بالمعدن أو الورق المتوسطة الصرف الذي يتم استخدامه حاليا
+EN|a poker hand with 2 cards of the same value|DESC|يد لعبة البوكر مع 2 بطاقات من نفس القيمة
+EN|a group of things of the same kind that belong together and are so used|DESC|مجموعة من الأشياء من نفس النوع التي تنتمي معا، وتستخدم لذلك
+EN|Poker hand|CONCEPT|اليد بوكر
+EN|the 5 cards held in a game of poker|DESC|5 بطاقات في لعبة البوكر
+EN|an indefinite period of time|DESC|فترة غير محددة من الوقت
+EN|of or relating to or requiring special knowledge to be understood|DESC|من تتصل أو التي تتطلب معرفة خاصة يجب أن يفهم
+EN|having or being more than normal or necessary:"long on brains"|DESC|ترتب أو أكثر من المعتاد أو اللازمة: "منذ فترة طويلة على العقول"
+EN|not known before|DESC|ولم يعرف من قبل
+EN|of very poor quality|DESC|من نوعية رديئة جداً
+EN|close at hand|DESC|في متناول اليد
+EN|noisy and unrestrained mischief|DESC|الأذى صاخبة وغير المقيد
+EN|an event causing distress or pain|DESC|حدث يسبب الضيق أو الألم
+EN|far apart in relevance or relationship or kinship|DESC|متباعدة في صلة أو علاقة أو صلة القرابة
+EN|reckless or malicious behavior that causes discomfort or annoyance in others|DESC|السلوك متهور أو الضارة التي تسبب عدم الراحة أو الانزعاج في بلدان أخرى
+EN|affording an abundant supply|DESC|إتاحة وفرة
+EN|a formal declaration that documents a fact of relevance to finance and investment|DESC|إعلانا رسميا بأن الوثائق هي حقيقة ذات الصلة بالتمويل والاستثمار
+EN|Document|CONCEPT|الوثيقة
+EN|writing that provides information [especially information of an official nature]|DESC|الكتابة التي توفر المعلومات [لا سيما المعلومات ذات الطابع الرسمي]
+EN|the area of cognitive psychology that studies memory processes|DESC|مجال علم النفس المعرفي الذي يدرس عمليات الذاكرة
+EN|Basic cognitive process|CONCEPT|العملية المعرفية الأساسية
+EN|cognitive processes involved in obtaining and storing knowledge|DESC|العمليات المعرفية التي تنطوي عليها في الحصول على وتخزين المعرفة
+EN|Cognitive psychology|CONCEPT|علم النفس المعرفي
+EN|an approach to psychology that emphasizes internal mental processes|DESC|مدخل لعلم النفس يركز على العمليات العقلية الداخلية
+EN|not working properly|DESC|لا يعمل بشكل صحيح
+EN|a financial institution that sells insurance|DESC|مؤسسة مالية تبيع التأمين
+EN|Nondepository financial institution|CONCEPT|مؤسسة مالية نونديبوسيتوري
+EN|a financial institution that funds their investment activities from the sale of securities or insurance|DESC|مؤسسة مالية التي تمول أنشطتها الاستثمارية من بيع الأوراق المالية أو التأمين
+EN|a coarse durable twill-weave cotton fabric|DESC|نسيج القطن حك دائم خشنة-نسج
+EN|Trouser|CONCEPT|ضاغط
+EN|[usually in the plural] a garment extending from the waist to the knee or ankle, covering each leg separately|DESC|[عادة ما تكون في صيغة الجمع] تغطي كل ساق ثوب يمتد من الخصر إلى الركبة أو الكاحل، كل على حدة
+EN|Workwear|CONCEPT|عمال
+EN|heavy-duty clothes for manual or physical work|DESC|الملابس الثقيلة للعمل اليدوي أو المادية
+EN|Fabric|CONCEPT|النسيج
+EN|artifact made by weaving or felting or knitting or crocheting natural or synthetic fibers|DESC|قطعة أثرية بالنسيج أو التلبيد أو التريكو أو الحياكة الألياف الطبيعية أو الاصطناعية
+EN|thoroughly acquainted through study or experience|DESC|دقة التعرف من خلال الدراسة أو الخبرات
+EN|enduring trying circumstances with even temper or characterized by such endurance|DESC|الدائمة محاولة الظروف مع حتى نخفف أو تتسم بمثل هذه القدرة على التحمل
+EN|holding appropriate documentation and officially on record as qualified to perform a specified function or practice a specified skill|DESC|عقد الوثائق المناسبة، وسجل رسميا على أنه مؤهل أداء وظيفة معينة أو ممارسة مهارة المحددة
+EN|any distracting or deceptive maneuver [as a mock attack]|DESC|أي مناورة خادعة أو تشتيت [كهجوم وهمي]
+EN|the advantage gained by beginning early [as in a race]|DESC|الميزة التي اكتسبتها بداية مبكرة [كما هو الحال في سباق]
+EN|Turn|CONCEPT|تشغيل
+EN|[game] the activity of doing something in an agreed succession|DESC|[لعبة] النشاط القيام بشيء في خلافة المتفق عليها
+EN|Change of state|CONCEPT|تغيير الدولة
+EN|the act of changing something into something different in essential characteristics|DESC|قانون تغيير شيء ما إلى شيء مختلف في الخصائص الأساسية
+EN|in games or sports|DESC|في الرياضة أو ألعاب
+EN|Signal|CONCEPT|إشارة
+EN|any nonverbal action or gesture that encodes a message|DESC|أي عمل غير اللفظي أو إيماءة بترميز رسالة
+EN|produced or growing in extreme abundance|DESC|المنتجة أو المتزايدة في وفرة المدقع
+EN|close enough to be walked to|DESC|إغلاق ما يكفي ليكون مشى إلى
+EN|expressing extreme contempt|DESC|وإذ تعرب عن الازدراء الشديد
+EN|a boxing or wrestling match|DESC|ملاكمة أو المصارعة المباراة
+EN|Aggressiveness|CONCEPT|العدوانية
+EN|the quality of being bold and enterprising|DESC|جودة يجري جريء ومغامر
+EN|Controversy|CONCEPT|الجدل
+EN|a contentious speech act|DESC|فعل كلام المثيرة للجدل
+EN|Boxing|CONCEPT|الملاكمة
+EN|fighting with the fists|DESC|القتال بالقبضات
+EN|a farm tool having one or more heavy blades to break the soil and cut a furrow prior to sowing|DESC|أداة مزرعة بعد ريش ثقيل واحد أو أكثر للخروج من التربة وقطع ثلم قبل البذر
+EN|Tool|CONCEPT|أداة
+EN|an implement used in the practice of a vocation|DESC|تنفيذ يستخدم في ممارسة مهنة
+EN|the male reproductive cell|DESC|الخلية التناسلية الذكور
+EN|Gamete|CONCEPT|مشيج
+EN|a mature sexual reproductive cell having a single set of unpaired chromosomes|DESC|خلية الإنجابية جنسية ناضجة وجود مجموعة واحدة من الكروموزومات مزاوج
+EN|[Judeo-Christian and Islamic religions] chief spirit of evil and adversary of God|DESC|[الديانات اليهودية-المسيحية والإسلامية] رئيس روح الشر وعدو الله
+EN|having two meanings with intent to deceive|DESC|وجود اثنين من المعاني بقصد خداع
+EN|the least possible|DESC|أقل قدر ممكن
+EN|putting seeds or young plants in the ground to grow|DESC|وضع البذور أو النباتات الصغيرة في الأرض لتنمو
+EN|Placement|CONCEPT|التنسيب
+EN|the act of putting something in a certain place|DESC|قانون لوضع شيء في مكان معين
+EN|Farming|CONCEPT|الزراعة
+EN|the practice of cultivating the land or raising stock|DESC|ممارسة زراعة الأرض أو زيادة المخزون
+EN|something causing misery or death|DESC|تسبب شيئا من البؤس أو الموت
+EN|[zoology] an expandable part or marking that resembles a hood on the head or neck of an animal|DESC|وسم يشبه غطاء على الرأس أو الرقبة من حيوان أو جزء [علم الحيوان] قابلة للتوسيع
+EN|a natural object that covers or envelops|DESC|كائن طبيعية التي تغطي أو مظاريف
+EN|Neighborhood|CONCEPT|حي
+EN|Attachment|CONCEPT|مرفق
+EN|a supplementary part or accessory|DESC|جزء تكميلي أو الملحقات
+EN|Roof|CONCEPT|سقف
+EN|protective covering on top of a motor vehicle|DESC|الواقية التي تغطي مقدمة سيارة
+EN|Headdress|CONCEPT|غطاء الرأس
+EN|clothing for the head|DESC|ملابس للرأس
+EN|an equal exchange|DESC|تبادل متساوية
+EN|the volume of commercial activity|DESC|حجم النشاط التجاري
+EN|Transaction|CONCEPT|الحركة
+EN|Prevailing wind|CONCEPT|الرياح السائدة
+EN|the predominant wind direction|DESC|اتجاه الرياح السائدة
+EN|Exchange|CONCEPT|تبادل
+EN|reciprocal transfer of equivalent sums of money [especially the currencies of different countries]|DESC|نقل متبادلة يعادل مبالغ من المال [لا سيما عملات البلدان المختلفة]
+EN|hinged or detachable flat section [as of a table or door]|DESC|قسم شقة المعلقة أو انفصال [اعتبارا من جدول أو الباب]
+EN|Sheet|CONCEPT|ورقة
+EN|paper used for writing or printing|DESC|الورق المستخدم للكتابة أو الطباعة
+EN|one of several parts or pieces that fit with others to constitute a whole object|DESC|واحدة من عدة أجزاء أو القطع التي تناسب مع الآخرين لتشكل كائن بأكمله
+EN|a country of southeastern Asia that extends southward along the Isthmus of Kra to the Malay Peninsula|DESC|بلد في جنوب شرق آسيا التي تمتد جنوبا على طول كرا البرزخ لشبه جزيرة الملايو
+EN|Asian country|CONCEPT|بلد آسيوي
+EN|any one of the nations occupying the Asian continent|DESC|أي واحد من الأمم تحتل القارة الآسيوية
+EN|money or goods contributed to the poor|DESC|المال أو السلع ساهمت في الفقراء
+EN|act of giving in common with others for a common purpose especially to a charity|DESC|قانون لإعطاء القواسم المشتركة مع الآخرين لغرض مشترك لمؤسسة خيرية خاصة
+EN|a linear unit of length equal to 12 inches or a third of a yard|DESC|وحدة طول تساوي 12 بوصة أو ثلث ساحة الخطي
+EN|a crude idol of Krishna|DESC|النفط خام معبود كريشنا
+EN|Power|CONCEPT|الطاقة
+EN|one possessing or exercising power or influence or authority|DESC|حيازة أو ممارسة السلطة أو النفوذ أو السلطة
+EN|Avatar|CONCEPT|الصورة الرمزية
+EN|the manifestation of a Hindu deity [especially Vishnu] in human or superhuman or animal form|DESC|مظهر لالوهية الهندوسية [لا سيما فيشنو] في شكل الإنسان أو فوق طاقة البشر أو الحيوانات
+EN|Idol|CONCEPT|المعبود
+EN|characteristic of an absolute ruler or absolute rule|DESC|مميزة لحاكم مطلق أو قاعدة مطلقة
+EN|gradually ceasing to be visible|DESC|وقف تدريجيا بحيث تكون مرئية
+EN|Golf stroke|CONCEPT|ملعب السكتة الدماغية
+EN|the act of swinging a golf club at a golf ball and [usually] hitting it|DESC|القانون يتأرجح نادي الغولف في كرة غولف وضرب [عادة]
+EN|[Roman Catholic Church] the head of the College of Cardinals|DESC|[الكنيسة الكاثوليكية] رئيس الكرادلة للكلية
+EN|Elder|CONCEPT|كبار السن
+EN|a person who is older than you are|DESC|شخص الذي أقدم من أنت
+EN|Cardinal|CONCEPT|الكاردينال
+EN|[Roman Catholic Church] one of a group of more than 100 prominent bishops in the Sacred College who advise the Pope and elect new Popes|DESC|[الكنيسة الكاثوليكية الرومانية] واحد من مجموعة من أكثر من 100 الأساقفة البارزين في الكلية المقدسة الذين المشورة البابا وانتخاب الباباوات الجديدة
+EN|the occupation of catching fish for a living|DESC|احتلال لاصطياد الأسماك للعيش
+EN|Outdoor sport|CONCEPT|الرياضة في الهواء الطلق
+EN|a sport that is played outdoors|DESC|رياضة التي لعبت في الهواء الطلق
+EN|a follower who hangs around a host [without benefit to the host] in hope of gain or advantage|DESC|اتباع الذين يخيم حول مضيف [بدون فائدة إلى المضيف] أملا في كسب الربح أو ميزة
+EN|Annelid|CONCEPT|أنيليد
+EN|worms with cylindrical bodies segmented both internally and externally|DESC|الديدان مع الهيئات أسطواني مجزأة على حد سواء داخليا وخارجياً
+EN|contraceptive device consisting of a sheath of thin rubber or latex that is worn over the penis during intercourse|DESC|جهاز منع الحمل تتكون من غمد رقيقة من المطاط أو المطاط الذي يلبس على القضيب أثناء الجماع
+EN|Strongbox|CONCEPT|سترونجبوكس
+EN|a strongly made box for holding money or valuables|DESC|مربع بشدة الاحتفاظ بالأموال أو الأشياء الثمينة
+EN|Cupboard|CONCEPT|خزانة
+EN|a small room [or recess] or cabinet used for storage space|DESC|غرفة صغيرة [أو تعليق] أو مجلس الوزراء المستخدمة لمساحة التخزين
+EN|Contraceptive|CONCEPT|وسائل منع الحمل
+EN|an agent or device intended to prevent conception|DESC|وكيل أو جهاز يهدف إلى منع الحمل
+EN|[rugby] the player in the middle of the front row of the scrum who tries to capture the ball with the foot|DESC|[الركبي] اللاعب وسط الصف الأمامي من scrum الذي يحاول التقاط الكرة بالقدم
+EN|General|CONCEPT|العام
+EN|a general officer of the highest rank|DESC|ضابط عام من أعلى رتبة
+EN|Golfer|CONCEPT|لاعب غولف
+EN|someone who plays the game of golf|DESC|شخص يلعب لعبة الغولف
+EN|Athlete|CONCEPT|رياضي
+EN|a person trained to compete in sports|DESC|تدريب شخص للتنافس في الألعاب الرياضية
+EN|an angel ranked above the highest rank in the celestial hierarchy|DESC|ملاك في المرتبة أعلاه أعلى رتبة في التسلسل الهرمي السماوية
+EN|a source of help and advice and encouragement|DESC|مصدر للمساعدة والمشورة والتشجيع
+EN|Kinsman|CONCEPT|كينسمان
+EN|a male relative|DESC|أحد الأقرباء الذكور
+EN|Benefactor|CONCEPT|متبرع
+EN|a vessel fitted with a flexible teat and filled with milk or formula|DESC|سفينة مزودة حلمه مرنة ومليئة بالحليب أو الصيغة
+EN|a person who performs religious duties and ceremonies in a non-Christian religion|DESC|شخص الذي يؤدي واجباته الدينية والاحتفالات بأحد الأديان غير المسيحية
+EN|Holy Order|CONCEPT|أمر الكرسي
+EN|[usually plural] the status or rank or office of a Christian clergyman in an ecclesiastical hierarchy|DESC|[عادة ما تكون صيغة الجمع] على حالة أو رتبة أو مكتب قس مسيحي في تدرج هرمي الكنسية
+EN|the act of returning money received previously|DESC|القانون لإرجاع الأموال التي تلقاها سابقا
+EN|[law] a gift of personal property by will|DESC|[القانون] هدية ممتلكات الشخصية بإرادة
+EN|Gift|CONCEPT|هدية
+EN|something acquired without compensation|DESC|شيء ما حصل دون تعويض
+EN|Inheritance|CONCEPT|الوراثة
+EN|that which is inherited|DESC|تلك التي يتم توريث
+EN|the act of praying for divine protection|DESC|قانون الصلاة من أجل الحماية الإلهية
+EN|aiding the cause or policy or interests of|DESC|مساعدة السبب أو سياسة أو مصالح
+EN|Good fortune|CONCEPT|حسن الحظ
+EN|an auspicious state resulting from favorable outcomes|DESC|دولة ميمونة الناجمة عن نتائج إيجابية
+EN|the oldness of wines|DESC|القدم النبيذ
+EN|Wine|CONCEPT|النبيذ
+EN|fermented juice [of grapes especially]|DESC|المخمرة عصير [من العنب خاصة]
+EN|Oldness|CONCEPT|القدم
+EN|the quality of being old|DESC|جودة يجري القديمة
+EN|a severe tropical cyclone usually with heavy rains and winds moving a 73-136 knots [12 on the Beaufort scale]|DESC|إعصار استوائي شديد عادة مع ثقيلة أمطار ورياح تتحرك عقده 73-136 [12 درجة على مقياس بوفورت]
+EN|Cyclone|CONCEPT|إعصار
+EN|a violent rotating windstorm|DESC|عاصفة عنيفة الدورية
+EN|a bottomless gulf or pit|DESC|قعر الخليج أو حفرة
+EN|Chasm|CONCEPT|هوة
+EN|a deep opening in the earth's surface|DESC|عميق لفتح في سطح الأرض
+EN|the latter part of the day [the period of decreasing daylight from late afternoon until nightfall]|DESC|الجزء الأخير من النهار [فترة تناقص النهار من وقت متأخر من بعد الظهر حتى الغروب]
+EN|a place that attracts many visitors|DESC|مكان الذي يجذب العديد من الزوار
+EN|Riyadh|CONCEPT|الرياض
+EN|joint capital [with Mecca] of Saudi Arabia located in the central oasis|DESC|رأس المال المشترك [بمكة المكرمة] المملكة العربية السعودية تقع في واحة وسط
+EN|a soft pebble-grained leather made from goatskin|DESC|الجلود حصاة الحبيبات ناعمة من الماعز
+EN|African country|CONCEPT|البلدان الأفريقية
+EN|any one of the countries occupying the African continent|DESC|أي واحد من البلدان التي تحتل القارة الأفريقية
+EN|[classical mythology] the food and drink of the gods|DESC|[الأساطير الكلاسيكية] الطعام والشراب للآلهة
+EN|Secretion|CONCEPT|إفراز
+EN|a functionally specialized substance [especially one that is not a waste] released from a gland or cell|DESC|مادة متخصصة وظيفيا [لا سيما واحد ليس مضيعة] صدر من غدة أو خلية
+EN|Fruit juice|CONCEPT|عصير الفواكه
+EN|drink produced by squeezing or crushing fruit|DESC|المشروبات التي تنتجها الضغط أو سحق الفواكه
+EN|Dainty|CONCEPT|لذيذ
+EN|something considered choice to eat|DESC|شيء يعتبر خيار لتناول الطعام
+EN|a midwestern state in central United States|DESC|دولة الغرب الأوسط في الولايات المتحدة وسط
+EN|American state|CONCEPT|الدولة الأمريكية
+EN|one of the 50 states of the United States|DESC|واحدة من الدول ال 50 للولايات المتحدة
+EN|a subsidiary or subordinate organization that is affiliated with another organization|DESC|الثانوية أو الفرعية منظمة التي تنتسب مع منظمة أخرى
+EN|the muscular back part of the shank|DESC|العضلات الجزء الخلفي من شأنك
+EN|a wingless sterile ant or termite having a large head and powerful jaws adapted for defending the colony|DESC|على النملة العقيمة مجنح أو لها رأس كبير وقوية الفكين تكييفها للدفاع عن المستعمرة للنمل الأبيض
+EN|Enlisted person|CONCEPT|الشخص الجنود
+EN|a serviceman who ranks below a commissioned officer|DESC|المجند الذي تحتل المرتبة أدناه ضابط الصف
+EN|sterile member of a colony of social insects that forages for food and cares for the larvae|DESC|الأعضاء العقيمة من مستعمرة للحشرات الاجتماعية الأعلاف للغذاء، ويهتم لليرقات
+EN|[Islam] an invisible spirit mentioned in the Koran and believed by Muslims to inhabit the earth and influence mankind by appearing in the form of humans or animals|DESC|[الإسلام] بروح غير مرئي المذكورة في القرآن ويعتقد المسلمون تسكن الأرض وتؤثر على الجنس البشري بالظهور في شكل البشر أو الحيوانات
+EN|increase in price or value|DESC|زيادة في الأسعار أو قيمة
+EN|Emergence|CONCEPT|ظهور
+EN|the gradual beginning or coming forth|DESC|بداية تدريجية أو القادمة إليها
+EN|Slope|CONCEPT|منحدر
+EN|an elevated geological formation|DESC|تكوين جيولوجي مرتفعة
+EN|Change of location|CONCEPT|تغيير الموقع
+EN|a movement through space that changes the location of something|DESC|حركة عبر الفضاء يقوم بتغيير الموقع من شيء
+EN|Increase|CONCEPT|زيادة
+EN|the amount by which something increases|DESC|المبلغ الذي يزيد شيئا
+EN|Grade|CONCEPT|الصف
+EN|the gradient of a slope or road or other surface|DESC|التدرج من منحدر أو الطرق أو غيرها من سطح
+EN|Wave|CONCEPT|موجه
+EN|one of a series of ridges that moves across the surface of a liquid [especially across a large body of water]|DESC|واحدة من سلسلة من التلال التي تنتقل عبر سطح السائل [لا سيما عبر مجموعة كبيرة من المياه]
+EN|Origin|CONCEPT|الأصل
+EN|an event that is a beginning|DESC|هذا حدث بداية
+EN|a constellation on the equator to the east of Taurus|DESC|كوكبة على خط الاستواء إلى الشرق من برج الثور
+EN|Mythical being|CONCEPT|يجري الأسطورية
+EN|an imaginary being of myth or fable|DESC|كونها خيالية من الأسطورة أو الخرافة
+EN|Constellation|CONCEPT|كوكبة
+EN|a configuration of stars as seen from the earth|DESC|تكوين النجوم كما يرى من الأرض
+EN|Diffuse nebula|CONCEPT|سديم منتشر
+EN|a cluster of stars within an intricate cloud of gas and dust|DESC|مجموعة من النجوم داخل معقدة سحابة من الغبار والغاز
+EN|an emblematic design [especially in heraldry]|DESC|تصميم رمزية [لا سيما في شعارات]
+EN|Instrumentality|CONCEPT|الوسيلة
+EN|an artifact [or system of artifacts] that is instrumental in accomplishing some end|DESC|قطعة أثرية [أو نظام للتحف] هذا دور فعال في إنجاز بعض نهاية
+EN|Design|CONCEPT|التصميم
+EN|a decorative or artistic work|DESC|عمل ديكور أو الفنية
+EN|Emblem|CONCEPT|شعار
+EN|special design or visual object representing a quality, type, group, etc.|DESC|تصميم خاص أو كائن مرئي يمثل نوعية، نوع، مجموعة، إلخ.
+EN|the set of elements common to two or more sets|DESC|المجموعة من العناصر المشتركة بين مجموعتين أو أكثر
+EN|Commodity|CONCEPT|السلع الأساسية
+EN|Chemical|CONCEPT|المادة الكيميائية
+EN|material produced by or used in a reaction involving changes in atoms or molecules|DESC|المواد التي تنتجها أو استخدامها في رد فعل التي تنطوي على تغييرات في الذرات أو الجزيئات
+EN|the monthly discharge of blood from the uterus of nonpregnant women from puberty to menopause|DESC|التصريف الشهري الدم من رحم المرأة نونبريجنانت من سن البلوغ إلى سن إلياس
+EN|Rate|CONCEPT|معدل
+EN|a magnitude or frequency relative to a time unit|DESC|حجم أو التردد بالنسبة لوحدة الزمن
+EN|a connected series of events or actions or developments|DESC|سلسلة متصلة من الأحداث أو الإجراءات أو التطورات
+EN|Discharge|CONCEPT|التفريغ
+EN|any of several bodily processes by which substances go out of the body|DESC|أي من العديد من العمليات الجسدية التي تخرج المواد من الجسم
+EN|[computer science] written programs or procedures or rules and associated documentation pertaining to the operation of a computer system and that are stored in read/write memory|DESC|[علم الحاسوب] كتابة البرامج أو الإجراءات أو القواعد والوثائق ذات الصلة المتعلقة بتشغيل نظام كمبيوتر والتي يتم تخزينها في ذاكرة القراءة والكتابة
+EN|Code|CONCEPT|مدونة
+EN|[computer science] the symbolic arrangement of data or instructions in a computer program or the set of such instructions|DESC|[علم الحاسوب] ترتيب البيانات أو التعليمات في برنامج كمبيوتر أو المجموعة من هذه التعليمات الرمزية
+EN|Orderliness|CONCEPT|الانتظام
+EN|the quality of appreciating method and system|DESC|نوعية تقديراً منها للأسلوب والنظام
+EN|Administration|CONCEPT|الإدارة
+EN|a method of tending to or managing the affairs of a some group of people [especially the group's business affairs]|DESC|أسلوب يميل إلى أو إدارة شؤون مجموعة بعض من الناس [لا سيما الشؤون التجارية للفريق]
+EN|the act of starting something|DESC|قانون ابتداء من شيء
+EN|a unit of firefighters including their equipment|DESC|وحدة من رجال الإطفاء بما في ذلك المعدات
+EN|Complement|CONCEPT|تكملة
+EN|number needed to make up a whole force|DESC|العدد المطلوب لجعل قوة كاملة
+EN|Motor vehicle|CONCEPT|المركبات الآلية
+EN|a self-propelled wheeled vehicle that does not run on rails|DESC|سيارة ذاتية الحركة ذات عجلات التي لا تعمل على القضبان
+EN|a natural body of running water flowing on or under the earth|DESC|هيئة طبيعية لتشغيل المياه المتدفقة على أو تحت الأرض
+EN|sewing consisting of small folds or puckers made by pulling tight a thread in a line of stitching|DESC|تتكون من طيات صغيرة أو ملمس قدمت عن طريق سحب مؤشر ترابط ضيق في خط خياطة الخياطة
+EN|Sewing|CONCEPT|خياطة
+EN|needlework on which you are working with needle and thread|DESC|أشغال الإبرة التي كنت تعمل مع إبرة وخيط

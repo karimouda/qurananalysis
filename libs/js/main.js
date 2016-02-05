@@ -165,10 +165,7 @@ function drawGraph(jsonNodesData,jsonLinksData,width,height,targetGraphDiv,lang,
 {
 
 	
-	// Next define the main object for the layout. We'll also
-	// define a couple of objects to keep track of the D3 selections
-	// for the nodes and the links. All of these objects are
-	// initialized later on.
+
 	
 	var force = null,
 	    nodes = null,

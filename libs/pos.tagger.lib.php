@@ -24,7 +24,7 @@
 #
 #  ====================================================================
 /*
- * SOURCE:http://phpir.com/part-of-speech-tagging/
+ * CODE SOURCE:http://phpir.com/part-of-speech-tagging/
  */
 function getLexiconItemFromMemory($token)
 {
