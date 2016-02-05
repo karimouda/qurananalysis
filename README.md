@@ -14,7 +14,18 @@ The WIKI includes more details and tutorials giving examples of how QA can be us
 
 The code is not well commented due to time limitations during the MSc
 
-## What do you get from QA
+## How can you benefit from QA ?
+
+
+If you are a developer or researcher
+- Access to language corpus and language resources (inlcuding QA Ontology)
+- Reusable code, algorithms, tested libraries and user interface
+- QA Ontology extraction module
+
+
+## WIKI
+
+https://github.com/karimouda/qurananalysis/wiki
 
 ## License
 
