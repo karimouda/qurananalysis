@@ -2116,7 +2116,7 @@ A#home-beta-button:HOVER
 }
 .help-message-area
 {
-	display: none;
+	display: block;
 	padding:10px;
 	font-size: 14px;
 }

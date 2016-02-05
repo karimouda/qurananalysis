@@ -63,12 +63,14 @@ loadModels("core,search,qac,qurana,wordnet",$lang);
 
 
 
-$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
+//$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = loadUthmaniToSimpleMappingTable();
+
+//preprint_r($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS);exit;
 
 
-$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+//$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
-$LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
+//$LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
 $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 
@@ -89,6 +91,7 @@ $WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
 
 	
 $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
+
 
 
 
@@ -139,7 +142,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	//exit;
 			  	
 			  	
-			  	$GENERATE_CONCEPTS_SWITCH = FALSE;
+			  	$GENERATE_CONCEPTS_SWITCH = TRUE;
 			  	
 			  	$GENERATE_TERMS = 	$GENERATE_CONCEPTS_SWITCH;
 			  	$GENERATE_PHRASE_TERMS = $GENERATE_CONCEPTS_SWITCH;
@@ -149,14 +152,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  				  	
 			  	
 			 
-			  	$GENERATE_NONTAXONOMIC_RELATIONS = FALSE;;
-			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = FALSE;
-			  	$GENERATE_TAXONOMIC_RELATIONS = FALSE;
+			  	$GENERATE_NONTAXONOMIC_RELATIONS = TRUE;;
+			  	$EXTRACT_NEWCONCEPTS_FROM_RELATIONS = TRUE;
+			  	$GENERATE_TAXONOMIC_RELATIONS = TRUE;
 			  	
 			  	
-			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = FALSE;
-			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = FALSE;
-			  	$ENRICH_CONCEPTS_METADATA_WORDNET = FALSE;
+			  	$ENRICH_CONCEPTS_METADATA_TRANSLATION_TRANSLITERATION = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_DBPEDIA = TRUE;
+			  	$ENRICH_CONCEPTS_METADATA_WORDNET = TRUE;
 			  	
 			  	$EXCLUDE_CONCEPTS_AND_RELATIONS = TRUE;
 			  	
@@ -166,13 +169,15 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  	$GENERATE_OWL_FILE = TRUE;
 			  	
 			
+				$WORDS_FREQUENCY = getModelEntryFromMemory($lang, "MODEL_CORE", "WORDS_FREQUENCY", "");
+				
 			  	
 			  	$wordsInfoArr = unserialize(file_get_contents("../data/cache/words.info.all"));
 			  		
 			  	// not cahed yet
 			  	if  ( empty($wordsInfoArr) )
 			  	{
-			  		foreach ($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
+			  		foreach ($WORDS_FREQUENCY['WORDS_TFIDF'] as $wordLabel => $wordFreqArr )
 			  		{
 			  	
 			  			$wordsInfoArr[$wordLabel] = getWordInfo($wordLabel, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
@@ -214,39 +219,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 			  		
 					
 					
-					/*function filterFunc($v)
-					{
-						return	isSimpleQuranWord($v);
-					} 
-			  	
-			  		$UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS = array_filter($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS, "filterFunc" );
-
-			  		//echoN( count($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS) );exit;
-			  		
-			  		// FILL EMPTY IMLA2Y WORDS - by getting the common repeated imla2y segment
-			  		foreach ($finalTerms as $term => $termArr )
-			  		{
-			  			if ( empty($termArr['SIMPLE_WORD']))
-			  			{
-			  				//echoN($term);
-			  				foreach( $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS as $mapTermKey => $mapTermVal)
-			  				{
-			  					
-			  					if ( $mapTermKey[0]==$term[0] && myLevensteinEditDistance($term, $mapTermKey)==1)
-			  					{
-			  						//echoN($mapTermKey."-".myLevensteinEditDistance($term, $mapTermKey));
-			  						
-			  						$finalTerms[$term]['SIMPLE_WORD']= $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$mapTermKey];
-			  						
-			  					}
-			  				}
-			  				
-			  				
-			  			}
-			  			
-			  		}
-						
-					*/
+				
 					
 					
 					
@@ -586,6 +559,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$quranaConcepts = 0;
 						$conceptsListArr  = $MODEL_QURANA['QURANA_CONCEPTS'];
 						
+						
+						
 						//preprint_r($conceptsListArr);
 						
 						$commonBiGramsConceptsWithQurana = array();
@@ -750,7 +725,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							{
 								if ( $counter++> 100) break;
 									
-								$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$lemaUthmani];
+								$simpleWord = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP",$lemaUthmani);
 									
 									
 								if ( !empty($simpleWord))
@@ -786,33 +761,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					}
 						
 					
-					/*$qacConcepts  = file("/home/karimo/Documents/SelfManagment/2013-LifeChangeStuff/Masters/Leeds/Semester_2/Project/QE/Data/Existing ontologies/QAC.clean.arabic",FILE_SKIP_EMPTY_LINES|FILE_IGNORE_NEW_LINES);
-					 	
-					$myConcepts1 = array_keys($filteredBiGrams);
-					$myConcepts2 = array();
-						
-					foreach ($finalTerms as $term => $termArr )
-					{
-					
-						
-					$simpleWord = $termArr['SIMPLE_WORD'];
-					$myConcepts2[] = $simpleWord;
-					}
-						
-					$intersection1 = array_intersect($qacConcepts,$myConcepts1);
-					$intersection2 = array_intersect($qacConcepts,$myConcepts2);
-						
-					$intersection = array_merge($intersection1,$intersection2);
-						
-					//preprint_r($finalTerms);
-					preprint_r($qacConcepts);
-					preprint_r($myConcepts1);
-					preprint_r($myConcepts2);
-					preprint_r($intersection);
-					echoN(count($intersection));
-					exit;
-					*/
-					
+				
 					
 					
 		
@@ -856,7 +805,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							$weight=0;
 							foreach($biGramWords as $biGramTerm)
 							{
-								$weight += floatval($MODEL_CORE['WORDS_FREQUENCY']['WORDS_TFIDF'][$biGramTerm]['TFIDF']);
+								$weight += floatval($WORDS_FREQUENCY['WORDS_TFIDF'][$biGramTerm]['TFIDF']);
 							}
 							
 							$weight = ($weight/2);
@@ -946,7 +895,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									  {
 							
 									  	// USINF SIMPLE  WORDS FOR SIMPLER LEXICAL CONDISTIONS
-									  	$simpleWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$uthmaniWord];
+									  	$simpleWord = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP",$uthmaniWord);
 									  	
 									  	
 									 
@@ -956,7 +905,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 									  	//{
 									  		 $qacLocation = ($s+1).":".($a+1).":".($index+1);
 									  		 
-										 	 $qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+										 	 $qacWordSegmentsArr = getModelEntryFromMemory($lang,"MODEL_QAC","QAC_MASTERTABLE",$qacLocation);
 	
 										 	 $pos="";
 										 	 $allSegments = "";
@@ -1143,69 +1092,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 					
 							
 		
-							/*$targetWord = "الله";
-							$handledVerses = array();
-							
-							foreach ($MODEL_SEARCH['INVERTED_INDEX'][$targetWord] as   $documentArrInIndex)
-							{
-									
-							
-							
-								$SURA = $documentArrInIndex['SURA'];
-								$AYA = $documentArrInIndex['AYA'];
 		
-		
-							
-								$qacLocation = ($SURA+1).":".($AYA+1);
-								
-								
-								
-								
-								//multiple pronouns for same verse
-								if (isset($handledVerses[$qacLocation])) continue;
-								//echoN($qacLocation);
-								
-								$handledVerses[$qacLocation]=1;
-								
-								$subSentenceIndex=1;
-								
-								$currentArrayItem = $poTaggedSubsentences[$qacLocation."-$subSentenceIndex"];
-								while(!empty($currentArrayItem) )
-								{
-									
-									//preprint_r($currentArrayItem);
-									
-									$subSentenceLocation = $qacLocation."-$subSentenceIndex";
-					
-									$wordsArr = $poTaggedSubsentences[$subSentenceLocation]['WORDS'];
-									$posArr = $poTaggedSubsentences[$subSentenceLocation]['POS_TAGS'];
-										
-									$ssPoSPattern = join(", ",$posArr);
-										
-									$subSentenceStr = join(" ",$wordsArr);
-									
-									
-									
-									
-										$ssPoSAggregation[$ssPoSPattern]++;
-									
-										$ssPoSAggregationCorrespondingSent[$subSentenceLocation] = array($ssPoSPattern,$subSentenceStr);
-									
-									
-									$subSentenceIndex++;
-									
-									$subSentenceLocation = $qacLocation."-$subSentenceIndex";
-									
-									$currentArrayItem = $poTaggedSubsentences[$subSentenceLocation];
-									
-									
-								}
-								
-								
-								
-							}
-							
-							*/
 						
 							// CONVERT POS SUBSENTENCES FROM ARRAYS TO STRINGS
 							foreach($poTaggedSubsentences as $location => $dataArr)
@@ -1277,7 +1164,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 									//echoN($qacLocation);
 									
-									$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacLocation];
+									$qacWordSegmentsArr = getModelEntryFromMemory($lang,"MODEL_QAC","QAC_MASTERTABLE",$qacLocation);
 							
 									$featuresArr = array();
 									foreach($qacWordSegmentsArr as $segmentIndex=> $segmentArr)
@@ -1308,7 +1195,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 											// ADD ANY PENDING RELATIONS
 											flushProperRelations($relationsArr,$conceptsArr,$verb,$lastSubject,$ssPoSPattern,$filledConcepts);
 											
-											// SKIP ANY VERSE WHICH INCLUIDES CONVERSATION OR CONDITION
+											// SKIP ANY VERSE WHICH INCLUDES CONVERSATION OR CONDITION
 											if ( $featuresArr['ROOT']=="قول" || strpos($posPattern,"COND")!==false)
 											{
 												$qacVerseIndex += (count($patternArr)-($index+1))+1;
@@ -1583,7 +1470,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												if ( $subject=="null" || $object=="null") continue;
 												
 												/// VERB LEMMA
-												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
+												$qacWordSegmentsArr = getModelEntryFromMemory($lang,"MODEL_QAC","QAC_MASTERTABLE",$qacWordLocation);
 													
 												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
 												$verbLemma = $verbSegmentArr['FORM_AR'];
@@ -1623,7 +1510,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												if ( empty($pronounConceptArr)) continue;
 												
 	
-												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
+												$qacWordSegmentsArr =  getModelEntryFromMemory($lang,"MODEL_QAC","QAC_MASTERTABLE",$qacWordLocation);
 												
 												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
 												$verbLemma = $verbSegmentArr['FEATURES']['LEM'];
@@ -1673,7 +1560,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												
 													// remove PRON chars from word
 													$qacWordLocationForSecondWord = $qacBaseLocation .":".($qacStartWordIndexInVerse+1);
-													$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocationForSecondWord];
+													$qacWordSegmentsArr = getModelEntryFromMemory($lang,"MODEL_QAC","QAC_MASTERTABLE",$qacWordLocationForSecondWord);
 													$nounSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"N");
 													$nounSegment = $nounSegmentArr['FEATURES']['LEM'];
 													
@@ -1710,7 +1597,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 												if ( $subject=="null" || $object=="null") continue;
 												
 												
-												$qacWordSegmentsArr = $MODEL_QAC['QAC_MASTERTABLE'][$qacWordLocation];
+												$qacWordSegmentsArr = getModelEntryFromMemory($lang,"MODEL_QAC","QAC_MASTERTABLE",$qacWordLocation);
 													
 												$verbSegmentArr = getQACSegmentByPos($qacWordSegmentsArr,"V");
 												$verbLemma = $verbSegmentArr['FORM_AR'];
@@ -1780,9 +1667,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$biGramWords = preg_split("/ /",$bigram);
 					
 						// CONVERT ALL WORDS TO SIMPLE
-						$concept = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[0]];
-						$adj1 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[1]];
-						$adj2 = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$biGramWords[2]];
+						$concept = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP",$biGramWords[0]);
+						$adj1 = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP",$biGramWords[1]);
+						$adj2 = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP",$biGramWords[2]);
 					
 					
 						$hasAttribute = "من صفاتة";
@@ -1956,7 +1843,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								// FIRST WORD IS PARENT
 								$parentConcept = $biGramWords[0];
 									
-								// GET ALL INFO ABOUT THIS WORD - INCLDING POS TAG
+								// GET ALL INFO ABOUT THIS WORD - INCLUDING POS TAG
 								$wordInfoArr = $wordsInfoArr[$parentConcept];//getWordInfo($parentConcept, $MODEL_CORE, $MODEL_SEARCH, $MODEL_QAC,true);
 									
 									
@@ -2022,7 +1909,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						{
 							
 							$currentEnglishTranslation = $coneptArr['EXTRA']['TRANSLATION_EN'];
-							$uthmaniWord = $UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS[$concept];
+							$uthmaniWord = getModelEntryFromMemory("AR", "OTHERS", "UTHMANI_TO_SIMPLE_WORD_MAP",$concept);
 							
 							//echoN("/$concept/");
 							if ( empty($currentEnglishTranslation))
@@ -2511,42 +2398,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								}
 							}
 							
-							/*if ($conceptNameEn=="Land")
-							{
-								preprint_r($wordnetInfoArr);
-								$wordnetIndex  = apc_fetch("WORDNET_INDEX");
-								
-								$lexicoSemanticCategories = apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
-								
-								$dataArr = apc_fetch("WORDNET_DATA");
-								
-								$lowerName  = strtolower($conceptNameEn);
-								
-								//preprint_r($wordnetIndex[$lowerName]);
-								
-								foreach($wordnetIndex[$lowerName]['noun']['SYNSETS'] as $index => $pointer)
-								{
-									
-									//preprint_r($dataArr['noun'][$pointer]);
-									$semantic = $dataArr['noun'][$pointer]['SEMANTIC_CATEGORY_ID'];
-									$wordsStr = join(",",array_keys($dataArr['noun'][$pointer]['WORDS']));
-								
-									
-									echoN("$pointer|$semantic|$wordsStr");
-									
-									foreach($dataArr['noun'][$pointer]['POINTERS'] as $index => $arr)
-									{
-										if ( $arr['SYMBOL_DESC']!="Hypernym")
-										{
-											continue;
-										}
-										
-										echoN($arr['SYNSET_OFFSET']."-".$arr['SYMBOL_DESC']);
-									}
-									
-								}
-								
-							}*/
+
 							
 							// DATA FOUND IN WORDNET FOR THE CURRENT CONCEPT
 							if ( !empty($wordnetInfoArr) )
@@ -3252,7 +3104,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 							
 						}
 						
-						preprint_r($RELATIONS_EXCLUSION_RULES);
+						//preprint_r($RELATIONS_EXCLUSION_RULES);
 						
 					
 						
@@ -3283,6 +3135,8 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								$relationsRemoved++;
 								continue;
 							}
+							
+					
 								
 							
 							$ruleFlag = false;
@@ -3303,9 +3157,9 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								   
 								   // REMOVE WHEN THE RELATION IS VARIANT OF AN EXCLUDED RELATION
 								   if (
-								   ( $ruleArr["SUBJECT"]=="*" || $ruleArr["SUBJECT"]==addAlefLam($subject) || $ruleArr["SUBJECT"]==removeAlefLamFromBegening($subject)) &&
+								   ( $ruleArr["SUBJECT"]=="*" || $ruleArr["SUBJECT"]==addAlefLam($subject) || $ruleArr["SUBJECT"]==removeAlefLamFromBegining($subject)) &&
 								     ($ruleArr["VERB"]=="*" || $ruleArr["VERB"]==$verbSimple) &&
-								     ($ruleArr["OBJECT"]=="*" || $ruleArr["OBJECT"]==addAlefLam($object) || $ruleArr["OBJECT"]==removeAlefLamFromBegening($object))
+								     ($ruleArr["OBJECT"]=="*" || $ruleArr["OBJECT"]==addAlefLam($object) || $ruleArr["OBJECT"]==removeAlefLamFromBegining($object))
 								   )
 								   {
 								   	echoN("//////////// RELATION REMOVED BY LAZY ASSUMPTION");
@@ -3363,7 +3217,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						
 						
 						
-						//preprint_r($filteredConcepts);
+					
 						
 						
 						file_put_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.final.concepts.stage7", serialize($filteredConcepts));
@@ -3532,7 +3386,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						echoN("Duplicates:".$duplicateCounter);
 						
 						
-						
+						$relationsArrCopy = $relationsArr;
 						foreach($relationsArr as $hash => $relationArr)
 						{
 							$relationsType = $relationArr['TYPE'];
@@ -3548,9 +3402,14 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 								$finalConcepts[$object]['CONCEPT_TYPE']='T-BOX';
 							}
 							
-							
+							if ( $subject==$object)
+							{
+								unset($relationsArrCopy[$hash]);
+							}
 							
 						}
+						
+						$relationsArr = $relationsArrCopy;
 						
 						foreach($finalConcepts as $concept => $coneptArr)
 						{

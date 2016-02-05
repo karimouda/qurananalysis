@@ -105,30 +105,7 @@ loadModels("core",$lang);
 				<div id='words-context-area'>
 				<?php 
 				
-				/*
-				$str = "Leeds is a university";
-				$strArr = preg_split("/ /", $str);
-				$strWordsCount = count($strArr);
-				
-				$ssLength  = $strWordsCount;
-				
-				while($ssLength>1)
-				{
-					$groupLoopsNeeded= (($strWordsCount-$ssLength)+1);
-					
-					$ssStr="";
-					$v=0;
-					while($v<$groupLoopsNeeded)
-					{
-						$ssStr= join(" ",array_slice($strArr, $v,$ssLength));
-						echoN($ssStr);
-						$v++;
-					}
-					
-					$ssLength--;
-				}
-				exit;
-				*/
+
 				
 				?>
 				</div>

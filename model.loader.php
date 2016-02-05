@@ -214,20 +214,23 @@ function loadModels($modelsToBeLoaded,$lang)
 				}
 				*/
 			}
-			else if ( ($modelName=="qurana"))
-			{
-				//$MODEL_QURANA = json_decode((file_get_contents("$serializedModelFile.qurana")),TRUE);
-				
-				$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
-				
-				
-				if ($MODEL_QURANA===false )
-				{
-					echo "QURANA MODEL NOT CACHED";exit;
-				}
-			}
+		
 		
 		}
+		
+		//else if ( ($modelName=="qurana"))
+		//{
+		//$MODEL_QURANA = json_decode((file_get_contents("$serializedModelFile.qurana")),TRUE);
+		
+		$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
+		
+		
+		if ($MODEL_QURANA===false )
+		{
+			echo "QURANA MODEL NOT CACHED";exit;
+		}
+		//}
+		
 		return;
 	}
 	########## ##### ##### ##### ##### #####
@@ -236,7 +239,7 @@ function loadModels($modelsToBeLoaded,$lang)
 	$quranMetaDataXMLObj = simplexml_load_file($quranMetaDataFile);
 	
 
-	###### CONVERT META XML STRUCUTURE TO OUR STRUCURE
+	###### CONVERT META XML STRUCUTURE TO OUR STRUCTURE
 	foreach ($quranMetaDataXMLObj->suras as $index => $surasArr )
 	{
 	

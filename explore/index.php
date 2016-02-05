@@ -122,7 +122,7 @@ $treeRootNodeObj = ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,0,$lang);
 //preprint_r($treeRootNodeObj);
 
 
-/////// MOVE THING CLASS CLUSTER TO THE END OF ARRAY TO MAKE PRIORITY FOR NOED 
+/////// MOVE THING CLASS CLUSTER TO THE END OF ARRAY TO MAKE PRIORITY FOR NODE 
 /////// TO BE CLUSTERED WITH SPECIFIC CLASSES FIRST - EX: مؤمن is شيء AND  صفة
 $thingClassClusterCopy = null;
 foreach($treeRootNodeObj['children'] as $index => $nodeArr)

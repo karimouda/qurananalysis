@@ -111,7 +111,7 @@ function addNewConcept(&$finalConceptsArr,$newConceptName,$coneptType,$exPhase,$
 	else 
 	{
 		//
-		// IT WAS MEANT TO BE T-BOX IF IT WAS NOT FOUND, SO IF IT IS FOUNJD SWITCH IT TO T-BOX SINCE IT IS A PARENT
+		// IT WAS MEANT TO BE T-BOX IF IT WAS NOT FOUND, SO IF IT IS FOUND SWITCH IT TO T-BOX SINCE IT IS A PARENT
 		if ( $coneptType=="T-BOX")
 		{
 			// SHOULD SWITCH TO T-BOX SINCE IT IS A PARENT CLASS NOW - FOR OWL SERIALIZATION BUGS
@@ -528,57 +528,6 @@ function getConceptTypeFromDescriptionText($abstract)
 
 	return false;
 		
-	/*
-	 if ( empty($matches))
-	 {
-	preg_match("/word for (.*?)[ \.,]/", $abstract,$matches);
-	}
-
-	if ( empty($matches))
-	{
-	preg_match("/kind of (.*?)[ \.,]/", $abstract,$matches);
-	}
-
-
-
-
-
-		
-
-	if ( empty($matches))
-	{
-	preg_match("/name of an (.*?) (?:in|that)/", $abstract,$matches);
-	}
-
-	if ( empty($matches))
-	{
-	preg_match("/is (?:the|a) (.*?) of/", $abstract,$matches);
-	}
-
-	if ( empty($matches))
-	{
-	preg_match("/(?:as|is|was) a[n]? (.*?)[ \.,]/", $abstract,$matches);
-	}
-
-	if ( empty($matches))
-	{
-	preg_match("/ a[n]? (.*?) (?:for|of|in|or|on|to|from|that|\.,)/", $abstract,$matches);
-	}
-	//echoN($matches[1]);
-
-	if ( preg_match_all("/ /",$matches[1])>4)
-	{
-	$matches[1] = substr($matches[1], 0,strpos($matches[1]," "));
-	}
-	else
-	if ( preg_match_all("/ /",$matches[1])>4)
-	{
-	$matches[1] = substr($matches[1], 0,strpos($matches[1]," "));
-	}
-
-
-	return $matches[1];
-	*/
 }
 
 
@@ -671,7 +620,7 @@ function getWordsByPos(&$finalTerms,$POS)
 
 
 		 
-		// NOT WORKIGN BECAUSE LEMMAS WILL NOT BE IN SIMPLE WORDS LIST و الصابيئن =>صَّٰبِـِٔين
+		// NOT WORKING BECAUSE LEMMAS WILL NOT BE IN SIMPLE WORDS LIST و الصابيئن =>صَّٰبِـِٔين
 		// if the word after removing tashkeel is not found in quran simple words list, then try lemma table
 		/*if (!isset($MODEL_CORE['WORDS_FREQUENCY']['WORDS'][$imla2yWord]) )
 		 {
