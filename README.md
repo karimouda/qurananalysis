@@ -6,7 +6,7 @@ The goal of this project is to build a Semantic Search and Intelligence System f
 
 **http://www.qurananalysis.com**
 
-QA started as an MSc project at the University of Leeds in 2015 supervised by Eric Atwell. The project aimed to glu-together and build on previous research done in the university and to provide an opensource base for Quran Analysis work, It was released as an opensource project to facilitate Quranic/Arabic research, to boost applications and foster innovation in that area.
+QA started as an MSc project at the University of Leeds in 2015 supervised by Eric Atwell. The project aimed to glu-together and build on previous research done in the university and to provide an opensource base for Quran Analysis work to facilitate research, boost applications and foster innovation in that area.
 
 More information can be found in my Thesis below
 
