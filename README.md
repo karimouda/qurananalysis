@@ -80,9 +80,17 @@ List of functions can be found [here](https://github.com/karimouda/qurananalysis
 
 https://github.com/karimouda/qurananalysis/wiki
 
-## Tutorials
+### Setup
+https://github.com/karimouda/qurananalysis/wiki/Setup
 
+### Tutorials
 https://github.com/karimouda/qurananalysis/wiki/Tutorials
+
+### Project-Structure
+https://github.com/karimouda/qurananalysis/wiki/Project-Structure
+
+### Ideas
+https://github.com/karimouda/qurananalysis/wiki/Future-Work-Ideas
 
 ## Notes
 
