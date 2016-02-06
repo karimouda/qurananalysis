@@ -2,13 +2,11 @@
 
 # Introduction
 
-The goal of this project is to build the a Semantic Search and Intelligence System for the Quran, providing normal users and scholars the ability to search the Quran semantically, analyse all aspects of the text, find hidden patterns and associations using state-of-the-art visualization techniques.
+The goal of this project is to build a Semantic Search and Intelligence System for the Quran, providing normal users and scholars the ability to search the Quran semantically, analyse all aspects of the text, find hidden patterns and associations using state-of-the-art visualization techniques.
 
 **http://www.qurananalysis.com**
 
-QA started as an MSc project at the University of Leeds in 2015 supervised by Eric Atwell. The project aimed to glu-together and build on previous research done in the university and to provide an opensource base for Quran Analysis work.
-
-Quran Analysis was released as an opensource project to facilitate Quranic/Arabic research, to boost applications and foster innovation in that area.
+QA started as an MSc project at the University of Leeds in 2015 supervised by Eric Atwell. The project aimed to glu-together and build on previous research done in the university and to provide an opensource base for Quran Analysis work, It was released as an opensource project to facilitate Quranic/Arabic research, to boost applications and foster innovation in that area.
 
 More information can be found in my Thesis below
 
@@ -75,8 +73,8 @@ Assuming you are a developer or researcher, with more than 20,000 lines of code 
 * wordnet.lib.php
 * owllib
 
-List of functions can be found here
-https://github.com/karimouda/qurananalysis/wiki/Libraries-&-Functions
+List of functions can be found [here](https://github.com/karimouda/qurananalysis/wiki/Libraries-&-Functions)
+
 
 ## WIKI
 
