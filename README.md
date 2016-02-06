@@ -27,7 +27,7 @@ If you are a developer or researcher
 
 https://github.com/karimouda/qurananalysis/wiki
 
-## Tutorials
+## Tutorials x
 
 https://github.com/karimouda/qurananalysis/wiki/Tutorials
 
