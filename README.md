@@ -27,6 +27,10 @@ If you are a developer or researcher
 
 https://github.com/karimouda/qurananalysis/wiki
 
+## Tutorials
+
+https://github.com/karimouda/qurananalysis/wiki/Tutorials
+
 ## License
 
     Quran Analysis (www.qurananalysis.com). Full Semantic Search and Intelligence System for the Quran.
@@ -45,6 +49,6 @@ https://github.com/karimouda/qurananalysis/wiki
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    You can use Quran Analysis code, framework or corpora in your website
-	 or application (commercial/non-commercial) provided that you link
+    You can use Quran Analysis code, framework and corpora in your website
+    or application (commercial/non-commercial) provided that you link
     back to www.qurananalysis.com and sufficient credits are given.
