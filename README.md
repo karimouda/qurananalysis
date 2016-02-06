@@ -86,7 +86,7 @@ https://github.com/karimouda/qurananalysis/wiki/Tutorials
 
 ## Notes
 
-I am sorry that some parts in the code are messy, undocumented and not well designed, this is due to shortage of time, stress and the novelty aspect of the project which lead me to focus more on research, coding and thesis writing to meet deadlines. I thought releasing the code this way is much better than waiting until i have time to clean it up.
+I am sorry that some parts in the code are messy, undocumented and not well designed, this is due to shortage of time, stress and the novelty aspect of the project which lead me to focus more on research, coding and thesis writing to meet deadlines. I thought releasing the code this way is much better than waiting until i have time to clean it up which can take forever.
 
 ## License
 
