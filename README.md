@@ -6,7 +6,7 @@ The goal of this project is to build a Semantic Search and Intelligence System f
 
 **http://www.qurananalysis.com**
 
-QA started as an MSc project at the University of Leeds in 2015 supervised by Eric Atwell. The project aimed to glu-together and build on previous research done in the university and to provide an opensource base for Quran Analysis work to facilitate research, boost applications and foster innovation in that area.
+QA started as an MSc project at the University of Leeds in 2015 supervised by Eric Atwell. The project aimed to glu-together and build on previous research done in the university providing an opensource framework for Quran Analysis work, a framework which can facilitate research, boost applications and foster innovation in that area.
 
 More information can be found in my Thesis below
 
@@ -47,7 +47,7 @@ Assuming you are a developer or researcher, with more than 20,000 lines of code 
 7. Wordnet: English dictionary and thesaurus corpus 
 8. DBPedia: semantic structured data extracted from Wikipedia 
 9. D3 Javascript Library 
-10. JQuery and JQuery Tagcloud Javascript Libraries.
+10. JQuery and JQuery Tagcloud Javascript Libraries
 11. TinySort Javascript Library
 12. OWLLib PHP Library 
 13. Microsoft Translator API 
@@ -86,7 +86,7 @@ https://github.com/karimouda/qurananalysis/wiki/Tutorials
 
 ## Notes
 
-I am sorry that some parts in the code are messy, undocumented and not well designed, this is due to shortage of time, stress and the novelty aspect of the project which lead me to focus more on research, coding and thesis writing to meet deadlines, i thought releasing the code this way is much better than waiting until i have time to clean it up.
+I am sorry that some parts in the code are messy, undocumented and not well designed, this is due to shortage of time, stress and the novelty aspect of the project which lead me to focus more on research, coding and thesis writing to meet deadlines. I thought releasing the code this way is much better than waiting until i have time to clean it up.
 
 ## License
 
