@@ -42,22 +42,7 @@
 		
 </fieldset>
 
-<fieldset class="credits-fs" >
-		  		 
-  		<legend>Papers</legend>
-  				    
-		<div class='info-page-text'>
-	
-				List of key research papers relevant to QA
-	   			
-	   			<ul>
-		   			Soon
-		   		
-	   			</ul>
 
-		</div>
-		
-</fieldset>
 
 
 
@@ -71,7 +56,7 @@
 				External code libraries used in QA
 	   			
 	   			<ul>
-		   			Soon
+		   			<a href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a>
 		   		
 	   			</ul>
 

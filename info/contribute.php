@@ -94,7 +94,7 @@
 	Contribute code on the following GitHub Repository
 	<br>
 	<br>
-	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a> (will be accessible in Jan 2016)
+	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a> 
 	<br><br>
 	<b>Join the mail list in this page to be notified when the code is released.</b>
 </p>
