@@ -24,13 +24,51 @@
 #    
 #  ====================================================================
 require_once("../global.settings.php");
-require_once("../libs/core.lib.php");
 
-loadModels("core,qac", "AR");
+$lang = "AR";
 
-
-$LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
+loadModels("", $lang);
 
 
-printHTMLPageHeader();
+$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+
+preprint_r($QURAN_TEXT[1][1]);
+
+$location = "1:1:1";
+
+$qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE",$location);
+
+preprint_r($qacMasterTableEntry);
+
+
+$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+
+foreach($qaOntologyConceptsIterator as $conceptsCursor )
+{
+	$conceptNameID = getEntryKeyFromAPCKey($conceptsCursor['key']);
+
+	$conceptArr = $conceptsCursor['value'];
+
+
+	$conceptLabelAR = $conceptArr['label_ar'];
+	$conceptLabelEN = $conceptArr['label_en'];
+	$conceptFrequency = $conceptArr['frequency'];
+	$conceptWeight = $conceptArr['weight'];
+	
+	preprint_r($conceptArr);
+	
+	break;//only one concept
+}
+
+
+
+// print all words in wordnet
+preprint_r(array_keys($MODEL_WORDNET['INDEX']));
+
+// get all information about "Egypt" from wordnet
+$wordNetEntry = getWordnetEntryByWordString("egypt");
+
+preprint_r($wordNetEntry);
+
+
 ?>
