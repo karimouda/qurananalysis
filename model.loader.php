@@ -146,29 +146,7 @@ function loadModels($modelsToBeLoaded,$lang)
 			
 			if ( $modelName=="wordnet")
 			{
-				$MODEL_WORDNET['INDEX']  = apc_fetch("WORDNET_INDEX");
-				
-				if ($MODEL_WORDNET['INDEX']===false )
-				{
-					echo "MODEL_WORDNET['INDEX'] NOT CACHED";exit;
-				}
-				
-				
-				$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
-				
-				if ($MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']===false )
-				{
-					echo " MODEL MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES'] NOT CACHED";exit;
-				}
-				
-				
-				$MODEL_WORDNET['DATA'] = apc_fetch("WORDNET_DATA");
-				
-				if ($MODEL_WORDNET['DATA']===false )
-				{
-					echo "MODEL MODEL_WORDNET['DATA'] NOT CACHED";exit;
-				}
-				
+			
 				
 			}
 				
@@ -217,6 +195,30 @@ function loadModels($modelsToBeLoaded,$lang)
 		
 		
 		}
+		
+		$MODEL_WORDNET['INDEX']  = apc_fetch("WORDNET_INDEX");
+		
+		if ($MODEL_WORDNET['INDEX']===false )
+		{
+			echo "MODEL_WORDNET['INDEX'] NOT CACHED";exit;
+		}
+		
+		
+		$MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']= apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+		
+		if ($MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES']===false )
+		{
+			echo " MODEL MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES'] NOT CACHED";exit;
+		}
+		
+		
+		$MODEL_WORDNET['DATA'] = apc_fetch("WORDNET_DATA");
+		
+		if ($MODEL_WORDNET['DATA']===false )
+		{
+			echo "MODEL MODEL_WORDNET['DATA'] NOT CACHED";exit;
+		}
+		
 		
 		//else if ( ($modelName=="qurana"))
 		//{
