@@ -28,10 +28,10 @@
 
 	<h1 class='info-page-section-title'>Source Code and Data files</h1> 
 	
-	The following GitHub repository will include the source code of the whole website + all data files used 
+	The following GitHub repository contains the source code of the whole website + all data files used 
 	<br>
 	<br>
-	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a> (will be accessible in Jan 2016)
+	<a target="_blank" href="https://github.com/karimouda/qurananalysis">https://github.com/karimouda/qurananalysis</a>
 	<br>
 	<br>
 	<b>Examples</b>
@@ -64,15 +64,5 @@
 		QuranAnalysis: A Semantic Search and Intelligence System for the Quran
 	</a>
  
-	
-<p>
-<p class='info-page-text'>
-		
-	<h1 class='info-page-section-title'>Documentation</h1> 
-	
-	Documentation for code setup, development and testing
-	<br>
-	<br>
-	<b>Soon</b> 
 	
 <p>
