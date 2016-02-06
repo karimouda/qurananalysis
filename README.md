@@ -86,7 +86,7 @@ https://github.com/karimouda/qurananalysis/wiki/Setup
 ### Tutorials
 https://github.com/karimouda/qurananalysis/wiki/Tutorials
 
-### Project-Structure
+### Project Structure
 https://github.com/karimouda/qurananalysis/wiki/Project-Structure
 
 ### Ideas
