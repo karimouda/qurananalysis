@@ -28,8 +28,8 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>css=span.result-sura-info</td>
-	<td>The Clans (Al-Ahzaab) [33:40]</td>
+	<td>//div[@id='result-verses-area']</td>
+	<td>*The Clans*[33:40]*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -53,8 +53,8 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>css=span.result-sura-info</td>
-	<td>محمد [47:2]</td>
+	<td>//body</td>
+	<td>*47:2*</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

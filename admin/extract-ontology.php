@@ -68,7 +68,7 @@ loadModels("core,search,qac,qurana,wordnet",$lang);
 //preprint_r($UTHMANI_TO_SIMPLE_WORD_MAP_AND_VS);exit;
 
 
-//$UTHMANI_TO_SIMPLE_LOCATION_MAP = apc_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
+//$UTHMANI_TO_SIMPLE_LOCATION_MAP = apcu_fetch("UTHMANI_TO_SIMPLE_LOCATION_MAP");
 
 //$LEMMA_TO_SIMPLE_WORD_MAP = loadLemmaToSimpleMappingTable();
 
@@ -80,11 +80,11 @@ $pauseMarksArr = getPauseMarksArrByFile($pauseMarksFile);
 
 
 
-$WORDS_TRANSLATIONS_EN_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
+$WORDS_TRANSLATIONS_EN_AR = apcu_fetch("WORDS_TRANSLATIONS_EN_AR");
 
-$WORDS_TRANSLATIONS_AR_EN = apc_fetch("WORDS_TRANSLATIONS_AR_EN");
+$WORDS_TRANSLATIONS_AR_EN = apcu_fetch("WORDS_TRANSLATIONS_AR_EN");
 
-$WORDS_TRANSLITERATION = apc_fetch("WORDS_TRANSLITERATION");
+$WORDS_TRANSLITERATION = apcu_fetch("WORDS_TRANSLITERATION");
 
 
 
@@ -2351,7 +2351,7 @@ $CUSTOM_TRANSLATION_TABLE_EN_AR = loadTranslationTable();
 						$finalTerms =  unserialize(file_get_contents("$ONTOLOGY_EXTRACTION_FOLDER/temp.all.terms"));
 
 						
-						$lexicoSemanticCategories = apc_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
+						$lexicoSemanticCategories = apcu_fetch("WORDNET_LEXICO_SEMANTIC_CATEGORIES");
 				
 					
 					

@@ -843,7 +843,7 @@
 	{
 		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
 		
-		$res = apc_store($apcMemoryEntryKey, $entryValue);
+		$res = apcu_store($apcMemoryEntryKey, $entryValue);
 		
 		if ( $res===false)
 		{
@@ -855,7 +855,7 @@
 	
 	function updateModelData($key,$valueOrValueArr)
 	{
-		$res = apc_store($key,$valueOrValueArr);
+		$res = apcu_store($key,$valueOrValueArr);
 		
 	
 		
@@ -874,7 +874,7 @@
 		
 		//echon($apcMemoryEntryKey);
 		
-		return  apc_fetch($apcMemoryEntryKey);
+		return  apcu_fetch($apcMemoryEntryKey);
 	
 	
 	}
@@ -884,7 +884,7 @@
 	
 		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
 	
-		return  apc_exists($apcMemoryEntryKey);
+		return  apcu_exists($apcMemoryEntryKey);
 	
 	
 	}
@@ -893,9 +893,9 @@
 	{
 		$apcMemoryEntryKey = "$lang/$model/$modelKey/$entryKey";
 		
-		if (apc_exists($apcMemoryEntryKey))
+		if (apcu_exists($apcMemoryEntryKey))
 		{
-			$entryArr = apc_fetch($apcMemoryEntryKey);
+			$entryArr = apcu_fetch($apcMemoryEntryKey);
 			//$entryArr = array();
 		}
 		else
@@ -906,7 +906,7 @@
 		$entryArr[] = $entryValue;
 		
 	
-		$res = apc_store($apcMemoryEntryKey, $entryArr);
+		$res = apcu_store($apcMemoryEntryKey, $entryArr);
 	
 		if ( $res===false)
 		{
@@ -920,7 +920,7 @@
 	{
 
 	
-		$resArr = apc_add($entryKeysValuesArr);
+		$resArr = apcu_add($entryKeysValuesArr);
 	
 		if ($resArr===FALSE)
 		{
@@ -936,9 +936,16 @@
 	
 	}
 	
-	function getAPCIterator($apcKeyRegExpPattern)
+	function getAPCUIterator($apcKeyRegExpPattern)
 	{
-		return new APCIterator('user', "/$apcKeyRegExpPattern/");
+		if (class_exists('APCUIterator')) 
+		{
+			return new APCUIterator( "/$apcKeyRegExpPattern/");
+		}
+		else 
+		{
+			return new APCIterator('user', "/$apcKeyRegExpPattern/");
+		}
 		
 	}
 	
@@ -1174,7 +1181,7 @@
 	
 	function loadUthmaniDataModel()
 	{
-		return  apc_fetch("MODEL_CORE[AR_UTH]");
+		return  apcu_fetch("MODEL_CORE[AR_UTH]");
 	}
 	
 	
@@ -1183,12 +1190,12 @@
 	
 	function loadUthmaniToSimpleMappingTable()
 	{
-		return apc_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
+		return apcu_fetch("UTHMANI_TO_SIMPLE_WORD_MAP");
 	}
 	
 	function loadLemmaToSimpleMappingTable()
 	{
-		return apc_fetch("LEMMA_TO_SIMPLE_WORD_MAP");
+		return apcu_fetch("LEMMA_TO_SIMPLE_WORD_MAP");
 	}	
 
 	

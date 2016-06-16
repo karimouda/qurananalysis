@@ -29,7 +29,7 @@ require_once("../global.settings.php");
 require_once("../libs/core.lib.php");
 require_once("../libs/search.lib.php");
 
-$TRANSLITERATION_WORDS_MAP = apc_fetch("WORDS_TRANSLITERATION");
+$TRANSLITERATION_WORDS_MAP = apcu_fetch("WORDS_TRANSLITERATION");
 
 $finalTransliteratedWords = array();
 foreach($TRANSLITERATION_WORDS_MAP as $wordUthmani=>$wordTransliteration)

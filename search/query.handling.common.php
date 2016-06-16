@@ -91,7 +91,7 @@ $significantWords = array();
 
 //echoN(memory_get_peak_usage());
 
-//$TRANSLATION_MAP_EN_TO_AR = apc_fetch("WORDS_TRANSLATIONS_EN_AR");
+//$TRANSLATION_MAP_EN_TO_AR = apcu_fetch("WORDS_TRANSLATIONS_EN_AR");
 
 //preprint_r($TRANSLATION_MAP_EN_TO_AR);
 
@@ -246,9 +246,9 @@ if ($lang=="EN" &&  !$isConceptSearch && !$isPhraseSearch && !$isQuestion  )
 	$firstWordInQuery =$originalQueryWordsArr[0];
 	
 	// load transliteration verse mapping
-	$TRANSLITERATION_VERSES_MAP = apc_fetch("TRANSLITERATION_VERSES_MAP");
+	$TRANSLITERATION_VERSES_MAP = apcu_fetch("TRANSLITERATION_VERSES_MAP");
 	
-	$TRANSLITERATION_WORDS_INDEX = apc_fetch("TRANSLITERATION_WORDS_INDEX");
+	$TRANSLITERATION_WORDS_INDEX = apcu_fetch("TRANSLITERATION_WORDS_INDEX");
 	
 
 	//echoN("==".memory_get_peak_usage());

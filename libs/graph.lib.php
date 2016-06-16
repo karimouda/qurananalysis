@@ -571,7 +571,7 @@ function ontologyToD3Graph($MODEL_QA_ONTOLOGY,$minFreq=0)
 	/** SHOULD BE ZERO BASED FOR D3 TO WORK - o.target.weight = NULL**/
 	$nodeSerialNumber = 0;
 
-	$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+	$qaOntologyConceptsIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 	
 	$conceptCount = $qaOntologyConceptsIterator->getTotalCount();
 
@@ -689,7 +689,7 @@ function ontologyToD3TreemapFlat($MODEL_QA_ONTOLOGY,$minFreq=0)
 	$nodeSerialNumber = 0;
 
 
-	$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+	$qaOntologyConceptsIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 
 	foreach($qaOntologyConceptsIterator as $conceptsCursor )
 	{
@@ -866,7 +866,7 @@ function ontologyToD3TreemapHierarchical($MODEL_QA_ONTOLOGY,$minFreq=0,$lang)
 	
 
 
-	$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+	$qaOntologyConceptsIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 	
 	foreach($qaOntologyConceptsIterator as $conceptsCursor )
 	{

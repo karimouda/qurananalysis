@@ -92,7 +92,7 @@ loadModels("core",$lang);
 								
 								
 								
-								$qaOntologyConceptsIterator = getAPCIterator("AR\/OTHERS\/UTHMANI_TO_SIMPLE_WORD_MAP\/.*");
+								$qaOntologyConceptsIterator = getAPCUIterator("AR\/OTHERS\/UTHMANI_TO_SIMPLE_WORD_MAP\/.*");
 								
 								foreach($qaOntologyConceptsIterator as $conceptsCursor )
 								{

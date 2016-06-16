@@ -233,7 +233,7 @@ function extendQueryWordsByDerivations($taggedSignificantWords,$lang)
 		
 			$simmlarWords = array();
 			
-			$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+			$qaOntologyConceptsIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 			
 			foreach($qaOntologyConceptsIterator as $conceptsCursor )
 			{
@@ -851,7 +851,7 @@ function getScoredDocumentsFromInveretdIndex($extendedQueryWordsArr,$query,$isPh
 
 	
 
-//	$MODEL_QURANA  = apc_fetch("MODEL_QURANA");
+//	$MODEL_QURANA  = apcu_fetch("MODEL_QURANA");
 	//preprint_r($extendedQueryWordsArr);
 	
 	//$isOneWordQuery = preg_match("/ /", $query)==0;

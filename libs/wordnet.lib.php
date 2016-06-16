@@ -317,7 +317,7 @@ function loadWordnet(&$MODEL_WORDNET)
 
 	
 	
-	if (  apc_fetch("WORDNET_INDEX") == false)
+	if (  apcu_fetch("WORDNET_INDEX") == false)
 	{
 		 $wordnetDir = array();
 		 $wordnetIndex = array();
@@ -342,20 +342,20 @@ function loadWordnet(&$MODEL_WORDNET)
 		 
 		//preprint_r($dataArr);
 		
-		 $res = apc_store("WORDNET_INDEX",$wordnetIndex);
+		 $res = apcu_store("WORDNET_INDEX",$wordnetIndex);
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_INDEX"); }
 		 
 		 $MODEL_WORDNET['INDEX'] = $wordnetIndex;
 		 
-		 $res = apc_store("WORDNET_LEXICO_SEMANTIC_CATEGORIES",$lexicoSemanticCategories);
+		 $res = apcu_store("WORDNET_LEXICO_SEMANTIC_CATEGORIES",$lexicoSemanticCategories);
 		
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_INDEX"); }
 		 
 		 $MODEL_WORDNET['LEXICO_SEMANTIC_CATEGORIES'] = $lexicoSemanticCategories;
 	
-		 $res = apc_store("WORDNET_DATA",$dataArr);
+		 $res = apcu_store("WORDNET_DATA",$dataArr);
 		 
 		 if ( $res===false){ throw new Exception("Can't cache WORDNET_DATA"); }
 		 

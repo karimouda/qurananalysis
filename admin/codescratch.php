@@ -41,7 +41,7 @@ $qacMasterTableEntry = getModelEntryFromMemory("AR","MODEL_QAC","QAC_MASTERTABLE
 preprint_r($qacMasterTableEntry);
 
 
-$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+$qaOntologyConceptsIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 
 foreach($qaOntologyConceptsIterator as $conceptsCursor )
 {

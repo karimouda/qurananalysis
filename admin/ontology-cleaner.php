@@ -123,7 +123,7 @@ $excludedShortDescArr = file("$baseDir/excluded.shortdesc",FILE_IGNORE_NEW_LINES
 
 //$conceptsArr = $MODEL_QA_ONTOLOGY['CONCEPTS'];
 
-$qaOntologyConceptsIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
+$qaOntologyConceptsIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/CONCEPTS\/.*");
 
 $conceptCount = $qaOntologyConceptsIterator->getTotalCount();
 

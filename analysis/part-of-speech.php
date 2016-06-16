@@ -90,7 +90,7 @@ loadModels("core,qac",$lang);
 					 <option value="" selected="true">&nbsp;</option>
 						<?php 
 						
-							$qacPoSTagsIterator = getAPCIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
+							$qacPoSTagsIterator = getAPCUIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
 						
 						
 							

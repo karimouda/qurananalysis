@@ -106,7 +106,7 @@ class OWLTag
   	$this->parsingTagContent = false;
   	
   	
-  	$conceptName = $attributes['http://www.w3.org/1999/02/22-rdf-syntax-ns#:ID'];
+  	//$conceptName = $attributes['http://www.w3.org/1999/02/22-rdf-syntax-ns#:ID'];
   	
 	
   	
@@ -227,9 +227,9 @@ class OWLTag
   	$uri = preg_replace("/#:/", "#", $tag);
   	$namespace  = substr($tag,0, strpos($tag, "#:"));
   	
-  	$conceptName = $attributes['http://www.w3.org/1999/02/22-rdf-syntax-ns#:ID'];
+  	/*$conceptName = $attributes['http://www.w3.org/1999/02/22-rdf-syntax-ns#:ID'];
   	
-  /*	if ( mb_strpos($conceptName, "عيسى")!==false)
+  	if ( mb_strpos($conceptName, "عيسى")!==false)
   	{
 
   		echoN("####".$conceptName);

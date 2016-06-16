@@ -803,7 +803,7 @@ function isWordPartOfAVerbInVerbIndex($word,$lang)
 {
 
 	
-	$verbIndexIterator = getAPCIterator("ALL\/MODEL_QA_ONTOLOGY\/VERB_INDEX\/.*");
+	$verbIndexIterator = getAPCUIterator("ALL\/MODEL_QA_ONTOLOGY\/VERB_INDEX\/.*");
 	
 	foreach($verbIndexIterator as $verbIndexCursor )
 	{

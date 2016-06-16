@@ -41,7 +41,7 @@ printHTMLPageHeader();
 //$qacMasterTableEntryArr2 = getModelEntryFromMemory("AR","MODEL_QAC","QAC_POS",$qacLocation);
 
 
-$qacPoSTagsIterator = getAPCIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
+$qacPoSTagsIterator = getAPCUIterator("AR\/MODEL_QAC\/QAC_POS\/.*");
 
 $QURAN_TEXT = getModelEntryFromMemory("AR", "MODEL_CORE", "QURAN_TEXT", "");
 

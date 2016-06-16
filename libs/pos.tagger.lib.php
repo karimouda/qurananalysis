@@ -40,7 +40,7 @@ class PosTagger {
         public function __construct($lexicon) {
         	
         		// caching added by KARIM
-        		if ( apc_fetch("EN/PHPIR_LEXICON/POS_ENTRY/who")===false)
+        		if ( apcu_fetch("EN/PHPIR_LEXICON/POS_ENTRY/who")===false)
         		{
         
         		
@@ -55,7 +55,7 @@ class PosTagger {
 	                
 	               // preprint_r( $this->dict);
 	                
-	                //apc_store("PHPIR_LEXICON", $this->dict);
+	                //apcu_store("PHPIR_LEXICON", $this->dict);
         		}
         }
         

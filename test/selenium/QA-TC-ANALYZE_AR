@@ -578,12 +578,12 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//table[@id='uts-mapping-table']/tbody/tr[2]/td</td>
+	<td>//table[@id='uts-mapping-table']/tbody//tr/td[1][text()=&quot;قَبْلِنَا&quot;]</td>
 	<td>قَبْلِنَا</td>
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>//table[@id='uts-mapping-table']/tbody/tr[9]/td[2]</td>
+	<td>//table[@id='uts-mapping-table']/tbody//tr/td[2][text()=&quot;متربة&quot;]</td>
 	<td>متربة</td>
 </tr>
 <tr>
@@ -918,13 +918,8 @@
 </tr>
 <tr>
 	<td>waitForText</td>
-	<td>css=li</td>
+	<td>//div[@id='simmilar-words-area']/ul//li[text()=&quot;كريما&quot;]</td>
 	<td>كريما</td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@id='simmilar-words-area']/ul/li[2]</td>
-	<td>الكريم</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

@@ -25,7 +25,7 @@
 #  ====================================================================
 $MAIN_ROOT_PATH = dirname(__FILE__)."/";
 
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_NOTICE);
 
 $BUILD_VERSION = "0.1.1";
 
