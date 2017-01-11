@@ -35,6 +35,61 @@ if ( isset($_GET['lang']) )
 	$lang = $_GET['lang'];
 }
 
+function getRepeatedVerses2($lang,$threshold=1)
+	{
+		global $numberOfSuras;
+		
+		$QURAN_TEXT = getModelEntryFromMemory($lang, "MODEL_CORE", "QURAN_TEXT", "");
+
+		$TRANSLITERATION_VERSES_MAP = apcu_fetch("TRANSLITERATION_VERSES_MAP");
+
+
+
+		$repeatedVerses = array();
+		$repeatedVersesPointer = array();
+		$repeatedTransliterated = array();
+		
+			$i=0;
+			/* SURA'S LOOP **/
+			for ($s=0;$s<$numberOfSuras;$s++)
+			{
+				
+				
+				$suraSize = count($QURAN_TEXT[$s]);
+						
+						/* VERSES LOOP **/
+				for ($a=0;$a<$suraSize;$a++)
+				{
+						
+					$i++;
+					$verseText = $QURAN_TEXT[$s][$a];
+						
+						
+					initArrayWithZero($repeatedVerses[$verseText]);
+						
+					$repeatedVerses[$verseText]++;
+					$verseLocation = ($s+1).":".($a+1);
+				        $repeatedVersesPointer[$verseText] = $verseLocation;
+
+					$repeatedTransliterated[$verseText] = $TRANSLITERATION_VERSES_MAP[$verseLocation];
+				
+				}
+			
+			}
+			
+			arsort($repeatedVerses);
+				
+			
+				
+			$repeatedVerses = array_filter($repeatedVerses, 
+					function($v) use ($threshold) 
+					{
+						return	$v > $threshold; 
+					} );
+			
+			return array($repeatedVerses,$repeatedVersesPointer,$repeatedTransliterated);
+	}
+
 loadModels("core",$lang);
 ?>
 <!DOCTYPE html>
@@ -63,21 +118,31 @@ loadModels("core",$lang);
 		?>	
 				
   <div id='main-container'>
-
+  
+  		<h1>Quran Repeated Verses</h1>
 			  		
 			
 	    <?php include_once("help-content.php"); ?>
 	
 			  
+<a href="?tr=1">Show transliteration</a>
 			  	
 			  	<div id='repetition-area'>
 					<?php 
-					
+
+					$showTR = $_GET['tr'];	
+			
+
 					$repeatedVerses = array();
 					
-					$repeatedVerses = getRepeatedVerses($lang);
+					$res_list = getRepeatedVerses2($lang);
+
+					$repeatedVerses = $res_list[0];
+
+					$repeatedVersesPointer = $res_list[1];
 					
-					
+					$repeatedVersesTransliteration = $res_list[2];
+			
 					
 					
 					$repeatedVersesCount = count($repeatedVerses);
@@ -98,7 +163,10 @@ loadModels("core",$lang);
 					</thead>
 					<tr>
 					<th>
-						Words
+						Location
+					</th>
+					<th>
+						Verse
 					</th>
 					<th>
 						Frequency
@@ -115,7 +183,19 @@ loadModels("core",$lang);
 					?>
 					<tr>	
 						<td>
-							<?=$key?>
+							<?=$repeatedVersesPointer[$key]?>
+						</td>
+						<td>
+							<?
+								if ($showTR==1)
+								{
+									echo $repeatedVersesTransliteration[$key];
+								}
+								else
+								{
+									echo $key;
+								}
+							?>
 						</td>
 						<td>
 							<?=$val?>
